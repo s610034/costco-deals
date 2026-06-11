@@ -1,0 +1,1333 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>好市多折扣週報 2026/06/11</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --red:#E3001B;--blue:#005DAA;--bg:#f4f4f4;
+  --text:#1a1a1a;--sub:#666;--border:#e0e0e0;
+  --radius:12px;--shadow:0 2px 12px rgba(0,0,0,0.08);
+}
+body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans TC",sans-serif;background:var(--bg);color:var(--text)}
+
+/* Header */
+header{background:var(--red);color:#fff;padding:16px;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.2)}
+header h1{font-size:1.15rem;font-weight:700}
+header .meta{font-size:.75rem;opacity:.85;margin-top:3px}
+.stats{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
+.stat{background:rgba(255,255,255,.2);border-radius:20px;padding:2px 10px;font-size:.72rem;font-weight:600}
+
+/* Tabs */
+.tabs-wrap{background:#fff;border-bottom:2px solid var(--border);overflow-x:auto;white-space:nowrap;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.tabs-wrap::-webkit-scrollbar{display:none}
+.tab{display:inline-block;padding:10px 14px;font-size:.8rem;font-weight:600;color:var(--sub);border:none;background:none;border-bottom:3px solid transparent;cursor:pointer;transition:all .2s;white-space:nowrap}
+.tab:hover,.tab.active{color:var(--red);border-bottom-color:var(--red)}
+.tab-count{background:var(--border);border-radius:20px;padding:1px 6px;font-size:.68rem;margin-left:3px}
+.tab.active .tab-count{background:var(--red);color:#fff}
+
+/* Search */
+.search-wrap{padding:12px 16px;background:#fff;border-bottom:1px solid var(--border)}
+.search-wrap input{width:100%;padding:9px 14px;border:1.5px solid var(--border);border-radius:24px;font-size:.88rem;outline:none;transition:border .2s}
+.search-wrap input:focus{border-color:var(--red)}
+
+/* Grid */
+main{padding:14px;max-width:960px;margin:0 auto}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:11px}
+.empty{text-align:center;padding:48px 16px;color:var(--sub);font-size:.9rem;display:none}
+
+/* Card */
+.card{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);text-decoration:none;color:var(--text);overflow:hidden;display:flex;flex-direction:column;border:1px solid var(--border);transition:transform .15s,box-shadow .15s}
+.card:hover{transform:translateY(-3px);box-shadow:0 6px 20px rgba(0,0,0,.12)}
+.card:active{transform:scale(.97)}
+.card[style*="display:none"]{display:none!important}
+
+.card-img{position:relative;width:100%;aspect-ratio:1;background:#f9f9f9;overflow:hidden}
+.card-img img{width:100%;height:100%;object-fit:contain;padding:8px}
+.no-img{display:flex;align-items:center;justify-content:center;height:100%;font-size:2.5rem;opacity:.25}
+.badge{position:absolute;top:6px;right:6px;background:var(--red);color:#fff;font-size:.68rem;font-weight:700;padding:2px 7px;border-radius:20px}
+.deal-tag{position:absolute;bottom:5px;left:5px;background:rgba(0,93,170,.85);color:#fff;font-size:.62rem;padding:2px 6px;border-radius:8px}
+
+.card-body{padding:9px;flex:1;display:flex;flex-direction:column;gap:3px}
+.card-name{font-size:.8rem;font-weight:600;line-height:1.4;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.card-price{display:flex;align-items:center;gap:4px;flex-wrap:wrap;margin-top:auto;padding-top:5px}
+.orig{font-size:.72rem;color:var(--sub);text-decoration:line-through}
+.arrow{font-size:.65rem;color:var(--sub)}
+.sale{font-size:.92rem;font-weight:700;color:var(--red)}
+.card-save{font-size:.72rem;color:#d97706;font-weight:600}
+.period{font-size:.65rem;color:var(--sub);margin-top:2px}
+
+/* Footer */
+footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
+
+/* RWD */
+@media(max-width:380px){.grid{grid-template-columns:repeat(2,1fr);gap:9px}}
+@media(min-width:600px){.grid{grid-template-columns:repeat(auto-fill,minmax(175px,1fr))}}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🛒 好市多折扣週報</h1>
+  <div class="meta">📅 2026/06/11（06/08～06/14）</div>
+  <div class="stats">
+    <span class="stat">共 92 項折扣</span>
+    <span class="stat">🍱 食品飲料 34項</span><span class="stat">📺 家電 3C 5項</span><span class="stat">🧴 保健美妝 7項</span><span class="stat">🏠 生活用品 6項</span><span class="stat">👕 服飾寢具 4項</span><span class="stat">🐾 寵物用品 2項</span><span class="stat">🧸 玩具育兒 1項</span><span class="stat">📦 其他 33項</span>
+  </div>
+</header>
+
+<div class="tabs-wrap">
+<button class="tab active" onclick="filterCat('all')">🏠 全部 <span class="tab-count">92</span></button>
+<button class="tab" onclick="filterCat('__食品飲料')">🍱 食品飲料 <span class="tab-count">34</span></button>
+<button class="tab" onclick="filterCat('__家電_3C')">📺 家電 3C <span class="tab-count">5</span></button>
+<button class="tab" onclick="filterCat('__保健美妝')">🧴 保健美妝 <span class="tab-count">7</span></button>
+<button class="tab" onclick="filterCat('__生活用品')">🏠 生活用品 <span class="tab-count">6</span></button>
+<button class="tab" onclick="filterCat('__服飾寢具')">👕 服飾寢具 <span class="tab-count">4</span></button>
+<button class="tab" onclick="filterCat('__寵物用品')">🐾 寵物用品 <span class="tab-count">2</span></button>
+<button class="tab" onclick="filterCat('__玩具育兒')">🧸 玩具育兒 <span class="tab-count">1</span></button>
+<button class="tab" onclick="filterCat('__其他')">📦 其他 <span class="tab-count">33</span></button>
+</div>
+
+<div class="search-wrap">
+  <input type="search" id="searchInput" placeholder="🔍 搜尋商品名稱..." oninput="doSearch(this.value)">
+</div>
+
+<main>
+  <div class="grid" id="grid">
+<a class="card" href="https://www.costco.com.tw/Health-Beauty/Supplements/Supplements-Digestive-Support/BLACKMORES-OMEGA-DHA-Fish-Oil-120-Capsule-60-Capsule-X-2-Bottle/p/125360" target="_blank" rel="noopener" data-cat="__食品飲料">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h26/hfc/369280447971358.jpg" alt="澳佳寶 DHA精粹濃縮深海魚油膠囊 120顆 (60顆 X 2瓶)" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.6%</div><div class="deal-tag">限時優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">澳佳寶 DHA精粹濃縮深海魚油膠囊 120顆 (60顆 X 2瓶)</p>
+    <div class="card-price">
+      <span class="orig">$1,409</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$1,049</span>
+    </div>
+    <p class="card-save">省 $360</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Health-Beauty/Supplements/Bone-Joint-Support/Move-Free-Glucosamine-6-in-1-Essence-Drink-25-ml-X-30-Pack/p/142927" target="_blank" rel="noopener" data-cat="__食品飲料">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h13/h33/210494018879518.jpg" alt="益節 葡萄糖胺六合一精華飲 25毫升 X 30包" loading="lazy" onerror="this.style.display='none'"><div class="badge">-24.3%</div><div class="deal-tag">限時優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">益節 葡萄糖胺六合一精華飲 25毫升 X 30包</p>
+    <div class="card-price">
+      <span class="orig">$1,069</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$809</span>
+    </div>
+    <p class="card-save">省 $260</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Food-Dining/Frozen-Fresh-Food/Frozen-Meals/Hong-Yu-Frozen-Seafood-Shrimp-Pancake-2-kg/p/247284" target="_blank" rel="noopener" data-cat="__食品飲料">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/hf8/h6b/295029024981022.jpg" alt="宏裕行 冷凍海鮮蝦餅 2公斤" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.3%</div><div class="deal-tag">精選優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">宏裕行 冷凍海鮮蝦餅 2公斤</p>
+    <div class="card-price">
+      <span class="orig">$949</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$709</span>
+    </div>
+    <p class="card-save">省 $240</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Health-Beauty/Supplements/Supplements-Digestive-Support/MeridLife-Essential-Probiotic-120-Capsule/p/97716" target="_blank" rel="noopener" data-cat="__食品飲料">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h03/hfe/101049260179486.jpg" alt="樂益活 菌護® 保健益生菌 食品 120顆" loading="lazy" onerror="this.style.display='none'"><div class="badge">-24.1%</div><div class="deal-tag">限時優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">樂益活 菌護® 保健益生菌 食品 120顆</p>
+    <div class="card-price">
+      <span class="orig">$829</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$629</span>
+    </div>
+    <p class="card-save">省 $200</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/c/Starbucks-Veranda-Blend-Whole-Bean-Coffee-113-kg/p/648080" target="_blank" rel="noopener" data-cat="__食品飲料">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h4e/h53/210494080909342.jpg" alt="星巴克 黃金烘焙綜合咖啡豆 1.13公斤" loading="lazy" onerror="this.style.display='none'"><div class="badge">-24.0%</div><div class="deal-tag">精選優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">星巴克 黃金烘焙綜合咖啡豆 1.13公斤</p>
+    <div class="card-price">
+      <span class="orig">$835</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$635</span>
+    </div>
+    <p class="card-save">省 $200</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Food-Dining/Frozen-Fresh-Food/Frozen-Seafood-Meat/Dachan-Frozen-Sweet-Sauce-Boneless-Thigh-Thirteen-Spices-Breast-5-kg/p/157706" target="_blank" rel="noopener" data-cat="__食品飲料">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/hc8/h28/402145329676318.jpg" alt="大成 冷凍蜜汁去骨清雞腿與十三香清雞胸 5公斤" loading="lazy" onerror="this.style.display='none'"><div class="badge">-12.9%</div><div class="deal-tag">精選優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">大成 冷凍蜜汁去骨清雞腿與十三香清雞胸 5公斤</p>
+    <div class="card-price">
+      <span class="orig">$1,301</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$1,133</span>
+    </div>
+    <p class="card-save">省 $168</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Food-Dining/Drinks/Coffee/Barista-2-In-1-Instant-Coffee-Latte-21-g-X-100-Count/p/109399" target="_blank" rel="noopener" data-cat="__食品飲料">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/hc0/ha3/167144460025886.jpg" alt="西雅圖二合一咖啡 21公克 X 100入" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.0%</div><div class="deal-tag">限時優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">西雅圖二合一咖啡 21公克 X 100入</p>
+    <div class="card-price">
+      <span class="orig">$559</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$419</span>
+    </div>
+    <p class="card-save">省 $140</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Food-Dining/Drinks/Coffee/Barista-Premium-Roast-Drip-Coffee-12-g-X-50-Count/p/101940" target="_blank" rel="noopener" data-cat="__食品飲料">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/hfb/hb8/167692325945374.jpg" alt="西雅圖 極品嚴焙大濾掛咖啡 12公克 X 50入" loading="lazy" onerror="this.style.display='none'"><div class="badge">-24.2%</div><div class="deal-tag">限時優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">西雅圖 極品嚴焙大濾掛咖啡 12公克 X 50入</p>
+    <div class="card-price">
+      <span class="orig">$579</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$439</span>
+    </div>
+    <p class="card-save">省 $140</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/c/Mon-Petit-Canned-Cat-Food-with-3-Flavors-80-g-X-24-Count/p/95452" target="_blank" rel="noopener" data-cat="__食品飲料">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h83/h65/416281832587294.jpg" alt="貓倍麗 貓罐頭三種口味 80公克 X 24入" loading="lazy" onerror="this.style.display='none'"><div class="badge">-26.0%</div><div class="deal-tag">限時優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">貓倍麗 貓罐頭三種口味 80公克 X 24入</p>
+    <div class="card-price">
+      <span class="orig">$539</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$399</span>
+    </div>
+    <p class="card-save">省 $140</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Food-Dining/Drinks/Coffee/Darling-White-Coffee-Cappuccino-30-g-X-80-Count/p/274199" target="_blank" rel="noopener" data-cat="__食品飲料">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h8f/ha1/16466679889950.jpg" alt="親愛的白咖啡 - 卡布奇諾 30公克 X 80入" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.0%</div><div class="deal-tag">限時優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">親愛的白咖啡 - 卡布奇諾 30公克 X 80入</p>
+    <div class="card-price">
+      <span class="orig">$559</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$419</span>
+    </div>
+    <p class="card-save">省 $140</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Food-Dining/Drinks/Coffee/One-Fresh-Cup-Brazil-Cerrado-Drip-Coffee-11-g-X-50-Count/p/37742" target="_blank" rel="noopener" data-cat="__食品飲料">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h5c/hca/33329119920158.jpg" alt="鮮一杯 巴西喜拉朵濾掛咖啡 11公克 X 50入" loading="lazy" onerror="this.style.display='none'"><div class="badge">-29.5%</div><div class="deal-tag">限時優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">鮮一杯 巴西喜拉朵濾掛咖啡 11公克 X 50入</p>
+    <div class="card-price">
+      <span class="orig">$475</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$335</span>
+    </div>
+    <p class="card-save">省 $140</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Food-Dining/Drinks/Beverages-Juice/Binggrae-Melon-Flavored-Milk-200-ml-X-24-Count/p/298723" target="_blank" rel="noopener" data-cat="__食品飲料">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h78/h19/386020562567198.jpg" alt="Binggrae 哈密瓜牛奶 保久調味乳 200毫升 X 24入" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.0%</div><div class="deal-tag">限時優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">Binggrae 哈密瓜牛奶 保久調味乳 200毫升 X 24入</p>
+    <div class="card-price">
+      <span class="orig">$559</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$419</span>
+    </div>
+    <p class="card-save">省 $140</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Food-Dining/Drinks/Beverages-Juice/Binggrae-Chestnut-Flavored-Milk-Drink-200-ml-X-24-Count/p/298724" target="_blank" rel="noopener" data-cat="__食品飲料">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h2e/hdd/386020563681310.jpg" alt="Binggrae 栗子牛奶 保久調味乳 200毫升 X 24入" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.0%</div><div class="deal-tag">限時優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">Binggrae 栗子牛奶 保久調味乳 200毫升 X 24入</p>
+    <div class="card-price">
+      <span class="orig">$559</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$419</span>
+    </div>
+    <p class="card-save">省 $140</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Food-Dining/Frozen-Fresh-Food/Frozen-Meals/Lao-Xie-Zhen-Frozen-Seafood-with-Cheese-Rice-Burger-195-g-X-10-Count/p/155717" target="_blank" rel="noopener" data-cat="__食品飲料">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h74/h36/397422720385054.jpg" alt="老協珍 冷凍海鮮起司米漢堡 195公克 X 10入" loading="lazy" onerror="this.style.display='none'"><div class="badge">-22.5%</div><div class="deal-tag">限時優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">老協珍 冷凍海鮮起司米漢堡 195公克 X 10入</p>
+    <div class="card-price">
+      <span class="orig">$489</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$379</span>
+    </div>
+    <p class="card-save">省 $110</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Food-Dining/Groceries/Canned-Prepared-Food/Heinz-Lobster-Bisque-1-L-X-2-Pack/p/150603" target="_blank" rel="noopener" data-cat="__食品飲料">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/hfb/hbf/325606304186398.jpg" alt="亨氏 法式龍蝦濃湯 1公升 X 2入" loading="lazy" onerror="this.style.display='none'"><div class="badge">-38.1%</div><div class="deal-tag">精選優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">亨氏 法式龍蝦濃湯 1公升 X 2入</p>
+    <div class="card-price">
+      <span class="orig">$289</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$179</span>
+    </div>
+    <p class="card-save">省 $110</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Food-Dining/Groceries/Baking-Dried-Goods/VONO-Potato-Clam-Chowder-Soup-169-g-X-32-Pack/p/157484" target="_blank" rel="noopener" data-cat="__食品飲料">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/ha6/h40/415043976626206.jpg" alt="VONO 馬鈴薯蛤蜊濃湯 16.9公克 X 32包" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.1%</div><div class="deal-tag">限時優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">VONO 馬鈴薯蛤蜊濃湯 16.9公克 X 32包</p>
+    <div class="card-price">
+      <span class="orig">$415</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$311</span>
+    </div>
+    <p class="card-save">省 $104</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Food-Dining/Snacks/Nuts-Jerky/Nestle-Fitness-Red-Berries-Cranberry-Milk-Cereal-Bar-235-g-X-32-Count/p/227818" target="_blank" rel="noopener" data-cat="__食品飲料">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/hd7/hf7/438876348022814.jpg" alt="雀巢纖怡 草莓穀物棒 & 蔓越莓牛奶穀物棒 23.5公克 X 32條" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.1%</div><div class="deal-tag">限時優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">雀巢纖怡 草莓穀物棒 & 蔓越莓牛奶穀物棒 23.5公克 X 32條</p>
+    <div class="card-price">
+      <span class="orig">$399</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$299</span>
+    </div>
+    <p class="card-save">省 $100</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Food-Dining/Groceries/Canned-Prepared-Food/Great-Day-Seafood-Congee-40-g-X-30-Pack/p/96387" target="_blank" rel="noopener" data-cat="__食品飲料">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/hdb/h7e/350052658184222.jpg" alt="得意的一天 干貝柴魚粥 40公克 X 30包" loading="lazy" onerror="this.style.display='none'"><div class="badge">-23.9%</div><div class="deal-tag">精選優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">得意的一天 干貝柴魚粥 40公克 X 30包</p>
+    <div class="card-price">
+      <span class="orig">$419</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$319</span>
+    </div>
+    <p class="card-save">省 $100</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Food-Dining/Drinks/Coffee/Nescafe-Sicily-Coffee-15-g-X-40-Pack/p/150636" target="_blank" rel="noopener" data-cat="__食品飲料">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/hb6/he6/414650589544478.jpg" alt="雀巢 西西里風檸檬咖啡 15公克 X 40入" loading="lazy" onerror="this.style.display='none'"><div class="badge">-24.1%</div><div class="deal-tag">精選優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">雀巢 西西里風檸檬咖啡 15公克 X 40入</p>
+    <div class="card-price">
+      <span class="orig">$394</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$299</span>
+    </div>
+    <p class="card-save">省 $95</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Food-Dining/Drinks/Powdered-Drink-Mix-Cereal-Oats/Quaker-Cold-Crunchy-Nut-Chia-Seeds-Cereal-31-g-X-50-Pack/p/140611" target="_blank" rel="noopener" data-cat="__食品飲料">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/hf7/hba/154550946332702.jpg" alt="桂格 冰沖堅果脆麥片 奇亞籽酥片 & 堅果顆粒 31公克 X 50包" loading="lazy" onerror="this.style.display='none'"><div class="badge">-23.7%</div><div class="deal-tag">精選優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">桂格 冰沖堅果脆麥片 奇亞籽酥片 & 堅果顆粒 31公克 X 50包</p>
+    <div class="card-price">
+      <span class="orig">$379</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$289</span>
+    </div>
+    <p class="card-save">省 $90</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Food-Dining/Drinks/Coffee/Barista-Iced-Latte-Caramel-Flavor-30-g-X-40-Pack/p/146963" target="_blank" rel="noopener" data-cat="__食品飲料">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h9d/ha0/258345332637726.jpg" alt="西雅圖 冰拿鐵 濃焦糖風味 30公克 X 40入" loading="lazy" onerror="this.style.display='none'"><div class="badge">-23.7%</div><div class="deal-tag">精選優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">西雅圖 冰拿鐵 濃焦糖風味 30公克 X 40入</p>
+    <div class="card-price">
+      <span class="orig">$379</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$289</span>
+    </div>
+    <p class="card-save">省 $90</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Food-Dining/Snacks/Candies-Chocolates/Meiji-Kinoko-Chocolate-Biscuits-66-g-X-8-Pack/p/203565" target="_blank" rel="noopener" data-cat="__食品飲料">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h24/h58/368528963076126.jpg" alt="明治 香菇造型巧克力餅乾 66 公克 X 8盒" loading="lazy" onerror="this.style.display='none'"><div class="badge">-23.6%</div><div class="deal-tag">精選優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">明治 香菇造型巧克力餅乾 66 公克 X 8盒</p>
+    <div class="card-price">
+      <span class="orig">$339</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$259</span>
+    </div>
+    <p class="card-save">省 $80</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Food-Dining/Drinks/Tea/TEAZEN-Kombucha-Lemon-Flavor-5-g-X-40-Pack/p/141460" target="_blank" rel="noopener" data-cat="__食品飲料">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h8a/hff/239741599973406.jpg" alt="TEAZEN 康普茶 檸檬口味 5公克 X 40包" loading="lazy" onerror="this.style.display='none'"><div class="badge">-23.9%</div><div class="deal-tag">精選優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">TEAZEN 康普茶 檸檬口味 5公克 X 40包</p>
+    <div class="card-price">
+      <span class="orig">$335</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$255</span>
+    </div>
+    <p class="card-save">省 $80</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/BeeTouched/BeeTouched-Honey-Milk-250-ml-X-24-Count/p/135879" target="_blank" rel="noopener" data-cat="__食品飲料">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h34/h61/275511545331742.jpg" alt="蜜蜂工坊 蜂蜜牛奶 250毫升 X 24入" loading="lazy" onerror="this.style.display='none'"><div class="badge">-21.1%</div><div class="deal-tag">精選優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">蜜蜂工坊 蜂蜜牛奶 250毫升 X 24入</p>
+    <div class="card-price">
+      <span class="orig">$379</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$299</span>
+    </div>
+    <p class="card-save">省 $80</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Food-Dining/Snacks/Cookies-Chips/Want-Want-Assorted-Rice-Crackers-827-g/p/120108" target="_blank" rel="noopener" data-cat="__食品飲料">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h6a/h9b/451299540762654.jpg" alt="旺旺 嚴選米菓 827公克" loading="lazy" onerror="this.style.display='none'"><div class="badge">-23.7%</div><div class="deal-tag">精選優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">旺旺 嚴選米菓 827公克</p>
+    <div class="card-price">
+      <span class="orig">$295</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$225</span>
+    </div>
+    <p class="card-save">省 $70</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Food-Dining/Snacks/Cookies-Chips/My-Motto-Premium-Wafers-Cocoa-Cocoa-Flavor-30-g-X-20-Pack/p/263941" target="_blank" rel="noopener" data-cat="__食品飲料">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/hdf/hcd/361958094733342.jpg" alt="My Motto 威化餅 雙重巧克力風味 30公克 X 20包" loading="lazy" onerror="this.style.display='none'"><div class="badge">-27.0%</div><div class="deal-tag">精選優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">My Motto 威化餅 雙重巧克力風味 30公克 X 20包</p>
+    <div class="card-price">
+      <span class="orig">$259</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$189</span>
+    </div>
+    <p class="card-save">省 $70</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Food-Dining/Snacks/Candies-Chocolates/Richy-Oatmeal-Mini-Bite-1000-g/p/1212068" target="_blank" rel="noopener" data-cat="__食品飲料">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/hea/hdd/272954705674270.jpg" alt="Richy 瑞奇 迷你燕麥酥 1000公克" loading="lazy" onerror="this.style.display='none'"><div class="badge">-22.5%</div><div class="deal-tag">限時優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">Richy 瑞奇 迷你燕麥酥 1000公克</p>
+    <div class="card-price">
+      <span class="orig">$285</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$221</span>
+    </div>
+    <p class="card-save">省 $64</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/c/Calbee-Fruit-Granola-1-kg/p/216971" target="_blank" rel="noopener" data-cat="__食品飲料">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/hec/h35/191494211633182.jpg" alt="卡樂比 富果樂水果早餐麥片 1 公斤" loading="lazy" onerror="this.style.display='none'"><div class="badge">-23.2%</div><div class="deal-tag">限時優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">卡樂比 富果樂水果早餐麥片 1 公斤</p>
+    <div class="card-price">
+      <span class="orig">$259</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$199</span>
+    </div>
+    <p class="card-save">省 $60</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Food-Dining/Snacks/Cookies-Chips/Angies-BoomChickaPop-Sweet-and-Salty-Kettle-Popcorn-652-g/p/979885" target="_blank" rel="noopener" data-cat="__食品飲料">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/ha8/hb9/11953683595294.jpg" alt="Angie's 鹹甜爆米花 652公克" loading="lazy" onerror="this.style.display='none'"><div class="badge">-20.8%</div><div class="deal-tag">精選優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">Angie's 鹹甜爆米花 652公克</p>
+    <div class="card-price">
+      <span class="orig">$289</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$229</span>
+    </div>
+    <p class="card-save">省 $60</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Food-Dining/Groceries/Baking-Dried-Goods/Vilson-Organic-Black-Bean-1500-g/p/208632" target="_blank" rel="noopener" data-cat="__食品飲料">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h63/hac/65826724741150.jpg" alt="米森 有機黑豆 1500公克" loading="lazy" onerror="this.style.display='none'"><div class="badge">-22.3%</div><div class="deal-tag">精選優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">米森 有機黑豆 1500公克</p>
+    <div class="card-price">
+      <span class="orig">$269</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$209</span>
+    </div>
+    <p class="card-save">省 $60</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Food-Dining/Drinks/Tea/I-Mei-Milk-Tea-250-ml-X-24-Count/p/133087" target="_blank" rel="noopener" data-cat="__食品飲料">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h78/h3f/68834662809630.jpg" alt="義美 厚絲絨奶茶 250毫升 X 24入" loading="lazy" onerror="this.style.display='none'"><div class="badge">-20.8%</div><div class="deal-tag">精選優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">義美 厚絲絨奶茶 250毫升 X 24入</p>
+    <div class="card-price">
+      <span class="orig">$264</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$209</span>
+    </div>
+    <p class="card-save">省 $55</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Food-Dining/Snacks/Cookies-Chips/New-Choice-Crispiroll-Mocha-Flavor-1-kg/p/67643" target="_blank" rel="noopener" data-cat="__食品飲料">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/hab/h03/79975394115614.webp" alt="New Choice 摩卡咖啡脆捲 1公斤" loading="lazy" onerror="this.style.display='none'"><div class="badge">-23.0%</div><div class="deal-tag">精選優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">New Choice 摩卡咖啡脆捲 1公斤</p>
+    <div class="card-price">
+      <span class="orig">$235</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$181</span>
+    </div>
+    <p class="card-save">省 $54</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Food-Dining/Snacks/Nuts-Jerky/North-Sea-Fish-Snacks-600-g/p/78623" target="_blank" rel="noopener" data-cat="__食品飲料">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h16/hfc/381454987755550.jpg" alt="北海 鱈魚香絲 600公克" loading="lazy" onerror="this.style.display='none'"><div class="badge">-18.6%</div><div class="deal-tag">精選優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">北海 鱈魚香絲 600公克</p>
+    <div class="card-price">
+      <span class="orig">$269</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$219</span>
+    </div>
+    <p class="card-save">省 $50</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Food-Dining/Snacks/Cookies-Chips/Koikeya-Salt-Seaweed-Potato-Chips-550-g/p/125733" target="_blank" rel="noopener" data-cat="__食品飲料">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h54/h4b/432046413774878.jpg" alt="湖池屋 和風海苔鹽厚切洋芋片 550公克" loading="lazy" onerror="this.style.display='none'"><div class="badge">-21.2%</div><div class="deal-tag">精選優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">湖池屋 和風海苔鹽厚切洋芋片 550公克</p>
+    <div class="card-price">
+      <span class="orig">$189</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$149</span>
+    </div>
+    <p class="card-save">省 $40</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Televisions-Appliances/Large-Appliances/Fridges-Freezers/Samsung-623-L-Top-Mount-Freezer-Fridge-RT62N704HS9TW/p/126223" target="_blank" rel="noopener" data-cat="__家電_3C">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/hf4/h51/45816675434526.jpg" alt="Samsung 623公升雙循環雙門冰箱 RT62N704HS9/TW" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.2%</div><div class="deal-tag">精選優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">Samsung 623公升雙循環雙門冰箱 RT62N704HS9/TW</p>
+    <div class="card-price">
+      <span class="orig">$21,399</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$15,999</span>
+    </div>
+    <p class="card-save">省 $5,400</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Televisions-Appliances/Large-Appliances/Washers-Dryers/Washer-Size-10-15-kg/Samsung-13-kg-AI-Top-Load-Washer-WA80F13S5LTW/p/155133" target="_blank" rel="noopener" data-cat="__家電_3C">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h16/hc2/384281302269982.jpg" alt="Samsung 13公斤 AI 智慧控制直立洗衣機 WA80F13S5LTW" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.0%</div><div class="deal-tag">限時優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">Samsung 13公斤 AI 智慧控制直立洗衣機 WA80F13S5LTW</p>
+    <div class="card-price">
+      <span class="orig">$12,799</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$9,599</span>
+    </div>
+    <p class="card-save">省 $3,200</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Televisions-Appliances/Cooling-Heating-Air-Treatment/Air-Purifiers-Filters-Accessories/Honeywell-Air-Purifier-HPA5350WTWV1/p/157137" target="_blank" rel="noopener" data-cat="__家電_3C">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h68/h7e/401755896152094.jpg" alt="Honeywell 淨味空氣清淨機 HPA5350WTWV1" loading="lazy" onerror="this.style.display='none'"><div class="badge">-28.2%</div><div class="deal-tag">限時優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">Honeywell 淨味空氣清淨機 HPA5350WTWV1</p>
+    <div class="card-price">
+      <span class="orig">$7,099</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$5,099</span>
+    </div>
+    <p class="card-save">省 $2,000</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Televisions-Appliances/Kitchen-Appliances/Cookers-Oven-Microwaves-Food-Waste-Machine/Zojirushi-Rice-Cooker-NS-ZLF18/p/122731" target="_blank" rel="noopener" data-cat="__家電_3C">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/hbc/hbc/12216003067934.jpg" alt="象印 黑金剛微電腦電子鍋 NS-ZLF18" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.0%</div><div class="deal-tag">限時優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">象印 黑金剛微電腦電子鍋 NS-ZLF18</p>
+    <div class="card-price">
+      <span class="orig">$3,999</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$2,999</span>
+    </div>
+    <p class="card-save">省 $1,000</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Household-Baby-Toys/Household-Essentials/Pest-Control-Air-Care/Farcent-Hanging-Dehumidifier-Bag-385-ml-X-15-Count/p/157762" target="_blank" rel="noopener" data-cat="__家電_3C">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h9e/haa/403520303595550.jpg" alt="克潮靈 吊掛式除濕袋 385毫升 X 15入" loading="lazy" onerror="this.style.display='none'"><div class="badge">-20.8%</div><div class="deal-tag">精選優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">克潮靈 吊掛式除濕袋 385毫升 X 15入</p>
+    <div class="card-price">
+      <span class="orig">$355</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$281</span>
+    </div>
+    <p class="card-save">省 $74</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Health-Beauty/Supplements/Supplements-Digestive-Support/Nature-Made-Lutein-20mg-with-Minerals-Vitamins-150-Softgels/p/335354" target="_blank" rel="noopener" data-cat="__保健美妝">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h56/hcf/329850809745438.jpg" alt="Nature Made 萊萃美 葉黃素20毫克綜合軟膠囊 150粒" loading="lazy" onerror="this.style.display='none'"><div class="badge">-24.8%</div><div class="deal-tag">限時優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">Nature Made 萊萃美 葉黃素20毫克綜合軟膠囊 150粒</p>
+    <div class="card-price">
+      <span class="orig">$929</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$699</span>
+    </div>
+    <p class="card-save">省 $230</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Health-Beauty/Supplements/Multi-Letter-Vitamins/Youtheory-Collagen-Biotin-390-Tablet/p/554059" target="_blank" rel="noopener" data-cat="__保健美妝">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/ha3/h5a/260837918539806.jpg" alt="Youtheory 膠原蛋白生物素錠 390錠" loading="lazy" onerror="this.style.display='none'"><div class="badge">-24.1%</div><div class="deal-tag">精選優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">Youtheory 膠原蛋白生物素錠 390錠</p>
+    <div class="card-price">
+      <span class="orig">$829</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$629</span>
+    </div>
+    <p class="card-save">省 $200</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Health-Beauty/Personal-Care/Shampoo-Conditioner/Aromase-5-Juniper-Head-To-Toe-Shampoo-Body-Wash-1000-ml-80-ml/p/133118" target="_blank" rel="noopener" data-cat="__保健美妝">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h07/h6a/79614871502878.jpg" alt="艾瑪絲 5α捷利爾洗髮沐浴露 Family 1000毫升 + 80毫升" loading="lazy" onerror="this.style.display='none'"><div class="badge">-26.7%</div><div class="deal-tag">限時優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">艾瑪絲 5α捷利爾洗髮沐浴露 Family 1000毫升 + 80毫升</p>
+    <div class="card-price">
+      <span class="orig">$525</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$385</span>
+    </div>
+    <p class="card-save">省 $140</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Health-Beauty/Personal-Care/Shampoo-Conditioner/Herbal-Essences-Shampoo-Blue-Ginger-and-Micellar-12-L/p/139521" target="_blank" rel="noopener" data-cat="__保健美妝">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/he2/he9/153265443504158.jpg" alt="Herbal Essences 藍薑草本豐盈清香洗髮露 1.2公升" loading="lazy" onerror="this.style.display='none'"><div class="badge">-26.1%</div><div class="deal-tag">限時優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">Herbal Essences 藍薑草本豐盈清香洗髮露 1.2公升</p>
+    <div class="card-price">
+      <span class="orig">$499</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$369</span>
+    </div>
+    <p class="card-save">省 $130</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Health-Beauty/Personal-Care/Oral-Care/Colgate-Advanced-Whitening-Toothpaste-181-g-X-5-Pack/p/1285702" target="_blank" rel="noopener" data-cat="__保健美妝">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h07/h02/438875646787614.jpg" alt="高露潔 全效潔白牙膏 181公克 X 5入" loading="lazy" onerror="this.style.display='none'"><div class="badge">-28.0%</div><div class="deal-tag">限時優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">高露潔 全效潔白牙膏 181公克 X 5入</p>
+    <div class="card-price">
+      <span class="orig">$429</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$309</span>
+    </div>
+    <p class="card-save">省 $120</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Health-Beauty/Personal-Care/Shampoo-Conditioner/Aromase-Herbal-Daily-Shampoo-Body-Wash-1000-ml-Citrus-Cedarwood/p/150878" target="_blank" rel="noopener" data-cat="__保健美妝">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h8b/hbf/349916536504350.jpg" alt="艾瑪絲 草本胺基酸每日健康洗髮沐浴露 1000毫升 清橙雪松" loading="lazy" onerror="this.style.display='none'"><div class="badge">-26.3%</div><div class="deal-tag">限時優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">艾瑪絲 草本胺基酸每日健康洗髮沐浴露 1000毫升 清橙雪松</p>
+    <div class="card-price">
+      <span class="orig">$419</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$309</span>
+    </div>
+    <p class="card-save">省 $110</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Food-Dining/Drinks/Beverages-Juice/QUAKER-Black-Mixed-Grain-Drink-300-ml-X-12-Count/p/136603" target="_blank" rel="noopener" data-cat="__保健美妝">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/hdc/hb0/417161901080606.jpg" alt="桂格 黑穀營養飲 300毫升 X 12罐" loading="lazy" onerror="this.style.display='none'"><div class="badge">-20.1%</div><div class="deal-tag">限時優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">桂格 黑穀營養飲 300毫升 X 12罐</p>
+    <div class="card-price">
+      <span class="orig">$299</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$239</span>
+    </div>
+    <p class="card-save">省 $60</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Household-Baby-Toys/Household-Essentials/Toilet-Paper-Paper-Towels/Kleenex-Flushable-Wipes-46-Sheet-X-32-Count/p/123333" target="_blank" rel="noopener" data-cat="__生活用品">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h62/h92/312615946485790.jpg" alt="舒潔 濕式衛生紙 46張 X 32入" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.0%</div><div class="deal-tag">精選優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">舒潔 濕式衛生紙 46張 X 32入</p>
+    <div class="card-price">
+      <span class="orig">$1,143</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$857</span>
+    </div>
+    <p class="card-save">省 $286</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Furniture-Kitchen/Kitchen-Dining/Water-Bottles/WOKY-Ceramic-Stainless-Steel-Travel-Tumbler-750-ml-X-2-Piece-Set/p/147551" target="_blank" rel="noopener" data-cat="__生活用品">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h83/h57/273678060781598.jpg" alt="WOKY 沃廚 渾圓杯雙層陶瓷保溫杯 750毫升 X 2件組" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.6%</div><div class="deal-tag">限時優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">WOKY 沃廚 渾圓杯雙層陶瓷保溫杯 750毫升 X 2件組</p>
+    <div class="card-price">
+      <span class="orig">$939</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$699</span>
+    </div>
+    <p class="card-save">省 $240</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Household-Baby-Toys/Household-Essentials/Laundry-Care/Tide-Advanced-Power-OXI-Liquid-Laundry-Detergent-408-L/p/3160440" target="_blank" rel="noopener" data-cat="__生活用品">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/he8/h26/274515360251934.jpg" alt="汰漬 OXI亮白護色洗衣精 4.08公升" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.0%</div><div class="deal-tag">限時優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">汰漬 OXI亮白護色洗衣精 4.08公升</p>
+    <div class="card-price">
+      <span class="orig">$519</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$389</span>
+    </div>
+    <p class="card-save">省 $130</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Household-Baby-Toys/Household-Essentials/Cleaning-Supplies/Pine-Sol-Multi-Surface-Cleaner-177-L-X-2-Count/p/1805039" target="_blank" rel="noopener" data-cat="__生活用品">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h67/h50/295029006598174.jpg" alt="Pine-Sol 兩倍濃縮 松木香 多用途清潔劑 1.77公升 X 2入" loading="lazy" onerror="this.style.display='none'"><div class="badge">-23.6%</div><div class="deal-tag">精選優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">Pine-Sol 兩倍濃縮 松木香 多用途清潔劑 1.77公升 X 2入</p>
+    <div class="card-price">
+      <span class="orig">$509</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$389</span>
+    </div>
+    <p class="card-save">省 $120</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Household-Baby-Toys/p/127295" target="_blank" rel="noopener" data-cat="__生活用品">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h82/h57/120613024890910.jpg" alt="舒潔 Viva 三層廚房紙巾 60張 X 16卷" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.1%</div><div class="deal-tag">精選優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">舒潔 Viva 三層廚房紙巾 60張 X 16卷</p>
+    <div class="card-price">
+      <span class="orig">$423</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$317</span>
+    </div>
+    <p class="card-save">省 $106</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Clothing-Accessories/Womens-Clothing/Womens-Bottoms-Dresses/Kirkland-Signature-Ladies-Lightweight-Short/p/7771782" target="_blank" rel="noopener" data-cat="__生活用品">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/hce/hcc/437687799644190.jpg" alt="科克蘭 女輕量休閒短褲" loading="lazy" onerror="this.style.display='none'"><div class="badge">-27.4%</div><div class="deal-tag">精選優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">科克蘭 女輕量休閒短褲</p>
+    <div class="card-price">
+      <span class="orig">$329</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$239</span>
+    </div>
+    <p class="card-save">省 $90</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Clothing-Accessories/Shoes/Womens-Shoes/Lacoste-Ladies-Shoe/p/154493" target="_blank" rel="noopener" data-cat="__服飾寢具">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h68/h77/451293254418462.jpg" alt="Lacoste 女休閒鞋" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.7%</div><div class="deal-tag">精選優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">Lacoste 女休閒鞋</p>
+    <div class="card-price">
+      <span class="orig">$1,399</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$1,039</span>
+    </div>
+    <p class="card-save">省 $360</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Clothing-Accessories/Shoes/Mens-Shoes/Adidas-Mens-Runvista-Shoe/p/154456" target="_blank" rel="noopener" data-cat="__服飾寢具">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h9d/h41/436453311873054.jpg" alt="Adidas 男運動休閒鞋" loading="lazy" onerror="this.style.display='none'"><div class="badge">-26.0%</div><div class="deal-tag">精選優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">Adidas 男運動休閒鞋</p>
+    <div class="card-price">
+      <span class="orig">$999</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$739</span>
+    </div>
+    <p class="card-save">省 $260</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Clothing-Accessories/Shoes/Womens-Shoes/Adidas-Runvista-Womens-Shoe/p/154454" target="_blank" rel="noopener" data-cat="__服飾寢具">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/hdc/h1b/453636507631646.jpg" alt="Adidas 女運動休閒鞋" loading="lazy" onerror="this.style.display='none'"><div class="badge">-26.0%</div><div class="deal-tag">精選優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">Adidas 女運動休閒鞋</p>
+    <div class="card-price">
+      <span class="orig">$999</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$739</span>
+    </div>
+    <p class="card-save">省 $260</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Clothing-Accessories/Womens-Clothing/Womens-Socks-Intimates/Gunze-Soft-Wirefree-Bra/p/160561" target="_blank" rel="noopener" data-cat="__服飾寢具">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h9d/h33/470130424479774.jpg" alt="Gunze 輕柔無鋼圈內衣" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.9%</div><div class="deal-tag">限時優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">Gunze 輕柔無鋼圈內衣</p>
+    <div class="card-price">
+      <span class="orig">$579</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$429</span>
+    </div>
+    <p class="card-save">省 $150</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/c/Scoop-Away-Complete-Performance-Plus-Cat-Litter-476-kg-X-4-Count/p/1529177" target="_blank" rel="noopener" data-cat="__寵物用品">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h5b/h88/226673722195998.jpg" alt="Scoop Away 超凝結貓砂 4.76公斤 X 4入" loading="lazy" onerror="this.style.display='none'"><div class="badge">-22.8%</div><div class="deal-tag">精選優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">Scoop Away 超凝結貓砂 4.76公斤 X 4入</p>
+    <div class="card-price">
+      <span class="orig">$569</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$439</span>
+    </div>
+    <p class="card-save">省 $130</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/c/Purreland-Tofu-Cat-Litter-Original-5-L-X-6-Count/p/121647" target="_blank" rel="noopener" data-cat="__寵物用品">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/hbe/h37/11470059962398.jpg" alt="PurreLand 倍淨豆腐貓砂 原味 5公升 X 6入" loading="lazy" onerror="this.style.display='none'"><div class="badge">-22.4%</div><div class="deal-tag">精選優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">PurreLand 倍淨豆腐貓砂 原味 5公升 X 6入</p>
+    <div class="card-price">
+      <span class="orig">$563</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$437</span>
+    </div>
+    <p class="card-save">省 $126</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Food-Dining/Drinks/Powdered-Drink-Mix-Cereal-Oats/KLIM-New-Zealand-Full-Cream-Milk-Powder-25-kg/p/230352" target="_blank" rel="noopener" data-cat="__玩具育兒">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/hef/h60/450045554950174.jpg" alt="KLIM 克寧 紐西蘭全脂奶粉 2.5公斤" loading="lazy" onerror="this.style.display='none'"><div class="badge">-24.3%</div><div class="deal-tag">精選優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">KLIM 克寧 紐西蘭全脂奶粉 2.5公斤</p>
+    <div class="card-price">
+      <span class="orig">$575</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$435</span>
+    </div>
+    <p class="card-save">省 $140</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Furniture-Kitchen/Furniture/Computer-Desk-Chair-Sets/Flexispot-Adjustable-Desk/p/158513" target="_blank" rel="noopener" data-cat="__其他">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/haa/h07/432345243385886.jpg" alt="Flexispot 電動升降桌" loading="lazy" onerror="this.style.display='none'"><div class="badge">-27.5%</div><div class="deal-tag">限時優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">Flexispot 電動升降桌</p>
+    <div class="card-price">
+      <span class="orig">$3,999</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$2,899</span>
+    </div>
+    <p class="card-save">省 $1,100</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Household-Baby-Toys/Baby/Baby-Diapers-Wipes/Pampers-Ichiban-Tape-Size-L-156-Piece/p/246571" target="_blank" rel="noopener" data-cat="__其他">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/hdd/hfc/466199226384414.jpg" alt="幫寶適 一級幫 護臀紙尿褲(黏貼型) L號 156片" loading="lazy" onerror="this.style.display='none'"><div class="badge">-35.0%</div><div class="deal-tag">限時優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">幫寶適 一級幫 護臀紙尿褲(黏貼型) L號 156片</p>
+    <div class="card-price">
+      <span class="orig">$999</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$649</span>
+    </div>
+    <p class="card-save">省 $350</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Household-Baby-Toys/Baby/Baby-Diapers-Wipes/Pampers-Ichiban-Tape-Size-M-186-Piece/p/246570" target="_blank" rel="noopener" data-cat="__其他">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h13/hdf/466199225466910.jpg" alt="幫寶適 一級幫 護臀紙尿褲(黏貼型) M號 186片" loading="lazy" onerror="this.style.display='none'"><div class="badge">-35.0%</div><div class="deal-tag">限時優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">幫寶適 一級幫 護臀紙尿褲(黏貼型) M號 186片</p>
+    <div class="card-price">
+      <span class="orig">$999</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$649</span>
+    </div>
+    <p class="card-save">省 $350</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Household-Baby-Toys/Baby/Baby-Diapers-Wipes/Pampers-Ichiban-Tape-Size-XL-124-Piece/p/246572" target="_blank" rel="noopener" data-cat="__其他">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h07/h8a/466199226482718.jpg" alt="幫寶適 一級幫 護臀紙尿褲(黏貼型) XL號 124片" loading="lazy" onerror="this.style.display='none'"><div class="badge">-35.0%</div><div class="deal-tag">限時優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">幫寶適 一級幫 護臀紙尿褲(黏貼型) XL號 124片</p>
+    <div class="card-price">
+      <span class="orig">$999</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$649</span>
+    </div>
+    <p class="card-save">省 $350</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Household-Baby-Toys/Baby/Baby-Diapers-Wipes/Pampers-Ichiban-Tape-Size-S-232-Piece/p/246569" target="_blank" rel="noopener" data-cat="__其他">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/hfe/h43/466199221927966.jpg" alt="幫寶適 一級幫 護臀紙尿褲(黏貼型) S號 232片" loading="lazy" onerror="this.style.display='none'"><div class="badge">-35.0%</div><div class="deal-tag">限時優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">幫寶適 一級幫 護臀紙尿褲(黏貼型) S號 232片</p>
+    <div class="card-price">
+      <span class="orig">$999</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$649</span>
+    </div>
+    <p class="card-save">省 $350</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Televisions-Appliances/Small-Appliances/Hair-Skin-Care-Tools/Tescom-Negative-ion-Hair-Dryer-TD570TW/p/152520" target="_blank" rel="noopener" data-cat="__其他">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h3b/hfd/368770433908766.jpg" alt="Tescom 大風量負離子吹風機 TD570TW" loading="lazy" onerror="this.style.display='none'"><div class="badge">-27.8%</div><div class="deal-tag">限時優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">Tescom 大風量負離子吹風機 TD570TW</p>
+    <div class="card-price">
+      <span class="orig">$1,189</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$859</span>
+    </div>
+    <p class="card-save">省 $330</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Household-Baby-Toys/Baby/Baby-Diapers-Wipes/Pampers-Ichiban-Pants-Size-XL-116-Piece/p/246574" target="_blank" rel="noopener" data-cat="__其他">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h0c/h4d/466199226875934.jpg" alt="幫寶適 一級幫 散熱拉拉褲 XL號 116片" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.0%</div><div class="deal-tag">限時優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">幫寶適 一級幫 散熱拉拉褲 XL號 116片</p>
+    <div class="card-price">
+      <span class="orig">$1,079</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$809</span>
+    </div>
+    <p class="card-save">省 $270</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Household-Baby-Toys/Baby/Baby-Diapers-Wipes/Pampers-Ichiban-Pants-Size-L-144-Piece/p/246573" target="_blank" rel="noopener" data-cat="__其他">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h62/hd6/466199226613790.jpg" alt="幫寶適 一級幫 散熱拉拉褲 L號 144片" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.0%</div><div class="deal-tag">限時優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">幫寶適 一級幫 散熱拉拉褲 L號 144片</p>
+    <div class="card-price">
+      <span class="orig">$1,079</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$809</span>
+    </div>
+    <p class="card-save">省 $270</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Household-Baby-Toys/Baby/Baby-Diapers-Wipes/Pampers-Ichiban-Pants-Size-XXL-93-Piece/p/246575" target="_blank" rel="noopener" data-cat="__其他">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h9e/h9b/466199228219422.jpg" alt="幫寶適 一級幫 散熱拉拉褲 XXL號 93片" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.0%</div><div class="deal-tag">限時優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">幫寶適 一級幫 散熱拉拉褲 XXL號 93片</p>
+    <div class="card-price">
+      <span class="orig">$1,079</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$809</span>
+    </div>
+    <p class="card-save">省 $270</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Household-Baby-Toys/Baby/Baby-Diapers-Wipes/Pampers-Ichiban-Pants-Size-XXXL-93-Piece/p/246576" target="_blank" rel="noopener" data-cat="__其他">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h42/h2f/466199227793438.jpg" alt="幫寶適 一級幫 散熱拉拉褲 XXXL號 93片" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.0%</div><div class="deal-tag">限時優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">幫寶適 一級幫 散熱拉拉褲 XXXL號 93片</p>
+    <div class="card-price">
+      <span class="orig">$1,079</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$809</span>
+    </div>
+    <p class="card-save">省 $270</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Health-Beauty/Beauty-Skin-Care/Skin-Care/sum37-Water-full-Time-Leap-Water-Gel-Cream-120-ml-50-ml/p/681601" target="_blank" rel="noopener" data-cat="__其他">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/had/hac/386020577378334.jpg" alt="su:m37º 活水潤澤酵能水凝霜 120毫升 + 50毫升" loading="lazy" onerror="this.style.display='none'"><div class="badge">-30.4%</div><div class="deal-tag">精選優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">su:m37º 活水潤澤酵能水凝霜 120毫升 + 50毫升</p>
+    <div class="card-price">
+      <span class="orig">$889</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$619</span>
+    </div>
+    <p class="card-save">省 $270</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Health-Beauty/Supplements/Multi-Letter-Vitamins/WEIDER-Daily-Nutripack-50-30-Pack/p/217619" target="_blank" rel="noopener" data-cat="__其他">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h56/h27/262758267715614.jpg" alt="威德 一日補給50+ 30包" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.0%</div><div class="deal-tag">限時優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">威德 一日補給50+ 30包</p>
+    <div class="card-price">
+      <span class="orig">$1,039</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$779</span>
+    </div>
+    <p class="card-save">省 $260</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Health-Beauty/Supplements/Supplements-Digestive-Support/JKJ-Red-Ginseng-EVERYTIME-10-ml-X-30-Pack/p/186999" target="_blank" rel="noopener" data-cat="__其他">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/he9/had/51290114031646.jpg" alt="正官庄 高麗蔘精 EVERYTIME 10毫升 X 30包" loading="lazy" onerror="this.style.display='none'"><div class="badge">-24.3%</div><div class="deal-tag">限時優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">正官庄 高麗蔘精 EVERYTIME 10毫升 X 30包</p>
+    <div class="card-price">
+      <span class="orig">$989</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$749</span>
+    </div>
+    <p class="card-save">省 $240</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Furniture-Kitchen/Kitchen-Dining/Food-Storage-Containers/Neoflam-Microwavable-Stainless-Steel-Storage-with-Lid-12-Piece-Set/p/8523323" target="_blank" rel="noopener" data-cat="__其他">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h32/h23/348867444801566.jpg" alt="Neoflam 可微波不鏽鋼保鮮盒 含蓋12件組" loading="lazy" onerror="this.style.display='none'"><div class="badge">-26.4%</div><div class="deal-tag">限時優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">Neoflam 可微波不鏽鋼保鮮盒 含蓋12件組</p>
+    <div class="card-price">
+      <span class="orig">$759</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$559</span>
+    </div>
+    <p class="card-save">省 $200</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Clothing-Accessories/Mens-Clothing/Mens-Tops/Timberland-Mens-Short-Sleeve-Polo-Shirt/p/134126" target="_blank" rel="noopener" data-cat="__其他">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h74/h20/453375861850142.jpg" alt="Timberland 男短袖Polo衫" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.0%</div><div class="deal-tag">限時優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">Timberland 男短袖Polo衫</p>
+    <div class="card-price">
+      <span class="orig">$639</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$479</span>
+    </div>
+    <p class="card-save">省 $160</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Clothing-Accessories/Womens-Clothing/Womens-Bottoms-Dresses/Well-Worn-Ladies-Casual-Denim-Jeans/p/1956376" target="_blank" rel="noopener" data-cat="__其他">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h4a/haa/439234223702046.jpg" alt="Well Worn 女牛仔休閒褲" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.5%</div><div class="deal-tag">精選優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">Well Worn 女牛仔休閒褲</p>
+    <div class="card-price">
+      <span class="orig">$589</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$439</span>
+    </div>
+    <p class="card-save">省 $150</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Clothing-Accessories/Womens-Clothing/Womens-Pajamas/Advent-Ladies-Short-Sleeve-Pajama-Set/p/156611" target="_blank" rel="noopener" data-cat="__其他">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h54/h03/437687004626974.jpg" alt="Advent 女短袖睡衣套組" loading="lazy" onerror="this.style.display='none'"><div class="badge">-27.3%</div><div class="deal-tag">精選優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">Advent 女短袖睡衣套組</p>
+    <div class="card-price">
+      <span class="orig">$549</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$399</span>
+    </div>
+    <p class="card-save">省 $150</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Health-Beauty/Beauty-Skin-Care/Makeup-Beauty-Accessories/Schick-Intuition-Shaving-Set-Razor-X-1-Blades-X-7-Pack/p/394744" target="_blank" rel="noopener" data-cat="__其他">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h70/h97/398742022422558.jpg" alt="舒適牌 舒芙仕女除毛刀組 刀把 X 1 + 刀片 X 7" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.1%</div><div class="deal-tag">限時優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">舒適牌 舒芙仕女除毛刀組 刀把 X 1 + 刀片 X 7</p>
+    <div class="card-price">
+      <span class="orig">$439</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$329</span>
+    </div>
+    <p class="card-save">省 $110</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Food-Dining/Drinks/Beverages-Juice/AW-Root-Beer-325-ml-X-24-Count/p/316384" target="_blank" rel="noopener" data-cat="__其他">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h94/h25/380918094430238.jpg" alt="A&W 沙士汽水 325毫升 X 24入" loading="lazy" onerror="this.style.display='none'"><div class="badge">-21.2%</div><div class="deal-tag">精選優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">A&W 沙士汽水 325毫升 X 24入</p>
+    <div class="card-price">
+      <span class="orig">$519</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$409</span>
+    </div>
+    <p class="card-save">省 $110</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Clothing-Accessories/Womens-Clothing/Womens-Bottoms-Dresses/Advent-Ladies-Advent-Draped-Pleated-Wide-Pant/p/156457" target="_blank" rel="noopener" data-cat="__其他">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/had/haf/422090897227806.jpg" alt="Advent 女寬直筒褲" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.6%</div><div class="deal-tag">精選優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">Advent 女寬直筒褲</p>
+    <div class="card-price">
+      <span class="orig">$429</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$319</span>
+    </div>
+    <p class="card-save">省 $110</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Food-Dining/Snacks/Nuts-Jerky/Hoodys-Harvest-Grove-Trail-Mix-907-g/p/1056107" target="_blank" rel="noopener" data-cat="__其他">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/hf1/hd2/65765251252254.jpg" alt="Hoody's 精緻果乾混綜合果仁 907公克" loading="lazy" onerror="this.style.display='none'"><div class="badge">-22.8%</div><div class="deal-tag">精選優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">Hoody's 精緻果乾混綜合果仁 907公克</p>
+    <div class="card-price">
+      <span class="orig">$439</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$339</span>
+    </div>
+    <p class="card-save">省 $100</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Food-Dining/Drinks/Coffee/SIP-Perfect-Coconut-Latte-16-g-X-50-Pack/p/149178" target="_blank" rel="noopener" data-cat="__其他">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/hd4/h20/281048026120222.jpg" alt="益昌 生椰拿鐵 16公克 X 50入" loading="lazy" onerror="this.style.display='none'"><div class="badge">-30.4%</div><div class="deal-tag">精選優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">益昌 生椰拿鐵 16公克 X 50入</p>
+    <div class="card-price">
+      <span class="orig">$329</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$229</span>
+    </div>
+    <p class="card-save">省 $100</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Food-Dining/Snacks/Cookies-Chips/Glico-Bisco-Lactobacillus-Cream-Biscuits-Large-Assorted-Pack-200-Piece/p/231119" target="_blank" rel="noopener" data-cat="__其他">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h21/h0c/381454968422430.jpg" alt="格力高 綜合乳酸菌夾心餅 200片" loading="lazy" onerror="this.style.display='none'"><div class="badge">-22.6%</div><div class="deal-tag">限時優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">格力高 綜合乳酸菌夾心餅 200片</p>
+    <div class="card-price">
+      <span class="orig">$399</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$309</span>
+    </div>
+    <p class="card-save">省 $90</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Food-Dining/Drinks/Beverages-Juice/Tree-Top-Sparkling-Orange-320ml-X-24-Can/p/149152" target="_blank" rel="noopener" data-cat="__其他">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/hd9/h28/365472246136862.jpg" alt="Tree Top 樹頂 柳橙氣泡飲 320毫升 X 24入" loading="lazy" onerror="this.style.display='none'"><div class="badge">-22.0%</div><div class="deal-tag">精選優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">Tree Top 樹頂 柳橙氣泡飲 320毫升 X 24入</p>
+    <div class="card-price">
+      <span class="orig">$409</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$319</span>
+    </div>
+    <p class="card-save">省 $90</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Food-Dining/Drinks/Beverages-Juice/KOH-COCONUT-100-Pure-Coconut-Water-1-L-X-6-Count/p/75130" target="_blank" rel="noopener" data-cat="__其他">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h28/hd0/102276188930078.jpg" alt="KOH COCONUT 純椰子汁 1公升 X 6入" loading="lazy" onerror="this.style.display='none'"><div class="badge">-21.1%</div><div class="deal-tag">限時優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">KOH COCONUT 純椰子汁 1公升 X 6入</p>
+    <div class="card-price">
+      <span class="orig">$379</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$299</span>
+    </div>
+    <p class="card-save">省 $80</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Food-Dining/Snacks/Cookies-Chips/Shu-Shin-Bou-Stuffed-Egg-Roll-480-g/p/144711" target="_blank" rel="noopener" data-cat="__其他">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h65/ha3/238305963311134.jpg" alt="手信坊 含餡蛋捲禮盒 480公克" loading="lazy" onerror="this.style.display='none'"><div class="badge">-24.2%</div><div class="deal-tag">精選優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">手信坊 含餡蛋捲禮盒 480公克</p>
+    <div class="card-price">
+      <span class="orig">$289</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$219</span>
+    </div>
+    <p class="card-save">省 $70</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Food-Dining/Groceries/Baking-Dried-Goods/ARM-HAMMER-Pure-Baking-Soda-612-kg/p/488431" target="_blank" rel="noopener" data-cat="__其他">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h3b/ha1/188147730710558.jpg" alt="ARM & HAMMER 多功能小蘇打粉 6.12公斤" loading="lazy" onerror="this.style.display='none'"><div class="badge">-21.0%</div><div class="deal-tag">精選優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">ARM & HAMMER 多功能小蘇打粉 6.12公斤</p>
+    <div class="card-price">
+      <span class="orig">$305</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$241</span>
+    </div>
+    <p class="card-save">省 $64</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Food-Dining/Snacks/Cookies-Chips/Cadina-95-Crispy-Mixed-Sweet-Potato-38-g-X-16-Pack/p/132366" target="_blank" rel="noopener" data-cat="__其他">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h07/h8b/332150384918558.jpg" alt="卡迪那 95℃ 鮮脆三色丁 38公克 X 16入" loading="lazy" onerror="this.style.display='none'"><div class="badge">-23.5%</div><div class="deal-tag">限時優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">卡迪那 95℃ 鮮脆三色丁 38公克 X 16入</p>
+    <div class="card-price">
+      <span class="orig">$255</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$195</span>
+    </div>
+    <p class="card-save">省 $60</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Food-Dining/Snacks/Candies-Chocolates/SHJ-DrQ-Konjac-Grape-and-Strawberry-Jelly-186-kg/p/123003" target="_blank" rel="noopener" data-cat="__其他">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h5b/h55/13692449161246.jpg" alt="盛香珍 Dr.Q 葡萄草莓蒟蒻果凍 1.86公斤" loading="lazy" onerror="this.style.display='none'"><div class="badge">-22.3%</div><div class="deal-tag">限時優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">盛香珍 Dr.Q 葡萄草莓蒟蒻果凍 1.86公斤</p>
+    <div class="card-price">
+      <span class="orig">$269</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$209</span>
+    </div>
+    <p class="card-save">省 $60</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Food-Dining/Snacks/Cookies-Chips/Nomura-Mire-Biscuit-70g-X-10-Pack/p/145475" target="_blank" rel="noopener" data-cat="__其他">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h28/h02/274514921947166.jpg" alt="野村煎豆 美樂圓餅 70公克 X 10袋" loading="lazy" onerror="this.style.display='none'"><div class="badge">-22.3%</div><div class="deal-tag">精選優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">野村煎豆 美樂圓餅 70公克 X 10袋</p>
+    <div class="card-price">
+      <span class="orig">$269</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$209</span>
+    </div>
+    <p class="card-save">省 $60</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Household-Baby-Toys/p/73655" target="_blank" rel="noopener" data-cat="__其他">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/hdb/h5a/223927011901470.jpg" alt="威滅滅蟑隊-s" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.1%</div><div class="deal-tag">精選優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">威滅滅蟑隊-s</p>
+    <div class="card-price">
+      <span class="orig">$239</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$179</span>
+    </div>
+    <p class="card-save">省 $60</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Food-Dining/Drinks/Beverages-Juice/Vitali-Vitamin-Soda-330-ml-X-24-Count/p/141523" target="_blank" rel="noopener" data-cat="__其他">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h24/h5b/172356639883294.jpg" alt="維大力 汽水 330毫升 X 24入" loading="lazy" onerror="this.style.display='none'"><div class="badge">-18.6%</div><div class="deal-tag">精選優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">維大力 汽水 330毫升 X 24入</p>
+    <div class="card-price">
+      <span class="orig">$269</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$219</span>
+    </div>
+    <p class="card-save">省 $50</p>
+    
+  </div>
+</a>
+<a class="card" href="https://www.costco.com.tw/Food-Dining/Snacks/Cookies-Chips/Ruffles-Chicken-Soup-Flavored-Potato-Chips-580-g/p/123855" target="_blank" rel="noopener" data-cat="__其他">
+  <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/hab/he5/69511100629022.jpg" alt="波樂 雞汁口味厚切洋芋片 580公克" loading="lazy" onerror="this.style.display='none'"><div class="badge">-22.3%</div><div class="deal-tag">限時優惠</div></div>
+  <div class="card-body">
+    <p class="card-name">波樂 雞汁口味厚切洋芋片 580公克</p>
+    <div class="card-price">
+      <span class="orig">$179</span>
+      <span class='arrow'>→</span>
+      <span class="sale">$139</span>
+    </div>
+    <p class="card-save">省 $40</p>
+    
+  </div>
+</a>
+  </div>
+  <div class="empty" id="empty">😢 找不到符合的商品</div>
+</main>
+
+<footer>
+  🤖 Hermes Agent 自動整理｜資料來源：costco.com.tw｜更新：2026-06-11 13:59
+</footer>
+
+<script>
+let currentCat = 'all';
+let currentSearch = '';
+
+function filterCat(cat) {
+  currentCat = cat;
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  event.target.classList.add('active');
+  applyFilter();
+}
+
+function doSearch(val) {
+  currentSearch = val.trim().toLowerCase();
+  applyFilter();
+}
+
+function applyFilter() {
+  const cards = document.querySelectorAll('.card');
+  let visible = 0;
+  cards.forEach(card => {
+    const matchCat = currentCat === 'all' || card.dataset.cat === currentCat;
+    const matchSearch = !currentSearch || card.querySelector('.card-name').textContent.toLowerCase().includes(currentSearch);
+    const show = matchCat && matchSearch;
+    card.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+  document.getElementById('empty').style.display = visible === 0 ? 'block' : 'none';
+}
+</script>
+</body>
+</html>
