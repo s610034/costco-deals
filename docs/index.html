@@ -13,7 +13,8 @@ header{background:var(--red);color:#fff;padding:14px 16px 0;position:sticky;top:
 header h1{font-size:1.1rem;font-weight:700}
 header .meta{font-size:.72rem;opacity:.85}
 header .total{background:rgba(255,255,255,.2);border-radius:20px;padding:2px 10px;font-size:.72rem;font-weight:600;margin-left:auto}
-/* Header 篩選標籤 */
+header .login-btn{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.4);color:#fff;border-radius:20px;padding:3px 10px;font-size:.7rem;cursor:pointer;margin-left:8px}
+header .login-btn.logged-in{background:rgba(255,255,255,.3);border-color:rgba(255,255,255,.6)}
 .header-filters{display:flex;gap:6px;margin-top:10px;overflow-x:auto;padding-bottom:10px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 .header-filters::-webkit-scrollbar{display:none}
 .hf-btn{flex-shrink:0;border:none;border-radius:20px;padding:5px 13px;font-size:.75rem;font-weight:700;cursor:pointer;transition:all .2s;white-space:nowrap}
@@ -22,17 +23,14 @@ header .total{background:rgba(255,255,255,.2);border-radius:20px;padding:2px 10p
 .hf-hot{background:rgba(255,200,0,.3);color:#fff}.hf-hot.active{background:#fef9c3;color:#854d0e}
 .hf-coup{background:rgba(99,102,241,.3);color:#fff}.hf-coup.active{background:#e0e7ff;color:#4338ca}
 .hf-both{background:rgba(239,68,68,.3);color:#fff}.hf-both.active{background:#fee2e2;color:#b91c1c}
-/* 分類 Tabs */
 .tabs-wrap{background:#fff;border-bottom:2px solid var(--border);overflow-x:auto;white-space:nowrap;scrollbar-width:thin;scrollbar-color:var(--border) transparent;-webkit-overflow-scrolling:touch;padding:0 4px}
 .tabs-wrap::-webkit-scrollbar{height:3px}.tabs-wrap::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
 .tab{display:inline-block;padding:10px 12px;font-size:.78rem;font-weight:600;color:var(--sub);border:none;background:none;border-bottom:3px solid transparent;cursor:pointer;transition:all .2s;white-space:nowrap}
 .tab:hover,.tab.active{color:var(--red);border-bottom-color:var(--red)}
 .tab-count{background:var(--border);border-radius:20px;padding:1px 5px;font-size:.65rem;margin-left:2px}.tab.active .tab-count{background:var(--red);color:#fff}
-/* Search */
 .search-wrap{padding:10px 16px;background:#fff;border-bottom:1px solid var(--border)}
 .search-wrap input{width:100%;padding:8px 14px;border:1.5px solid var(--border);border-radius:24px;font-size:.88rem;outline:none;transition:border .2s}
 .search-wrap input:focus{border-color:var(--red)}
-/* Grid & Cards */
 main{padding:12px;max-width:960px;margin:0 auto}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:10px}
 .empty{text-align:center;padding:48px 16px;color:var(--sub);font-size:.9rem;display:none}
@@ -54,8 +52,10 @@ main{padding:12px;max-width:960px;margin:0 auto}
 .card-save{font-size:.72rem;color:var(--orange);font-weight:600}
 .history{font-size:.65rem;color:var(--sub);margin-top:2px}
 .cat-badge{display:inline-block;font-size:.6rem;background:#e0f2fe;color:#0369a1;padding:1px 6px;border-radius:10px;margin-top:2px}
-.change-cat-btn{position:absolute;bottom:6px;right:6px;border:none;background:transparent;font-size:.75rem;cursor:pointer;opacity:.35;padding:2px;line-height:1}
-.change-cat-btn:hover{opacity:1}
+/* 編輯按鈕：預設隱藏，登入後才顯示 */
+.change-cat-btn{position:absolute;bottom:6px;right:6px;border:none;background:transparent;font-size:.75rem;cursor:pointer;opacity:0;pointer-events:none;padding:2px;line-height:1;transition:opacity .2s}
+body.editor-mode .change-cat-btn{opacity:.35;pointer-events:auto}
+body.editor-mode .change-cat-btn:hover{opacity:1}
 /* Modal */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;align-items:flex-end;justify-content:center}
 .modal-overlay.open{display:flex}
@@ -67,6 +67,13 @@ main{padding:12px;max-width:960px;margin:0 auto}
 .modal-cat-btn:hover{border-color:var(--red);color:var(--red)}
 .modal-cat-btn.selected{border-color:var(--red);background:#fff0f0;color:var(--red);font-weight:700}
 .modal-cancel{width:100%;padding:12px;border:none;background:var(--bg);border-radius:10px;font-size:.9rem;cursor:pointer;font-weight:600;color:var(--sub)}
+/* 登入 Modal */
+.login-modal{background:#fff;border-radius:20px;width:90%;max-width:320px;padding:24px;margin:auto}
+.login-modal h3{font-size:1rem;font-weight:700;margin-bottom:16px;text-align:center}
+.login-modal input{width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:.9rem;outline:none;margin-bottom:12px}
+.login-modal input:focus{border-color:var(--red)}
+.login-modal .login-submit{width:100%;padding:12px;background:var(--red);color:#fff;border:none;border-radius:10px;font-size:.9rem;font-weight:700;cursor:pointer}
+.login-modal .login-error{color:#dc2626;font-size:.78rem;text-align:center;margin-top:8px;display:none}
 footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
 @media(max-width:380px){.grid{grid-template-columns:repeat(2,1fr);gap:8px}}
 @media(min-width:600px){.grid{grid-template-columns:repeat(auto-fill,minmax(175px,1fr))}.modal{border-radius:20px;margin-bottom:20px}}
@@ -78,6 +85,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
     <h1>🛒 好市多折扣週報</h1>
     <span class="meta">📅 2026/06/12（06/08～06/14）</span>
     <span class="total">共 95 項</span>
+    <button class="login-btn" id="loginToggleBtn" onclick="toggleLogin()">🔐 登入</button>
   </div>
   <div class="header-filters">
   <button class="hf-btn hf-all active" onclick="dealFilter('all',this)">全部 <span>95</span></button>
@@ -118,7 +126,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_h_3_Flavors_80_g_X_24_Count_p_95452','__寵物用品','貓倍麗 貓罐頭三種口味 80公克 X 24入')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_h_3_Flavors_80_g_X_24_Count_p_95452','__寵物用品','貓倍麗 貓罐頭三種口味 80公克 X 24入','https://www.costco.com.tw/c/Mon-Petit-Canned-Cat-Food-with-3-Flavors-80-g-X-24-Count/p/95452')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_t_Litter_476_kg_X_4_Count_p_1529177" data-cat="__寵物用品" data-deal="coupon">
   <a href="https://www.costco.com.tw/c/Scoop-Away-Complete-Performance-Plus-Cat-Litter-476-kg-X-4-Count/p/1529177" target="_blank" rel="noopener" class="card-link">
@@ -134,7 +142,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_t_Litter_476_kg_X_4_Count_p_1529177','__寵物用品','Scoop Away 超凝結貓砂 4.76公斤 X 4入')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_t_Litter_476_kg_X_4_Count_p_1529177','__寵物用品','Scoop Away 超凝結貓砂 4.76公斤 X 4入','https://www.costco.com.tw/c/Scoop-Away-Complete-Performance-Plus-Cat-Litter-476-kg-X-4-Count/p/1529177')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_ter_Original_5_L_X_6_Count_p_121647" data-cat="__寵物用品" data-deal="coupon">
   <a href="https://www.costco.com.tw/c/Purreland-Tofu-Cat-Litter-Original-5-L-X-6-Count/p/121647" target="_blank" rel="noopener" class="card-link">
@@ -150,7 +158,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_ter_Original_5_L_X_6_Count_p_121647','__寵物用品','PurreLand 倍淨豆腐貓砂 原味 5公升 X 6入')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_ter_Original_5_L_X_6_Count_p_121647','__寵物用品','PurreLand 倍淨豆腐貓砂 原味 5公升 X 6入','https://www.costco.com.tw/c/Purreland-Tofu-Cat-Litter-Original-5-L-X-6-Count/p/121647')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_sule_60_Capsule_X_2_Bottle_p_125360" data-cat="__食品飲料" data-deal="hotbuys">
   <a href="https://www.costco.com.tw/Health-Beauty/Supplements/Supplements-Digestive-Support/BLACKMORES-OMEGA-DHA-Fish-Oil-120-Capsule-60-Capsule-X-2-Bottle/p/125360" target="_blank" rel="noopener" class="card-link">
@@ -166,7 +174,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_sule_60_Capsule_X_2_Bottle_p_125360','__食品飲料','澳佳寶 DHA精粹濃縮深海魚油膠囊 120顆 (60顆 X 2瓶)')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_sule_60_Capsule_X_2_Bottle_p_125360','__食品飲料','澳佳寶 DHA精粹濃縮深海魚油膠囊 120顆 (60顆 X 2瓶)','https://www.costco.com.tw/Health-Beauty/Supplements/Supplements-Digestive-Support/BLACKMORES-OMEGA-DHA-Fish-Oil-120-Capsule-60-Capsule-X-2-Bottle/p/125360')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_ence_Drink_25_ml_X_30_Pack_p_142927" data-cat="__食品飲料" data-deal="hotbuys">
   <a href="https://www.costco.com.tw/Health-Beauty/Supplements/Bone-Joint-Support/Move-Free-Glucosamine-6-in-1-Essence-Drink-25-ml-X-30-Pack/p/142927" target="_blank" rel="noopener" class="card-link">
@@ -182,7 +190,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_ence_Drink_25_ml_X_30_Pack_p_142927','__食品飲料','益節 葡萄糖胺六合一精華飲 25毫升 X 30包')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_ence_Drink_25_ml_X_30_Pack_p_142927','__食品飲料','益節 葡萄糖胺六合一精華飲 25毫升 X 30包','https://www.costco.com.tw/Health-Beauty/Supplements/Bone-Joint-Support/Move-Free-Glucosamine-6-in-1-Essence-Drink-25-ml-X-30-Pack/p/142927')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_eafood_Shrimp_Pancake_2_kg_p_247284" data-cat="__食品飲料" data-deal="coupon">
   <a href="https://www.costco.com.tw/Food-Dining/Frozen-Fresh-Food/Frozen-Meals/Hong-Yu-Frozen-Seafood-Shrimp-Pancake-2-kg/p/247284" target="_blank" rel="noopener" class="card-link">
@@ -198,7 +206,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_eafood_Shrimp_Pancake_2_kg_p_247284','__食品飲料','宏裕行 冷凍海鮮蝦餅 2公斤')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_eafood_Shrimp_Pancake_2_kg_p_247284','__食品飲料','宏裕行 冷凍海鮮蝦餅 2公斤','https://www.costco.com.tw/Food-Dining/Frozen-Fresh-Food/Frozen-Meals/Hong-Yu-Frozen-Seafood-Shrimp-Pancake-2-kg/p/247284')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_ntial_Probiotic_120_Capsule_p_97716" data-cat="__食品飲料" data-deal="hotbuys">
   <a href="https://www.costco.com.tw/Health-Beauty/Supplements/Supplements-Digestive-Support/MeridLife-Essential-Probiotic-120-Capsule/p/97716" target="_blank" rel="noopener" class="card-link">
@@ -214,7 +222,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_ntial_Probiotic_120_Capsule_p_97716','__食品飲料','樂益活 菌護® 保健益生菌 食品 120顆')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_ntial_Probiotic_120_Capsule_p_97716','__食品飲料','樂益活 菌護® 保健益生菌 食品 120顆','https://www.costco.com.tw/Health-Beauty/Supplements/Supplements-Digestive-Support/MeridLife-Essential-Probiotic-120-Capsule/p/97716')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_d_Whole_Bean_Coffee_113_kg_p_648080" data-cat="__食品飲料" data-deal="coupon">
   <a href="https://www.costco.com.tw/c/Starbucks-Veranda-Blend-Whole-Bean-Coffee-113-kg/p/648080" target="_blank" rel="noopener" class="card-link">
@@ -230,7 +238,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_d_Whole_Bean_Coffee_113_kg_p_648080','__食品飲料','星巴克 黃金烘焙綜合咖啡豆 1.13公斤')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_d_Whole_Bean_Coffee_113_kg_p_648080','__食品飲料','星巴克 黃金烘焙綜合咖啡豆 1.13公斤','https://www.costco.com.tw/c/Starbucks-Veranda-Blend-Whole-Bean-Coffee-113-kg/p/648080')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_Jinxuan_Tea_300_g_X_2_Pack_p_210915" data-cat="__食品飲料" data-deal="coupon">
   <a href="https://www.costco.com.tw/Food-Dining/Drinks/Tea/Blossom-Jinxuan-Tea-300-g-X-2-Pack/p/210915" target="_blank" rel="noopener" class="card-link">
@@ -246,7 +254,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_Jinxuan_Tea_300_g_X_2_Pack_p_210915','__食品飲料','桂淳 金萱茶 300公克 X 2包')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_Jinxuan_Tea_300_g_X_2_Pack_p_210915','__食品飲料','桂淳 金萱茶 300公克 X 2包','https://www.costco.com.tw/Food-Dining/Drinks/Tea/Blossom-Jinxuan-Tea-300-g-X-2-Pack/p/210915')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_hirteen_Spices_Breast_5_kg_p_157706" data-cat="__食品飲料" data-deal="coupon">
   <a href="https://www.costco.com.tw/Food-Dining/Frozen-Fresh-Food/Frozen-Seafood-Meat/Dachan-Frozen-Sweet-Sauce-Boneless-Thigh-Thirteen-Spices-Breast-5-kg/p/157706" target="_blank" rel="noopener" class="card-link">
@@ -262,7 +270,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_hirteen_Spices_Breast_5_kg_p_157706','__食品飲料','大成 冷凍蜜汁去骨清雞腿與十三香清雞胸 5公斤')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_hirteen_Spices_Breast_5_kg_p_157706','__食品飲料','大成 冷凍蜜汁去骨清雞腿與十三香清雞胸 5公斤','https://www.costco.com.tw/Food-Dining/Frozen-Fresh-Food/Frozen-Seafood-Meat/Dachan-Frozen-Sweet-Sauce-Boneless-Thigh-Thirteen-Spices-Breast-5-kg/p/157706')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_fee_Latte_21_g_X_100_Count_p_109399" data-cat="__食品飲料" data-deal="hotbuys">
   <a href="https://www.costco.com.tw/Food-Dining/Drinks/Coffee/Barista-2-In-1-Instant-Coffee-Latte-21-g-X-100-Count/p/109399" target="_blank" rel="noopener" class="card-link">
@@ -278,7 +286,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_fee_Latte_21_g_X_100_Count_p_109399','__食品飲料','西雅圖二合一咖啡 21公克 X 100入')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_fee_Latte_21_g_X_100_Count_p_109399','__食品飲料','西雅圖二合一咖啡 21公克 X 100入','https://www.costco.com.tw/Food-Dining/Drinks/Coffee/Barista-2-In-1-Instant-Coffee-Latte-21-g-X-100-Count/p/109399')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_rip_Coffee_12_g_X_50_Count_p_101940" data-cat="__食品飲料" data-deal="hotbuys">
   <a href="https://www.costco.com.tw/Food-Dining/Drinks/Coffee/Barista-Premium-Roast-Drip-Coffee-12-g-X-50-Count/p/101940" target="_blank" rel="noopener" class="card-link">
@@ -294,7 +302,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_rip_Coffee_12_g_X_50_Count_p_101940','__食品飲料','西雅圖 極品嚴焙大濾掛咖啡 12公克 X 50入')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_rip_Coffee_12_g_X_50_Count_p_101940','__食品飲料','西雅圖 極品嚴焙大濾掛咖啡 12公克 X 50入','https://www.costco.com.tw/Food-Dining/Drinks/Coffee/Barista-Premium-Roast-Drip-Coffee-12-g-X-50-Count/p/101940')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_Drip_Coffee_11_g_X_50_Count_p_37742" data-cat="__食品飲料" data-deal="hotbuys">
   <a href="https://www.costco.com.tw/Food-Dining/Drinks/Coffee/One-Fresh-Cup-Brazil-Cerrado-Drip-Coffee-11-g-X-50-Count/p/37742" target="_blank" rel="noopener" class="card-link">
@@ -310,7 +318,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_Drip_Coffee_11_g_X_50_Count_p_37742','__食品飲料','鮮一杯 巴西喜拉朵濾掛咖啡 11公克 X 50入')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_Drip_Coffee_11_g_X_50_Count_p_37742','__食品飲料','鮮一杯 巴西喜拉朵濾掛咖啡 11公克 X 50入','https://www.costco.com.tw/Food-Dining/Drinks/Coffee/One-Fresh-Cup-Brazil-Cerrado-Drip-Coffee-11-g-X-50-Count/p/37742')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_Cappuccino_30_g_X_80_Count_p_274199" data-cat="__食品飲料" data-deal="hotbuys">
   <a href="https://www.costco.com.tw/Food-Dining/Drinks/Coffee/Darling-White-Coffee-Cappuccino-30-g-X-80-Count/p/274199" target="_blank" rel="noopener" class="card-link">
@@ -326,7 +334,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_Cappuccino_30_g_X_80_Count_p_274199','__食品飲料','親愛的白咖啡 - 卡布奇諾 30公克 X 80入')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_Cappuccino_30_g_X_80_Count_p_274199','__食品飲料','親愛的白咖啡 - 卡布奇諾 30公克 X 80入','https://www.costco.com.tw/Food-Dining/Drinks/Coffee/Darling-White-Coffee-Cappuccino-30-g-X-80-Count/p/274199')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_red_Milk_200_ml_X_24_Count_p_298723" data-cat="__食品飲料" data-deal="hotbuys">
   <a href="https://www.costco.com.tw/Food-Dining/Drinks/Beverages-Juice/Binggrae-Melon-Flavored-Milk-200-ml-X-24-Count/p/298723" target="_blank" rel="noopener" class="card-link">
@@ -342,7 +350,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_red_Milk_200_ml_X_24_Count_p_298723','__食品飲料','Binggrae 哈密瓜牛奶 保久調味乳 200毫升 X 24入')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_red_Milk_200_ml_X_24_Count_p_298723','__食品飲料','Binggrae 哈密瓜牛奶 保久調味乳 200毫升 X 24入','https://www.costco.com.tw/Food-Dining/Drinks/Beverages-Juice/Binggrae-Melon-Flavored-Milk-200-ml-X-24-Count/p/298723')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_lk_Drink_200_ml_X_24_Count_p_298724" data-cat="__食品飲料" data-deal="hotbuys">
   <a href="https://www.costco.com.tw/Food-Dining/Drinks/Beverages-Juice/Binggrae-Chestnut-Flavored-Milk-Drink-200-ml-X-24-Count/p/298724" target="_blank" rel="noopener" class="card-link">
@@ -358,7 +366,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_lk_Drink_200_ml_X_24_Count_p_298724','__食品飲料','Binggrae 栗子牛奶 保久調味乳 200毫升 X 24入')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_lk_Drink_200_ml_X_24_Count_p_298724','__食品飲料','Binggrae 栗子牛奶 保久調味乳 200毫升 X 24入','https://www.costco.com.tw/Food-Dining/Drinks/Beverages-Juice/Binggrae-Chestnut-Flavored-Milk-Drink-200-ml-X-24-Count/p/298724')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_hicken_Breast_Strips_17_kg_p_153647" data-cat="__食品飲料" data-deal="coupon">
   <a href="https://www.costco.com.tw/Food-Dining/Frozen-Fresh-Food/Frozen-Meals/Dachan-Frozen-Original-Fried-Chicken-Breast-Strips-17-kg/p/153647" target="_blank" rel="noopener" class="card-link">
@@ -374,7 +382,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_hicken_Breast_Strips_17_kg_p_153647','__食品飲料','大成 冷凍香酥原味炸雞柳 1.7公斤')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_hicken_Breast_Strips_17_kg_p_153647','__食品飲料','大成 冷凍香酥原味炸雞柳 1.7公斤','https://www.costco.com.tw/Food-Dining/Frozen-Fresh-Food/Frozen-Meals/Dachan-Frozen-Original-Fried-Chicken-Breast-Strips-17-kg/p/153647')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_ce_Burger_195_g_X_10_Count_p_155717" data-cat="__食品飲料" data-deal="hotbuys">
   <a href="https://www.costco.com.tw/Food-Dining/Frozen-Fresh-Food/Frozen-Meals/Lao-Xie-Zhen-Frozen-Seafood-with-Cheese-Rice-Burger-195-g-X-10-Count/p/155717" target="_blank" rel="noopener" class="card-link">
@@ -390,7 +398,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_ce_Burger_195_g_X_10_Count_p_155717','__食品飲料','老協珍 冷凍海鮮起司米漢堡 195公克 X 10入')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_ce_Burger_195_g_X_10_Count_p_155717','__食品飲料','老協珍 冷凍海鮮起司米漢堡 195公克 X 10入','https://www.costco.com.tw/Food-Dining/Frozen-Fresh-Food/Frozen-Meals/Lao-Xie-Zhen-Frozen-Seafood-with-Cheese-Rice-Burger-195-g-X-10-Count/p/155717')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_obster_Bisque_1_L_X_2_Pack_p_150603" data-cat="__食品飲料" data-deal="coupon">
   <a href="https://www.costco.com.tw/Food-Dining/Groceries/Canned-Prepared-Food/Heinz-Lobster-Bisque-1-L-X-2-Pack/p/150603" target="_blank" rel="noopener" class="card-link">
@@ -406,7 +414,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_obster_Bisque_1_L_X_2_Pack_p_150603','__食品飲料','亨氏 法式龍蝦濃湯 1公升 X 2入')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_obster_Bisque_1_L_X_2_Pack_p_150603','__食品飲料','亨氏 法式龍蝦濃湯 1公升 X 2入','https://www.costco.com.tw/Food-Dining/Groceries/Canned-Prepared-Food/Heinz-Lobster-Bisque-1-L-X-2-Pack/p/150603')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_owder_Soup_169_g_X_32_Pack_p_157484" data-cat="__食品飲料" data-deal="hotbuys">
   <a href="https://www.costco.com.tw/Food-Dining/Groceries/Baking-Dried-Goods/VONO-Potato-Clam-Chowder-Soup-169-g-X-32-Pack/p/157484" target="_blank" rel="noopener" class="card-link">
@@ -422,7 +430,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_owder_Soup_169_g_X_32_Pack_p_157484','__食品飲料','VONO 馬鈴薯蛤蜊濃湯 16.9公克 X 32包')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_owder_Soup_169_g_X_32_Pack_p_157484','__食品飲料','VONO 馬鈴薯蛤蜊濃湯 16.9公克 X 32包','https://www.costco.com.tw/Food-Dining/Groceries/Baking-Dried-Goods/VONO-Potato-Clam-Chowder-Soup-169-g-X-32-Pack/p/157484')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_ereal_Bar_235_g_X_32_Count_p_227818" data-cat="__食品飲料" data-deal="hotbuys">
   <a href="https://www.costco.com.tw/Food-Dining/Snacks/Nuts-Jerky/Nestle-Fitness-Red-Berries-Cranberry-Milk-Cereal-Bar-235-g-X-32-Count/p/227818" target="_blank" rel="noopener" class="card-link">
@@ -438,7 +446,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_ereal_Bar_235_g_X_32_Count_p_227818','__食品飲料','雀巢纖怡 草莓穀物棒 & 蔓越莓牛奶穀物棒 23.5公克 X 32條')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_ereal_Bar_235_g_X_32_Count_p_227818','__食品飲料','雀巢纖怡 草莓穀物棒 & 蔓越莓牛奶穀物棒 23.5公克 X 32條','https://www.costco.com.tw/Food-Dining/Snacks/Nuts-Jerky/Nestle-Fitness-Red-Berries-Cranberry-Milk-Cereal-Bar-235-g-X-32-Count/p/227818')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_afood_Congee_40_g_X_30_Pack_p_96387" data-cat="__食品飲料" data-deal="coupon">
   <a href="https://www.costco.com.tw/Food-Dining/Groceries/Canned-Prepared-Food/Great-Day-Seafood-Congee-40-g-X-30-Pack/p/96387" target="_blank" rel="noopener" class="card-link">
@@ -454,7 +462,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_afood_Congee_40_g_X_30_Pack_p_96387','__食品飲料','得意的一天 干貝柴魚粥 40公克 X 30包')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_afood_Congee_40_g_X_30_Pack_p_96387','__食品飲料','得意的一天 干貝柴魚粥 40公克 X 30包','https://www.costco.com.tw/Food-Dining/Groceries/Canned-Prepared-Food/Great-Day-Seafood-Congee-40-g-X-30-Pack/p/96387')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_cily_Coffee_15_g_X_40_Pack_p_150636" data-cat="__食品飲料" data-deal="coupon">
   <a href="https://www.costco.com.tw/Food-Dining/Drinks/Coffee/Nescafe-Sicily-Coffee-15-g-X-40-Pack/p/150636" target="_blank" rel="noopener" class="card-link">
@@ -470,7 +478,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_cily_Coffee_15_g_X_40_Pack_p_150636','__食品飲料','雀巢 西西里風檸檬咖啡 15公克 X 40入')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_cily_Coffee_15_g_X_40_Pack_p_150636','__食品飲料','雀巢 西西里風檸檬咖啡 15公克 X 40入','https://www.costco.com.tw/Food-Dining/Drinks/Coffee/Nescafe-Sicily-Coffee-15-g-X-40-Pack/p/150636')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_eeds_Cereal_31_g_X_50_Pack_p_140611" data-cat="__食品飲料" data-deal="coupon">
   <a href="https://www.costco.com.tw/Food-Dining/Drinks/Powdered-Drink-Mix-Cereal-Oats/Quaker-Cold-Crunchy-Nut-Chia-Seeds-Cereal-31-g-X-50-Pack/p/140611" target="_blank" rel="noopener" class="card-link">
@@ -486,7 +494,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_eeds_Cereal_31_g_X_50_Pack_p_140611','__食品飲料','桂格 冰沖堅果脆麥片 奇亞籽酥片 & 堅果顆粒 31公克 X 50包')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_eeds_Cereal_31_g_X_50_Pack_p_140611','__食品飲料','桂格 冰沖堅果脆麥片 奇亞籽酥片 & 堅果顆粒 31公克 X 50包','https://www.costco.com.tw/Food-Dining/Drinks/Powdered-Drink-Mix-Cereal-Oats/Quaker-Cold-Crunchy-Nut-Chia-Seeds-Cereal-31-g-X-50-Pack/p/140611')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_amel_Flavor_30_g_X_40_Pack_p_146963" data-cat="__食品飲料" data-deal="coupon">
   <a href="https://www.costco.com.tw/Food-Dining/Drinks/Coffee/Barista-Iced-Latte-Caramel-Flavor-30-g-X-40-Pack/p/146963" target="_blank" rel="noopener" class="card-link">
@@ -502,7 +510,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_amel_Flavor_30_g_X_40_Pack_p_146963','__食品飲料','西雅圖 冰拿鐵 濃焦糖風味 30公克 X 40入')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_amel_Flavor_30_g_X_40_Pack_p_146963','__食品飲料','西雅圖 冰拿鐵 濃焦糖風味 30公克 X 40入','https://www.costco.com.tw/Food-Dining/Drinks/Coffee/Barista-Iced-Latte-Caramel-Flavor-30-g-X-40-Pack/p/146963')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_Lemon_Flavor_5_g_X_40_Pack_p_141460" data-cat="__食品飲料" data-deal="coupon">
   <a href="https://www.costco.com.tw/Food-Dining/Drinks/Tea/TEAZEN-Kombucha-Lemon-Flavor-5-g-X-40-Pack/p/141460" target="_blank" rel="noopener" class="card-link">
@@ -518,7 +526,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_Lemon_Flavor_5_g_X_40_Pack_p_141460','__食品飲料','TEAZEN 康普茶 檸檬口味 5公克 X 40包')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_Lemon_Flavor_5_g_X_40_Pack_p_141460','__食品飲料','TEAZEN 康普茶 檸檬口味 5公克 X 40包','https://www.costco.com.tw/Food-Dining/Drinks/Tea/TEAZEN-Kombucha-Lemon-Flavor-5-g-X-40-Pack/p/141460')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_ate_Biscuits_66_g_X_8_Pack_p_203565" data-cat="__食品飲料" data-deal="coupon">
   <a href="https://www.costco.com.tw/Food-Dining/Snacks/Candies-Chocolates/Meiji-Kinoko-Chocolate-Biscuits-66-g-X-8-Pack/p/203565" target="_blank" rel="noopener" class="card-link">
@@ -534,7 +542,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_ate_Biscuits_66_g_X_8_Pack_p_203565','__食品飲料','明治 香菇造型巧克力餅乾 66 公克 X 8盒')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_ate_Biscuits_66_g_X_8_Pack_p_203565','__食品飲料','明治 香菇造型巧克力餅乾 66 公克 X 8盒','https://www.costco.com.tw/Food-Dining/Snacks/Candies-Chocolates/Meiji-Kinoko-Chocolate-Biscuits-66-g-X-8-Pack/p/203565')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_ney_Milk_250_ml_X_24_Count_p_135879" data-cat="__食品飲料" data-deal="coupon">
   <a href="https://www.costco.com.tw/BeeTouched/BeeTouched-Honey-Milk-250-ml-X-24-Count/p/135879" target="_blank" rel="noopener" class="card-link">
@@ -550,7 +558,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_ney_Milk_250_ml_X_24_Count_p_135879','__食品飲料','蜜蜂工坊 蜂蜜牛奶 250毫升 X 24入')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_ney_Milk_250_ml_X_24_Count_p_135879','__食品飲料','蜜蜂工坊 蜂蜜牛奶 250毫升 X 24入','https://www.costco.com.tw/BeeTouched/BeeTouched-Honey-Milk-250-ml-X-24-Count/p/135879')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_ocoa_Flavor_30_g_X_20_Pack_p_263941" data-cat="__食品飲料" data-deal="coupon">
   <a href="https://www.costco.com.tw/Food-Dining/Snacks/Cookies-Chips/My-Motto-Premium-Wafers-Cocoa-Cocoa-Flavor-30-g-X-20-Pack/p/263941" target="_blank" rel="noopener" class="card-link">
@@ -566,7 +574,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_ocoa_Flavor_30_g_X_20_Pack_p_263941','__食品飲料','My Motto 威化餅 雙重巧克力風味 30公克 X 20包')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_ocoa_Flavor_30_g_X_20_Pack_p_263941','__食品飲料','My Motto 威化餅 雙重巧克力風味 30公克 X 20包','https://www.costco.com.tw/Food-Dining/Snacks/Cookies-Chips/My-Motto-Premium-Wafers-Cocoa-Cocoa-Flavor-30-g-X-20-Pack/p/263941')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_sorted_Rice_Crackers_827_g_p_120108" data-cat="__食品飲料" data-deal="coupon">
   <a href="https://www.costco.com.tw/Food-Dining/Snacks/Cookies-Chips/Want-Want-Assorted-Rice-Crackers-827-g/p/120108" target="_blank" rel="noopener" class="card-link">
@@ -582,7 +590,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_sorted_Rice_Crackers_827_g_p_120108','__食品飲料','旺旺 嚴選米菓 827公克')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_sorted_Rice_Crackers_827_g_p_120108','__食品飲料','旺旺 嚴選米菓 827公克','https://www.costco.com.tw/Food-Dining/Snacks/Cookies-Chips/Want-Want-Assorted-Rice-Crackers-827-g/p/120108')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_y_Sharebox_150_g_X_10_Pack_p_555551" data-cat="__食品飲料" data-deal="coupon">
   <a href="https://www.costco.com.tw/Food-Dining/Snacks/Candies-Chocolates/KOPIKO-Coffee-Candy-Sharebox-150-g-X-10-Pack/p/555551" target="_blank" rel="noopener" class="card-link">
@@ -598,7 +606,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_y_Sharebox_150_g_X_10_Pack_p_555551','__食品飲料','KOPIKO 咖啡糖分享組 150公克 X 10包')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_y_Sharebox_150_g_X_10_Pack_p_555551','__食品飲料','KOPIKO 咖啡糖分享組 150公克 X 10包','https://www.costco.com.tw/Food-Dining/Snacks/Candies-Chocolates/KOPIKO-Coffee-Candy-Sharebox-150-g-X-10-Pack/p/555551')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c__Oatmeal_Mini_Bite_1000_g_p_1212068" data-cat="__食品飲料" data-deal="hotbuys">
   <a href="https://www.costco.com.tw/Food-Dining/Snacks/Candies-Chocolates/Richy-Oatmeal-Mini-Bite-1000-g/p/1212068" target="_blank" rel="noopener" class="card-link">
@@ -614,7 +622,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c__Oatmeal_Mini_Bite_1000_g_p_1212068','__食品飲料','Richy 瑞奇 迷你燕麥酥 1000公克')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c__Oatmeal_Mini_Bite_1000_g_p_1212068','__食品飲料','Richy 瑞奇 迷你燕麥酥 1000公克','https://www.costco.com.tw/Food-Dining/Snacks/Candies-Chocolates/Richy-Oatmeal-Mini-Bite-1000-g/p/1212068')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c__Calbee_Fruit_Granola_1_kg_p_216971" data-cat="__食品飲料" data-deal="hotbuys">
   <a href="https://www.costco.com.tw/c/Calbee-Fruit-Granola-1-kg/p/216971" target="_blank" rel="noopener" class="card-link">
@@ -630,7 +638,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c__Calbee_Fruit_Granola_1_kg_p_216971','__食品飲料','卡樂比 富果樂水果早餐麥片 1 公斤')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c__Calbee_Fruit_Granola_1_kg_p_216971','__食品飲料','卡樂比 富果樂水果早餐麥片 1 公斤','https://www.costco.com.tw/c/Calbee-Fruit-Granola-1-kg/p/216971')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_Salty_Kettle_Popcorn_652_g_p_979885" data-cat="__食品飲料" data-deal="coupon">
   <a href="https://www.costco.com.tw/Food-Dining/Snacks/Cookies-Chips/Angies-BoomChickaPop-Sweet-and-Salty-Kettle-Popcorn-652-g/p/979885" target="_blank" rel="noopener" class="card-link">
@@ -646,7 +654,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_Salty_Kettle_Popcorn_652_g_p_979885','__食品飲料','Angie\'s 鹹甜爆米花 652公克')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_Salty_Kettle_Popcorn_652_g_p_979885','__食品飲料','Angie\'s 鹹甜爆米花 652公克','https://www.costco.com.tw/Food-Dining/Snacks/Cookies-Chips/Angies-BoomChickaPop-Sweet-and-Salty-Kettle-Popcorn-652-g/p/979885')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c__Organic_Black_Bean_1500_g_p_208632" data-cat="__食品飲料" data-deal="coupon">
   <a href="https://www.costco.com.tw/Food-Dining/Groceries/Baking-Dried-Goods/Vilson-Organic-Black-Bean-1500-g/p/208632" target="_blank" rel="noopener" class="card-link">
@@ -662,7 +670,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c__Organic_Black_Bean_1500_g_p_208632','__食品飲料','米森 有機黑豆 1500公克')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c__Organic_Black_Bean_1500_g_p_208632','__食品飲料','米森 有機黑豆 1500公克','https://www.costco.com.tw/Food-Dining/Groceries/Baking-Dried-Goods/Vilson-Organic-Black-Bean-1500-g/p/208632')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_Milk_Tea_250_ml_X_24_Count_p_133087" data-cat="__食品飲料" data-deal="coupon">
   <a href="https://www.costco.com.tw/Food-Dining/Drinks/Tea/I-Mei-Milk-Tea-250-ml-X-24-Count/p/133087" target="_blank" rel="noopener" class="card-link">
@@ -678,7 +686,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_Milk_Tea_250_ml_X_24_Count_p_133087','__食品飲料','義美 厚絲絨奶茶 250毫升 X 24入')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_Milk_Tea_250_ml_X_24_Count_p_133087','__食品飲料','義美 厚絲絨奶茶 250毫升 X 24入','https://www.costco.com.tw/Food-Dining/Drinks/Tea/I-Mei-Milk-Tea-250-ml-X-24-Count/p/133087')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_rispiroll_Mocha_Flavor_1_kg_p_67643" data-cat="__食品飲料" data-deal="coupon">
   <a href="https://www.costco.com.tw/Food-Dining/Snacks/Cookies-Chips/New-Choice-Crispiroll-Mocha-Flavor-1-kg/p/67643" target="_blank" rel="noopener" class="card-link">
@@ -694,7 +702,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_rispiroll_Mocha_Flavor_1_kg_p_67643','__食品飲料','New Choice 摩卡咖啡脆捲 1公斤')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_rispiroll_Mocha_Flavor_1_kg_p_67643','__食品飲料','New Choice 摩卡咖啡脆捲 1公斤','https://www.costco.com.tw/Food-Dining/Snacks/Cookies-Chips/New-Choice-Crispiroll-Mocha-Flavor-1-kg/p/67643')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_North_Sea_Fish_Snacks_600_g_p_78623" data-cat="__食品飲料" data-deal="coupon">
   <a href="https://www.costco.com.tw/Food-Dining/Snacks/Nuts-Jerky/North-Sea-Fish-Snacks-600-g/p/78623" target="_blank" rel="noopener" class="card-link">
@@ -710,7 +718,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_North_Sea_Fish_Snacks_600_g_p_78623','__食品飲料','北海 鱈魚香絲 600公克')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_North_Sea_Fish_Snacks_600_g_p_78623','__食品飲料','北海 鱈魚香絲 600公克','https://www.costco.com.tw/Food-Dining/Snacks/Nuts-Jerky/North-Sea-Fish-Snacks-600-g/p/78623')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_iso_Soup_Less_Salt_36_Pack_p_156759" data-cat="__食品飲料" data-deal="coupon">
   <a href="https://www.costco.com.tw/Food-Dining/Groceries/Baking-Dried-Goods/Marukome-Miso-Soup-Less-Salt-36-Pack/p/156759" target="_blank" rel="noopener" class="card-link">
@@ -726,7 +734,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_iso_Soup_Less_Salt_36_Pack_p_156759','__食品飲料','丸米 減鹽綜合沖泡味噌湯 36入')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_iso_Soup_Less_Salt_36_Pack_p_156759','__食品飲料','丸米 減鹽綜合沖泡味噌湯 36入','https://www.costco.com.tw/Food-Dining/Groceries/Baking-Dried-Goods/Marukome-Miso-Soup-Less-Salt-36-Pack/p/156759')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_Seaweed_Potato_Chips_550_g_p_125733" data-cat="__食品飲料" data-deal="coupon">
   <a href="https://www.costco.com.tw/Food-Dining/Snacks/Cookies-Chips/Koikeya-Salt-Seaweed-Potato-Chips-550-g/p/125733" target="_blank" rel="noopener" class="card-link">
@@ -742,7 +750,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_Seaweed_Potato_Chips_550_g_p_125733','__食品飲料','湖池屋 和風海苔鹽厚切洋芋片 550公克')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_Seaweed_Potato_Chips_550_g_p_125733','__食品飲料','湖池屋 和風海苔鹽厚切洋芋片 550公克','https://www.costco.com.tw/Food-Dining/Snacks/Cookies-Chips/Koikeya-Salt-Seaweed-Potato-Chips-550-g/p/125733')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_eezer_Fridge_RT62N704HS9TW_p_126223" data-cat="__家電_3C" data-deal="coupon">
   <a href="https://www.costco.com.tw/Televisions-Appliances/Large-Appliances/Fridges-Freezers/Samsung-623-L-Top-Mount-Freezer-Fridge-RT62N704HS9TW/p/126223" target="_blank" rel="noopener" class="card-link">
@@ -758,7 +766,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_eezer_Fridge_RT62N704HS9TW_p_126223','__家電_3C','Samsung 623公升雙循環雙門冰箱 RT62N704HS9/TW')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_eezer_Fridge_RT62N704HS9TW_p_126223','__家電_3C','Samsung 623公升雙循環雙門冰箱 RT62N704HS9/TW','https://www.costco.com.tw/Televisions-Appliances/Large-Appliances/Fridges-Freezers/Samsung-623-L-Top-Mount-Freezer-Fridge-RT62N704HS9TW/p/126223')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_p_Load_Washer_WA80F13S5LTW_p_155133" data-cat="__家電_3C" data-deal="hotbuys">
   <a href="https://www.costco.com.tw/Televisions-Appliances/Large-Appliances/Washers-Dryers/Washer-Size-10-15-kg/Samsung-13-kg-AI-Top-Load-Washer-WA80F13S5LTW/p/155133" target="_blank" rel="noopener" class="card-link">
@@ -774,7 +782,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_p_Load_Washer_WA80F13S5LTW_p_155133','__家電_3C','Samsung 13公斤 AI 智慧控制直立洗衣機 WA80F13S5LTW')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_p_Load_Washer_WA80F13S5LTW_p_155133','__家電_3C','Samsung 13公斤 AI 智慧控制直立洗衣機 WA80F13S5LTW','https://www.costco.com.tw/Televisions-Appliances/Large-Appliances/Washers-Dryers/Washer-Size-10-15-kg/Samsung-13-kg-AI-Top-Load-Washer-WA80F13S5LTW/p/155133')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c__Air_Purifier_HPA5350WTWV1_p_157137" data-cat="__家電_3C" data-deal="hotbuys">
   <a href="https://www.costco.com.tw/Televisions-Appliances/Cooling-Heating-Air-Treatment/Air-Purifiers-Filters-Accessories/Honeywell-Air-Purifier-HPA5350WTWV1/p/157137" target="_blank" rel="noopener" class="card-link">
@@ -790,7 +798,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c__Air_Purifier_HPA5350WTWV1_p_157137','__家電_3C','Honeywell 淨味空氣清淨機 HPA5350WTWV1')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c__Air_Purifier_HPA5350WTWV1_p_157137','__家電_3C','Honeywell 淨味空氣清淨機 HPA5350WTWV1','https://www.costco.com.tw/Televisions-Appliances/Cooling-Heating-Air-Treatment/Air-Purifiers-Filters-Accessories/Honeywell-Air-Purifier-HPA5350WTWV1/p/157137')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_rushi_Rice_Cooker_NS_ZLF18_p_122731" data-cat="__家電_3C" data-deal="hotbuys">
   <a href="https://www.costco.com.tw/Televisions-Appliances/Kitchen-Appliances/Cookers-Oven-Microwaves-Food-Waste-Machine/Zojirushi-Rice-Cooker-NS-ZLF18/p/122731" target="_blank" rel="noopener" class="card-link">
@@ -806,7 +814,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_rushi_Rice_Cooker_NS_ZLF18_p_122731','__家電_3C','象印 黑金剛微電腦電子鍋 NS-ZLF18')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_rushi_Rice_Cooker_NS_ZLF18_p_122731','__家電_3C','象印 黑金剛微電腦電子鍋 NS-ZLF18','https://www.costco.com.tw/Televisions-Appliances/Kitchen-Appliances/Cookers-Oven-Microwaves-Food-Waste-Machine/Zojirushi-Rice-Cooker-NS-ZLF18/p/122731')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_fier_Bag_385_ml_X_15_Count_p_157762" data-cat="__家電_3C" data-deal="coupon">
   <a href="https://www.costco.com.tw/Household-Baby-Toys/Household-Essentials/Pest-Control-Air-Care/Farcent-Hanging-Dehumidifier-Bag-385-ml-X-15-Count/p/157762" target="_blank" rel="noopener" class="card-link">
@@ -822,7 +830,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_fier_Bag_385_ml_X_15_Count_p_157762','__家電_3C','克潮靈 吊掛式除濕袋 385毫升 X 15入')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_fier_Bag_385_ml_X_15_Count_p_157762','__家電_3C','克潮靈 吊掛式除濕袋 385毫升 X 15入','https://www.costco.com.tw/Household-Baby-Toys/Household-Essentials/Pest-Control-Air-Care/Farcent-Hanging-Dehumidifier-Bag-385-ml-X-15-Count/p/157762')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_rals_Vitamins_150_Softgels_p_335354" data-cat="__保健美妝" data-deal="hotbuys">
   <a href="https://www.costco.com.tw/Health-Beauty/Supplements/Supplements-Digestive-Support/Nature-Made-Lutein-20mg-with-Minerals-Vitamins-150-Softgels/p/335354" target="_blank" rel="noopener" class="card-link">
@@ -838,7 +846,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_rals_Vitamins_150_Softgels_p_335354','__保健美妝','Nature Made 萊萃美 葉黃素20毫克綜合軟膠囊 150粒')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_rals_Vitamins_150_Softgels_p_335354','__保健美妝','Nature Made 萊萃美 葉黃素20毫克綜合軟膠囊 150粒','https://www.costco.com.tw/Health-Beauty/Supplements/Supplements-Digestive-Support/Nature-Made-Lutein-20mg-with-Minerals-Vitamins-150-Softgels/p/335354')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_Collagen_Biotin_390_Tablet_p_554059" data-cat="__保健美妝" data-deal="coupon">
   <a href="https://www.costco.com.tw/Health-Beauty/Supplements/Multi-Letter-Vitamins/Youtheory-Collagen-Biotin-390-Tablet/p/554059" target="_blank" rel="noopener" class="card-link">
@@ -854,7 +862,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_Collagen_Biotin_390_Tablet_p_554059','__保健美妝','Youtheory 膠原蛋白生物素錠 390錠')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_Collagen_Biotin_390_Tablet_p_554059','__保健美妝','Youtheory 膠原蛋白生物素錠 390錠','https://www.costco.com.tw/Health-Beauty/Supplements/Multi-Letter-Vitamins/Youtheory-Collagen-Biotin-390-Tablet/p/554059')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_oo_Body_Wash_1000_ml_80_ml_p_133118" data-cat="__保健美妝" data-deal="hotbuys">
   <a href="https://www.costco.com.tw/Health-Beauty/Personal-Care/Shampoo-Conditioner/Aromase-5-Juniper-Head-To-Toe-Shampoo-Body-Wash-1000-ml-80-ml/p/133118" target="_blank" rel="noopener" class="card-link">
@@ -870,7 +878,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_oo_Body_Wash_1000_ml_80_ml_p_133118','__保健美妝','艾瑪絲 5α捷利爾洗髮沐浴露 Family 1000毫升 + 80毫升')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_oo_Body_Wash_1000_ml_80_ml_p_133118','__保健美妝','艾瑪絲 5α捷利爾洗髮沐浴露 Family 1000毫升 + 80毫升','https://www.costco.com.tw/Health-Beauty/Personal-Care/Shampoo-Conditioner/Aromase-5-Juniper-Head-To-Toe-Shampoo-Body-Wash-1000-ml-80-ml/p/133118')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_e_Ginger_and_Micellar_12_L_p_139521" data-cat="__保健美妝" data-deal="hotbuys">
   <a href="https://www.costco.com.tw/Health-Beauty/Personal-Care/Shampoo-Conditioner/Herbal-Essences-Shampoo-Blue-Ginger-and-Micellar-12-L/p/139521" target="_blank" rel="noopener" class="card-link">
@@ -886,7 +894,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_e_Ginger_and_Micellar_12_L_p_139521','__保健美妝','Herbal Essences 藍薑草本豐盈清香洗髮露 1.2公升')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_e_Ginger_and_Micellar_12_L_p_139521','__保健美妝','Herbal Essences 藍薑草本豐盈清香洗髮露 1.2公升','https://www.costco.com.tw/Health-Beauty/Personal-Care/Shampoo-Conditioner/Herbal-Essences-Shampoo-Blue-Ginger-and-Micellar-12-L/p/139521')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_Toothpaste_181_g_X_5_Pack_p_1285702" data-cat="__保健美妝" data-deal="hotbuys">
   <a href="https://www.costco.com.tw/Health-Beauty/Personal-Care/Oral-Care/Colgate-Advanced-Whitening-Toothpaste-181-g-X-5-Pack/p/1285702" target="_blank" rel="noopener" class="card-link">
@@ -902,7 +910,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_Toothpaste_181_g_X_5_Pack_p_1285702','__保健美妝','高露潔 全效潔白牙膏 181公克 X 5入')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_Toothpaste_181_g_X_5_Pack_p_1285702','__保健美妝','高露潔 全效潔白牙膏 181公克 X 5入','https://www.costco.com.tw/Health-Beauty/Personal-Care/Oral-Care/Colgate-Advanced-Whitening-Toothpaste-181-g-X-5-Pack/p/1285702')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_h_1000_ml_Citrus_Cedarwood_p_150878" data-cat="__保健美妝" data-deal="hotbuys">
   <a href="https://www.costco.com.tw/Health-Beauty/Personal-Care/Shampoo-Conditioner/Aromase-Herbal-Daily-Shampoo-Body-Wash-1000-ml-Citrus-Cedarwood/p/150878" target="_blank" rel="noopener" class="card-link">
@@ -918,7 +926,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_h_1000_ml_Citrus_Cedarwood_p_150878','__保健美妝','艾瑪絲 草本胺基酸每日健康洗髮沐浴露 1000毫升 清橙雪松')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_h_1000_ml_Citrus_Cedarwood_p_150878','__保健美妝','艾瑪絲 草本胺基酸每日健康洗髮沐浴露 1000毫升 清橙雪松','https://www.costco.com.tw/Health-Beauty/Personal-Care/Shampoo-Conditioner/Aromase-Herbal-Daily-Shampoo-Body-Wash-1000-ml-Citrus-Cedarwood/p/150878')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_in_Drink_300_ml_X_12_Count_p_136603" data-cat="__保健美妝" data-deal="hotbuys">
   <a href="https://www.costco.com.tw/Food-Dining/Drinks/Beverages-Juice/QUAKER-Black-Mixed-Grain-Drink-300-ml-X-12-Count/p/136603" target="_blank" rel="noopener" class="card-link">
@@ -934,7 +942,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_in_Drink_300_ml_X_12_Count_p_136603','__保健美妝','桂格 黑穀營養飲 300毫升 X 12罐')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_in_Drink_300_ml_X_12_Count_p_136603','__保健美妝','桂格 黑穀營養飲 300毫升 X 12罐','https://www.costco.com.tw/Food-Dining/Drinks/Beverages-Juice/QUAKER-Black-Mixed-Grain-Drink-300-ml-X-12-Count/p/136603')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c__Wipes_46_Sheet_X_32_Count_p_123333" data-cat="__生活用品" data-deal="coupon">
   <a href="https://www.costco.com.tw/Household-Baby-Toys/Household-Essentials/Toilet-Paper-Paper-Towels/Kleenex-Flushable-Wipes-46-Sheet-X-32-Count/p/123333" target="_blank" rel="noopener" class="card-link">
@@ -950,7 +958,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c__Wipes_46_Sheet_X_32_Count_p_123333','__生活用品','舒潔 濕式衛生紙 46張 X 32入')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c__Wipes_46_Sheet_X_32_Count_p_123333','__生活用品','舒潔 濕式衛生紙 46張 X 32入','https://www.costco.com.tw/Household-Baby-Toys/Household-Essentials/Toilet-Paper-Paper-Towels/Kleenex-Flushable-Wipes-46-Sheet-X-32-Count/p/123333')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_mbler_750_ml_X_2_Piece_Set_p_147551" data-cat="__生活用品" data-deal="hotbuys">
   <a href="https://www.costco.com.tw/Furniture-Kitchen/Kitchen-Dining/Water-Bottles/WOKY-Ceramic-Stainless-Steel-Travel-Tumbler-750-ml-X-2-Piece-Set/p/147551" target="_blank" rel="noopener" class="card-link">
@@ -966,7 +974,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_mbler_750_ml_X_2_Piece_Set_p_147551','__生活用品','WOKY 沃廚 渾圓杯雙層陶瓷保溫杯 750毫升 X 2件組')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_mbler_750_ml_X_2_Piece_Set_p_147551','__生活用品','WOKY 沃廚 渾圓杯雙層陶瓷保溫杯 750毫升 X 2件組','https://www.costco.com.tw/Furniture-Kitchen/Kitchen-Dining/Water-Bottles/WOKY-Ceramic-Stainless-Steel-Travel-Tumbler-750-ml-X-2-Piece-Set/p/147551')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_d_Laundry_Detergent_408_L_p_3160440" data-cat="__生活用品" data-deal="hotbuys">
   <a href="https://www.costco.com.tw/Household-Baby-Toys/Household-Essentials/Laundry-Care/Tide-Advanced-Power-OXI-Liquid-Laundry-Detergent-408-L/p/3160440" target="_blank" rel="noopener" class="card-link">
@@ -982,7 +990,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_d_Laundry_Detergent_408_L_p_3160440','__生活用品','汰漬 OXI亮白護色洗衣精 4.08公升')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_d_Laundry_Detergent_408_L_p_3160440','__生活用品','汰漬 OXI亮白護色洗衣精 4.08公升','https://www.costco.com.tw/Household-Baby-Toys/Household-Essentials/Laundry-Care/Tide-Advanced-Power-OXI-Liquid-Laundry-Detergent-408-L/p/3160440')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_e_Cleaner_177_L_X_2_Count_p_1805039" data-cat="__生活用品" data-deal="coupon">
   <a href="https://www.costco.com.tw/Household-Baby-Toys/Household-Essentials/Cleaning-Supplies/Pine-Sol-Multi-Surface-Cleaner-177-L-X-2-Count/p/1805039" target="_blank" rel="noopener" class="card-link">
@@ -998,7 +1006,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_e_Cleaner_177_L_X_2_Count_p_1805039','__生活用品','Pine-Sol 兩倍濃縮 松木香 多用途清潔劑 1.77公升 X 2入')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_e_Cleaner_177_L_X_2_Count_p_1805039','__生活用品','Pine-Sol 兩倍濃縮 松木香 多用途清潔劑 1.77公升 X 2入','https://www.costco.com.tw/Household-Baby-Toys/Household-Essentials/Cleaning-Supplies/Pine-Sol-Multi-Surface-Cleaner-177-L-X-2-Count/p/1805039')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_n_Towel_60_Sheet_X_16_Roll_p_127295" data-cat="__生活用品" data-deal="coupon">
   <a href="https://www.costco.com.tw/Household-Baby-Toys/Household-Essentials/Toilet-Paper-Paper-Towels/Kleenex-Viva-3-ply-Kitchen-Towel-60-Sheet-X-16-Roll/p/127295" target="_blank" rel="noopener" class="card-link">
@@ -1014,7 +1022,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_n_Towel_60_Sheet_X_16_Roll_p_127295','__生活用品','舒潔 Viva 三層廚房紙巾 60張 X 16卷')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_n_Towel_60_Sheet_X_16_Roll_p_127295','__生活用品','舒潔 Viva 三層廚房紙巾 60張 X 16卷','https://www.costco.com.tw/Household-Baby-Toys/Household-Essentials/Toilet-Paper-Paper-Towels/Kleenex-Viva-3-ply-Kitchen-Towel-60-Sheet-X-16-Roll/p/127295')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c__Ladies_Lightweight_Short_p_7771782" data-cat="__生活用品" data-deal="coupon">
   <a href="https://www.costco.com.tw/Clothing-Accessories/Womens-Clothing/Womens-Bottoms-Dresses/Kirkland-Signature-Ladies-Lightweight-Short/p/7771782" target="_blank" rel="noopener" class="card-link">
@@ -1030,7 +1038,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c__Ladies_Lightweight_Short_p_7771782','__生活用品','科克蘭 女輕量休閒短褲')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c__Ladies_Lightweight_Short_p_7771782','__生活用品','科克蘭 女輕量休閒短褲','https://www.costco.com.tw/Clothing-Accessories/Womens-Clothing/Womens-Bottoms-Dresses/Kirkland-Signature-Ladies-Lightweight-Short/p/7771782')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c__Shoes_Lacoste_Ladies_Shoe_p_154493" data-cat="__服飾寢具" data-deal="coupon">
   <a href="https://www.costco.com.tw/Clothing-Accessories/Shoes/Womens-Shoes/Lacoste-Ladies-Shoe/p/154493" target="_blank" rel="noopener" class="card-link">
@@ -1046,7 +1054,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c__Shoes_Lacoste_Ladies_Shoe_p_154493','__服飾寢具','Lacoste 女休閒鞋')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c__Shoes_Lacoste_Ladies_Shoe_p_154493','__服飾寢具','Lacoste 女休閒鞋','https://www.costco.com.tw/Clothing-Accessories/Shoes/Womens-Shoes/Lacoste-Ladies-Shoe/p/154493')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_didas_Runvista_Womens_Shoe_p_154454" data-cat="__服飾寢具" data-deal="coupon">
   <a href="https://www.costco.com.tw/Clothing-Accessories/Shoes/Womens-Shoes/Adidas-Runvista-Womens-Shoe/p/154454" target="_blank" rel="noopener" class="card-link">
@@ -1062,7 +1070,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_didas_Runvista_Womens_Shoe_p_154454','__服飾寢具','Adidas 女運動休閒鞋')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_didas_Runvista_Womens_Shoe_p_154454','__服飾寢具','Adidas 女運動休閒鞋','https://www.costco.com.tw/Clothing-Accessories/Shoes/Womens-Shoes/Adidas-Runvista-Womens-Shoe/p/154454')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c__Adidas_Mens_Runvista_Shoe_p_154456" data-cat="__服飾寢具" data-deal="coupon">
   <a href="https://www.costco.com.tw/Clothing-Accessories/Shoes/Mens-Shoes/Adidas-Mens-Runvista-Shoe/p/154456" target="_blank" rel="noopener" class="card-link">
@@ -1078,7 +1086,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c__Adidas_Mens_Runvista_Shoe_p_154456','__服飾寢具','Adidas 男運動休閒鞋')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c__Adidas_Mens_Runvista_Shoe_p_154456','__服飾寢具','Adidas 男運動休閒鞋','https://www.costco.com.tw/Clothing-Accessories/Shoes/Mens-Shoes/Adidas-Mens-Runvista-Shoe/p/154456')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_es_Gunze_Soft_Wirefree_Bra_p_160561" data-cat="__服飾寢具" data-deal="hotbuys">
   <a href="https://www.costco.com.tw/Clothing-Accessories/Womens-Clothing/Womens-Socks-Intimates/Gunze-Soft-Wirefree-Bra/p/160561" target="_blank" rel="noopener" class="card-link">
@@ -1094,7 +1102,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_es_Gunze_Soft_Wirefree_Bra_p_160561','__服飾寢具','Gunze 輕柔無鋼圈內衣')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_es_Gunze_Soft_Wirefree_Bra_p_160561','__服飾寢具','Gunze 輕柔無鋼圈內衣','https://www.costco.com.tw/Clothing-Accessories/Womens-Clothing/Womens-Socks-Intimates/Gunze-Soft-Wirefree-Bra/p/160561')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_ll_Cream_Milk_Powder_25_kg_p_230352" data-cat="__玩具育兒" data-deal="coupon">
   <a href="https://www.costco.com.tw/Food-Dining/Drinks/Powdered-Drink-Mix-Cereal-Oats/KLIM-New-Zealand-Full-Cream-Milk-Powder-25-kg/p/230352" target="_blank" rel="noopener" class="card-link">
@@ -1110,7 +1118,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_ll_Cream_Milk_Powder_25_kg_p_230352','__玩具育兒','KLIM 克寧 紐西蘭全脂奶粉 2.5公斤')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_ll_Cream_Milk_Powder_25_kg_p_230352','__玩具育兒','KLIM 克寧 紐西蘭全脂奶粉 2.5公斤','https://www.costco.com.tw/Food-Dining/Drinks/Powdered-Drink-Mix-Cereal-Oats/KLIM-New-Zealand-Full-Cream-Milk-Powder-25-kg/p/230352')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c__Flexispot_Adjustable_Desk_p_158513" data-cat="__其他" data-deal="hotbuys">
   <a href="https://www.costco.com.tw/Furniture-Kitchen/Furniture/Computer-Desk-Chair-Sets/Flexispot-Adjustable-Desk/p/158513" target="_blank" rel="noopener" class="card-link">
@@ -1126,7 +1134,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c__Flexispot_Adjustable_Desk_p_158513','__其他','Flexispot 電動升降桌')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c__Flexispot_Adjustable_Desk_p_158513','__其他','Flexispot 電動升降桌','https://www.costco.com.tw/Furniture-Kitchen/Furniture/Computer-Desk-Chair-Sets/Flexispot-Adjustable-Desk/p/158513')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_ore_Folding_Chair_2_Piece_p_1276530" data-cat="__其他" data-deal="hotbuys">
   <a href="https://www.costco.com.tw/Furniture-Kitchen/Furniture/Dining-Sets/Stakmore-Folding-Chair-2-Piece/p/1276530" target="_blank" rel="noopener" class="card-link">
@@ -1142,7 +1150,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🆕 首次出現</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_ore_Folding_Chair_2_Piece_p_1276530','__其他','Stakmore 實木折疊椅 2入')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_ore_Folding_Chair_2_Piece_p_1276530','__其他','Stakmore 實木折疊椅 2入','https://www.costco.com.tw/Furniture-Kitchen/Furniture/Dining-Sets/Stakmore-Folding-Chair-2-Piece/p/1276530')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_iban_Tape_Size_L_156_Piece_p_246571" data-cat="__其他" data-deal="hotbuys">
   <a href="https://www.costco.com.tw/Household-Baby-Toys/Baby/Baby-Diapers-Wipes/Pampers-Ichiban-Tape-Size-L-156-Piece/p/246571" target="_blank" rel="noopener" class="card-link">
@@ -1158,7 +1166,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_iban_Tape_Size_L_156_Piece_p_246571','__其他','幫寶適 一級幫 護臀紙尿褲(黏貼型) L號 156片')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_iban_Tape_Size_L_156_Piece_p_246571','__其他','幫寶適 一級幫 護臀紙尿褲(黏貼型) L號 156片','https://www.costco.com.tw/Household-Baby-Toys/Baby/Baby-Diapers-Wipes/Pampers-Ichiban-Tape-Size-L-156-Piece/p/246571')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_ban_Tape_Size_XL_124_Piece_p_246572" data-cat="__其他" data-deal="hotbuys">
   <a href="https://www.costco.com.tw/Household-Baby-Toys/Baby/Baby-Diapers-Wipes/Pampers-Ichiban-Tape-Size-XL-124-Piece/p/246572" target="_blank" rel="noopener" class="card-link">
@@ -1174,7 +1182,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_ban_Tape_Size_XL_124_Piece_p_246572','__其他','幫寶適 一級幫 護臀紙尿褲(黏貼型) XL號 124片')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_ban_Tape_Size_XL_124_Piece_p_246572','__其他','幫寶適 一級幫 護臀紙尿褲(黏貼型) XL號 124片','https://www.costco.com.tw/Household-Baby-Toys/Baby/Baby-Diapers-Wipes/Pampers-Ichiban-Tape-Size-XL-124-Piece/p/246572')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_iban_Tape_Size_M_186_Piece_p_246570" data-cat="__其他" data-deal="hotbuys">
   <a href="https://www.costco.com.tw/Household-Baby-Toys/Baby/Baby-Diapers-Wipes/Pampers-Ichiban-Tape-Size-M-186-Piece/p/246570" target="_blank" rel="noopener" class="card-link">
@@ -1190,7 +1198,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_iban_Tape_Size_M_186_Piece_p_246570','__其他','幫寶適 一級幫 護臀紙尿褲(黏貼型) M號 186片')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_iban_Tape_Size_M_186_Piece_p_246570','__其他','幫寶適 一級幫 護臀紙尿褲(黏貼型) M號 186片','https://www.costco.com.tw/Household-Baby-Toys/Baby/Baby-Diapers-Wipes/Pampers-Ichiban-Tape-Size-M-186-Piece/p/246570')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_iban_Tape_Size_S_232_Piece_p_246569" data-cat="__其他" data-deal="hotbuys">
   <a href="https://www.costco.com.tw/Household-Baby-Toys/Baby/Baby-Diapers-Wipes/Pampers-Ichiban-Tape-Size-S-232-Piece/p/246569" target="_blank" rel="noopener" class="card-link">
@@ -1206,7 +1214,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_iban_Tape_Size_S_232_Piece_p_246569','__其他','幫寶適 一級幫 護臀紙尿褲(黏貼型) S號 232片')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_iban_Tape_Size_S_232_Piece_p_246569','__其他','幫寶適 一級幫 護臀紙尿褲(黏貼型) S號 232片','https://www.costco.com.tw/Household-Baby-Toys/Baby/Baby-Diapers-Wipes/Pampers-Ichiban-Tape-Size-S-232-Piece/p/246569')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_ive_ion_Hair_Dryer_TD570TW_p_152520" data-cat="__其他" data-deal="hotbuys">
   <a href="https://www.costco.com.tw/Televisions-Appliances/Small-Appliances/Hair-Skin-Care-Tools/Tescom-Negative-ion-Hair-Dryer-TD570TW/p/152520" target="_blank" rel="noopener" class="card-link">
@@ -1222,7 +1230,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_ive_ion_Hair_Dryer_TD570TW_p_152520','__其他','Tescom 大風量負離子吹風機 TD570TW')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_ive_ion_Hair_Dryer_TD570TW_p_152520','__其他','Tescom 大風量負離子吹風機 TD570TW','https://www.costco.com.tw/Televisions-Appliances/Small-Appliances/Hair-Skin-Care-Tools/Tescom-Negative-ion-Hair-Dryer-TD570TW/p/152520')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_an_Pants_Size_XL_116_Piece_p_246574" data-cat="__其他" data-deal="hotbuys">
   <a href="https://www.costco.com.tw/Household-Baby-Toys/Baby/Baby-Diapers-Wipes/Pampers-Ichiban-Pants-Size-XL-116-Piece/p/246574" target="_blank" rel="noopener" class="card-link">
@@ -1238,7 +1246,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_an_Pants_Size_XL_116_Piece_p_246574','__其他','幫寶適 一級幫 散熱拉拉褲 XL號 116片')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_an_Pants_Size_XL_116_Piece_p_246574','__其他','幫寶適 一級幫 散熱拉拉褲 XL號 116片','https://www.costco.com.tw/Household-Baby-Toys/Baby/Baby-Diapers-Wipes/Pampers-Ichiban-Pants-Size-XL-116-Piece/p/246574')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_ban_Pants_Size_L_144_Piece_p_246573" data-cat="__其他" data-deal="hotbuys">
   <a href="https://www.costco.com.tw/Household-Baby-Toys/Baby/Baby-Diapers-Wipes/Pampers-Ichiban-Pants-Size-L-144-Piece/p/246573" target="_blank" rel="noopener" class="card-link">
@@ -1254,7 +1262,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_ban_Pants_Size_L_144_Piece_p_246573','__其他','幫寶適 一級幫 散熱拉拉褲 L號 144片')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_ban_Pants_Size_L_144_Piece_p_246573','__其他','幫寶適 一級幫 散熱拉拉褲 L號 144片','https://www.costco.com.tw/Household-Baby-Toys/Baby/Baby-Diapers-Wipes/Pampers-Ichiban-Pants-Size-L-144-Piece/p/246573')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_an_Pants_Size_XXL_93_Piece_p_246575" data-cat="__其他" data-deal="hotbuys">
   <a href="https://www.costco.com.tw/Household-Baby-Toys/Baby/Baby-Diapers-Wipes/Pampers-Ichiban-Pants-Size-XXL-93-Piece/p/246575" target="_blank" rel="noopener" class="card-link">
@@ -1270,7 +1278,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_an_Pants_Size_XXL_93_Piece_p_246575','__其他','幫寶適 一級幫 散熱拉拉褲 XXL號 93片')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_an_Pants_Size_XXL_93_Piece_p_246575','__其他','幫寶適 一級幫 散熱拉拉褲 XXL號 93片','https://www.costco.com.tw/Household-Baby-Toys/Baby/Baby-Diapers-Wipes/Pampers-Ichiban-Pants-Size-XXL-93-Piece/p/246575')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_n_Pants_Size_XXXL_93_Piece_p_246576" data-cat="__其他" data-deal="hotbuys">
   <a href="https://www.costco.com.tw/Household-Baby-Toys/Baby/Baby-Diapers-Wipes/Pampers-Ichiban-Pants-Size-XXXL-93-Piece/p/246576" target="_blank" rel="noopener" class="card-link">
@@ -1286,7 +1294,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_n_Pants_Size_XXXL_93_Piece_p_246576','__其他','幫寶適 一級幫 散熱拉拉褲 XXXL號 93片')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_n_Pants_Size_XXXL_93_Piece_p_246576','__其他','幫寶適 一級幫 散熱拉拉褲 XXXL號 93片','https://www.costco.com.tw/Household-Baby-Toys/Baby/Baby-Diapers-Wipes/Pampers-Ichiban-Pants-Size-XXXL-93-Piece/p/246576')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_ter_Gel_Cream_120_ml_50_ml_p_681601" data-cat="__其他" data-deal="coupon">
   <a href="https://www.costco.com.tw/Health-Beauty/Beauty-Skin-Care/Skin-Care/sum37-Water-full-Time-Leap-Water-Gel-Cream-120-ml-50-ml/p/681601" target="_blank" rel="noopener" class="card-link">
@@ -1302,7 +1310,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_ter_Gel_Cream_120_ml_50_ml_p_681601','__其他','su:m37º 活水潤澤酵能水凝霜 120毫升 + 50毫升')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_ter_Gel_Cream_120_ml_50_ml_p_681601','__其他','su:m37º 活水潤澤酵能水凝霜 120毫升 + 50毫升','https://www.costco.com.tw/Health-Beauty/Beauty-Skin-Care/Skin-Care/sum37-Water-full-Time-Leap-Water-Gel-Cream-120-ml-50-ml/p/681601')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c__EVERYTIME_10_ml_X_30_Pack_p_186999" data-cat="__其他" data-deal="hotbuys">
   <a href="https://www.costco.com.tw/Health-Beauty/Supplements/Supplements-Digestive-Support/JKJ-Red-Ginseng-EVERYTIME-10-ml-X-30-Pack/p/186999" target="_blank" rel="noopener" class="card-link">
@@ -1318,7 +1326,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c__EVERYTIME_10_ml_X_30_Pack_p_186999','__其他','正官庄 高麗蔘精 EVERYTIME 10毫升 X 30包')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c__EVERYTIME_10_ml_X_30_Pack_p_186999','__其他','正官庄 高麗蔘精 EVERYTIME 10毫升 X 30包','https://www.costco.com.tw/Health-Beauty/Supplements/Supplements-Digestive-Support/JKJ-Red-Ginseng-EVERYTIME-10-ml-X-30-Pack/p/186999')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_age_with_Lid_12_Piece_Set_p_8523323" data-cat="__其他" data-deal="hotbuys">
   <a href="https://www.costco.com.tw/Furniture-Kitchen/Kitchen-Dining/Food-Storage-Containers/Neoflam-Microwavable-Stainless-Steel-Storage-with-Lid-12-Piece-Set/p/8523323" target="_blank" rel="noopener" class="card-link">
@@ -1334,7 +1342,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_age_with_Lid_12_Piece_Set_p_8523323','__其他','Neoflam 可微波不鏽鋼保鮮盒 含蓋12件組')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_age_with_Lid_12_Piece_Set_p_8523323','__其他','Neoflam 可微波不鏽鋼保鮮盒 含蓋12件組','https://www.costco.com.tw/Furniture-Kitchen/Kitchen-Dining/Food-Storage-Containers/Neoflam-Microwavable-Stainless-Steel-Storage-with-Lid-12-Piece-Set/p/8523323')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_DClean_shower_head_package_p_127125" data-cat="__其他" data-deal="coupon">
   <a href="https://www.costco.com.tw/Furniture-Kitchen/Hardware-DIY/KitchenBathroom-Hardware/DClean-shower-head-package/p/127125" target="_blank" rel="noopener" class="card-link">
@@ -1350,7 +1358,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🆕 首次出現</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_DClean_shower_head_package_p_127125','__其他','過濾花灑套組')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_DClean_shower_head_package_p_127125','__其他','過濾花灑套組','https://www.costco.com.tw/Furniture-Kitchen/Hardware-DIY/KitchenBathroom-Hardware/DClean-shower-head-package/p/127125')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_ns_Short_Sleeve_Polo_Shirt_p_134126" data-cat="__其他" data-deal="hotbuys">
   <a href="https://www.costco.com.tw/Clothing-Accessories/Mens-Clothing/Mens-Tops/Timberland-Mens-Short-Sleeve-Polo-Shirt/p/134126" target="_blank" rel="noopener" class="card-link">
@@ -1366,7 +1374,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_ns_Short_Sleeve_Polo_Shirt_p_134126','__其他','Timberland 男短袖Polo衫')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_ns_Short_Sleeve_Polo_Shirt_p_134126','__其他','Timberland 男短袖Polo衫','https://www.costco.com.tw/Clothing-Accessories/Mens-Clothing/Mens-Tops/Timberland-Mens-Short-Sleeve-Polo-Shirt/p/134126')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_Ladies_Casual_Denim_Jeans_p_1956376" data-cat="__其他" data-deal="coupon">
   <a href="https://www.costco.com.tw/Clothing-Accessories/Womens-Clothing/Womens-Bottoms-Dresses/Well-Worn-Ladies-Casual-Denim-Jeans/p/1956376" target="_blank" rel="noopener" class="card-link">
@@ -1382,7 +1390,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_Ladies_Casual_Denim_Jeans_p_1956376','__其他','Well Worn 女牛仔休閒褲')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_Ladies_Casual_Denim_Jeans_p_1956376','__其他','Well Worn 女牛仔休閒褲','https://www.costco.com.tw/Clothing-Accessories/Womens-Clothing/Womens-Bottoms-Dresses/Well-Worn-Ladies-Casual-Denim-Jeans/p/1956376')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_est_Grove_Trail_Mix_907_g_p_1056107" data-cat="__其他" data-deal="coupon">
   <a href="https://www.costco.com.tw/Food-Dining/Snacks/Nuts-Jerky/Hoodys-Harvest-Grove-Trail-Mix-907-g/p/1056107" target="_blank" rel="noopener" class="card-link">
@@ -1398,7 +1406,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_est_Grove_Trail_Mix_907_g_p_1056107','__其他','Hoody\'s 精緻果乾混綜合果仁 907公克')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_est_Grove_Trail_Mix_907_g_p_1056107','__其他','Hoody\'s 精緻果乾混綜合果仁 907公克','https://www.costco.com.tw/Food-Dining/Snacks/Nuts-Jerky/Hoodys-Harvest-Grove-Trail-Mix-907-g/p/1056107')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_conut_Latte_16_g_X_50_Pack_p_149178" data-cat="__其他" data-deal="coupon">
   <a href="https://www.costco.com.tw/Food-Dining/Drinks/Coffee/SIP-Perfect-Coconut-Latte-16-g-X-50-Pack/p/149178" target="_blank" rel="noopener" class="card-link">
@@ -1414,7 +1422,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_conut_Latte_16_g_X_50_Pack_p_149178','__其他','益昌 生椰拿鐵 16公克 X 50入')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_conut_Latte_16_g_X_50_Pack_p_149178','__其他','益昌 生椰拿鐵 16公克 X 50入','https://www.costco.com.tw/Food-Dining/Drinks/Coffee/SIP-Perfect-Coconut-Latte-16-g-X-50-Pack/p/149178')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_asting_AA_Battery_40_Pack_p_1012891" data-cat="__其他" data-deal="coupon">
   <a href="https://www.costco.com.tw/Furniture-Kitchen/Hardware-DIY/Power-Tools-Electrical/Duracell-Long-Lasting-AA-Battery-40-Pack/p/1012891" target="_blank" rel="noopener" class="card-link">
@@ -1430,7 +1438,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🆕 首次出現</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_asting_AA_Battery_40_Pack_p_1012891','__其他','金頂 三號電池 40入')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_asting_AA_Battery_40_Pack_p_1012891','__其他','金頂 三號電池 40入','https://www.costco.com.tw/Furniture-Kitchen/Hardware-DIY/Power-Tools-Electrical/Duracell-Long-Lasting-AA-Battery-40-Pack/p/1012891')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_ng_Water_500_ml_X_24_Count_p_151543" data-cat="__其他" data-deal="hotbuys">
   <a href="https://www.costco.com.tw/Food-Dining/Drinks/Water-Sparkling-Water/IRIS-OHYAMA-Strong-Sparkling-Water-500-ml-X-24-Count/p/151543" target="_blank" rel="noopener" class="card-link">
@@ -1446,7 +1454,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🆕 首次出現</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_ng_Water_500_ml_X_24_Count_p_151543','__其他','IRIS OHYAMA 富士山強氣泡水 環保無標籤款 500毫升 X 24瓶')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_ng_Water_500_ml_X_24_Count_p_151543','__其他','IRIS OHYAMA 富士山強氣泡水 環保無標籤款 500毫升 X 24瓶','https://www.costco.com.tw/Food-Dining/Drinks/Water-Sparkling-Water/IRIS-OHYAMA-Strong-Sparkling-Water-500-ml-X-24-Count/p/151543')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_ge_Assorted_Pack_200_Piece_p_231119" data-cat="__其他" data-deal="hotbuys">
   <a href="https://www.costco.com.tw/Food-Dining/Snacks/Cookies-Chips/Glico-Bisco-Lactobacillus-Cream-Biscuits-Large-Assorted-Pack-200-Piece/p/231119" target="_blank" rel="noopener" class="card-link">
@@ -1462,7 +1470,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_ge_Assorted_Pack_200_Piece_p_231119','__其他','格力高 綜合乳酸菌夾心餅 200片')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_ge_Assorted_Pack_200_Piece_p_231119','__其他','格力高 綜合乳酸菌夾心餅 200片','https://www.costco.com.tw/Food-Dining/Snacks/Cookies-Chips/Glico-Bisco-Lactobacillus-Cream-Biscuits-Large-Assorted-Pack-200-Piece/p/231119')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_ling_Orange_320ml_X_24_Can_p_149152" data-cat="__其他" data-deal="coupon">
   <a href="https://www.costco.com.tw/Food-Dining/Drinks/Beverages-Juice/Tree-Top-Sparkling-Orange-320ml-X-24-Can/p/149152" target="_blank" rel="noopener" class="card-link">
@@ -1478,7 +1486,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_ling_Orange_320ml_X_24_Can_p_149152','__其他','Tree Top 樹頂 柳橙氣泡飲 320毫升 X 24入')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_ling_Orange_320ml_X_24_Can_p_149152','__其他','Tree Top 樹頂 柳橙氣泡飲 320毫升 X 24入','https://www.costco.com.tw/Food-Dining/Drinks/Beverages-Juice/Tree-Top-Sparkling-Orange-320ml-X-24-Can/p/149152')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_Coconut_Water_1_L_X_6_Count_p_75130" data-cat="__其他" data-deal="hotbuys">
   <a href="https://www.costco.com.tw/Food-Dining/Drinks/Beverages-Juice/KOH-COCONUT-100-Pure-Coconut-Water-1-L-X-6-Count/p/75130" target="_blank" rel="noopener" class="card-link">
@@ -1494,7 +1502,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_Coconut_Water_1_L_X_6_Count_p_75130','__其他','KOH COCONUT 純椰子汁 1公升 X 6入')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_Coconut_Water_1_L_X_6_Count_p_75130','__其他','KOH COCONUT 純椰子汁 1公升 X 6入','https://www.costco.com.tw/Food-Dining/Drinks/Beverages-Juice/KOH-COCONUT-100-Pure-Coconut-Water-1-L-X-6-Count/p/75130')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_Bou_Stuffed_Egg_Roll_480_g_p_144711" data-cat="__其他" data-deal="coupon">
   <a href="https://www.costco.com.tw/Food-Dining/Snacks/Cookies-Chips/Shu-Shin-Bou-Stuffed-Egg-Roll-480-g/p/144711" target="_blank" rel="noopener" class="card-link">
@@ -1510,7 +1518,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_Bou_Stuffed_Egg_Roll_480_g_p_144711','__其他','手信坊 含餡蛋捲禮盒 480公克')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_Bou_Stuffed_Egg_Roll_480_g_p_144711','__其他','手信坊 含餡蛋捲禮盒 480公克','https://www.costco.com.tw/Food-Dining/Snacks/Cookies-Chips/Shu-Shin-Bou-Stuffed-Egg-Roll-480-g/p/144711')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_ER_Pure_Baking_Soda_612_kg_p_488431" data-cat="__其他" data-deal="coupon">
   <a href="https://www.costco.com.tw/Food-Dining/Groceries/Baking-Dried-Goods/ARM-HAMMER-Pure-Baking-Soda-612-kg/p/488431" target="_blank" rel="noopener" class="card-link">
@@ -1526,7 +1534,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_ER_Pure_Baking_Soda_612_kg_p_488431','__其他','ARM & HAMMER 多功能小蘇打粉 6.12公斤')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_ER_Pure_Baking_Soda_612_kg_p_488431','__其他','ARM & HAMMER 多功能小蘇打粉 6.12公斤','https://www.costco.com.tw/Food-Dining/Groceries/Baking-Dried-Goods/ARM-HAMMER-Pure-Baking-Soda-612-kg/p/488431')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_weet_Potato_38_g_X_16_Pack_p_132366" data-cat="__其他" data-deal="hotbuys">
   <a href="https://www.costco.com.tw/Food-Dining/Snacks/Cookies-Chips/Cadina-95-Crispy-Mixed-Sweet-Potato-38-g-X-16-Pack/p/132366" target="_blank" rel="noopener" class="card-link">
@@ -1542,7 +1550,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_weet_Potato_38_g_X_16_Pack_p_132366','__其他','卡迪那 95℃ 鮮脆三色丁 38公克 X 16入')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_weet_Potato_38_g_X_16_Pack_p_132366','__其他','卡迪那 95℃ 鮮脆三色丁 38公克 X 16入','https://www.costco.com.tw/Food-Dining/Snacks/Cookies-Chips/Cadina-95-Crispy-Mixed-Sweet-Potato-38-g-X-16-Pack/p/132366')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_nd_Strawberry_Jelly_186_kg_p_123003" data-cat="__其他" data-deal="hotbuys">
   <a href="https://www.costco.com.tw/Food-Dining/Snacks/Candies-Chocolates/SHJ-DrQ-Konjac-Grape-and-Strawberry-Jelly-186-kg/p/123003" target="_blank" rel="noopener" class="card-link">
@@ -1558,7 +1566,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_nd_Strawberry_Jelly_186_kg_p_123003','__其他','盛香珍 Dr.Q 葡萄草莓蒟蒻果凍 1.86公斤')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_nd_Strawberry_Jelly_186_kg_p_123003','__其他','盛香珍 Dr.Q 葡萄草莓蒟蒻果凍 1.86公斤','https://www.costco.com.tw/Food-Dining/Snacks/Candies-Chocolates/SHJ-DrQ-Konjac-Grape-and-Strawberry-Jelly-186-kg/p/123003')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_Mire_Biscuit_70g_X_10_Pack_p_145475" data-cat="__其他" data-deal="coupon">
   <a href="https://www.costco.com.tw/Food-Dining/Snacks/Cookies-Chips/Nomura-Mire-Biscuit-70g-X-10-Pack/p/145475" target="_blank" rel="noopener" class="card-link">
@@ -1574,7 +1582,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_Mire_Biscuit_70g_X_10_Pack_p_145475','__其他','野村煎豆 美樂圓餅 70公克 X 10袋')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_Mire_Biscuit_70g_X_10_Pack_p_145475','__其他','野村煎豆 美樂圓餅 70公克 X 10袋','https://www.costco.com.tw/Food-Dining/Snacks/Cookies-Chips/Nomura-Mire-Biscuit-70g-X-10-Pack/p/145475')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_ls_Pest_Control_Air_Care__s_p_73655" data-cat="__其他" data-deal="coupon">
   <a href="https://www.costco.com.tw/Household-Baby-Toys/Household-Essentials/Pest-Control-Air-Care/-s/p/73655" target="_blank" rel="noopener" class="card-link">
@@ -1590,7 +1598,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_ls_Pest_Control_Air_Care__s_p_73655','__其他','威滅滅蟑隊-s')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_ls_Pest_Control_Air_Care__s_p_73655','__其他','威滅滅蟑隊-s','https://www.costco.com.tw/Household-Baby-Toys/Household-Essentials/Pest-Control-Air-Care/-s/p/73655')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_min_Soda_330_ml_X_24_Count_p_141523" data-cat="__其他" data-deal="coupon">
   <a href="https://www.costco.com.tw/Food-Dining/Drinks/Beverages-Juice/Vitali-Vitamin-Soda-330-ml-X-24-Count/p/141523" target="_blank" rel="noopener" class="card-link">
@@ -1606,7 +1614,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_min_Soda_330_ml_X_24_Count_p_141523','__其他','維大力 汽水 330毫升 X 24入')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_min_Soda_330_ml_X_24_Count_p_141523','__其他','維大力 汽水 330毫升 X 24入','https://www.costco.com.tw/Food-Dining/Drinks/Beverages-Juice/Vitali-Vitamin-Soda-330-ml-X-24-Count/p/141523')" title="修改分類（需登入）">✏️</button>
 </div>
 <div class="card" id="c_lavored_Potato_Chips_580_g_p_123855" data-cat="__其他" data-deal="hotbuys">
   <a href="https://www.costco.com.tw/Food-Dining/Snacks/Cookies-Chips/Ruffles-Chicken-Soup-Flavored-Potato-Chips-580-g/p/123855" target="_blank" rel="noopener" class="card-link">
@@ -1622,14 +1630,15 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_lavored_Potato_Chips_580_g_p_123855','__其他','波樂 雞汁口味厚切洋芋片 580公克')" title="修改分類">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_lavored_Potato_Chips_580_g_p_123855','__其他','波樂 雞汁口味厚切洋芋片 580公克','https://www.costco.com.tw/Food-Dining/Snacks/Cookies-Chips/Ruffles-Chicken-Soup-Flavored-Potato-Chips-580-g/p/123855')" title="修改分類（需登入）">✏️</button>
 </div>
 </div>
   <div class="empty" id="empty">😢 找不到符合的商品</div>
 </main>
 
-<footer>🤖 Hermes Agent 自動整理｜資料來源：costco.com.tw｜更新：2026-06-12 11:39<br>🏪=賣場同售 📰=daybuy情報 ✏️=點卡片右下角可修改分類</footer>
+<footer>🤖 Hermes Agent 自動整理｜資料來源：costco.com.tw｜更新：2026-06-12 15:39<br>🏪=賣場同售 📰=daybuy情報 ✏️=登入後可修改分類</footer>
 
+<!-- 分類 Modal -->
 <div class="modal-overlay" id="catModal" onclick="if(event.target===this)closeModal()">
   <div class="modal">
     <div class="modal-title">修改商品分類</div>
@@ -1647,74 +1656,195 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
   </div>
 </div>
 
+<!-- 登入 Modal -->
+<div class="modal-overlay" id="loginModal" onclick="if(event.target===this)closeLoginModal()">
+  <div class="login-modal">
+    <h3>🔐 編輯者登入</h3>
+    <input type="password" id="loginPwInput" placeholder="請輸入密碼" onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="login-submit" onclick="doLogin()">登入</button>
+    <div class="login-error" id="loginError">密碼錯誤，請再試一次</div>
+  </div>
+</div>
+
 <script>
-const ALL_CATS=["🐾 寵物用品", "🍱 食品飲料", "📺 家電 3C", "🧴 保健美妝", "🏠 生活用品", "👕 服飾寢具", "🧸 玩具育兒", "🏋️ 運動戶外", "📦 其他"];
-const STORAGE_KEY="costco_cat_overrides";
-let currentDeal="all", currentCat="all", modalCardId=null;
+const ALL_CATS = ["🐾 寵物用品", "🍱 食品飲料", "📺 家電 3C", "🧴 保健美妝", "🏠 生活用品", "👕 服飾寢具", "🧸 玩具育兒", "🏋️ 運動戶外", "📦 其他"];
+// 從 DB 產生的分類覆蓋（作為初始值）
+const DB_OVERRIDES = {};
+// 密碼 hash（SHA-256，避免明文存在 HTML）
+// 預設密碼：costco2024（可在 generate_html.py 的 EDITOR_PW_HASH 修改）
+const EDITOR_PW_HASH = "addc483480c1a93cb87cb80df9f6a7128c21ebdb862944337982c500b9c7145f";
+const STORAGE_KEY = "costco_cat_overrides";
+const SESSION_KEY = "costco_editor_session";
+let currentDeal = "all", currentCat = "all";
+let modalCardId = null, modalProductLink = "";
+let isLoggedIn = false;
 
-function getOverrides(){try{return JSON.parse(localStorage.getItem(STORAGE_KEY)||"{}")}catch{return{}}}
-function saveOverride(id,cat){const o=getOverrides();o[id]=cat;localStorage.setItem(STORAGE_KEY,JSON.stringify(o));}
+// ── 登入 ──
+async function sha256(msg) {
+  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(msg));
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,"0")).join("");
+}
+async function doLogin() {
+  const pw = document.getElementById("loginPwInput").value;
+  const hash = await sha256(pw);
+  if (hash === EDITOR_PW_HASH) {
+    isLoggedIn = true;
+    sessionStorage.setItem(SESSION_KEY, "1");
+    document.body.classList.add("editor-mode");
+    document.getElementById("loginToggleBtn").textContent = "✏️ 編輯中";
+    document.getElementById("loginToggleBtn").classList.add("logged-in");
+    document.getElementById("loginError").style.display = "none";
+    closeLoginModal();
+  } else {
+    document.getElementById("loginError").style.display = "block";
+    document.getElementById("loginPwInput").value = "";
+  }
+}
+function toggleLogin() {
+  if (isLoggedIn) {
+    isLoggedIn = false;
+    sessionStorage.removeItem(SESSION_KEY);
+    document.body.classList.remove("editor-mode");
+    document.getElementById("loginToggleBtn").textContent = "🔐 登入";
+    document.getElementById("loginToggleBtn").classList.remove("logged-in");
+  } else {
+    document.getElementById("loginModal").classList.add("open");
+    setTimeout(()=>document.getElementById("loginPwInput").focus(), 100);
+  }
+}
+function closeLoginModal() {
+  document.getElementById("loginModal").classList.remove("open");
+}
+// 恢復 session
+if (sessionStorage.getItem(SESSION_KEY)) {
+  isLoggedIn = true;
+  document.body.classList.add("editor-mode");
+  document.getElementById("loginToggleBtn").textContent = "✏️ 編輯中";
+  document.getElementById("loginToggleBtn").classList.add("logged-in");
+}
 
-window.addEventListener("DOMContentLoaded",()=>{
-  Object.entries(getOverrides()).forEach(([id,catId])=>{
-    const card=document.getElementById(id); if(!card) return;
-    card.dataset.cat=catId;
-    const body=card.querySelector(".card-body");
-    const ex=body.querySelector(".cat-badge"); if(ex) ex.remove();
-    const label=ALL_CATS.find(c=>c.replace(/[^\w]/g,"_")===catId)||catId;
-    const b=document.createElement("span"); b.className="cat-badge"; b.textContent="✏️ "+label;
-    body.appendChild(b);
+// ── 分類覆蓋（localStorage + DB 合併）──
+function getOverrides() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); } catch { return {}; }
+}
+function saveOverride(id, cat) {
+  const o = getOverrides();
+  o[id] = cat;
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(o));
+}
+
+// ── 同步到 GitHub（透過 GitHub API 更新 overrides.json）──
+async function syncToGitHub(cardId, catId, productName, productLink) {
+  const token = localStorage.getItem("costco_gh_token") || "";
+  if (!token) return; // 沒有 token 就只存 localStorage
+
+  const apiUrl = "https://api.github.com/repos/s610034/costco-deals/contents/data/overrides.json";
+  try {
+    // 先取得現有檔案
+    const getResp = await fetch(apiUrl, {
+      headers: { "Authorization": "token " + token, "Accept": "application/vnd.github.v3+json" }
+    });
+    let sha = "", existing = {};
+    if (getResp.ok) {
+      const data = await getResp.json();
+      sha = data.sha;
+      existing = JSON.parse(atob(data.content.replace(/\n/g, "")));
+    }
+    // 更新
+    existing[cardId] = { cat: catId, name: productName, link: productLink };
+    const content = btoa(unescape(encodeURIComponent(JSON.stringify(existing, null, 2))));
+    const putResp = await fetch(apiUrl, {
+      method: "PUT",
+      headers: { "Authorization": "token " + token, "Content-Type": "application/json" },
+      body: JSON.stringify({ message: "update category: " + cardId, content, sha })
+    });
+    if (putResp.ok) console.log("✅ 分類已同步到 GitHub");
+  } catch (e) {
+    console.warn("GitHub 同步失敗（不影響本地儲存）:", e);
+  }
+}
+
+// ── 初始化（DB 覆蓋 + localStorage 覆蓋，localStorage 優先）──
+window.addEventListener("DOMContentLoaded", () => {
+  // 先套用 DB 覆蓋（來自後端）
+  Object.entries(DB_OVERRIDES).forEach(([id, catId]) => {
+    const card = document.getElementById(id); if (!card) return;
+    _applyCatToCard(card, catId);
+  });
+  // 再套用 localStorage（覆蓋 DB）
+  Object.entries(getOverrides()).forEach(([id, catId]) => {
+    const card = document.getElementById(id); if (!card) return;
+    _applyCatToCard(card, catId);
   });
   applyFilter();
 });
 
-function dealFilter(val,el){
-  currentDeal=val; currentCat="all";
-  document.querySelectorAll(".tab,.hf-btn").forEach(t=>t.classList.remove("active"));
+function _applyCatToCard(card, catId) {
+  card.dataset.cat = catId;
+  const body = card.querySelector(".card-body");
+  const ex = body.querySelector(".cat-badge"); if (ex) ex.remove();
+  const label = ALL_CATS.find(c => c.replace(/[^\w]/g,"_") === catId) || catId;
+  const b = document.createElement("span"); b.className = "cat-badge"; b.textContent = "✏️ " + label;
+  body.appendChild(b);
+}
+
+// ── 篩選 ──
+function dealFilter(val, el) {
+  currentDeal = val; currentCat = "all";
+  document.querySelectorAll(".tab,.hf-btn").forEach(t => t.classList.remove("active"));
   el.classList.add("active");
-  // 讓 Tab 全部也重置為全部
   document.querySelector(".tab").classList.add("active");
   applyFilter();
 }
-function catFilter(cat,el){
-  currentCat=cat; currentDeal="all";
-  document.querySelectorAll(".tab,.hf-btn").forEach(t=>t.classList.remove("active"));
+function catFilter(cat, el) {
+  currentCat = cat; currentDeal = "all";
+  document.querySelectorAll(".tab,.hf-btn").forEach(t => t.classList.remove("active"));
   el.classList.add("active");
-  // Header 全部也重置
   document.querySelector(".hf-all").classList.add("active");
   applyFilter();
 }
-function applyFilter(){
-  const search=document.getElementById("searchInput").value.trim().toLowerCase();
-  let visible=0;
-  document.querySelectorAll(".card").forEach(card=>{
-    const mDeal=currentDeal==="all"||card.dataset.deal===currentDeal;
-    const mCat=currentCat==="all"||card.dataset.cat===currentCat;
-    const mSearch=!search||card.querySelector(".card-name").textContent.toLowerCase().includes(search);
-    const show=mDeal&&mCat&&mSearch;
-    card.style.display=show?"":"none";
-    if(show) visible++;
+function applyFilter() {
+  const search = document.getElementById("searchInput").value.trim().toLowerCase();
+  let visible = 0;
+  document.querySelectorAll(".card").forEach(card => {
+    const mDeal = currentDeal === "all" || card.dataset.deal === currentDeal;
+    const mCat  = currentCat  === "all" || card.dataset.cat  === currentCat;
+    const mSearch = !search || card.querySelector(".card-name").textContent.toLowerCase().includes(search);
+    const show = mDeal && mCat && mSearch;
+    card.style.display = show ? "" : "none";
+    if (show) visible++;
   });
-  document.getElementById("empty").style.display=visible===0?"block":"none";
+  document.getElementById("empty").style.display = visible === 0 ? "block" : "none";
 }
-function openCatModal(cardId,curCat,name){
-  modalCardId=cardId;
-  document.getElementById("modalProductName").textContent=name||"";
-  const card=document.getElementById(cardId);
-  document.querySelectorAll(".modal-cat-btn").forEach(b=>b.classList.toggle("selected",b.dataset.cat===card.dataset.cat));
+
+// ── 分類 Modal ──
+function openCatModal(cardId, curCat, name, productLink) {
+  if (!isLoggedIn) {
+    document.getElementById("loginModal").classList.add("open");
+    setTimeout(()=>document.getElementById("loginPwInput").focus(), 100);
+    return;
+  }
+  modalCardId = cardId;
+  modalProductLink = productLink || "";
+  document.getElementById("modalProductName").textContent = name || "";
+  const card = document.getElementById(cardId);
+  document.querySelectorAll(".modal-cat-btn").forEach(b =>
+    b.classList.toggle("selected", b.dataset.cat === card.dataset.cat)
+  );
   document.getElementById("catModal").classList.add("open");
 }
-function closeModal(){document.getElementById("catModal").classList.remove("open");modalCardId=null;}
-function selectCat(catId){
-  if(!modalCardId) return;
-  const card=document.getElementById(modalCardId);
-  card.dataset.cat=catId; saveOverride(modalCardId,catId);
-  const body=card.querySelector(".card-body");
-  const ex=body.querySelector(".cat-badge"); if(ex) ex.remove();
-  const label=ALL_CATS.find(c=>c.replace(/[^\w]/g,"_")===catId)||catId;
-  const b=document.createElement("span"); b.className="cat-badge"; b.textContent="✏️ "+label;
-  body.appendChild(b);
-  closeModal(); applyFilter();
+function closeModal() { document.getElementById("catModal").classList.remove("open"); modalCardId = null; }
+function selectCat(catId) {
+  if (!modalCardId || !isLoggedIn) return;
+  const card = document.getElementById(modalCardId);
+  const productName = document.getElementById("modalProductName").textContent;
+  card.dataset.cat = catId;
+  saveOverride(modalCardId, catId);
+  _applyCatToCard(card, catId);
+  // 同步到 GitHub
+  syncToGitHub(modalCardId, catId, productName, modalProductLink);
+  closeModal();
+  applyFilter();
 }
 </script>
 </body>
