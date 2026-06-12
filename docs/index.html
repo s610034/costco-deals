@@ -74,6 +74,12 @@ body.editor-mode .change-cat-btn:hover{opacity:1}
 .login-modal input:focus{border-color:var(--red)}
 .login-modal .login-submit{width:100%;padding:12px;background:var(--red);color:#fff;border:none;border-radius:10px;font-size:.9rem;font-weight:700;cursor:pointer}
 .login-modal .login-error{color:#dc2626;font-size:.78rem;text-align:center;margin-top:8px;display:none}
+/* 編輯者下拉選單 */
+.editor-menu{position:absolute;top:calc(100% + 6px);right:0;background:#fff;border-radius:10px;box-shadow:0 4px 20px rgba(0,0,0,.15);overflow:hidden;min-width:130px;display:none;z-index:300}
+.editor-menu button{display:block;width:100%;padding:10px 16px;border:none;background:none;font-size:.82rem;cursor:pointer;text-align:left;white-space:nowrap}
+.editor-menu button:hover{background:#f5f5f5}
+.editor-menu .logout-btn{color:#dc2626;border-top:1px solid #eee}
+header .login-wrap{position:relative;margin-left:8px}
 footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
 @media(max-width:380px){.grid{grid-template-columns:repeat(2,1fr);gap:8px}}
 @media(min-width:600px){.grid{grid-template-columns:repeat(auto-fill,minmax(175px,1fr))}.modal{border-radius:20px;margin-bottom:20px}}
@@ -85,7 +91,13 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
     <h1>🛒 好市多折扣週報</h1>
     <span class="meta">📅 2026/06/12（06/08～06/14）</span>
     <span class="total">共 95 項</span>
-    <button class="login-btn" id="loginToggleBtn" onclick="toggleLogin()">🔐 登入</button>
+    <div class="login-wrap">
+      <button class="login-btn" id="loginToggleBtn" onclick="toggleLogin()">🔐 登入</button>
+      <div class="editor-menu" id="editorMenu">
+        <button onclick="openChangePw()">🔑 修改密碼</button>
+        <button class="logout-btn" onclick="logout()">🚪 登出</button>
+      </div>
+    </div>
   </div>
   <div class="header-filters">
   <button class="hf-btn hf-all active" onclick="dealFilter('all',this)">全部 <span>95</span></button>
@@ -96,15 +108,15 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
 </header>
 
 <div class="tabs-wrap">
-<button class="tab active" onclick="catFilter('all',this)">🏠 全部</button>
-<button class="tab" onclick="catFilter('__寵物用品',this)">🐾 寵物用品 <span class="tab-count">3</span></button>
-<button class="tab" onclick="catFilter('__食品飲料',this)">🍱 食品飲料 <span class="tab-count">37</span></button>
-<button class="tab" onclick="catFilter('__家電_3C',this)">📺 家電 3C <span class="tab-count">5</span></button>
-<button class="tab" onclick="catFilter('__保健美妝',this)">🧴 保健美妝 <span class="tab-count">7</span></button>
-<button class="tab" onclick="catFilter('__生活用品',this)">🏠 生活用品 <span class="tab-count">6</span></button>
-<button class="tab" onclick="catFilter('__服飾寢具',this)">👕 服飾寢具 <span class="tab-count">4</span></button>
-<button class="tab" onclick="catFilter('__玩具育兒',this)">🧸 玩具育兒 <span class="tab-count">1</span></button>
-<button class="tab" onclick="catFilter('__其他',this)">📦 其他 <span class="tab-count">32</span></button>
+<button class="tab active" data-catid="all" onclick="catFilter('all',this)">🏠 全部 <span class="tab-count">95</span></button>
+<button class="tab" data-catid="__寵物用品" onclick="catFilter('__寵物用品',this)">🐾 寵物用品 <span class="tab-count">3</span></button>
+<button class="tab" data-catid="__食品飲料" onclick="catFilter('__食品飲料',this)">🍱 食品飲料 <span class="tab-count">37</span></button>
+<button class="tab" data-catid="__家電_3C" onclick="catFilter('__家電_3C',this)">📺 家電 3C <span class="tab-count">5</span></button>
+<button class="tab" data-catid="__保健美妝" onclick="catFilter('__保健美妝',this)">🧴 保健美妝 <span class="tab-count">7</span></button>
+<button class="tab" data-catid="__生活用品" onclick="catFilter('__生活用品',this)">🏠 生活用品 <span class="tab-count">6</span></button>
+<button class="tab" data-catid="__服飾寢具" onclick="catFilter('__服飾寢具',this)">👕 服飾寢具 <span class="tab-count">4</span></button>
+<button class="tab" data-catid="__玩具育兒" onclick="catFilter('__玩具育兒',this)">🧸 玩具育兒 <span class="tab-count">1</span></button>
+<button class="tab" data-catid="__其他" onclick="catFilter('__其他',this)">📦 其他 <span class="tab-count">32</span></button>
 </div>
 
 <div class="search-wrap">
@@ -1636,7 +1648,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
   <div class="empty" id="empty">😢 找不到符合的商品</div>
 </main>
 
-<footer>🤖 Hermes Agent 自動整理｜資料來源：costco.com.tw｜更新：2026-06-12 15:39<br>🏪=賣場同售 📰=daybuy情報 ✏️=登入後可修改分類</footer>
+<footer>🤖 Hermes Agent 自動整理｜資料來源：costco.com.tw｜更新：2026-06-12 21:50<br>🏪=賣場同售 📰=daybuy情報 ✏️=登入後可修改分類</footer>
 
 <!-- 分類 Modal -->
 <div class="modal-overlay" id="catModal" onclick="if(event.target===this)closeModal()">
@@ -1656,13 +1668,26 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
   </div>
 </div>
 
-<!-- 登入 Modal -->
+<!-- 登入 / 改密碼 Modal -->
 <div class="modal-overlay" id="loginModal" onclick="if(event.target===this)closeLoginModal()">
   <div class="login-modal">
-    <h3>🔐 編輯者登入</h3>
-    <input type="password" id="loginPwInput" placeholder="請輸入密碼" onkeydown="if(event.key==='Enter')doLogin()">
-    <button class="login-submit" onclick="doLogin()">登入</button>
-    <div class="login-error" id="loginError">密碼錯誤，請再試一次</div>
+    <!-- 登入頁 -->
+    <div id="loginView">
+      <h3>🔐 編輯者登入</h3>
+      <input type="password" id="loginPwInput" placeholder="請輸入密碼" onkeydown="if(event.key==='Enter')doLogin()">
+      <button class="login-submit" onclick="doLogin()">登入</button>
+      <div class="login-error" id="loginError">密碼錯誤，請再試一次</div>
+    </div>
+    <!-- 改密碼頁（登入後顯示） -->
+    <div id="changePwView" style="display:none">
+      <h3>🔑 修改密碼</h3>
+      <input type="password" id="oldPwInput" placeholder="目前密碼">
+      <input type="password" id="newPwInput" placeholder="新密碼（至少6字）">
+      <input type="password" id="newPwInput2" placeholder="確認新密碼">
+      <button class="login-submit" onclick="doChangePw()">確認修改</button>
+      <div class="login-error" id="changePwError"></div>
+      <button onclick="closeLoginModal()" style="width:100%;padding:10px;border:none;background:var(--bg);border-radius:10px;font-size:.9rem;cursor:pointer;font-weight:600;color:var(--sub);margin-top:8px">取消</button>
+    </div>
   </div>
 </div>
 
@@ -1680,18 +1705,22 @@ let modalCardId = null, modalProductLink = "";
 let isLoggedIn = false;
 
 // ── 登入 ──
+let _currentPwHash = EDITOR_PW_HASH;  // 可在 session 中臨時覆蓋
+
 async function sha256(msg) {
   const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(msg));
   return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,"0")).join("");
 }
+
 async function doLogin() {
   const pw = document.getElementById("loginPwInput").value;
   const hash = await sha256(pw);
-  if (hash === EDITOR_PW_HASH) {
+  const storedHash = sessionStorage.getItem("costco_pw_override") || _currentPwHash;
+  if (hash === storedHash) {
     isLoggedIn = true;
     sessionStorage.setItem(SESSION_KEY, "1");
     document.body.classList.add("editor-mode");
-    document.getElementById("loginToggleBtn").textContent = "✏️ 編輯中";
+    document.getElementById("loginToggleBtn").textContent = "✏️ 編輯中 ▾";
     document.getElementById("loginToggleBtn").classList.add("logged-in");
     document.getElementById("loginError").style.display = "none";
     closeLoginModal();
@@ -1700,28 +1729,96 @@ async function doLogin() {
     document.getElementById("loginPwInput").value = "";
   }
 }
+
 function toggleLogin() {
   if (isLoggedIn) {
-    isLoggedIn = false;
-    sessionStorage.removeItem(SESSION_KEY);
-    document.body.classList.remove("editor-mode");
-    document.getElementById("loginToggleBtn").textContent = "🔐 登入";
-    document.getElementById("loginToggleBtn").classList.remove("logged-in");
-  } else {
-    document.getElementById("loginModal").classList.add("open");
-    setTimeout(()=>document.getElementById("loginPwInput").focus(), 100);
+    // 登入狀態：顯示選單
+    const menu = document.getElementById("editorMenu");
+    if (menu) { menu.style.display = menu.style.display === "block" ? "none" : "block"; return; }
   }
+  document.getElementById("loginView").style.display = "block";
+  document.getElementById("changePwView").style.display = "none";
+  document.getElementById("loginModal").classList.add("open");
+  setTimeout(()=>document.getElementById("loginPwInput").focus(), 100);
 }
+
+function logout() {
+  isLoggedIn = false;
+  sessionStorage.removeItem(SESSION_KEY);
+  document.body.classList.remove("editor-mode");
+  document.getElementById("loginToggleBtn").textContent = "🔐 登入";
+  document.getElementById("loginToggleBtn").classList.remove("logged-in");
+  const menu = document.getElementById("editorMenu");
+  if (menu) menu.style.display = "none";
+}
+
+function openChangePw() {
+  const menu = document.getElementById("editorMenu");
+  if (menu) menu.style.display = "none";
+  document.getElementById("loginView").style.display = "none";
+  document.getElementById("changePwView").style.display = "block";
+  document.getElementById("changePwError").style.display = "none";
+  document.getElementById("oldPwInput").value = "";
+  document.getElementById("newPwInput").value = "";
+  document.getElementById("newPwInput2").value = "";
+  document.getElementById("loginModal").classList.add("open");
+  setTimeout(()=>document.getElementById("oldPwInput").focus(), 100);
+}
+
+async function doChangePw() {
+  const oldPw  = document.getElementById("oldPwInput").value;
+  const newPw  = document.getElementById("newPwInput").value;
+  const newPw2 = document.getElementById("newPwInput2").value;
+  const errEl  = document.getElementById("changePwError");
+  errEl.style.display = "none";
+
+  if (newPw.length < 6) {
+    errEl.textContent = "新密碼至少需要 6 個字元"; errEl.style.display = "block"; return;
+  }
+  if (newPw !== newPw2) {
+    errEl.textContent = "兩次輸入不一致"; errEl.style.display = "block"; return;
+  }
+
+  const storedHash = sessionStorage.getItem("costco_pw_override") || _currentPwHash;
+  const oldHash = await sha256(oldPw);
+  if (oldHash !== storedHash) {
+    errEl.textContent = "目前密碼錯誤"; errEl.style.display = "block"; return;
+  }
+
+  const newHash = await sha256(newPw);
+  // 存到 sessionStorage（本次 session 生效）
+  sessionStorage.setItem("costco_pw_override", newHash);
+  // 存到 localStorage（下次開瀏覽器仍生效）
+  localStorage.setItem("costco_pw_hash", newHash);
+  closeLoginModal();
+  alert("✅ 密碼已更新！注意：此密碼僅存在瀏覽器中。
+下次執行 run_costco.py 時若要永久套用，請更新 .env 的 EDITOR_PASSWORD。");
+}
+
 function closeLoginModal() {
   document.getElementById("loginModal").classList.remove("open");
+  document.getElementById("loginPwInput").value = "";
 }
-// 恢復 session
+
+// 恢復 session（含自訂密碼）
 if (sessionStorage.getItem(SESSION_KEY)) {
   isLoggedIn = true;
   document.body.classList.add("editor-mode");
-  document.getElementById("loginToggleBtn").textContent = "✏️ 編輯中";
+  document.getElementById("loginToggleBtn").textContent = "✏️ 編輯中 ▾";
   document.getElementById("loginToggleBtn").classList.add("logged-in");
 }
+// 若有 localStorage 的自訂密碼 hash，使用它
+const _lsPwHash = localStorage.getItem("costco_pw_hash");
+if (_lsPwHash) sessionStorage.setItem("costco_pw_override", _lsPwHash);
+
+// 點其他地方關閉 editorMenu
+document.addEventListener("click", e => {
+  const menu = document.getElementById("editorMenu");
+  const btn  = document.getElementById("loginToggleBtn");
+  if (menu && !menu.contains(e.target) && e.target !== btn) {
+    menu.style.display = "none";
+  }
+});
 
 // ── 分類覆蓋（localStorage + DB 合併）──
 function getOverrides() {
@@ -1766,26 +1863,49 @@ async function syncToGitHub(cardId, catId, productName, productLink) {
 
 // ── 初始化（DB 覆蓋 + localStorage 覆蓋，localStorage 優先）──
 window.addEventListener("DOMContentLoaded", () => {
-  // 先套用 DB 覆蓋（來自後端）
   Object.entries(DB_OVERRIDES).forEach(([id, catId]) => {
     const card = document.getElementById(id); if (!card) return;
-    _applyCatToCard(card, catId);
+    _applyCatToCard(card, catId, false);  // false = 不加標籤（後端已分好類）
   });
-  // 再套用 localStorage（覆蓋 DB）
   Object.entries(getOverrides()).forEach(([id, catId]) => {
     const card = document.getElementById(id); if (!card) return;
-    _applyCatToCard(card, catId);
+    _applyCatToCard(card, catId, true);   // true = 使用者手動改的，加標籤
   });
+  updateTabCounts();
   applyFilter();
 });
 
-function _applyCatToCard(card, catId) {
+// ── 套用分類到卡片 ──
+// showBadge: false = 不加標籤（後端分類/初始）, true = 加「✏️ 分類」標籤
+function _applyCatToCard(card, catId, showBadge) {
   card.dataset.cat = catId;
   const body = card.querySelector(".card-body");
   const ex = body.querySelector(".cat-badge"); if (ex) ex.remove();
-  const label = ALL_CATS.find(c => c.replace(/[^\w]/g,"_") === catId) || catId;
-  const b = document.createElement("span"); b.className = "cat-badge"; b.textContent = "✏️ " + label;
-  body.appendChild(b);
+  if (showBadge) {
+    const label = ALL_CATS.find(c => c.replace(/[^\w]/g,"_") === catId) || catId;
+    const b = document.createElement("span"); b.className = "cat-badge"; b.textContent = "✏️ " + label;
+    body.appendChild(b);
+  }
+}
+
+// ── 更新 Tab 數字 ──
+function updateTabCounts() {
+  // 計算每個分類的可見卡片數（不考慮目前篩選，只看 data-cat）
+  const counts = {};
+  document.querySelectorAll(".card").forEach(card => {
+    const cat = card.dataset.cat || "__其他";
+    counts[cat] = (counts[cat] || 0) + 1;
+  });
+  document.querySelectorAll(".tab[data-catid]").forEach(tab => {
+    const span = tab.querySelector(".tab-count");
+    if (span) span.textContent = counts[tab.dataset.catid] || 0;
+  });
+  // 更新「全部」tab
+  const allTab = document.querySelector(".tab[data-catid='all']");
+  if (allTab) {
+    const span = allTab.querySelector(".tab-count");
+    if (span) span.textContent = document.querySelectorAll(".card").length;
+  }
 }
 
 // ── 篩選 ──
@@ -1840,10 +1960,10 @@ function selectCat(catId) {
   const productName = document.getElementById("modalProductName").textContent;
   card.dataset.cat = catId;
   saveOverride(modalCardId, catId);
-  _applyCatToCard(card, catId);
-  // 同步到 GitHub
+  _applyCatToCard(card, catId, true);  // 手動改的加標籤
   syncToGitHub(modalCardId, catId, productName, modalProductLink);
   closeModal();
+  updateTabCounts();  // 改完後刷新 Tab 數字
   applyFilter();
 }
 </script>
