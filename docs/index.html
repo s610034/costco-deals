@@ -1791,8 +1791,7 @@ async function doChangePw() {
   // 存到 localStorage（下次開瀏覽器仍生效）
   localStorage.setItem("costco_pw_hash", newHash);
   closeLoginModal();
-  alert("✅ 密碼已更新！注意：此密碼僅存在瀏覽器中。
-下次執行 run_costco.py 時若要永久套用，請更新 .env 的 EDITOR_PASSWORD。");
+  alert("✅ 密碼已更新！注意：此密碼僅存在瀏覽器中。\n下次執行 run_costco.py 時若要永久套用，請更新 .env 的 EDITOR_PASSWORD。");
 }
 
 function closeLoginModal() {
