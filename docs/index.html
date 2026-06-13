@@ -1817,11 +1817,7 @@ async function doChangePw() {
   const token = localStorage.getItem("costco_gh_token") || "";
   if (!token) {
     closeLoginModal();
-    alert("✅ 密碼本次 session 已更新。
-
-若要讓所有設備永久生效，請設定 GitHub Token：
-在瀏覽器 console 執行：
-localStorage.setItem('costco_gh_token', 'YOUR_TOKEN')");
+    alert("✅ 密碼本次 session 已更新。\n\n若要讓所有設備永久生效，請設定 GitHub Token：\n在瀏覽器 console 執行：\nlocalStorage.setItem('costco_gh_token', 'YOUR_TOKEN')");
     return;
   }
 
@@ -1845,8 +1841,7 @@ localStorage.setItem('costco_gh_token', 'YOUR_TOKEN')");
     });
     if (putResp.ok) {
       closeLoginModal();
-      alert("✅ 密碼已更新並同步到所有設備！
-（config.json 已更新到 GitHub）");
+      alert("✅ 密碼已更新並同步到所有設備！\n（config.json 已更新到 GitHub）");
     } else {
       throw new Error("GitHub API 回傳 " + putResp.status);
     }
