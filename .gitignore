@@ -1,5 +1,7 @@
 .env
 data/
+!data/config.json
+!data/overrides.json
 __pycache__/
 *.pyc
 report/
