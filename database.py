@@ -53,7 +53,8 @@ def init_db():
             圖片URL       TEXT,
             商品連結      TEXT,
             抓取時間      TEXT,
-            商品編號      TEXT
+            商品編號      TEXT,
+            討論連結      TEXT DEFAULT ""
         );
 
         CREATE TABLE IF NOT EXISTS category_overrides (
@@ -87,7 +88,7 @@ def upsert_products(products: List[Dict], crawl_date: str = None) -> int:
     for p in products:
         link = p.get("商品連結", "")
         exists = conn.execute(
-            "SELECT id, 優惠期間, 商品編號, 原價, 折扣金額, 圖片URL FROM products WHERE crawl_date=? AND 商品連結=?",
+            "SELECT id, 優惠期間, 商品編號, 原價, 折扣金額, 圖片URL, 討論連結 FROM products WHERE crawl_date=? AND 商品連結=?",
             (crawl_date, link)
         ).fetchone()
         if exists:
@@ -120,6 +121,11 @@ def upsert_products(products: List[Dict], crawl_date: str = None) -> int:
             if new_img and not exists["圖片URL"]:
                 updates.append("圖片URL=?")
                 vals.append(new_img)
+            # 有新的討論連結就更新
+            new_disc_url = p.get("討論連結", "")
+            if new_disc_url and not exists["討論連結"]:
+                updates.append("討論連結=?")
+                vals.append(new_disc_url)
             if updates:
                 vals.append(exists["id"])
                 conn.execute(f"UPDATE products SET {', '.join(updates)} WHERE id=?", vals)
@@ -128,8 +134,8 @@ def upsert_products(products: List[Dict], crawl_date: str = None) -> int:
         conn.execute("""
             INSERT INTO products
               (crawl_date, 商品名稱, 分類, 細分類, 原價, 折扣金額, 折扣幅度,
-               折扣後售價, 優惠期間, 實體賣場, 圖片URL, 商品連結, 抓取時間, 商品編號)
-            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+               折扣後售價, 優惠期間, 實體賣場, 圖片URL, 商品連結, 抓取時間, 商品編號, 討論連結)
+            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
         """, (
             crawl_date,
             p.get("商品名稱", ""),
@@ -145,6 +151,7 @@ def upsert_products(products: List[Dict], crawl_date: str = None) -> int:
             p.get("商品連結", ""),
             p.get("抓取時間", ""),
             p.get("商品編號", ""),
+            p.get("討論連結", ""),
         ))
         inserted += 1
 

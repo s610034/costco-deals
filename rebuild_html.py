@@ -72,20 +72,29 @@ def get_products_last_30_days():
 
     cutoff = (datetime.datetime.now() - datetime.timedelta(days=30)).strftime('%Y%m%d')
 
-    # 取得最近30天內出現過的商品連結（取最新那筆，只保留有折扣的）
+    # 取得最近30天內出現過的商品（取最新那筆，只保留有折扣的）
+    # 用商品編號優先去重，沒有商品編號才用商品連結
     rows = conn.execute("""
         SELECT p.*
         FROM products p
         INNER JOIN (
-            SELECT 商品連結, MAX(crawl_date) as max_date
+            SELECT
+                CASE WHEN 商品編號 != '' AND 商品編號 IS NOT NULL
+                     THEN 商品編號
+                     ELSE 商品連結 END as group_key,
+                MAX(crawl_date) as max_date,
+                MAX(CASE WHEN 商品連結 LIKE '%costco.com.tw/p/%' THEN crawl_date ELSE '' END) as official_date
             FROM products
             WHERE crawl_date >= ?
               AND 商品連結 != ''
               AND 商品名稱 != ''
               AND (折扣金額 IS NOT NULL OR 折扣後售價 IS NOT NULL)
-            GROUP BY 商品連結
-        ) latest ON p.商品連結 = latest.商品連結
-                    AND p.crawl_date = latest.max_date
+            GROUP BY group_key
+        ) latest ON (
+            CASE WHEN p.商品編號 != '' AND p.商品編號 IS NOT NULL
+                 THEN p.商品編號
+                 ELSE p.商品連結 END = latest.group_key
+        ) AND p.crawl_date = COALESCE(NULLIF(latest.official_date,''), latest.max_date)
         WHERE p.折扣金額 IS NOT NULL OR p.折扣後售價 IS NOT NULL
         ORDER BY p.折扣金額 DESC NULLS LAST
     """, (cutoff,)).fetchall()
@@ -107,7 +116,7 @@ def get_products_last_30_days():
             '圖片URL':    p.get('圖片URL', ''),
             '商品連結':   p.get('商品連結', ''),
             '抓取時間':   p.get('抓取時間', ''),
-            '討論連結':   '',
+            '討論連結':   p.get('討論連結', '') or '',
             '來源':       '',
         })
 
@@ -149,7 +158,14 @@ def get_products_last_30_days():
                 bool(old_p.get("商品編號")),
             ])
             if new_score > old_score:
+                # 切換到新的，但繼承舊的 討論連結（如果新的沒有）
+                if not p.get("討論連結") and old_p.get("討論連結"):
+                    p["討論連結"] = old_p["討論連結"]
                 seen[pid] = p
+            else:
+                # 保留舊的，但繼承新的 討論連結（如果舊的沒有）
+                if not old_p.get("討論連結") and p.get("討論連結"):
+                    old_p["討論連結"] = p["討論連結"]
     products = list(seen.values())
     print(f"  📦 DB 30天合併：{len(products)} 筆（去重後）")
     return products

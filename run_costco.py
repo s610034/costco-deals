@@ -153,7 +153,12 @@ def get_products_last_30_days():
                 bool(old_p.get("商品編號")),
             ])
             if new_score > old_score:
+                if not p.get("討論連結") and seen[pid].get("討論連結"):
+                    p["討論連結"] = seen[pid]["討論連結"]
                 seen[pid] = p
+            else:
+                if not seen[pid].get("討論連結") and p.get("討論連結"):
+                    seen[pid]["討論連結"] = p["討論連結"]
     products = list(seen.values())
     print(f"  📦 DB 30天合併：{len(products)} 筆（去重後）")
     return products
