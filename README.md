@@ -8,21 +8,30 @@
 ## 📁 專案位置
 ```
 ~/Documents/testthing/costco-deals/
-├── run_costco.py        # 主執行腳本（完整流程）
-├── scraper.py           # Playwright 爬蟲（官網三個折扣頁）
-├── costco_search.py     # 官網搜尋補充（社群商品補圖片/原價）
-├── daybuy_monitor.py    # daybuy @daybuy Telegram 頻道爬蟲
-├── ptt_monitor.py       # PTT hypermall 板爬蟲
-├── generate_html.py     # 產生 HTML 報告
-├── formatter.py         # Telegram 摘要格式
-├── database.py          # SQLite 歷史資料庫
-├── deploy.py            # GitHub Pages 部署
-├── notify.py            # Telegram 推播
-├── rebuild_html.py      # 用 DB 重新產生 HTML（不重新爬蟲）
-├── run_costco.sh        # launchd 用的 shell wrapper
-├── .env                 # Token 設定（不在 git）
-├── data/                # JSON + SQLite + overrides
-└── docs/index.html      # GitHub Pages 靜態網頁
+├── run_costco.py         # 主執行腳本（完整流程，8個 Step）
+├── scraper.py            # Playwright 爬蟲（官網三個折扣頁）
+├── daybuy_monitor.py     # daybuy @daybuy Telegram 頻道爬蟲
+├── ptt_monitor.py        # PTT hypermall 板爬蟲
+├── sighting_monitor.py   # daybuy 賣場目擊情報爬蟲
+├── verify_prices.py      # 用商品編號去官網詳情頁驗證正確原價
+├── crawl_all_products.py # 全量爬取官網所有商品（獨立維護任務）
+├── generate_html.py      # 產生 HTML 報告
+├── database.py           # SQLite 資料庫（含 products_master 表）
+├── deploy.py             # GitHub Pages 部署
+├── notify.py             # Telegram 推播
+├── rebuild_html.py       # 用 DB 重建 HTML（不重新爬蟲）
+├── formatter.py          # Telegram 摘要格式
+├── run_costco.sh         # launchd 排程用的 shell wrapper
+├── launch_costco.sh      # 手動開 Terminal 視窗執行
+├── .env                  # Token 設定（不在 git）
+├── data/
+│   ├── costco_history.db      # 主資料庫（products + products_master）
+│   ├── config.json            # 密碼 hash（跨設備同步）
+│   ├── overrides.json         # 前端分類覆蓋
+│   ├── ptt_cache.json         # PTT 文章快取
+│   ├── daybuy_cache.json      # daybuy 快取
+│   └── costco_deals_YYYYMMDD.json
+└── docs/index.html       # GitHub Pages 首頁
 ```
 
 ---
@@ -44,19 +53,20 @@ Log:              /tmp/costco_deals.log
 ## 🔄 執行流程（run_costco.py）
 
 ```
-Step 0：初始化 DB + 從 GitHub 同步前端分類覆蓋（overrides.json）
+Step 0：初始化 DB + 從 GitHub 同步前端分類覆蓋
 Step 1：Playwright 爬官網三頁
-  ├── 限時優惠 https://costco.com.tw/c/hot-buys        (~46 筆)
-  ├── 精選優惠 https://costco.com.tw/Deals/c/Coupon    (~43 筆)
-  └── 把握優惠 https://costco.com.tw/While-Supplies-Last/c/Toogood
-               （只取有折扣金額的，通常 0 筆，為線上限定）
-Step 1.5：daybuy @daybuy Telegram 頻道補充（純 requests）
-Step 1.6：PTT hypermall 板補充（pttweb.cc，純 requests）
-  └── 只處理 30 天內文章，解析多商品格式
-Step 1.7：社群商品去官網搜尋補充圖片/原價
-  └── costco_search.py → search?q=商品名稱
-Step 2：存 JSON + 存 SQLite DB
-Step 3：從 DB 撈最近 30 天商品（去重合併）
+  ├── 限時優惠 /c/hot-buys（~46筆，有優惠期間 .Wallet）
+  ├── 精選優惠 /Deals/c/Coupon（~43筆）
+  └── 把握優惠（只取有折扣金額的，通常 0 筆）
+Step 1.5：daybuy @daybuy Telegram 補充
+  └── 每條訊息去 daybuy.tw 文章補充：原價、商品編號、優惠期間
+Step 1.6：PTT hypermall 板補充（只取 30 天內文章，解析多商品格式）
+Step 1.7：用商品編號去官網詳情頁驗證正確原價
+  └── DB 已有原價的直接套用（節省時間），沒有的才進詳情頁
+Step 1.8：daybuy 賣場目擊情報
+  └── 補充限定門市標記 + 發現賣場折扣商品
+Step 2：存 JSON + 存 SQLite DB + 寫入 products_master
+Step 3：從 DB 撈最近 30 天商品（去重合併，有折扣才撈）
 Step 4：generate_html.py → docs/index.html
 Step 5：deploy.py → GitHub Pages
 Step 6：Telegram 推播
@@ -64,68 +74,93 @@ Step 6：Telegram 推播
 
 ---
 
-## 🗄️ 資料庫（SQLite）
-- 位置：`data/costco_history.db`
-- 表：`products`（爬取歷史）、`category_overrides`（前端分類覆蓋）
-- 不會清空，每次執行只新增當天資料
-- `rebuild_html.py` 讀 DB 重建 HTML（不重爬，用於修 HTML 樣式）
+## 🗄️ 資料庫 Schema（SQLite）
+
+### products 表（折扣歷史，時間性資料）
+欄位：id, crawl_date, 商品名稱, 分類, 細分類, 原價, 折扣金額, 折扣幅度, 折扣後售價,
+      優惠期間, 實體賣場, 圖片URL, 商品連結, 抓取時間, **商品編號**
+
+### products_master 表（永久商品主資料庫）
+欄位：商品編號(PK), 商品名稱, 分類, 細分類, 原價, 折扣金額, 折扣後售價, 圖片URL,
+      商品連結, 最後更新, 資料來源
+- 目前 **5,499 個商品**（100% 有商品編號，99% 有圖片）
+- 來源：crawl_all_products 5,188 筆 + scraper_history 47 筆 + daybuy_sighting 264 筆
+- 每次 run_costco.py 執行後自動更新
+
+### category_overrides 表（前端分類覆蓋）
 
 ---
 
-## 🌐 GitHub 相關檔案
-- `data/config.json`：編輯密碼 hash（跨設備同步）
-- `data/overrides.json`：前端分類覆蓋（使用者手動改的分類）
-- `docs/index.html`：GitHub Pages 首頁
-
----
-
-## 🖥️ 網頁功能
-- Header 篩選：限時優惠 / 精選優惠
-- 商品分類 Tab（8 個分類 + 其他）+ 橫向滾動（sticky）
-- 商品搜尋
-- 手動修改分類（登入後才能編輯，密碼 Eric99316125）
-- 分類修改同步到 GitHub overrides.json（需在瀏覽器 Console 設定 Token）
-- 優惠期間標籤（有日期顯示日期，把握優惠顯示🔥）
+## 🌐 網頁功能
+- Header 篩選：全部 / ⏰限時優惠 / 🏷️精選優惠（可疊加分類 Tab）
+- 商品分類 Tab（8類）+ sticky
+- 限時/精選優惠小標籤（卡片上顯示）
+- 優惠期間標籤（有日期顯示日期）
+- 📍縣市限定標籤（限定門市）
+- 📰 daybuy 情報頁連結按鈕
+- 搜尋功能
 - 歷史折扣天數顯示
+- 登入（密碼 Eric99316125）→ 手動修改分類，同步到 GitHub overrides.json
 
 ---
 
-## 📋 注意事項
-- Python 3.9：不支援 `int | None`，用 `Optional[int]`；f-string 不能有反斜線
-- 官網是 Angular SPA，用 `domcontentloaded` + sleep 等待（不用 networkidle）
-- Playwright page 要先去首頁接受 cookie 才能渲染商品頁
-- launchd plist：`~/Library/LaunchAgents/com.ericchen.costcodeals.plist`
-- `.env` 不在 git，需手動建立
-- `data/` 在 `.gitignore`，但 `config.json` 和 `overrides.json` 用 `-f` force add
+## 📊 全量商品爬蟲（獨立任務）
+```bash
+# 完整爬取所有分類（約 24 分鐘）
+python3 crawl_all_products.py
 
----
+# 繼續上次中斷的
+python3 crawl_all_products.py --resume
 
-## 📋 待辦清單
-1. **社群商品搜尋補充優化** — 部分商品原價抓不到（笑牛乾酪、嘉實多機油等）
-2. **優惠週 → 多商品展開** — PTT 優惠週文章已可解析多商品
-3. **Line 推播** — `.env` 填入 `LINE_CHANNEL_ACCESS_TOKEN` 和 `LINE_USER_ID`
-4. **daybuy 圖片補充** — daybuy 訊息有時附有圖片連結，可以嘗試抓取
+# 測試模式（只爬前5個分類）
+python3 crawl_all_products.py --test
+```
 
 ---
 
 ## 🚀 快速指令
 ```bash
-# 手動執行完整流程
-cd ~/Documents/testthing/costco-deals && python3 run_costco.py
+cd ~/Documents/testthing/costco-deals
 
-# 只重建 HTML（不重爬，用現有 DB 資料）
-cd ~/Documents/testthing/costco-deals && python3 rebuild_html.py
+# 完整流程
+python3 run_costco.py
+
+# 只重建 HTML（不重新爬蟲）
+python3 rebuild_html.py
 
 # 單獨測試各來源
 python3 daybuy_monitor.py
 python3 ptt_monitor.py
-python3 costco_search.py
+python3 sighting_monitor.py
+python3 verify_prices.py
 
-# 查看 DB 統計
+# 全量爬取官網商品
+python3 crawl_all_products.py
+
+# DB 統計
 python3 -c "
-import sqlite3, datetime
+import sqlite3
 conn = sqlite3.connect('data/costco_history.db')
-rows = conn.execute('SELECT crawl_date, COUNT(*) FROM products GROUP BY crawl_date ORDER BY crawl_date DESC LIMIT 10').fetchall()
-for r in rows: print(r[0], r[1], '筆')
+print('products:', conn.execute('SELECT COUNT(*) FROM products').fetchone()[0])
+print('master:', conn.execute('SELECT COUNT(*) FROM products_master').fetchone()[0])
 "
 ```
+
+---
+
+## 📋 待辦清單
+1. **原價批次補充** — 對 products_master 沒有原價的商品，分批跑 verify_prices
+2. **Step 1.7 改用 master** — 直接從 master 取原價，不再進官網詳情頁
+3. **分類補完** — MAIN_CAT_MAP 補齊所有 cat_id，讓「其他」分類減少
+4. **Line 推播** — `.env` 填入 `LINE_CHANNEL_ACCESS_TOKEN` 和 `LINE_USER_ID`
+5. **TORRIDEN 面膜特價** — 每片 $37 不是整組，需修 daybuy 解析邏輯
+
+---
+
+## 📌 注意事項
+- Python 3.9：不支援 `int | None`，用 `Optional[int]`
+- 官網是 Angular SPA：用 `domcontentloaded` + sleep 等待（不用 networkidle）
+- 分類頁 URL 格式：`/c/數字`（不是 `/c/英文名`）
+- 子分類才有商品，大分類頁（如 `/c/8`）通常是 0
+- launchd plist：`~/Library/LaunchAgents/com.ericchen.costcodeals.plist`
+- `.env` 不在 git，需手動建立

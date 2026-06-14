@@ -4,4 +4,10 @@ data/
 !data/overrides.json
 __pycache__/
 *.pyc
+*.pyo
 report/
+debug_*.py
+debug_*.html
+*.log
+.DS_Store
+data/crawl_state.json

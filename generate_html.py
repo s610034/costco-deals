@@ -127,6 +127,17 @@ def generate_html(products: List[Dict], output_path: str) -> str:
             elif "精選" in deal_cat:  deal_val = "coupon"
             else:                     deal_val = "other"
 
+            # 優惠類型小標籤
+            if deal_val == "hotbuys":
+                deal_badge_html = '<span class="deal-type-badge badge-hot">⏰ 限時優惠</span>'
+            elif deal_val == "coupon":
+                deal_badge_html = '<span class="deal-type-badge badge-coup">🏷️ 精選優惠</span>'
+            elif deal_val == "both":
+                deal_badge_html = '<span class="deal-type-badge badge-hot">⏰ 限時優惠</span>'
+            else:
+                deal_badge_html = ''
+
+
             orig_str = f"${orig:,}" if orig else ""
             sale_str = f"${sale:,}" if sale else ""
             amt_str  = f"省 ${amt:,}" if amt else ""
@@ -174,6 +185,7 @@ def generate_html(products: List[Dict], output_path: str) -> str:
     <div class="card-img">{img_html}{badge_html}{src_icon}</div>
     <div class="card-body">
       <p class="card-name">{name}</p>
+      {deal_badge_html}
       {location_html}
       {period_html}
       <div class="card-price">
@@ -269,6 +281,9 @@ main{{padding:12px;max-width:960px;margin:0 auto}}
 .history{{font-size:.65rem;color:var(--sub);margin-top:2px}}
 .cat-badge{{display:inline-block;font-size:.6rem;background:#e0f2fe;color:#0369a1;padding:1px 6px;border-radius:10px;margin-top:2px}}
 .location-badge{{display:inline-block;font-size:.62rem;font-weight:700;color:#fff;background:#dc2626;padding:1px 7px;border-radius:10px;margin-top:2px}}
+.deal-type-badge{{display:inline-block;font-size:.6rem;font-weight:600;padding:1px 6px;border-radius:8px;margin-top:2px}}
+.badge-hot{{background:#fef3c7;color:#92400e}}
+.badge-coup{{background:#ede9fe;color:#5b21b6}}
 .change-cat-btn{{position:absolute;bottom:6px;right:6px;border:none;background:transparent;font-size:.75rem;cursor:pointer;opacity:0;pointer-events:none;padding:2px;transition:opacity .2s}}
 .daybuy-link{{display:block;font-size:.65rem;color:#0369a1;text-align:center;padding:4px 8px;border-top:1px solid var(--border);background:#f0f9ff;text-decoration:none;margin-top:4px}}
 .daybuy-link:hover{{background:#dbeafe}}
@@ -534,20 +549,23 @@ function _applyCatToCard(card, catId, showBadge) {{
 
 // Tab 數字更新
 function updateTabCounts() {{
+  // 根據目前的 deal 篩選計算各分類數量
   const counts = {{}};
+  let total = 0;
   document.querySelectorAll(".card").forEach(card => {{
+    const mDeal = currentDeal === "all" || card.dataset.deal === currentDeal;
+    if (!mDeal) return;
     const cat = card.dataset.cat || "__其他";
     counts[cat] = (counts[cat] || 0) + 1;
+    total++;
   }});
   document.querySelectorAll(".tab[data-catid]").forEach(tab => {{
+    const catid = tab.dataset.catid;
     const span = tab.querySelector(".tab-count");
-    if (span) span.textContent = counts[tab.dataset.catid] || 0;
+    if (!span) return;
+    if (catid === "all") span.textContent = total;
+    else span.textContent = counts[catid] || 0;
   }});
-  const allTab = document.querySelector(".tab[data-catid='all']");
-  if (allTab) {{
-    const span = allTab.querySelector(".tab-count");
-    if (span) span.textContent = document.querySelectorAll(".card").length;
-  }}
 }}
 
 // 初始化
@@ -568,17 +586,24 @@ window.addEventListener("DOMContentLoaded", () => {{
 
 // 篩選
 function dealFilter(val, el) {{
-  currentDeal = val; currentCat = "all";
-  document.querySelectorAll(".tab,.hf-btn").forEach(t => t.classList.remove("active"));
-  el.classList.add("active");
-  document.querySelector(".tab").classList.add("active");
+  // 再點一次同一個按鈕 → 取消篩選
+  currentDeal = (currentDeal === val) ? "all" : val;
+  // 更新 hf-btn active 狀態
+  document.querySelectorAll(".hf-btn").forEach(t => t.classList.remove("active"));
+  if (currentDeal === "all") {{
+    document.querySelector(".hf-all").classList.add("active");
+  }} else {{
+    el.classList.add("active");
+  }}
+  // 不重置 currentCat，讓分類篩選繼續作用
+  updateTabCounts();
   applyFilter();
 }}
 function catFilter(cat, el) {{
-  currentCat = cat; currentDeal = "all";
-  document.querySelectorAll(".tab,.hf-btn").forEach(t => t.classList.remove("active"));
+  currentCat = cat;
+  // 不重置 currentDeal，讓優惠類型篩選繼續作用
+  document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
   el.classList.add("active");
-  document.querySelector(".hf-all").classList.add("active");
   applyFilter();
 }}
 function applyFilter() {{

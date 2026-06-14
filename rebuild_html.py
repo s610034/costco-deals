@@ -184,7 +184,7 @@ print(f"\n【Step 4】部署到 GitHub Pages...")
 deploy()
 
 report_url = 'https://s610034.github.io/costco-deals/'
-summary = format_summary(products, stats)
+summary = format_summary(products)
 msg = summary + f"\n\n📱 完整折扣清單：\n{report_url}"
 tg_send(msg)
 print("  ✅ Telegram 已發送")
