@@ -1,82 +1,27 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-generate_html.py
-將折扣商品資料產生手機優先的響應式 HTML 報告
-輸出到 docs/ 資料夾（GitHub Pages）
-"""
+"""generate_html.py - 產生手機優先的響應式 HTML 報告"""
 
-import json
-import os
-import datetime
-import re
+import json, os, datetime, re, hashlib
 from typing import List, Dict
 
-# ── 商品分類關鍵字對照表（參考好市多官方分類）──────────────
 CATEGORY_RULES = [
-    ("🍱 食品飲料", [
-        "咖啡", "茶", "飲料", "果汁", "零食", "餅乾", "糖果", "巧克力",
-        "堅果", "麵包", "蛋糕", "米", "麵", "泡麵", "醬", "油", "鹽",
-        "糖", "米粉", "牛奶", "優格", "起司", "雞蛋", "肉", "魚", "海鮮",
-        "蔬菜", "水果", "冷凍", "罐頭", "即食", "披薩", "烘焙", "食品",
-        "飲食", "料理", "湯", "粥", "燕麥", "穀物", "蜂蜜", "果醬",
-        "Barista", "Coffee", "Tea", "Snack", "Food",
-    ]),
-    ("📺 家電 3C", [
-        "電視", "冰箱", "洗衣機", "冷氣", "空調", "除濕", "空氣清淨",
-        "吸塵器", "掃地機器人", "烤箱", "微波爐", "電鍋", "咖啡機",
-        "果汁機", "電磁爐", "電熱水瓶", "手機", "平板", "筆電", "電腦",
-        "耳機", "喇叭", "相機", "印表機", "路由器", "充電", "電池",
-        "Samsung", "Panasonic", "LG", "Sony", "Philips", "Honeywell",
-        "Dyson", "Roomba", "iPhone", "iPad", "Apple", "Daikin", "大金",
-        "國際牌", "象印", "Zojirushi", "Oster", "Breville", "Nespresso",
-        "TV", "Washer", "Fridge", "Purifier", "Vacuum", "Inverter",
-    ]),
-    ("🧴 保健美妝", [
-        "維他命", "魚油", "保健", "益生菌", "葉黃素", "膠原蛋白",
-        "乳清蛋白", "營養", "藥", "保養", "面膜", "乳液", "精華",
-        "洗面", "防曬", "眼霜", "沐浴乳", "洗髮", "護髮", "牙膏",
-        "牙刷", "化妝", "美妝", "香水", "刮鬍", "除臭",
-        "Blackmores", "Webber", "Nature", "Vitamin", "Omega",
-        "Fish Oil", "Protein", "Probiotic", "Collagen",
-    ]),
-    ("🏠 生活用品", [
-        "衛生紙", "紙巾", "廚房紙", "濕紙巾", "垃圾袋", "保鮮膜",
-        "鋁箔", "清潔劑", "洗碗", "洗衣精", "柔軟精", "漂白",
-        "除菌", "消毒", "掃除", "拖把", "抹布", "收納", "整理箱",
-        "衣架", "曬衣", "燈泡", "電池", "蠟燭", "香薰", "濾水",
-        "廚具", "鍋具", "餐具", "保溫瓶", "保溫杯", "水壺",
-        "Kirkland", "科克蘭", "Glad", "Hefty",
-        "Tissue", "Paper", "Detergent", "Cleaner",
-    ]),
-    ("👕 服飾寢具", [
-        "衣服", "褲子", "上衣", "外套", "羽絨", "襪子", "內衣",
-        "運動服", "泳衣", "鞋", "包包", "皮帶", "帽子", "圍巾",
-        "棉被", "枕頭", "床墊", "床單", "毛毯", "毛巾", "浴巾",
-        "睡袋", "寢具", "Jacket", "Shirt", "Pants", "Shoes",
-        "Bedding", "Pillow", "Blanket", "Towel",
-    ]),
-    ("🐾 寵物用品", [
-        "貓", "狗", "寵物", "貓糧", "狗糧", "貓砂", "寵物零食",
-        "寵物保健", "Cat", "Dog", "Pet", "Litter",
-    ]),
-    ("🧸 玩具育兒", [
-        "玩具", "積木", "樂高", "嬰兒", "尿布", "奶粉", "奶瓶",
-        "推車", "兒童", "童裝", "玩具車", "桌遊", "拼圖",
-        "Toy", "Baby", "Diaper", "Kids", "LEGO",
-    ]),
-    ("🏋️ 運動戶外", [
-        "運動", "健身", "瑜珈", "自行車", "登山", "露營", "帳篷",
-        "球", "球拍", "游泳", "跑步", "舉重", "按摩",
-        "Sport", "Fitness", "Outdoor", "Camping", "Gym",
-    ]),
+    ("🐾 寵物用品", ["貓","狗","寵物","貓糧","狗糧","貓砂","Mon Petit","貓倍麗","愛貓","愛犬","Cat","Dog","Pet","Litter"]),
+    ("🍱 食品飲料", ["咖啡","茶","飲料","果汁","零食","餅乾","糖果","巧克力","堅果","麵包","蛋糕","米","麵","泡麵","醬","油","鹽","糖","牛奶","優格","起司","雞蛋","肉","魚","海鮮","蔬菜","水果","冷凍","罐頭","即食","披薩","烘焙","食品","料理","湯","粥","燕麥","穀物","蜂蜜","果醬","Barista","Coffee","Tea","Snack","Food"]),
+    ("📺 家電 3C",  ["電視","冰箱","洗衣機","冷氣","空調","除濕","空氣清淨","吸塵器","掃地機","烤箱","微波爐","電鍋","咖啡機","果汁機","電磁爐","電熱水瓶","手機","平板","筆電","電腦","耳機","喇叭","相機","印表機","路由器","充電","Samsung","Panasonic","LG","Sony","Philips","Honeywell","Dyson","Roomba","iPhone","iPad","Apple","Daikin","大金","國際牌","象印","Zojirushi","Oster","Breville","Nespresso","TV","Washer","Fridge","Purifier","Vacuum"]),
+    ("🧴 保健美妝", ["維他命","魚油","保健","益生菌","葉黃素","膠原蛋白","乳清蛋白","營養","保養","面膜","乳液","精華","洗面","防曬","沐浴乳","洗髮","護髮","牙膏","牙刷","美妝","香水","刮鬍","Blackmores","Webber","Vitamin","Omega","Fish Oil","Protein","Probiotic","Collagen"]),
+    ("🏠 生活用品", ["衛生紙","紙巾","廚房紙","濕紙巾","垃圾袋","保鮮膜","清潔劑","洗碗","洗衣精","柔軟精","除菌","消毒","收納","整理箱","燈泡","蠟燭","濾水","廚具","鍋具","餐具","保溫瓶","保溫杯","水壺","Kirkland","科克蘭","Tissue","Paper","Detergent","Cleaner"]),
+    ("👕 服飾寢具", ["衣服","褲子","上衣","外套","羽絨","襪子","內衣","運動服","泳衣","鞋","包包","帽子","棉被","枕頭","床墊","床單","毛毯","毛巾","浴巾","寢具","Jacket","Shirt","Pants","Shoes","Bedding","Pillow","Blanket","Towel"]),
+    ("🧸 玩具育兒", ["玩具","積木","嬰兒","尿布","奶粉","奶瓶","推車","兒童","童裝","桌遊","拼圖","Toy","Baby","Diaper","Kids","LEGO"]),
+    ("🏋️ 運動戶外", ["運動","健身","瑜珈","自行車","登山","露營","帳篷","球","球拍","游泳","跑步","舉重","按摩","Sport","Fitness","Outdoor","Camping","Gym"]),
 ]
-
 OTHER_CATEGORY = "📦 其他"
+ALL_CATS = [r[0] for r in CATEGORY_RULES] + [OTHER_CATEGORY]
+
+LIMITED_TIME_KEYWORDS = ["優惠週","限時","特展","期間限定","只到","限量","快閃"]
 
 
 def classify_product(name: str) -> str:
-    """根據商品名稱關鍵字判斷分類"""
     for cat_name, keywords in CATEGORY_RULES:
         for kw in keywords:
             if kw.lower() in name.lower():
@@ -84,74 +29,186 @@ def classify_product(name: str) -> str:
     return OTHER_CATEGORY
 
 
+def normalize_deal_category(product: Dict) -> Dict:
+    deal_cat = product.get("分類", "")
+    if "限時" in deal_cat:
+        return product
+    combined = " ".join([
+        deal_cat,
+        product.get("ptt_標題", "") or "",
+        product.get("優惠期間", "") or "",
+        product.get("商品名稱", "") or "",
+    ])
+    for kw in LIMITED_TIME_KEYWORDS:
+        if kw in combined:
+            product["分類"] = "限時優惠"
+            return product
+    return product
+
+
 def generate_html(products: List[Dict], output_path: str) -> str:
-    today = datetime.datetime.now()
-    date_str = today.strftime("%Y/%m/%d")
+    # 讀取 DB 分類覆蓋
+    try:
+        from database import get_all_category_overrides
+        db_overrides = get_all_category_overrides()
+    except Exception:
+        db_overrides = {}
+
+    # 讀取密碼 hash
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    env_pw = "costco2024"
+    try:
+        with open(os.path.join(base_dir, ".env")) as f:
+            for line in f:
+                line = line.strip()
+                if line.startswith("EDITOR_PASSWORD="):
+                    env_pw = line.split("=", 1)[1].strip()
+                    break
+    except Exception:
+        pass
+    pw_hash = hashlib.sha256(env_pw.encode()).hexdigest()
+
+    today      = datetime.datetime.now()
+    date_str   = today.strftime("%Y/%m/%d")
     week_range = _get_week_range()
 
-    # 為每個商品加上細分類
+    # 套用分類和限時歸類
     for p in products:
+        normalize_deal_category(p)
         p["細分類"] = classify_product(p.get("商品名稱", ""))
 
-    # 依細分類分組，排序
+    # DB 覆蓋：用商品連結的 card_id 對應
+    link_overrides: Dict[str, str] = {}
+    for card_id, cat in db_overrides.items():
+        link_overrides[card_id] = cat
+
+    # 分組
     categories: Dict[str, List] = {}
     for p in products:
-        cat = p["細分類"]
-        categories.setdefault(cat, []).append(p)
-
-    # 依折扣金額排序
+        categories.setdefault(p["細分類"], []).append(p)
     for cat in categories:
         categories[cat].sort(key=lambda x: x.get("折扣金額") or 0, reverse=True)
 
-    # 分類排序：照 CATEGORY_RULES 順序，其他放最後
     ordered_cats = [r[0] for r in CATEGORY_RULES if r[0] in categories]
     if OTHER_CATEGORY in categories:
         ordered_cats.append(OTHER_CATEGORY)
 
-    # ── 產生分類 Tab HTML ────────────────────────────────
-    tabs_html = '<button class="tab active" onclick="filterCat(\'all\')">🏠 全部 <span class="tab-count">' + str(len(products)) + '</span></button>\n'
-    for cat in ordered_cats:
-        cat_id = re.sub(r'[^\w]', '_', cat)
-        tabs_html += f'<button class="tab" onclick="filterCat(\'{cat_id}\')">{cat} <span class="tab-count">{len(categories[cat])}</span></button>\n'
+    total       = len(products)
+    hotbuys_cnt = sum(1 for p in products if "限時" in p.get("分類",""))
+    coupon_cnt  = sum(1 for p in products if "精選" in p.get("分類","") and "限時" not in p.get("分類",""))
+    both_cnt    = sum(1 for p in products if "限時" in p.get("分類","") and "精選" in p.get("分類",""))
+    all_cats_js = json.dumps(ALL_CATS, ensure_ascii=False)
+    db_overrides_js = json.dumps(db_overrides, ensure_ascii=False)
 
-    # ── 產生商品卡片 HTML ────────────────────────────────
+    # 產生卡片
     all_cards_html = ""
     for cat in ordered_cats:
-        cat_id = re.sub(r'[^\w]', '_', cat)
         for p in categories[cat]:
-            name = p.get("商品名稱", "")
-            orig = p.get("原價")
-            amt  = p.get("折扣金額")
-            sale = p.get("折扣後售價")
-            pct  = p.get("折扣幅度", "")
-            period = p.get("優惠期間", "")
-            img  = p.get("圖片URL", "")
-            link = p.get("商品連結", "#")
-            deal_cat = p.get("分類", "")  # 限時優惠 / 精選優惠
+            name      = p.get("商品名稱", "")
+            orig      = p.get("原價")
+            amt       = p.get("折扣金額")
+            sale      = p.get("折扣後售價")
+            pct       = p.get("折扣幅度", "")
+            period    = p.get("優惠期間", "").strip()
+            img       = p.get("圖片URL", "")
+            link      = p.get("商品連結", "#")
+            deal_cat  = p.get("分類", "")
+            disc_url  = p.get("討論連結", "")
+            days      = p.get("距上次折扣天數")
+            price_chg = p.get("價格變化", "")
+            cat_id    = re.sub(r"[^\w]", "_", p["細分類"])
+            card_id   = "c_" + re.sub(r"[^\w]", "_", link[-35:])
+
+            # 套用 DB 覆蓋分類
+            actual_cat_id = link_overrides.get(card_id, cat_id)
+
+            if "限時" in deal_cat and "精選" in deal_cat: deal_val = "both"
+            elif "限時" in deal_cat:  deal_val = "hotbuys"
+            elif "精選" in deal_cat:  deal_val = "coupon"
+            else:                     deal_val = "other"
 
             orig_str = f"${orig:,}" if orig else ""
             sale_str = f"${sale:,}" if sale else ""
             amt_str  = f"省 ${amt:,}" if amt else ""
 
-            img_html = f'<img src="{img}" alt="{name}" loading="lazy" onerror="this.style.display=\'none\'">' if img else '<div class="no-img">📦</div>'
-            badge_html = f'<div class="badge">-{pct}</div>' if pct else ""
-            deal_tag_html = f'<div class="deal-tag">{deal_cat}</div>' if deal_cat else ""
-            period_html = f'<p class="period">⏰ {period}</p>' if period else ""
+            img_html    = f'<img src="{img}" alt="{name}" loading="lazy" onerror="this.style.display=\'none\'">' if img else '<div class="no-img">📦</div>'
+            badge_html  = f'<div class="badge">-{pct}</div>' if pct else ""
+            # 限定門市標籤
+            location = p.get("限定門市", "")
+            location_html = f'<span class="location-badge">📍 {location}限定</span>' if location else ""
 
-            all_cards_html += f'''<a class="card" href="{link}" target="_blank" rel="noopener" data-cat="{cat_id}">
-  <div class="card-img">{img_html}{badge_html}{deal_tag_html}</div>
-  <div class="card-body">
-    <p class="card-name">{name}</p>
-    <div class="card-price">
-      <span class="orig">{orig_str}</span>
-      {"<span class='arrow'>→</span>" if orig_str else ""}
-      <span class="sale">{sale_str}</span>
+            # 優惠期間標籤：有日期就顯示日期，沒有則依分類顯示標籤
+            if period:
+                period_html = f'<p class="deal-period">📅 {period}</p>'
+            elif "把握" in deal_cat:
+                period_html = '<p class="deal-period">🔥 把握優惠（數量有限）</p>'
+            else:
+                period_html = ""
+
+            src_icon = ""
+            daybuy_link_html = ""
+            disc_url = p.get("討論連結", "") or p.get("商品連結_官網", "")
+
+            # 判斷是否有 daybuy 連結
+            orig_link = p.get("商品連結", "")
+            has_daybuy = "daybuy.tw" in orig_link or ("daybuy.tw" in disc_url)
+
+            if has_daybuy:
+                daybuy_url = orig_link if "daybuy.tw" in orig_link else disc_url
+                src_icon = f'<a class="src-icon" href="{daybuy_url}" target="_blank" onclick="event.stopPropagation()" title="daybuy 情報">📰</a>'
+                daybuy_link_html = f'<a class="daybuy-link" href="{daybuy_url}" target="_blank" onclick="event.stopPropagation()">📰 daybuy 情報頁</a>'
+            elif p.get("實體賣場"):
+                src_icon = '<span class="src-icon" title="線上售價與賣場相同">🏪</span>'
+
+            history_html = ""
+            if days is not None:
+                history_html = f'<p class="history">🕐 距上次折扣 {days} 天</p>'
+            elif price_chg == "首次出現":
+                history_html = '<p class="history">🆕 首次出現</p>'
+
+            name_esc = name.replace("'", "\\'")
+            link_esc = link.replace("'", "\\'")
+
+            all_cards_html += f'''<div class="card" id="{card_id}" data-cat="{actual_cat_id}" data-deal="{deal_val}">
+  <a href="{link}" target="_blank" rel="noopener" class="card-link">
+    <div class="card-img">{img_html}{badge_html}{src_icon}</div>
+    <div class="card-body">
+      <p class="card-name">{name}</p>
+      {location_html}
+      {period_html}
+      <div class="card-price">
+        <span class="orig">{orig_str}</span>{"<span class='arrow'>→</span>" if orig_str else ""}
+        <span class="sale">{sale_str}</span>
+      </div>
+      <p class="card-save">{amt_str}</p>
+      {history_html}
     </div>
-    <p class="card-save">{amt_str}</p>
-    {period_html}
-  </div>
-</a>
+  </a>
+  <button class="change-cat-btn" onclick="openCatModal('{card_id}','{actual_cat_id}','{name_esc}','{link_esc}')" title="修改分類（需登入）">✏️</button>
+  {daybuy_link_html}
+</div>
 '''
+
+    # Header 篩選
+    both_btn = f'<button class="hf-btn hf-both" onclick="dealFilter(\'both\',this)">🔥 兩者皆有 <span>{both_cnt}</span></button>' if both_cnt else ""
+    header_filters = f'''<div class="header-filters">
+  <button class="hf-btn hf-all active" onclick="dealFilter(\'all\',this)">全部 <span>{total}</span></button>
+  <button class="hf-btn hf-hot" onclick="dealFilter(\'hotbuys\',this)">⏰ 限時優惠 <span>{hotbuys_cnt}</span></button>
+  <button class="hf-btn hf-coup" onclick="dealFilter(\'coupon\',this)">🏷️ 精選優惠 <span>{coupon_cnt}</span></button>
+  {both_btn}
+</div>'''
+
+    # Tabs
+    tabs_html = '<button class="tab active" data-catid="all" onclick="catFilter(\'all\',this)">🏠 全部 <span class="tab-count">' + str(total) + '</span></button>\n'
+    for cat in ordered_cats:
+        cid = re.sub(r"[^\w]", "_", cat)
+        tabs_html += f'<button class="tab" data-catid="{cid}" onclick="catFilter(\'{cid}\',this)">{cat} <span class="tab-count">{len(categories[cat])}</span></button>\n'
+
+    # Modal 選項
+    modal_options = "\n".join(
+        f'<button class="modal-cat-btn" data-cat="{re.sub(chr(92) + "W", "_", c)}" onclick="selectCat(\'{re.sub(chr(92) + "W", "_", c)}\')">{c}</button>'
+        for c in ALL_CATS
+    )
 
     html = f"""<!DOCTYPE html>
 <html lang="zh-TW">
@@ -161,127 +218,419 @@ def generate_html(products: List[Dict], output_path: str) -> str:
 <title>好市多折扣週報 {date_str}</title>
 <style>
 *,*::before,*::after{{box-sizing:border-box;margin:0;padding:0}}
-:root{{
-  --red:#E3001B;--blue:#005DAA;--bg:#f4f4f4;
-  --text:#1a1a1a;--sub:#666;--border:#e0e0e0;
-  --radius:12px;--shadow:0 2px 12px rgba(0,0,0,0.08);
-}}
+:root{{--red:#E3001B;--orange:#d97706;--bg:#f4f4f4;--text:#1a1a1a;--sub:#666;--border:#e0e0e0;--radius:12px;--shadow:0 2px 12px rgba(0,0,0,.08)}}
 body{{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans TC",sans-serif;background:var(--bg);color:var(--text)}}
-
-/* Header */
-header{{background:var(--red);color:#fff;padding:16px;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.2)}}
-header h1{{font-size:1.15rem;font-weight:700}}
-header .meta{{font-size:.75rem;opacity:.85;margin-top:3px}}
-.stats{{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}}
-.stat{{background:rgba(255,255,255,.2);border-radius:20px;padding:2px 10px;font-size:.72rem;font-weight:600}}
-
-/* Tabs */
-.tabs-wrap{{background:#fff;border-bottom:2px solid var(--border);overflow-x:auto;white-space:nowrap;scrollbar-width:none;-webkit-overflow-scrolling:touch}}
-.tabs-wrap::-webkit-scrollbar{{display:none}}
-.tab{{display:inline-block;padding:10px 14px;font-size:.8rem;font-weight:600;color:var(--sub);border:none;background:none;border-bottom:3px solid transparent;cursor:pointer;transition:all .2s;white-space:nowrap}}
+header{{background:var(--red);color:#fff;padding:14px 16px 0;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.2)}}
+.header-row{{display:flex;align-items:center;gap:8px;flex-wrap:wrap}}
+header h1{{font-size:1.1rem;font-weight:700}}
+header .meta{{font-size:.72rem;opacity:.85}}
+header .total{{background:rgba(255,255,255,.2);border-radius:20px;padding:2px 10px;font-size:.72rem;font-weight:600;margin-left:auto}}
+.login-wrap{{position:relative;margin-left:8px}}
+.login-btn{{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.4);color:#fff;border-radius:20px;padding:3px 10px;font-size:.7rem;cursor:pointer}}
+.login-btn.logged-in{{background:rgba(255,255,255,.3)}}
+.editor-menu{{position:absolute;top:calc(100% + 6px);right:0;background:#fff;border-radius:10px;box-shadow:0 4px 20px rgba(0,0,0,.15);overflow:hidden;min-width:130px;display:none;z-index:300}}
+.editor-menu button{{display:block;width:100%;padding:10px 16px;border:none;background:none;font-size:.82rem;cursor:pointer;text-align:left}}
+.editor-menu button:hover{{background:#f5f5f5}}
+.editor-menu .logout-btn{{color:#dc2626;border-top:1px solid #eee}}
+.header-filters{{display:flex;gap:6px;margin-top:10px;overflow-x:auto;padding-bottom:10px;scrollbar-width:none}}
+.header-filters::-webkit-scrollbar{{display:none}}
+.hf-btn{{flex-shrink:0;border:none;border-radius:20px;padding:5px 13px;font-size:.75rem;font-weight:700;cursor:pointer;white-space:nowrap}}
+.hf-btn span{{background:rgba(0,0,0,.15);border-radius:20px;padding:1px 7px;margin-left:4px;font-size:.68rem}}
+.hf-all{{background:rgba(255,255,255,.2);color:#fff}}.hf-all.active{{background:#fff;color:var(--red)}}
+.hf-hot{{background:rgba(255,200,0,.3);color:#fff}}.hf-hot.active{{background:#fef9c3;color:#854d0e}}
+.hf-coup{{background:rgba(99,102,241,.3);color:#fff}}.hf-coup.active{{background:#e0e7ff;color:#4338ca}}
+.hf-both{{background:rgba(239,68,68,.3);color:#fff}}.hf-both.active{{background:#fee2e2;color:#b91c1c}}
+.tabs-wrap{{background:#fff;border-bottom:2px solid var(--border);overflow-x:auto;white-space:nowrap;scrollbar-width:thin;-webkit-overflow-scrolling:touch;padding:0 4px;position:sticky;top:var(--header-h,0px);z-index:90;box-shadow:0 2px 4px rgba(0,0,0,.06)}}
+.tab{{display:inline-block;padding:10px 12px;font-size:.78rem;font-weight:600;color:var(--sub);border:none;background:none;border-bottom:3px solid transparent;cursor:pointer;white-space:nowrap}}
 .tab:hover,.tab.active{{color:var(--red);border-bottom-color:var(--red)}}
-.tab-count{{background:var(--border);border-radius:20px;padding:1px 6px;font-size:.68rem;margin-left:3px}}
-.tab.active .tab-count{{background:var(--red);color:#fff}}
-
-/* Search */
-.search-wrap{{padding:12px 16px;background:#fff;border-bottom:1px solid var(--border)}}
-.search-wrap input{{width:100%;padding:9px 14px;border:1.5px solid var(--border);border-radius:24px;font-size:.88rem;outline:none;transition:border .2s}}
+.tab-count{{background:var(--border);border-radius:20px;padding:1px 5px;font-size:.65rem;margin-left:2px}}.tab.active .tab-count{{background:var(--red);color:#fff}}
+.search-wrap{{padding:10px 16px;background:#fff;border-bottom:1px solid var(--border)}}
+.search-wrap input{{width:100%;padding:8px 14px;border:1.5px solid var(--border);border-radius:24px;font-size:.88rem;outline:none}}
 .search-wrap input:focus{{border-color:var(--red)}}
-
-/* Grid */
-main{{padding:14px;max-width:960px;margin:0 auto}}
-.grid{{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:11px}}
+main{{padding:12px;max-width:960px;margin:0 auto}}
+.grid{{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:10px}}
 .empty{{text-align:center;padding:48px 16px;color:var(--sub);font-size:.9rem;display:none}}
-
-/* Card */
-.card{{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);text-decoration:none;color:var(--text);overflow:hidden;display:flex;flex-direction:column;border:1px solid var(--border);transition:transform .15s,box-shadow .15s}}
+.card{{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column;border:1px solid var(--border);position:relative}}
 .card:hover{{transform:translateY(-3px);box-shadow:0 6px 20px rgba(0,0,0,.12)}}
-.card:active{{transform:scale(.97)}}
-.card[style*="display:none"]{{display:none!important}}
-
+.card-link{{text-decoration:none;color:var(--text);display:flex;flex-direction:column;flex:1}}
 .card-img{{position:relative;width:100%;aspect-ratio:1;background:#f9f9f9;overflow:hidden}}
 .card-img img{{width:100%;height:100%;object-fit:contain;padding:8px}}
 .no-img{{display:flex;align-items:center;justify-content:center;height:100%;font-size:2.5rem;opacity:.25}}
-.badge{{position:absolute;top:6px;right:6px;background:var(--red);color:#fff;font-size:.68rem;font-weight:700;padding:2px 7px;border-radius:20px}}
-.deal-tag{{position:absolute;bottom:5px;left:5px;background:rgba(0,93,170,.85);color:#fff;font-size:.62rem;padding:2px 6px;border-radius:8px}}
-
+.badge{{position:absolute;top:6px;right:6px;background:var(--red);color:#fff;font-size:.66rem;font-weight:700;padding:2px 7px;border-radius:20px}}
+.src-icon{{position:absolute;bottom:5px;left:6px;font-size:.85rem;text-decoration:none;opacity:.8}}
+.deal-period{{font-size:.68rem;font-weight:600;color:#9a3412;background:#fff7ed;border-radius:4px;padding:2px 7px;margin-top:2px;margin-bottom:2px;display:inline-block}}
 .card-body{{padding:9px;flex:1;display:flex;flex-direction:column;gap:3px}}
 .card-name{{font-size:.8rem;font-weight:600;line-height:1.4;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}}
 .card-price{{display:flex;align-items:center;gap:4px;flex-wrap:wrap;margin-top:auto;padding-top:5px}}
 .orig{{font-size:.72rem;color:var(--sub);text-decoration:line-through}}
 .arrow{{font-size:.65rem;color:var(--sub)}}
 .sale{{font-size:.92rem;font-weight:700;color:var(--red)}}
-.card-save{{font-size:.72rem;color:#d97706;font-weight:600}}
-.period{{font-size:.65rem;color:var(--sub);margin-top:2px}}
-
-/* Footer */
+.card-save{{font-size:.72rem;color:var(--orange);font-weight:600}}
+.history{{font-size:.65rem;color:var(--sub);margin-top:2px}}
+.cat-badge{{display:inline-block;font-size:.6rem;background:#e0f2fe;color:#0369a1;padding:1px 6px;border-radius:10px;margin-top:2px}}
+.location-badge{{display:inline-block;font-size:.62rem;font-weight:700;color:#fff;background:#dc2626;padding:1px 7px;border-radius:10px;margin-top:2px}}
+.change-cat-btn{{position:absolute;bottom:6px;right:6px;border:none;background:transparent;font-size:.75rem;cursor:pointer;opacity:0;pointer-events:none;padding:2px;transition:opacity .2s}}
+.daybuy-link{{display:block;font-size:.65rem;color:#0369a1;text-align:center;padding:4px 8px;border-top:1px solid var(--border);background:#f0f9ff;text-decoration:none;margin-top:4px}}
+.daybuy-link:hover{{background:#dbeafe}}
+body.editor-mode .change-cat-btn{{opacity:.35;pointer-events:auto}}
+body.editor-mode .change-cat-btn:hover{{opacity:1}}
+.modal-overlay{{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;align-items:flex-end;justify-content:center}}
+.modal-overlay.open{{display:flex}}
+.modal{{background:#fff;border-radius:20px 20px 0 0;width:100%;max-width:480px;padding:20px;max-height:80vh;overflow-y:auto}}
+.modal-title{{font-size:.95rem;font-weight:700;margin-bottom:4px}}
+.modal-subtitle{{font-size:.75rem;color:var(--sub);margin-bottom:16px}}
+.modal-cats{{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}}
+.modal-cat-btn{{border:2px solid var(--border);background:#fff;border-radius:10px;padding:10px 8px;font-size:.82rem;cursor:pointer;text-align:center}}
+.modal-cat-btn:hover,.modal-cat-btn.selected{{border-color:var(--red);color:var(--red);background:#fff0f0;font-weight:700}}
+.modal-cancel{{width:100%;padding:12px;border:none;background:var(--bg);border-radius:10px;font-size:.9rem;cursor:pointer;font-weight:600;color:var(--sub)}}
+.login-modal{{background:#fff;border-radius:20px;width:90%;max-width:320px;padding:24px;margin:auto}}
+.login-modal h3{{font-size:1rem;font-weight:700;margin-bottom:16px;text-align:center}}
+.login-modal input{{width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:.9rem;outline:none;margin-bottom:12px}}
+.login-modal input:focus{{border-color:var(--red)}}
+.login-submit{{width:100%;padding:12px;background:var(--red);color:#fff;border:none;border-radius:10px;font-size:.9rem;font-weight:700;cursor:pointer}}
+.login-error{{color:#dc2626;font-size:.78rem;text-align:center;margin-top:8px;display:none}}
+.login-cancel{{width:100%;padding:10px;border:none;background:var(--bg);border-radius:10px;font-size:.9rem;cursor:pointer;font-weight:600;color:var(--sub);margin-top:8px}}
 footer{{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}}
-
-/* RWD */
-@media(max-width:380px){{.grid{{grid-template-columns:repeat(2,1fr);gap:9px}}}}
-@media(min-width:600px){{.grid{{grid-template-columns:repeat(auto-fill,minmax(175px,1fr))}}}}
+@media(min-width:600px){{.grid{{grid-template-columns:repeat(auto-fill,minmax(175px,1fr))}}.modal{{border-radius:20px;margin-bottom:20px}}}}
 </style>
 </head>
 <body>
-
 <header>
-  <h1>🛒 好市多折扣週報</h1>
-  <div class="meta">📅 {date_str}（{week_range}）</div>
-  <div class="stats">
-    <span class="stat">共 {len(products)} 項折扣</span>
-    {''.join(f'<span class="stat">{c} {len(categories[c])}項</span>' for c in ordered_cats)}
+  <div class="header-row">
+    <h1>🛒 好市多折扣週報</h1>
+    <span class="meta">📅 {date_str}（{week_range}）</span>
+    <span class="total">共 {total} 項</span>
+    <div class="login-wrap">
+      <button class="login-btn" id="loginToggleBtn" onclick="toggleLogin()">🔐 登入</button>
+      <div class="editor-menu" id="editorMenu">
+        <button onclick="openChangePw()">🔑 修改密碼</button>
+        <button class="logout-btn" onclick="logout()">🚪 登出</button>
+      </div>
+    </div>
   </div>
+  {header_filters}
 </header>
 
 <div class="tabs-wrap">
 {tabs_html}</div>
 
 <div class="search-wrap">
-  <input type="search" id="searchInput" placeholder="🔍 搜尋商品名稱..." oninput="doSearch(this.value)">
+  <input type="search" id="searchInput" placeholder="🔍 搜尋商品名稱..." oninput="applyFilter()">
 </div>
 
 <main>
-  <div class="grid" id="grid">
-{all_cards_html}  </div>
+  <div class="grid" id="grid">{all_cards_html}</div>
   <div class="empty" id="empty">😢 找不到符合的商品</div>
 </main>
 
-<footer>
-  🤖 Hermes Agent 自動整理｜資料來源：costco.com.tw｜更新：{today.strftime("%Y-%m-%d %H:%M")}
-</footer>
+<footer>🤖 Hermes Agent 自動整理｜資料來源：costco.com.tw｜更新：{today.strftime("%Y-%m-%d %H:%M")}<br>🏪=賣場同售 📰=daybuy情報 ✏️=登入後可修改分類</footer>
+
+<!-- 分類 Modal -->
+<div class="modal-overlay" id="catModal" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="modal-title">修改商品分類</div>
+    <div class="modal-subtitle" id="modalProductName"></div>
+    <div class="modal-cats">{modal_options}</div>
+    <button class="modal-cancel" onclick="closeModal()">取消</button>
+  </div>
+</div>
+
+<!-- 登入 Modal -->
+<div class="modal-overlay" id="loginModal" onclick="if(event.target===this)closeLoginModal()">
+  <div class="login-modal">
+    <div id="loginView">
+      <h3>🔐 編輯者登入</h3>
+      <input type="password" id="loginPwInput" placeholder="請輸入密碼" onkeydown="if(event.key==='Enter')doLogin()">
+      <button class="login-submit" onclick="doLogin()">登入</button>
+      <div class="login-error" id="loginError">密碼錯誤，請再試一次</div>
+    </div>
+    <div id="changePwView" style="display:none">
+      <h3>🔑 修改密碼</h3>
+      <input type="password" id="oldPwInput" placeholder="目前密碼">
+      <input type="password" id="newPwInput" placeholder="新密碼（至少6字）">
+      <input type="password" id="newPwInput2" placeholder="確認新密碼">
+      <button class="login-submit" onclick="doChangePw()">確認修改</button>
+      <div class="login-error" id="changePwError"></div>
+      <button class="login-cancel" onclick="closeLoginModal()">取消</button>
+    </div>
+  </div>
+</div>
 
 <script>
-let currentCat = 'all';
-let currentSearch = '';
+const ALL_CATS = {all_cats_js};
+const DB_OVERRIDES = {db_overrides_js};
+const PW_HASH_DEFAULT = "{pw_hash}";
+const CONFIG_URL = "https://raw.githubusercontent.com/s610034/costco-deals/main/data/config.json";
+const CONFIG_API = "https://api.github.com/repos/s610034/costco-deals/contents/data/config.json";
+const STORAGE_KEY = "costco_cat_overrides";
+const SESSION_KEY = "costco_editor_session";
+let currentDeal = "all", currentCat = "all";
+let modalCardId = null, modalProductLink = "";
+let isLoggedIn = false;
+let _pwHash = PW_HASH_DEFAULT;
 
-function filterCat(cat) {{
-  currentCat = cat;
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  event.target.classList.add('active');
-  applyFilter();
+// 動態計算 header 高度，讓 tabs sticky 緊貼在 header 下
+function updateHeaderHeight() {{
+  const h = document.querySelector('header');
+  if (h) document.documentElement.style.setProperty('--header-h', h.offsetHeight + 'px');
+}}
+window.addEventListener('DOMContentLoaded', updateHeaderHeight);
+window.addEventListener('resize', updateHeaderHeight);
+
+// 從 GitHub 載入最新密碼 hash
+async function loadConfig() {{
+  try {{
+    const r = await fetch(CONFIG_URL + "?t=" + Date.now());
+    if (r.ok) {{
+      const cfg = await r.json();
+      if (cfg.editor_pw_hash) _pwHash = cfg.editor_pw_hash;
+    }}
+  }} catch(e) {{}}
+}}
+loadConfig();
+
+// SHA-256
+async function sha256(msg) {{
+  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(msg));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,"0")).join("");
 }}
 
-function doSearch(val) {{
-  currentSearch = val.trim().toLowerCase();
-  applyFilter();
+// 登入
+async function doLogin() {{
+  const pw = document.getElementById("loginPwInput").value;
+  const hash = await sha256(pw);
+  if (hash === _pwHash) {{
+    isLoggedIn = true;
+    sessionStorage.setItem(SESSION_KEY, "1");
+    document.body.classList.add("editor-mode");
+    document.getElementById("loginToggleBtn").textContent = "✏️ 編輯中 ▾";
+    document.getElementById("loginToggleBtn").classList.add("logged-in");
+    document.getElementById("loginError").style.display = "none";
+    closeLoginModal();
+  }} else {{
+    document.getElementById("loginError").style.display = "block";
+    document.getElementById("loginPwInput").value = "";
+  }}
 }}
 
+function toggleLogin() {{
+  if (isLoggedIn) {{
+    const menu = document.getElementById("editorMenu");
+    menu.style.display = menu.style.display === "block" ? "none" : "block";
+    return;
+  }}
+  document.getElementById("loginView").style.display = "block";
+  document.getElementById("changePwView").style.display = "none";
+  document.getElementById("loginModal").classList.add("open");
+  setTimeout(() => document.getElementById("loginPwInput").focus(), 100);
+}}
+
+function logout() {{
+  isLoggedIn = false;
+  sessionStorage.removeItem(SESSION_KEY);
+  document.body.classList.remove("editor-mode");
+  document.getElementById("loginToggleBtn").textContent = "🔐 登入";
+  document.getElementById("loginToggleBtn").classList.remove("logged-in");
+  document.getElementById("editorMenu").style.display = "none";
+}}
+
+function openChangePw() {{
+  document.getElementById("editorMenu").style.display = "none";
+  document.getElementById("loginView").style.display = "none";
+  document.getElementById("changePwView").style.display = "block";
+  document.getElementById("changePwError").style.display = "none";
+  document.getElementById("oldPwInput").value = "";
+  document.getElementById("newPwInput").value = "";
+  document.getElementById("newPwInput2").value = "";
+  document.getElementById("loginModal").classList.add("open");
+  setTimeout(() => document.getElementById("oldPwInput").focus(), 100);
+}}
+
+async function doChangePw() {{
+  const oldPw  = document.getElementById("oldPwInput").value;
+  const newPw  = document.getElementById("newPwInput").value;
+  const newPw2 = document.getElementById("newPwInput2").value;
+  const errEl  = document.getElementById("changePwError");
+  errEl.style.display = "none";
+  if (newPw.length < 6) {{ errEl.textContent = "新密碼至少 6 字元"; errEl.style.display = "block"; return; }}
+  if (newPw !== newPw2) {{ errEl.textContent = "兩次輸入不一致"; errEl.style.display = "block"; return; }}
+  const oldHash = await sha256(oldPw);
+  if (oldHash !== _pwHash) {{ errEl.textContent = "目前密碼錯誤"; errEl.style.display = "block"; return; }}
+  const newHash = await sha256(newPw);
+  _pwHash = newHash;
+  const token = localStorage.getItem("costco_gh_token") || "";
+  if (token) {{
+    try {{
+      const getR = await fetch(CONFIG_API, {{headers: {{"Authorization": "token " + token, "Accept": "application/vnd.github.v3+json"}}}});
+      const data = await getR.json();
+      const sha  = data.sha || "";
+      const content = btoa(unescape(encodeURIComponent(JSON.stringify({{"editor_pw_hash": newHash, "version": 1}}, null, 2))));
+      await fetch(CONFIG_API, {{method: "PUT", headers: {{"Authorization": "token " + token, "Content-Type": "application/json"}}, body: JSON.stringify({{"message": "update password hash", "content": content, "sha": sha}})}});
+      closeLoginModal();
+      alert("密碼已更新並同步到所有設備");
+      return;
+    }} catch(e) {{}}
+  }}
+  closeLoginModal();
+  alert("密碼本次已更新（僅此分頁）");
+}}
+
+function closeLoginModal() {{
+  document.getElementById("loginModal").classList.remove("open");
+  document.getElementById("loginPwInput").value = "";
+}}
+
+// 恢復 session
+if (sessionStorage.getItem(SESSION_KEY)) {{
+  isLoggedIn = true;
+  document.body.classList.add("editor-mode");
+  document.getElementById("loginToggleBtn").textContent = "✏️ 編輯中 ▾";
+  document.getElementById("loginToggleBtn").classList.add("logged-in");
+}}
+
+// 點其他地方關閉 editorMenu
+document.addEventListener("click", e => {{
+  const menu = document.getElementById("editorMenu");
+  const btn  = document.getElementById("loginToggleBtn");
+  if (!menu.contains(e.target) && e.target !== btn) menu.style.display = "none";
+}});
+
+// 分類 overrides（localStorage）
+function getOverrides() {{
+  try {{ return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{{}}"); }} catch {{ return {{}}; }}
+}}
+function saveOverride(id, cat) {{
+  const o = getOverrides(); o[id] = cat;
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(o));
+}}
+
+// GitHub overrides.json 同步
+async function syncToGitHub(cardId, catId, productName, productLink) {{
+  const token = localStorage.getItem("costco_gh_token") || "";
+  if (!token) return;
+  const apiUrl = "https://api.github.com/repos/s610034/costco-deals/contents/data/overrides.json";
+  try {{
+    const getR = await fetch(apiUrl, {{headers: {{"Authorization": "token " + token, "Accept": "application/vnd.github.v3+json"}}}});
+    let sha = "", existing = {{}};
+    if (getR.ok) {{
+      const d = await getR.json();
+      sha = d.sha;
+      existing = JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(d.content.replace(/\\n/g, "")), c => c.charCodeAt(0))));
+    }}
+    existing[cardId] = {{cat: catId, name: productName, link: productLink}};
+    const encoded = new TextEncoder().encode(JSON.stringify(existing, null, 2)); const content = btoa(String.fromCharCode(...encoded));
+    await fetch(apiUrl, {{method: "PUT", headers: {{"Authorization": "token " + token, "Content-Type": "application/json"}}, body: JSON.stringify({{"message": "update category: " + cardId, "content": content, "sha": sha}})}});
+  }} catch(e) {{}}
+}}
+
+// 套用分類覆蓋
+function _applyCatToCard(card, catId, showBadge) {{
+  card.dataset.cat = catId;
+  const body = card.querySelector(".card-body");
+  const ex = body.querySelector(".cat-badge");
+  if (ex) ex.remove();
+  // 不顯示手動改分類的標籤（保持和自動分類一樣的樣式）
+}}
+
+// Tab 數字更新
+function updateTabCounts() {{
+  const counts = {{}};
+  document.querySelectorAll(".card").forEach(card => {{
+    const cat = card.dataset.cat || "__其他";
+    counts[cat] = (counts[cat] || 0) + 1;
+  }});
+  document.querySelectorAll(".tab[data-catid]").forEach(tab => {{
+    const span = tab.querySelector(".tab-count");
+    if (span) span.textContent = counts[tab.dataset.catid] || 0;
+  }});
+  const allTab = document.querySelector(".tab[data-catid='all']");
+  if (allTab) {{
+    const span = allTab.querySelector(".tab-count");
+    if (span) span.textContent = document.querySelectorAll(".card").length;
+  }}
+}}
+
+// 初始化
+window.addEventListener("DOMContentLoaded", () => {{
+  // 套用 DB 覆蓋（後端分好的，不加 badge）
+  Object.entries(DB_OVERRIDES).forEach(([id, catId]) => {{
+    const card = document.getElementById(id);
+    if (card) _applyCatToCard(card, catId, false);
+  }});
+  // 套用 localStorage 覆蓋（使用者手動改的，加 badge）
+  Object.entries(getOverrides()).forEach(([id, catId]) => {{
+    const card = document.getElementById(id);
+    if (card) _applyCatToCard(card, catId, true);
+  }});
+  updateTabCounts();
+  applyFilter();
+}});
+
+// 篩選
+function dealFilter(val, el) {{
+  currentDeal = val; currentCat = "all";
+  document.querySelectorAll(".tab,.hf-btn").forEach(t => t.classList.remove("active"));
+  el.classList.add("active");
+  document.querySelector(".tab").classList.add("active");
+  applyFilter();
+}}
+function catFilter(cat, el) {{
+  currentCat = cat; currentDeal = "all";
+  document.querySelectorAll(".tab,.hf-btn").forEach(t => t.classList.remove("active"));
+  el.classList.add("active");
+  document.querySelector(".hf-all").classList.add("active");
+  applyFilter();
+}}
 function applyFilter() {{
-  const cards = document.querySelectorAll('.card');
+  const search = document.getElementById("searchInput").value.trim().toLowerCase();
   let visible = 0;
-  cards.forEach(card => {{
-    const matchCat = currentCat === 'all' || card.dataset.cat === currentCat;
-    const matchSearch = !currentSearch || card.querySelector('.card-name').textContent.toLowerCase().includes(currentSearch);
-    const show = matchCat && matchSearch;
-    card.style.display = show ? '' : 'none';
+  document.querySelectorAll(".card").forEach(card => {{
+    const mDeal   = currentDeal === "all" || card.dataset.deal === currentDeal;
+    const mCat    = currentCat  === "all" || card.dataset.cat  === currentCat;
+    const mSearch = !search || card.querySelector(".card-name").textContent.toLowerCase().includes(search);
+    const show = mDeal && mCat && mSearch;
+    card.style.display = show ? "" : "none";
     if (show) visible++;
   }});
-  document.getElementById('empty').style.display = visible === 0 ? 'block' : 'none';
+  document.getElementById("empty").style.display = visible === 0 ? "block" : "none";
+}}
+
+// 分類 Modal
+function openCatModal(cardId, curCat, name, productLink) {{
+  if (!isLoggedIn) {{
+    document.getElementById("loginView").style.display = "block";
+    document.getElementById("changePwView").style.display = "none";
+    document.getElementById("loginModal").classList.add("open");
+    setTimeout(() => document.getElementById("loginPwInput").focus(), 100);
+    return;
+  }}
+  modalCardId = cardId;
+  modalProductLink = productLink || "";
+  document.getElementById("modalProductName").textContent = name || "";
+  const card = document.getElementById(cardId);
+  document.querySelectorAll(".modal-cat-btn").forEach(b =>
+    b.classList.toggle("selected", b.dataset.cat === card.dataset.cat)
+  );
+  document.getElementById("catModal").classList.add("open");
+}}
+function closeModal() {{ document.getElementById("catModal").classList.remove("open"); modalCardId = null; }}
+function selectCat(catId) {{
+  if (!modalCardId || !isLoggedIn) return;
+  const card = document.getElementById(modalCardId);
+  const productName = document.getElementById("modalProductName").textContent;
+  card.dataset.cat = catId;
+  saveOverride(modalCardId, catId);
+  _applyCatToCard(card, catId, true);
+  syncToGitHub(modalCardId, catId, productName, modalProductLink);
+  closeModal();
+  updateTabCounts();
+  applyFilter();
 }}
 </script>
 </body>
 </html>"""
 
+    # 注入密碼 hash（已在 pw_hash 變數裡）
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
     with open(output_path, "w", encoding="utf-8") as f:
         f.write(html)
@@ -290,7 +639,7 @@ function applyFilter() {{
 
 
 def _get_week_range() -> str:
-    today = datetime.date.today()
+    today  = datetime.date.today()
     monday = today - datetime.timedelta(days=today.weekday())
     sunday = monday + datetime.timedelta(days=6)
     return f"{monday.strftime('%m/%d')}～{sunday.strftime('%m/%d')}"
@@ -299,14 +648,12 @@ def _get_week_range() -> str:
 if __name__ == "__main__":
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     DATA_DIR = os.path.join(BASE_DIR, "data")
-    files = sorted([f for f in os.listdir(DATA_DIR) if f.endswith(".json")])
+    files = sorted([f for f in os.listdir(DATA_DIR) if f.startswith("costco_deals_") and f.endswith(".json")])
     if not files:
-        print("找不到資料，請先執行 scraper.py")
-        exit(1)
+        print("找不到資料"); exit(1)
     with open(os.path.join(DATA_DIR, files[-1]), encoding="utf-8") as f:
         products = json.load(f)
-    today = datetime.datetime.now().strftime("%Y%m%d")
-    out = os.path.join(BASE_DIR, "docs", f"costco_{today}.html")
+    out = os.path.join(BASE_DIR, "docs", "index.html")
     generate_html(products, out)
     import subprocess
     subprocess.run(["open", out])

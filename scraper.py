@@ -39,12 +39,12 @@ USER_AGENT = (
     "Chrome/125.0.0.0 Safari/537.36"
 )
 
-# 線上限定關鍵字（出現在商品名稱或摘要時跳過）
 ONLINE_ONLY_KEYWORDS = ["線上限定", "線上專屬", "網路限定", "online only", "online exclusive"]
+
+DATE_RANGE_RE = re.compile(r"(\d{4}/\d{2}/\d{2}[^\d]+\d{4}/\d{2}/\d{2})")
 
 
 def parse_number(text: str) -> Optional[int]:
-    """從字串取出第一個整數，'$7,099' → 7099"""
     if not text:
         return None
     digits = re.sub(r"[^\d]", "", text)
@@ -52,22 +52,41 @@ def parse_number(text: str) -> Optional[int]:
 
 
 def extract_chinese_name(text: str) -> str:
-    """
-    從「中文名稱\n英文名稱」格式中只取中文行
-    例如 'Honeywell 淨味空氣清淨機 HPA5350WTWV1\nHoneywell Air Purifier HPA5350WTWV1'
-    → 'Honeywell 淨味空氣清淨機 HPA5350WTWV1'
-    """
     if not text:
         return ""
     lines = [l.strip() for l in text.strip().splitlines() if l.strip()]
     if not lines:
         return text.strip()
-    # 優先取含中文字的行
     for line in lines:
         if re.search(r'[\u4e00-\u9fff]', line):
             return line
-    # 沒有中文就回傳第一行
     return lines[0]
+
+
+def extract_page_period(page) -> str:
+    """
+    從清單頁抓優惠期間（整頁所有商品共用）。
+    限時優惠頁有 <p> 含「優惠期間」；精選優惠頁沒有（不強制抓）。
+    """
+    try:
+        result = page.evaluate("""() => {
+            const els = document.querySelectorAll('p');
+            for (const el of els) {
+                const t = el.innerText?.trim();
+                if (t && t.includes('優惠期間')) return t;
+            }
+            return '';
+        }""")
+        if result:
+            m = DATE_RANGE_RE.search(result)
+            if m:
+                return m.group(1).strip()
+            clean = result.replace("*", "").replace("優惠期間", "").strip()
+            if clean:
+                return clean
+    except Exception:
+        pass
+    return ""
 
 
 def scrape_page(page, url: str, category_tag: str) -> List[Dict]:
@@ -80,7 +99,6 @@ def scrape_page(page, url: str, category_tag: str) -> List[Dict]:
     except PlaywrightTimeout:
         print(f"  ⚠️  頁面逾時，繼續嘗試解析...")
 
-    # 緩慢滾動觸發 lazy-load
     for _ in range(5):
         page.evaluate("window.scrollBy(0, window.innerHeight * 1.5)")
         time.sleep(1.2)
@@ -90,36 +108,50 @@ def scrape_page(page, url: str, category_tag: str) -> List[Dict]:
         cards = page.query_selector_all("[data-product-code]")
 
     print(f"  📦 找到 {len(cards)} 個商品卡片")
+
+    # 抓整頁優惠期間（限時優惠頁有；精選優惠頁沒有，不強制）
+    page_period = extract_page_period(page)
+    if page_period:
+        print(f"  📅 優惠期間：{page_period}")
+
     scraped_at = datetime.datetime.now().isoformat(timespec="seconds")
     skipped_no_discount = 0
     skipped_online_only = 0
 
     for card in cards:
         try:
-            # ── 商品名稱（只取中文）──
+            # 商品名稱
             name_el = card.query_selector(".lister-name .notranslate, .lister-name")
             raw_name = name_el.inner_text().strip() if name_el else ""
-            name = extract_chinese_name(raw_name)
+            if not raw_name:
+                title_el = card.query_selector("a[title]")
+                if title_el:
+                    raw_name = title_el.get_attribute("title") or ""
+            if not raw_name:
+                nc = card.query_selector(".product-name-container")
+                if nc:
+                    raw_name = nc.inner_text().strip()
+            name = extract_chinese_name(raw_name) or raw_name.strip()
             if not name:
                 continue
 
-            # ── 摘要文字（用於判斷線上限定 / 優惠期間）──
+            # 摘要文字
             summary_el = card.query_selector(".product-summary-container, .product-information-text")
             summary_text = summary_el.inner_text() if summary_el else ""
 
-            # ── 過濾線上限定 ──
+            # 過濾線上限定
             combined_check = (name + summary_text).lower()
             if any(kw in combined_check for kw in ONLINE_ONLY_KEYWORDS):
                 skipped_online_only += 1
                 continue
 
-            # ── 商品連結 ──
-            link_el = card.query_selector("a.lister-name, a.thumb")
+            # 商品連結
+            link_el = card.query_selector("a.lister-name, a.thumb, a[href*='/p/']")
             href = link_el.get_attribute("href") if link_el else ""
             if href and not href.startswith("http"):
                 href = "https://www.costco.com.tw" + href
 
-            # ── 圖片 ──
+            # 圖片
             img_el = card.query_selector("img")
             img_url = ""
             if img_el:
@@ -128,14 +160,13 @@ def scrape_page(page, url: str, category_tag: str) -> List[Dict]:
                     src = "https://www.costco.com.tw" + src
                 img_url = src
 
-            # ── 原價 ──
+            # 原價
             orig_el = card.query_selector(".original-price .product-price-amount, .product-price-amount")
             original_price = parse_number(orig_el.inner_text() if orig_el else "")
 
-            # ── 折扣金額（從 .savings 或 price-panel 全文搜尋「折價」）──
+            # 折扣金額
             saving_el = card.query_selector(".savings, [class*='saving'], [class*='discount-amount']")
             saving_text = saving_el.inner_text() if saving_el else ""
-
             if not saving_text:
                 panel_el = card.query_selector(".price-panel, .product-price")
                 if panel_el:
@@ -143,16 +174,15 @@ def scrape_page(page, url: str, category_tag: str) -> List[Dict]:
                     m = re.search(r"折價[\s\$]*[\d,]+", panel_text)
                     if m:
                         saving_text = m.group()
-
             discount_amt = parse_number(saving_text) if saving_text else None
 
-            # ── 只保留有折扣金額的商品 ──
+            # 只保留有折扣金額的商品
             if not discount_amt:
                 skipped_no_discount += 1
                 continue
 
-            # ── 折扣後售價 & 折扣幅度 ──
-            if original_price and discount_amt < original_price:
+            # 折扣後售價 & 折扣幅度
+            if original_price and discount_amt and discount_amt < original_price:
                 sale_price = original_price - discount_amt
                 pct = round((discount_amt / original_price) * 100, 1)
                 discount_pct = f"{pct}%"
@@ -160,12 +190,12 @@ def scrape_page(page, url: str, category_tag: str) -> List[Dict]:
                 sale_price = None
                 discount_pct = None
 
-            # ── 優惠期間 ──
-            period = ""
-            if summary_text:
-                m = re.search(r"優惠期間[^\n]*", summary_text)
-                if m:
-                    period = m.group().replace("*", "").replace("優惠期間", "").strip()
+            # 優惠期間：用頁面層級的 page_period，fallback 從 summary_text
+            period = page_period
+            if not period and summary_text:
+                m2 = re.search(r"優惠期間[^\n]*", summary_text)
+                if m2:
+                    period = m2.group().replace("*", "").replace("優惠期間", "").strip()
 
             products.append({
                 "商品名稱": name,
@@ -178,6 +208,7 @@ def scrape_page(page, url: str, category_tag: str) -> List[Dict]:
                 "圖片URL": img_url,
                 "商品連結": href,
                 "抓取時間": scraped_at,
+                "商品編號": re.search(r"/p/(\d+)", href).group(1) if re.search(r"/p/(\d+)", href) else "",
             })
 
         except Exception as e:
