@@ -2352,7 +2352,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
   <div class="empty" id="empty">😢 找不到符合的商品</div>
 </main>
 
-<footer>🤖 Hermes Agent 自動整理｜資料來源：costco.com.tw｜更新：2026-06-14 16:15<br>🏪=賣場同售 📰=daybuy情報 ✏️=登入後可修改分類</footer>
+<footer>🤖 Hermes Agent 自動整理｜資料來源：costco.com.tw｜更新：2026-06-14 16:18<br>🏪=賣場同售 📰=daybuy情報 ✏️=登入後可修改分類</footer>
 
 <!-- 分類 Modal -->
 <div class="modal-overlay" id="catModal" onclick="if(event.target===this)closeModal()">
@@ -2608,17 +2608,24 @@ window.addEventListener("DOMContentLoaded", () => {
 
 // 篩選
 function dealFilter(val, el) {
-  currentDeal = val; currentCat = "all";
-  document.querySelectorAll(".tab,.hf-btn").forEach(t => t.classList.remove("active"));
-  el.classList.add("active");
-  document.querySelector(".tab").classList.add("active");
+  // 再點一次同一個按鈕 → 取消篩選
+  currentDeal = (currentDeal === val) ? "all" : val;
+  // 更新 hf-btn active 狀態
+  document.querySelectorAll(".hf-btn").forEach(t => t.classList.remove("active"));
+  if (currentDeal === "all") {
+    document.querySelector(".hf-all").classList.add("active");
+  } else {
+    el.classList.add("active");
+  }
+  // 不重置 currentCat，讓分類篩選繼續作用
+  updateTabCounts();
   applyFilter();
 }
 function catFilter(cat, el) {
-  currentCat = cat; currentDeal = "all";
-  document.querySelectorAll(".tab,.hf-btn").forEach(t => t.classList.remove("active"));
+  currentCat = cat;
+  // 不重置 currentDeal，讓優惠類型篩選繼續作用
+  document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
   el.classList.add("active");
-  document.querySelector(".hf-all").classList.add("active");
   applyFilter();
 }
 function applyFilter() {
