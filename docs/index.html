@@ -95,7 +95,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
 </style>
 <script>
   // 版本控制：每次部署時更新，強制瀏覽器重新載入
-  const BUILD_TIME = '20260615143606';
+  const BUILD_TIME = '20260615144112';
   const stored = localStorage.getItem('costco_build');
   if (stored && stored !== BUILD_TIME) {
     localStorage.setItem('costco_build', BUILD_TIME);
@@ -110,7 +110,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
   <div class="header-row">
     <h1>🛒 好市多折扣週報</h1>
     <span class="meta">📅 2026/06/15（06/15～06/21）</span>
-    <span class="total">共 135 項</span>
+    <span class="total">共 134 項</span>
     <div class="login-wrap">
       <button class="login-btn" id="loginToggleBtn" onclick="toggleLogin()">🔐 登入</button>
       <div class="editor-menu" id="editorMenu">
@@ -120,17 +120,17 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
     </div>
   </div>
   <div class="header-filters">
-  <button class="hf-btn hf-all active" onclick="dealFilter('all',this)">全部 <span>135</span></button>
+  <button class="hf-btn hf-all active" onclick="dealFilter('all',this)">全部 <span>134</span></button>
   <button class="hf-btn hf-hot" onclick="dealFilter('hotbuys',this)">⏰ 限時優惠 <span>52</span></button>
-  <button class="hf-btn hf-coup" onclick="dealFilter('coupon',this)">🏷️ 精選優惠 <span>83</span></button>
+  <button class="hf-btn hf-coup" onclick="dealFilter('coupon',this)">🏷️ 精選優惠 <span>82</span></button>
   
 </div>
 </header>
 
 <div class="tabs-wrap">
-<button class="tab active" data-catid="all" onclick="catFilter('all',this)">🏠 全部 <span class="tab-count">135</span></button>
+<button class="tab active" data-catid="all" onclick="catFilter('all',this)">🏠 全部 <span class="tab-count">134</span></button>
 <button class="tab" data-catid="__寵物用品" onclick="catFilter('__寵物用品',this)">🐾 寵物用品 <span class="tab-count">4</span></button>
-<button class="tab" data-catid="__食品飲料" onclick="catFilter('__食品飲料',this)">🍱 食品飲料 <span class="tab-count">63</span></button>
+<button class="tab" data-catid="__食品飲料" onclick="catFilter('__食品飲料',this)">🍱 食品飲料 <span class="tab-count">62</span></button>
 <button class="tab" data-catid="__家電_3C" onclick="catFilter('__家電_3C',this)">📺 家電 3C <span class="tab-count">12</span></button>
 <button class="tab" data-catid="__保健美妝" onclick="catFilter('__保健美妝',this)">🧴 保健美妝 <span class="tab-count">15</span></button>
 <button class="tab" data-catid="__生活用品" onclick="catFilter('__生活用品',this)">🏠 生活用品 <span class="tab-count">21</span></button>
@@ -941,25 +941,6 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
   </a>
   <button class="change-cat-btn" onclick="openCatModal('c_Coconut_Water_1_L_X_6_Count_p_75130','__食品飲料','KOH COCONUT 純椰子汁 1公升 X 6入','https://www.costco.com.tw/Food-Dining/Drinks/Beverages-Juice/KOH-COCONUT-100-Pure-Coconut-Water-1-L-X-6-Count/p/75130')" title="修改分類（需登入）">✏️</button>
   
-</div>
-<div class="card" id="c_https___www_daybuy_tw_costco_31177_" data-cat="__食品飲料" data-deal="coupon">
-  <a href="https://www.daybuy.tw/costco/31177/" target="_blank" rel="noopener" class="card-link">
-    <div class="card-img"><div class="no-img">📦</div><a class="src-icon" href="https://www.daybuy.tw/costco/31177/" target="_blank" onclick="event.stopPropagation()" title="daybuy 情報">📰</a></div>
-    <div class="card-body">
-      <p class="card-name">蜜蜂工坊的蜂蜜牛奶</p>
-      <span class="deal-type-badge badge-coup">🏷️ 精選優惠</span>
-      
-      <p class="deal-period">📅 6/11(四)，每組折價80元</p>
-      <div class="card-price">
-        <span class="orig"></span>
-        <span class="sale"></span>
-      </div>
-      <p class="card-save">省 $80</p>
-      <p class="history">🕐 距上次折扣 2 天</p>
-    </div>
-  </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_https___www_daybuy_tw_costco_31177_','__食品飲料','蜜蜂工坊的蜂蜜牛奶','https://www.daybuy.tw/costco/31177/')" title="修改分類（需登入）">✏️</button>
-  <a class="daybuy-link" href="https://www.daybuy.tw/costco/31177/" target="_blank" onclick="event.stopPropagation()">📰 daybuy 情報頁</a>
 </div>
 <div class="card" id="c_Mango_Milk_Pudding_6_Count_p_124007" data-cat="__食品飲料" data-deal="coupon">
   <a href="https://www.costco.com.tw/Warehouse-Only/Food-Beverages/Chilled/Mango-Milk-Pudding-6-Count/p/124007" target="_blank" rel="noopener" class="card-link">
@@ -2713,7 +2694,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
   <div class="empty" id="empty">😢 找不到符合的商品</div>
 </main>
 
-<footer>🤖 Hermes Agent 自動整理｜資料來源：costco.com.tw｜更新：2026-06-15 14:36<br>🏪=賣場同售 📰=daybuy情報 ✏️=登入後可修改分類</footer>
+<footer>🤖 Hermes Agent 自動整理｜資料來源：costco.com.tw｜更新：2026-06-15 14:41<br>🏪=賣場同售 📰=daybuy情報 ✏️=登入後可修改分類</footer>
 
 <!-- 分類 Modal -->
 <div class="modal-overlay" id="catModal" onclick="if(event.target===this)closeModal()">
