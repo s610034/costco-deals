@@ -1,4 +1,3 @@
-import datetime
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """generate_html.py - 產生手機優先的響應式 HTML 報告"""
@@ -150,6 +149,30 @@ def generate_html(products: List[Dict], output_path: str) -> str:
             location_html = f'<span class="location-badge">📍 {location}限定</span>' if location else ""
 
             # 優惠期間標籤：有日期就顯示日期，沒有則依分類顯示標籤
+            # 解析結束日，計算倒數
+            countdown_html = ""
+            if period and deal_val in ("hotbuys", "both"):
+                import re as _re
+                end_m = _re.search(r"(\d{1,2})/(\d{1,2})(?:\(.*?\))?\s*$", period.replace("~","-").split("-")[-1].strip())
+                if end_m:
+                    import datetime as _dt
+                    _td = _dt.date.today()
+                    end_month, end_day = int(end_m.group(1)), int(end_m.group(2))
+                    if 1 <= end_month <= 12 and 1 <= end_day <= 31:
+                        try:
+                            end_year = _td.year if end_month >= _td.month else _td.year + 1
+                            end_date = _dt.date(end_year, end_month, end_day)
+                            days_left = (end_date - _td).days
+                            if days_left >= 0:
+                                if days_left == 0:
+                                    countdown_html = '<span class="countdown urgent">⏰ 今天到期！</span>'
+                                elif days_left <= 3:
+                                    countdown_html = f'<span class="countdown urgent">⏰ 倒數 {days_left} 天</span>'
+                                else:
+                                    countdown_html = f'<span class="countdown">⏰ 剩 {days_left} 天</span>'
+                        except ValueError:
+                            pass
+
             if period:
                 period_html = f'<p class="deal-period">📅 {period}</p>'
             elif "把握" in deal_cat:
@@ -186,7 +209,7 @@ def generate_html(products: List[Dict], output_path: str) -> str:
     <div class="card-img">{img_html}{badge_html}{src_icon}</div>
     <div class="card-body">
       <p class="card-name">{name}</p>
-      {deal_badge_html}
+      {deal_badge_html}{countdown_html}
       {location_html}
       {period_html}
       <div class="card-price">
@@ -287,6 +310,9 @@ main{{padding:12px;max-width:960px;margin:0 auto}}
 .cat-badge{{display:inline-block;font-size:.6rem;background:#e0f2fe;color:#0369a1;padding:1px 6px;border-radius:10px;margin-top:2px}}
 .location-badge{{display:inline-block;font-size:.62rem;font-weight:700;color:#fff;background:#dc2626;padding:1px 7px;border-radius:10px;margin-top:2px}}
 .deal-type-badge{{display:inline-block;font-size:.6rem;font-weight:600;padding:1px 6px;border-radius:8px;margin-top:2px}}
+.countdown{{display:inline-block;font-size:.6rem;font-weight:700;padding:1px 6px;border-radius:8px;margin-top:2px;margin-left:3px;background:#fef9c3;color:#854d0e}}
+.countdown.urgent{{background:#fee2e2;color:#991b1b;animation:pulse 1.5s infinite}}
+@keyframes pulse{{0%,100%{{opacity:1}}50%{{opacity:.6}}}}
 .badge-hot{{background:#fef3c7;color:#92400e}}
 .badge-coup{{background:#ede9fe;color:#5b21b6}}
 .change-cat-btn{{position:absolute;bottom:6px;right:6px;border:none;background:transparent;font-size:.75rem;cursor:pointer;opacity:0;pointer-events:none;padding:2px;transition:opacity .2s}}

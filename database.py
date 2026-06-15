@@ -87,10 +87,22 @@ def upsert_products(products: List[Dict], crawl_date: str = None) -> int:
     inserted = 0
     for p in products:
         link = p.get("商品連結", "")
-        exists = conn.execute(
-            "SELECT id, 優惠期間, 商品編號, 原價, 折扣金額, 圖片URL, 討論連結 FROM products WHERE crawl_date=? AND 商品連結=?",
-            (crawl_date, link)
-        ).fetchone()
+        code = p.get("商品編號", "")
+
+        # 有商品編號：用商品編號+日期去重（避免官網版+daybuy版重複）
+        if code:
+            exists = conn.execute(
+                "SELECT id, 優惠期間, 商品編號, 原價, 折扣金額, 圖片URL, 討論連結, 商品連結 FROM products WHERE crawl_date=? AND 商品編號=?",
+                (crawl_date, code)
+            ).fetchone()
+            # 官網連結優先：如果已存 daybuy 版但現在有官網版，更新連結
+            if exists and "costco.com.tw/p/" in link and "costco.com.tw/p/" not in (exists["商品連結"] or ""):
+                conn.execute("UPDATE products SET 商品連結=? WHERE id=?", (link, exists["id"]))
+        else:
+            exists = conn.execute(
+                "SELECT id, 優惠期間, 商品編號, 原價, 折扣金額, 圖片URL, 討論連結, 商品連結 FROM products WHERE crawl_date=? AND 商品連結=?",
+                (crawl_date, link)
+            ).fetchone()
         if exists:
             updates = []
             vals = []
