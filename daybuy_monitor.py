@@ -356,9 +356,17 @@ def fetch_daybuy_channel(days_back: int = 7) -> List[Dict]:
         name = extract_product_name(text)
         if not name:
             continue
-        # 過濾明顯不是商品名的文字
-        skip_words = ["情報", "看這裡", "連結", "網址", "完整資訊", "更多資訊"]
+        # 過濾明顯不是商品名的文字（廣告/活動訊息）
+        skip_words = ["情報", "看這裡", "連結", "網址", "完整資訊", "更多資訊",
+                      "好市多限時", "facebook", "社友", "驚喜", "活動", "抽獎",
+                      "號外", "文末", "限時特價"]
         if any(w in name for w in skip_words):
+            continue
+        # 名稱太短或以【開頭（廣告格式）
+        if len(name) < 3 or name.startswith("【"):
+            continue
+        # 沒有 daybuy.tw 連結 且 名稱是廣告格式
+        if not daybuy_link and ("facebook" in text.lower() or "instagram" in text.lower()):
             continue
 
         period = extract_period(text)
