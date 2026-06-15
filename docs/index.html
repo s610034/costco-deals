@@ -95,7 +95,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
 </style>
 <script>
   // 版本控制：每次部署時更新，強制瀏覽器重新載入
-  const BUILD_TIME = '20260615132409';
+  const BUILD_TIME = '20260615132853';
   const stored = localStorage.getItem('costco_build');
   if (stored && stored !== BUILD_TIME) {
     localStorage.setItem('costco_build', BUILD_TIME);
@@ -110,7 +110,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
   <div class="header-row">
     <h1>🛒 好市多折扣週報</h1>
     <span class="meta">📅 2026/06/15（06/15～06/21）</span>
-    <span class="total">共 130 項</span>
+    <span class="total">共 133 項</span>
     <div class="login-wrap">
       <button class="login-btn" id="loginToggleBtn" onclick="toggleLogin()">🔐 登入</button>
       <div class="editor-menu" id="editorMenu">
@@ -120,19 +120,19 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
     </div>
   </div>
   <div class="header-filters">
-  <button class="hf-btn hf-all active" onclick="dealFilter('all',this)">全部 <span>130</span></button>
+  <button class="hf-btn hf-all active" onclick="dealFilter('all',this)">全部 <span>133</span></button>
   <button class="hf-btn hf-hot" onclick="dealFilter('hotbuys',this)">⏰ 限時優惠 <span>49</span></button>
-  <button class="hf-btn hf-coup" onclick="dealFilter('coupon',this)">🏷️ 精選優惠 <span>81</span></button>
+  <button class="hf-btn hf-coup" onclick="dealFilter('coupon',this)">🏷️ 精選優惠 <span>84</span></button>
   
 </div>
 </header>
 
 <div class="tabs-wrap">
-<button class="tab active" data-catid="all" onclick="catFilter('all',this)">🏠 全部 <span class="tab-count">130</span></button>
+<button class="tab active" data-catid="all" onclick="catFilter('all',this)">🏠 全部 <span class="tab-count">133</span></button>
 <button class="tab" data-catid="__寵物用品" onclick="catFilter('__寵物用品',this)">🐾 寵物用品 <span class="tab-count">4</span></button>
-<button class="tab" data-catid="__食品飲料" onclick="catFilter('__食品飲料',this)">🍱 食品飲料 <span class="tab-count">62</span></button>
-<button class="tab" data-catid="__家電_3C" onclick="catFilter('__家電_3C',this)">📺 家電 3C <span class="tab-count">11</span></button>
-<button class="tab" data-catid="__保健美妝" onclick="catFilter('__保健美妝',this)">🧴 保健美妝 <span class="tab-count">13</span></button>
+<button class="tab" data-catid="__食品飲料" onclick="catFilter('__食品飲料',this)">🍱 食品飲料 <span class="tab-count">63</span></button>
+<button class="tab" data-catid="__家電_3C" onclick="catFilter('__家電_3C',this)">📺 家電 3C <span class="tab-count">12</span></button>
+<button class="tab" data-catid="__保健美妝" onclick="catFilter('__保健美妝',this)">🧴 保健美妝 <span class="tab-count">14</span></button>
 <button class="tab" data-catid="__生活用品" onclick="catFilter('__生活用品',this)">🏠 生活用品 <span class="tab-count">20</span></button>
 <button class="tab" data-catid="__服飾寢具" onclick="catFilter('__服飾寢具',this)">👕 服飾寢具 <span class="tab-count">9</span></button>
 <button class="tab" data-catid="__玩具育兒" onclick="catFilter('__玩具育兒',this)">🧸 玩具育兒 <span class="tab-count">10</span></button>
@@ -241,7 +241,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
 </div>
 <div class="card" id="c__Motor_Oil_946_ml_X_6_Pack_p_125482" data-cat="__食品飲料" data-deal="coupon">
   <a href="https://www.costco.com.tw/Sports-Lifestyle/Automotive/Car-Oils-Fluids/Castrol-EDGE-5W-30-Advanced-Full-Synthetic-Motor-Oil-946-ml-X-6-Pack/p/125482" target="_blank" rel="noopener" class="card-link">
-    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h18/hd0/434798425997342.jpg" alt="嘉實多 極致5W-30 全合成機油 946毫升 X 6入" loading="lazy" onerror="this.style.display='none'"><div class="badge">-21.9%</div></div>
+    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h18/hd0/434798425997342.jpg" alt="嘉實多 極致5W-30 全合成機油 946毫升 X 6入" loading="lazy" onerror="this.style.display='none'"><div class="badge">-21.9%</div><a class="src-icon" href="https://www.daybuy.tw/costco/213783/" target="_blank" onclick="event.stopPropagation()" title="daybuy 情報">📰</a></div>
     <div class="card-body">
       <p class="card-name">嘉實多 極致5W-30 全合成機油 946毫升 X 6入</p>
       <span class="deal-type-badge badge-coup">🏷️ 精選優惠</span>
@@ -256,7 +256,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
     </div>
   </a>
   <button class="change-cat-btn" onclick="openCatModal('c__Motor_Oil_946_ml_X_6_Pack_p_125482','__食品飲料','嘉實多 極致5W-30 全合成機油 946毫升 X 6入','https://www.costco.com.tw/Sports-Lifestyle/Automotive/Car-Oils-Fluids/Castrol-EDGE-5W-30-Advanced-Full-Synthetic-Motor-Oil-946-ml-X-6-Pack/p/125482')" title="修改分類（需登入）">✏️</button>
-  
+  <a class="daybuy-link official-link" href="https://www.costco.com.tw/p/125482" target="_blank" onclick="event.stopPropagation()">🛒 好市多官網</a><a class="daybuy-link" href="https://www.daybuy.tw/costco/213783/" target="_blank" onclick="event.stopPropagation()">📰 daybuy 情報頁</a>
 </div>
 <div class="card" id="c_d_Sweetness_Soy_Milk_25_kg_p_141611" data-cat="__食品飲料" data-deal="coupon">
   <a href="https://www.costco.com.tw/Health-Beauty/Supplements/Sports-Performance/The-Vegan-Soy-Protein-Isolate-No-Extra-Added-Sweetness-Soy-Milk-25-kg/p/141611" target="_blank" rel="noopener" class="card-link">
@@ -731,7 +731,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
     </div>
   </a>
   <button class="change-cat-btn" onclick="openCatModal('c_https___www_daybuy_tw_costco_37195_','__食品飲料','LAUGHING COW 笑牛迷你貝比貝爾乾酪28粒','https://www.daybuy.tw/costco/37195/')" title="修改分類（需登入）">✏️</button>
-  <a class="daybuy-link" href="https://www.daybuy.tw/costco/37195/" target="_blank" onclick="event.stopPropagation()">📰 daybuy 情報頁</a>
+  <a class="daybuy-link official-link" href="https://www.costco.com.tw/p/68677" target="_blank" onclick="event.stopPropagation()">🛒 好市多官網</a><a class="daybuy-link" href="https://www.daybuy.tw/costco/37195/" target="_blank" onclick="event.stopPropagation()">📰 daybuy 情報頁</a>
 </div>
 <div class="card" id="c_afood_Congee_40_g_X_30_Pack_p_96387" data-cat="__食品飲料" data-deal="coupon">
   <a href="https://www.costco.com.tw/Food-Dining/Groceries/Canned-Prepared-Food/Great-Day-Seafood-Congee-40-g-X-30-Pack/p/96387" target="_blank" rel="noopener" class="card-link">
@@ -980,6 +980,25 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
   <button class="change-cat-btn" onclick="openCatModal('c_Mango_Milk_Pudding_6_Count_p_124007','__食品飲料','新鮮芒果奶酪 6入','https://www.costco.com.tw/Warehouse-Only/Food-Beverages/Chilled/Mango-Milk-Pudding-6-Count/p/124007')" title="修改分類（需登入）">✏️</button>
   
 </div>
+<div class="card" id="c_Mango_Milk_Pudding_6_Count_p_124007" data-cat="__食品飲料" data-deal="coupon">
+  <a href="https://www.costco.com.tw/Warehouse-Only/Food-Beverages/Chilled/Mango-Milk-Pudding-6-Count/p/124007" target="_blank" rel="noopener" class="card-link">
+    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/hdc/hbb/33230094172190.jpg" alt="新鮮芒果奶酪 6入" loading="lazy" onerror="this.style.display='none'"><div class="badge">-20.1%</div><span class="src-icon" title="線上售價與賣場相同">🏪</span></div>
+    <div class="card-body">
+      <p class="card-name">新鮮芒果奶酪 6入</p>
+      <span class="deal-type-badge badge-coup">🏷️ 精選優惠</span>
+      
+      
+      <div class="card-price">
+        <span class="orig">$389</span><span class='arrow'>→</span>
+        <span class="sale">$311</span>
+      </div>
+      <p class="card-save">省 $78</p>
+      <p class="history">🕐 距上次折扣 1 天</p>
+    </div>
+  </a>
+  <button class="change-cat-btn" onclick="openCatModal('c_Mango_Milk_Pudding_6_Count_p_124007','__食品飲料','新鮮芒果奶酪 6入','https://www.costco.com.tw/Warehouse-Only/Food-Beverages/Chilled/Mango-Milk-Pudding-6-Count/p/124007')" title="修改分類（需登入）">✏️</button>
+  
+</div>
 <div class="card" id="c_tin_10000_mcg_X_100_Tablet_p_115609" data-cat="__食品飲料" data-deal="coupon">
   <a href="https://www.costco.com.tw/Health-Beauty/Supplements/Multi-Letter-Vitamins/Natrol-Biotin-10000-mcg-X-100-Tablet/p/115609" target="_blank" rel="noopener" class="card-link">
     <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h94/h66/378821315919902.jpg" alt="Natrol 納妥 生物素10,000微克(食品) 100錠" loading="lazy" onerror="this.style.display='none'"><div class="badge">-22.2%</div></div>
@@ -1020,7 +1039,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
 </div>
 <div class="card" id="c_Bou_Stuffed_Egg_Roll_480_g_p_144711" data-cat="__食品飲料" data-deal="coupon">
   <a href="https://www.costco.com.tw/Food-Dining/Snacks/Cookies-Chips/Shu-Shin-Bou-Stuffed-Egg-Roll-480-g/p/144711" target="_blank" rel="noopener" class="card-link">
-    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h65/ha3/238305963311134.jpg" alt="手信坊 含餡蛋捲禮盒 480公克" loading="lazy" onerror="this.style.display='none'"><div class="badge">-19.5%</div></div>
+    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h65/ha3/238305963311134.jpg" alt="手信坊 含餡蛋捲禮盒 480公克" loading="lazy" onerror="this.style.display='none'"><div class="badge">-19.5%</div><a class="src-icon" href="https://www.daybuy.tw/costco/121418/" target="_blank" onclick="event.stopPropagation()" title="daybuy 情報">📰</a></div>
     <div class="card-body">
       <p class="card-name">手信坊 含餡蛋捲禮盒 480公克</p>
       <span class="deal-type-badge badge-coup">🏷️ 精選優惠</span>
@@ -1035,7 +1054,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
     </div>
   </a>
   <button class="change-cat-btn" onclick="openCatModal('c_Bou_Stuffed_Egg_Roll_480_g_p_144711','__食品飲料','手信坊 含餡蛋捲禮盒 480公克','https://www.costco.com.tw/Food-Dining/Snacks/Cookies-Chips/Shu-Shin-Bou-Stuffed-Egg-Roll-480-g/p/144711')" title="修改分類（需登入）">✏️</button>
-  
+  <a class="daybuy-link official-link" href="https://www.costco.com.tw/p/144711" target="_blank" onclick="event.stopPropagation()">🛒 好市多官網</a><a class="daybuy-link" href="https://www.daybuy.tw/costco/121418/" target="_blank" onclick="event.stopPropagation()">📰 daybuy 情報頁</a>
 </div>
 <div class="card" id="c_ocoa_Flavor_30_g_X_20_Pack_p_263941" data-cat="__食品飲料" data-deal="coupon">
   <a href="https://www.costco.com.tw/Food-Dining/Snacks/Cookies-Chips/My-Motto-Premium-Wafers-Cocoa-Cocoa-Flavor-30-g-X-20-Pack/p/263941" target="_blank" rel="noopener" class="card-link">
@@ -1531,6 +1550,25 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
   <button class="change-cat-btn" onclick="openCatModal('c_argeable_Batteries_10_Pack_p_137510','__家電_3C','Panasonic Eneloop 3、4號充電電池 10入','https://www.costco.com.tw/Furniture-Kitchen/Hardware-DIY/Power-Tools-Electrical/Panasonic-Eneloop-AAA-Rechargeable-Batteries-10-Pack/p/137510')" title="修改分類（需登入）">✏️</button>
   
 </div>
+<div class="card" id="c_https___www_costco_com_tw_p_137510" data-cat="__家電_3C" data-deal="coupon">
+  <a href="https://www.costco.com.tw/p/137510" target="_blank" rel="noopener" class="card-link">
+    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h28/h42/155423692881950.jpg" alt="Panasonic Eneloop 3、4號充電電池 10入" loading="lazy" onerror="this.style.display='none'"><div class="badge">-20.2%</div><span class="src-icon" title="線上售價與賣場相同">🏪</span></div>
+    <div class="card-body">
+      <p class="card-name">Panasonic Eneloop 3、4號充電電池 10入</p>
+      <span class="deal-type-badge badge-coup">🏷️ 精選優惠</span>
+      
+      
+      <div class="card-price">
+        <span class="orig">$989</span><span class='arrow'>→</span>
+        <span class="sale">$789</span>
+      </div>
+      <p class="card-save">省 $200</p>
+      <p class="history">🕐 距上次折扣 1 天</p>
+    </div>
+  </a>
+  <button class="change-cat-btn" onclick="openCatModal('c_https___www_costco_com_tw_p_137510','__家電_3C','Panasonic Eneloop 3、4號充電電池 10入','https://www.costco.com.tw/p/137510')" title="修改分類（需登入）">✏️</button>
+  
+</div>
 <div class="card" id="c_cc_bbs_hypermall_M_1779184003_A_4D2" data-cat="__家電_3C" data-deal="coupon">
   <a href="https://www.pttweb.cc/bbs/hypermall/M.1779184003.A.4D2" target="_blank" rel="noopener" class="card-link">
     <div class="card-img"><div class="no-img">📦</div><div class="badge">-20.1%</div><span class="src-icon" title="線上售價與賣場相同">🏪</span></div>
@@ -1759,6 +1797,25 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
   <button class="change-cat-btn" onclick="openCatModal('c_https___www_costco_com_tw_p_994336','__保健美妝','Webber Naturals 蔓越莓濃縮精華膠囊 250粒','https://www.costco.com.tw/p/994336')" title="修改分類（需登入）">✏️</button>
   
 </div>
+<div class="card" id="c_ry_Concentrate_250_Capsule_p_994336" data-cat="__保健美妝" data-deal="coupon">
+  <a href="https://www.costco.com.tw/Health-Beauty/Supplements/Supplements-Digestive-Support/Webber-Naturals-Cranberry-Concentrate-250-Capsule/p/994336" target="_blank" rel="noopener" class="card-link">
+    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/hb4/h5d/168371764789278.jpg" alt="Webber Naturals 蔓越莓濃縮精華膠囊 250粒" loading="lazy" onerror="this.style.display='none'"><div class="badge">-20.5%</div><span class="src-icon" title="線上售價與賣場相同">🏪</span></div>
+    <div class="card-body">
+      <p class="card-name">Webber Naturals 蔓越莓濃縮精華膠囊 250粒</p>
+      <span class="deal-type-badge badge-coup">🏷️ 精選優惠</span>
+      
+      
+      <div class="card-price">
+        <span class="orig">$635</span><span class='arrow'>→</span>
+        <span class="sale">$505</span>
+      </div>
+      <p class="card-save">省 $130</p>
+      <p class="history">🕐 距上次折扣 1 天</p>
+    </div>
+  </a>
+  <button class="change-cat-btn" onclick="openCatModal('c_ry_Concentrate_250_Capsule_p_994336','__保健美妝','Webber Naturals 蔓越莓濃縮精華膠囊 250粒','https://www.costco.com.tw/Health-Beauty/Supplements/Supplements-Digestive-Support/Webber-Naturals-Cranberry-Concentrate-250-Capsule/p/994336')" title="修改分類（需登入）">✏️</button>
+  
+</div>
 <div class="card" id="c_Toothpaste_181_g_X_5_Pack_p_1285702" data-cat="__保健美妝" data-deal="hotbuys">
   <a href="https://www.costco.com.tw/Health-Beauty/Personal-Care/Oral-Care/Colgate-Advanced-Whitening-Toothpaste-181-g-X-5-Pack/p/1285702" target="_blank" rel="noopener" class="card-link">
     <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h07/h02/438875646787614.jpg" alt="高露潔 全效潔白牙膏 181公克 X 5入" loading="lazy" onerror="this.style.display='none'"><div class="badge">-21.9%</div></div>
@@ -1837,7 +1894,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
 </div>
 <div class="card" id="c__DIVE_IN_Mask_Set_24_Piece_p_158784" data-cat="__保健美妝" data-deal="coupon">
   <a href="https://www.costco.com.tw/Health-Beauty/Beauty-Skin-Care/Skin-Care/Torriden-DIVE-IN-Mask-Set-24-Piece/p/158784" target="_blank" rel="noopener" class="card-link">
-    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h90/hb4/434798780219422.jpg" alt="TORRIDEN 5D玻尿酸面膜" loading="lazy" onerror="this.style.display='none'"><span class="src-icon" title="線上售價與賣場相同">🏪</span></div>
+    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h90/hb4/434798780219422.jpg" alt="TORRIDEN 5D玻尿酸面膜" loading="lazy" onerror="this.style.display='none'"><a class="src-icon" href="https://www.daybuy.tw/costco/241312/" target="_blank" onclick="event.stopPropagation()" title="daybuy 情報">📰</a></div>
     <div class="card-body">
       <p class="card-name">TORRIDEN 5D玻尿酸面膜</p>
       <span class="deal-type-badge badge-coup">🏷️ 精選優惠</span>
@@ -1852,7 +1909,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
     </div>
   </a>
   <button class="change-cat-btn" onclick="openCatModal('c__DIVE_IN_Mask_Set_24_Piece_p_158784','__保健美妝','TORRIDEN 5D玻尿酸面膜','https://www.costco.com.tw/Health-Beauty/Beauty-Skin-Care/Skin-Care/Torriden-DIVE-IN-Mask-Set-24-Piece/p/158784')" title="修改分類（需登入）">✏️</button>
-  
+  <a class="daybuy-link official-link" href="https://www.costco.com.tw/p/158784" target="_blank" onclick="event.stopPropagation()">🛒 好市多官網</a><a class="daybuy-link" href="https://www.daybuy.tw/costco/241312/" target="_blank" onclick="event.stopPropagation()">📰 daybuy 情報頁</a>
 </div>
 <div class="card" id="c_ignature_Players_Iron_Set_p_1740556" data-cat="__生活用品" data-deal="coupon">
   <a href="https://www.costco.com.tw/Sports-Lifestyle/Sports-Fitness/Team-Sports/Kirkland-Signature-Players-Iron-Set/p/1740556" target="_blank" rel="noopener" class="card-link">
@@ -2618,7 +2675,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
   <div class="empty" id="empty">😢 找不到符合的商品</div>
 </main>
 
-<footer>🤖 Hermes Agent 自動整理｜資料來源：costco.com.tw｜更新：2026-06-15 13:24<br>🏪=賣場同售 📰=daybuy情報 ✏️=登入後可修改分類</footer>
+<footer>🤖 Hermes Agent 自動整理｜資料來源：costco.com.tw｜更新：2026-06-15 13:28<br>🏪=賣場同售 📰=daybuy情報 ✏️=登入後可修改分類</footer>
 
 <!-- 分類 Modal -->
 <div class="modal-overlay" id="catModal" onclick="if(event.target===this)closeModal()">
