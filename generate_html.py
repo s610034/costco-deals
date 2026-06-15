@@ -1,3 +1,4 @@
+import datetime
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """generate_html.py - 產生手機優先的響應式 HTML 報告"""
@@ -222,11 +223,15 @@ def generate_html(products: List[Dict], output_path: str) -> str:
         for c in ALL_CATS
     )
 
+    build_time = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
     html = f"""<!DOCTYPE html>
 <html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <title>好市多折扣週報 {date_str}</title>
 <style>
 *,*::before,*::after{{box-sizing:border-box;margin:0;padding:0}}
@@ -308,6 +313,17 @@ body.editor-mode .change-cat-btn:hover{{opacity:1}}
 footer{{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}}
 @media(min-width:600px){{.grid{{grid-template-columns:repeat(auto-fill,minmax(175px,1fr))}}.modal{{border-radius:20px;margin-bottom:20px}}}}
 </style>
+<script>
+  // 版本控制：每次部署時更新，強制瀏覽器重新載入
+  const BUILD_TIME = '{build_time}';
+  const stored = localStorage.getItem('costco_build');
+  if (stored && stored !== BUILD_TIME) {{
+    localStorage.setItem('costco_build', BUILD_TIME);
+    window.location.reload(true);
+  }} else {{
+    localStorage.setItem('costco_build', BUILD_TIME);
+  }}
+</script>
 </head>
 <body>
 <header>
