@@ -244,6 +244,51 @@ def run():
     try:
         from ptt_monitor import fetch_ptt_costco, merge_ptt_with_existing
         ptt_products = fetch_ptt_costco(pages=3, fetch_content=True)
+
+        # PTT 商品需要去官網確認目前是否真的有折扣
+        # 沒有商品編號的直接排除，有商品編號的去詳情頁確認折扣還在
+        if ptt_products:
+            from verify_prices import verify_product_price
+            from playwright.sync_api import sync_playwright as _spw2
+            import time as _t2
+            import re as _re2
+
+            with _spw2() as _pw2:
+                _browser2 = _pw2.chromium.launch(headless=True)
+                _ctx2 = _browser2.new_context(
+                    user_agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36",
+                    locale="zh-TW"
+                )
+                _page2 = _ctx2.new_page()
+                _page2.goto("https://www.costco.com.tw/", wait_until="domcontentloaded", timeout=20000)
+                _t2.sleep(1)
+                try:
+                    _btn2 = _page2.query_selector("button:has-text('同意')")
+                    if _btn2: _btn2.click(); _t2.sleep(1)
+                except Exception: pass
+
+                verified_ptt = []
+                for pp in ptt_products:
+                    code = pp.get("商品編號", "")
+                    if not code:
+                        print(f"  ⏭️  跳過（無商品編號）：{pp['商品名稱'][:30]}")
+                        continue
+                    result = verify_product_price(code, _page2)
+                    if result and result.get("折扣金額"):
+                        # 官網確認有折扣，更新資料
+                        pp["原價"]       = result["原價"]
+                        pp["折扣金額"]   = result["折扣金額"]
+                        pp["折扣後售價"] = result["折扣後售價"]
+                        pp["折扣幅度"]   = result["折扣幅度"] or pp.get("折扣幅度","")
+                        pp["官網連結"]   = result["官網連結"]
+                        verified_ptt.append(pp)
+                        print(f"  ✅ PTT 驗證有折扣：{pp['商品名稱'][:30]} 折={result['折扣金額']}")
+                    else:
+                        print(f"  ❌ PTT 排除（官網無折扣）：{pp['商品名稱'][:30]}")
+
+                _browser2.close()
+            ptt_products = verified_ptt
+
         new_products = merge_ptt_with_existing(new_products, ptt_products)
     except Exception as e:
         print(f"  ⚠️  PTT 失敗（繼續）：{e}")

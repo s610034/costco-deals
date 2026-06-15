@@ -18,7 +18,7 @@ CACHE_FILE = os.path.join(DATA_DIR, "ptt_cache.json")
 PTTWEB_BASE  = "https://www.pttweb.cc"
 PTTWEB_BOARD = "/bbs/hypermall"
 PTTWEB_INDEX = PTTWEB_BASE + PTTWEB_BOARD + "/index"
-DAYS_LIMIT   = 30  # 只處理 N 天內的文章
+DAYS_LIMIT   = 14  # 只處理 N 天內的文章（PTT 資訊時效短，14天即可）
 
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
@@ -337,6 +337,20 @@ def fetch_ptt_costco(pages: int = 3, fetch_content: bool = True) -> List[Dict]:
         p for p in all_products
         if p.get("折扣金額") or p.get("折扣後售價") or p.get("原價")
     ]
+
+    # 嘗試從文章內文補充商品編號（用於後續官網驗證）
+    import re as _re2
+    for p in all_products:
+        if not p.get("商品編號"):
+            # 從 PTT 文章內文找 #數字 或商品編號
+            try:
+                _html = fetch_html(p.get("商品連結", "") or p.get("討論連結", ""))
+                if _html:
+                    _codes = _re2.findall(r"#(\d{5,8})", _html)
+                    if _codes:
+                        p["商品編號"] = _codes[0]
+            except Exception:
+                pass
 
     # 商品名稱去重（前8字相同只留折扣金額最大的）
     seen_names: Dict[str, Dict] = {}
