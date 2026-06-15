@@ -16,8 +16,7 @@ COSTCO_TG_TOKEN   = os.environ.get("COSTCO_TG_TOKEN", "")      # 好市多專用
 COSTCO_TG_CHAT_ID = os.environ.get("COSTCO_TG_CHAT_ID", "843096573")  # 預設沿用同一個 chat_id
 
 # 若還沒建新 Bot，暫時 fallback 到台股 Bot
-_FALLBACK_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN", "8928610067:AAGaDRiAPSBEoeQ0apjMKITsS6Yg4hZjt-E")
-TG_TOKEN   = COSTCO_TG_TOKEN if COSTCO_TG_TOKEN else _FALLBACK_TOKEN
+TG_TOKEN   = COSTCO_TG_TOKEN  # 沒有設定就不發送，不 fallback 到其他 bot
 TG_CHAT_ID = COSTCO_TG_CHAT_ID
 
 TG_MAX_LEN = 4000
@@ -30,6 +29,9 @@ LINE_USER_ID = os.environ.get("LINE_USER_ID", "")
 # ── Telegram ──────────────────────────────────────────────
 
 def tg_send(text: str) -> bool:
+    if not TG_TOKEN:
+        print("  ⚠️  COSTCO_TG_TOKEN 未設定，跳過 Telegram 推播")
+        return False
     url = f"https://api.telegram.org/bot{TG_TOKEN}/sendMessage"
     payload = json.dumps({
         "chat_id": TG_CHAT_ID,
@@ -61,8 +63,7 @@ def tg_send_chunked(text: str) -> None:
         chunks.append("\n".join(cur))
 
     total = len(chunks)
-    bot_label = "好市多專用Bot" if COSTCO_TG_TOKEN else "台股Bot(暫用)"
-    print(f"  📤 Telegram 發送（{bot_label}，共 {total} 段）")
+    print(f"  📤 Telegram 發送（共 {total} 段）")
     for i, chunk in enumerate(chunks, 1):
         ok = tg_send(chunk)
         print(f"    {'✅' if ok else '❌'} 第 {i}/{total} 段")
@@ -123,6 +124,6 @@ def notify_all(summary: str, full_message: str) -> None:
 
 if __name__ == "__main__":
     test_msg = "🛒 好市多折扣測試\n這是來自 Hermes 的好市多專用 Bot 測試！"
-    print(f"使用 Token：{'好市多專用' if COSTCO_TG_TOKEN else '台股Bot(fallback)'}")
+    print(f"使用 Token：{'好市多專用' if COSTCO_TG_TOKEN else '(未設定)'}")
     ok = tg_send(test_msg)
     print("Telegram:", "✅" if ok else "❌")
