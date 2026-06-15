@@ -39,6 +39,44 @@ PAGE_URL = "https://s610034.github.io/costco-deals/"
 TOKEN    = os.environ.get("GITHUB_TOKEN", "")
 
 
+def sync_overrides_to_github():
+    """把本機 DB 的分類覆蓋推送到 GitHub overrides.json"""
+    if not TOKEN:
+        return 0
+    try:
+        import sqlite3 as _sq
+        conn = _sq.connect(os.path.join(DATA_DIR, "costco_history.db"))
+        rows = conn.execute("SELECT card_id, 商品名稱, 商品連結, 細分類, updated_at FROM category_overrides").fetchall()
+        conn.close()
+        overrides = {r[0]: {"name": r[1], "link": r[2], "cat": r[3], "updated": r[4]} for r in rows}
+
+        content_b64 = base64.b64encode(json.dumps(overrides, ensure_ascii=False, indent=2).encode()).decode()
+        url = "https://api.github.com/repos/s610034/costco-deals/contents/data/overrides.json"
+
+        # 取得現有 sha
+        sha = None
+        try:
+            req = urllib.request.Request(url, headers={"Authorization": f"token {TOKEN}", "Accept": "application/vnd.github.v3+json"})
+            with urllib.request.urlopen(req, timeout=10) as r:
+                sha = json.loads(r.read()).get("sha")
+        except Exception:
+            pass
+
+        body = {"message": f"sync: overrides {len(overrides)} 筆", "content": content_b64}
+        if sha:
+            body["sha"] = sha
+        req = urllib.request.Request(url, data=json.dumps(body).encode(),
+            headers={"Authorization": f"token {TOKEN}", "Content-Type": "application/json", "Accept": "application/vnd.github.v3+json"},
+            method="PUT")
+        with urllib.request.urlopen(req, timeout=15) as r:
+            json.loads(r.read())
+        print(f"  ✅ overrides 推送 GitHub：{len(overrides)} 筆")
+        return len(overrides)
+    except Exception as e:
+        print(f"  ⚠️  overrides 推送失敗：{e}")
+        return 0
+
+
 def sync_overrides_from_github():
     """從 GitHub overrides.json 同步分類覆蓋到本機 DB"""
     if not TOKEN:
@@ -318,6 +356,7 @@ def run():
     # Step 5：部署
     print(f"\n【Step 5】部署到 GitHub Pages...")
     deployed = deploy()
+    sync_overrides_to_github()  # DB overrides → GitHub
 
     # Step 6：Telegram 推播
     print(f"\n【Step 6】推播 Telegram...")
