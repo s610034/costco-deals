@@ -8,13 +8,13 @@ from typing import List, Dict
 
 CATEGORY_RULES = [
     ("🐾 寵物用品", ["貓","狗","寵物","貓糧","狗糧","貓砂","Mon Petit","貓倍麗","愛貓","愛犬","Cat","Dog","Pet","Litter"]),
-    ("🍱 食品飲料", ["咖啡","茶","飲料","果汁","零食","餅乾","糖果","巧克力","堅果","麵包","蛋糕","米","麵","泡麵","醬","油","鹽","糖","牛奶","優格","起司","雞蛋","肉","魚","海鮮","蔬菜","水果","冷凍","罐頭","即食","披薩","烘焙","食品","料理","湯","粥","燕麥","穀物","蜂蜜","果醬","Barista","Coffee","Tea","Snack","Food"]),
-    ("📺 家電 3C",  ["電視","冰箱","洗衣機","冷氣","空調","除濕","空氣清淨","吸塵器","掃地機","烤箱","微波爐","電鍋","咖啡機","果汁機","電磁爐","電熱水瓶","手機","平板","筆電","電腦","耳機","喇叭","相機","印表機","路由器","充電","Samsung","Panasonic","LG","Sony","Philips","Honeywell","Dyson","Roomba","iPhone","iPad","Apple","Daikin","大金","國際牌","象印","Zojirushi","Oster","Breville","Nespresso","TV","Washer","Fridge","Purifier","Vacuum"]),
-    ("🧴 保健美妝", ["維他命","魚油","保健","益生菌","葉黃素","膠原蛋白","乳清蛋白","營養","保養","面膜","乳液","精華","洗面","防曬","沐浴乳","洗髮","護髮","牙膏","牙刷","美妝","香水","刮鬍","Blackmores","Webber","Vitamin","Omega","Fish Oil","Protein","Probiotic","Collagen"]),
-    ("🏠 生活用品", ["衛生紙","紙巾","廚房紙","濕紙巾","垃圾袋","保鮮膜","清潔劑","洗碗","洗衣精","柔軟精","除菌","消毒","收納","整理箱","燈泡","蠟燭","濾水","廚具","鍋具","餐具","保溫瓶","保溫杯","水壺","Kirkland","科克蘭","Tissue","Paper","Detergent","Cleaner"]),
-    ("👕 服飾寢具", ["衣服","褲子","上衣","外套","羽絨","襪子","內衣","運動服","泳衣","鞋","包包","帽子","棉被","枕頭","床墊","床單","毛毯","毛巾","浴巾","寢具","Jacket","Shirt","Pants","Shoes","Bedding","Pillow","Blanket","Towel"]),
-    ("🧸 玩具育兒", ["玩具","積木","嬰兒","尿布","奶粉","奶瓶","推車","兒童","童裝","桌遊","拼圖","Toy","Baby","Diaper","Kids","LEGO"]),
-    ("🏋️ 運動戶外", ["運動","健身","瑜珈","自行車","登山","露營","帳篷","球","球拍","游泳","跑步","舉重","按摩","Sport","Fitness","Outdoor","Camping","Gym"]),
+    ("🍱 食品飲料", ["咖啡","茶","飲料","果汁","零食","餅乾","糖果","巧克力","堅果","麵包","蛋糕","米","麵","泡麵","醬","油","鹽","糖","牛奶","優格","起司","雞蛋","肉","魚","海鮮","蔬菜","水果","冷凍","罐頭","即食","披薩","烘焙","食品","料理","湯","粥","燕麥","穀物","蜂蜜","果醬","汽水","氣泡水","卡迪那","野村","椰子汁","乾酪","豆腐","蛋捲","果乾","洋芋片","果凍","奶酪","拿鐵","威化","乳酸菌","高麗蔘","Barista","Coffee","Tea","Snack","Food","A&W","KOH","Tree Top","Laughing Cow"]),
+    ("📺 家電 3C",  ["電視","冰箱","洗衣機","冷氣","空調","除濕","空氣清淨","吸塵器","掃地機","烤箱","微波爐","電鍋","咖啡機","果汁機","電磁爐","電熱水瓶","手機","平板","筆電","電腦","耳機","喇叭","相機","印表機","路由器","充電","電池","吹風機","升降桌","Samsung","Panasonic","LG","Sony","Philips","Honeywell","Dyson","Roomba","Tescom","Flexispot","iPhone","iPad","Apple","Daikin","大金","國際牌","象印","Zojirushi","Oster","Breville","Nespresso","Duracell","金頂","TV","Washer","Fridge","Purifier","Vacuum"]),
+    ("🧴 保健美妝", ["維他命","魚油","保健","益生菌","葉黃素","膠原蛋白","乳清蛋白","營養","保養","面膜","乳液","精華","洗面","防曬","沐浴乳","洗髮","護髮","牙膏","牙刷","美妝","香水","刮鬍","除毛","蔘","威德","補給","Blackmores","Webber","Vitamin","Omega","Fish Oil","Protein","Probiotic","Collagen","sum37","su:m"]),
+    ("🏠 生活用品", ["衛生紙","紙巾","廚房紙","濕紙巾","垃圾袋","保鮮膜","清潔劑","洗碗","洗衣精","柔軟精","除菌","消毒","收納","整理箱","燈泡","蠟燈","濾水","廚具","鍋具","餐具","保溫瓶","保溫杯","水壺","小蘇打","除臭","滅蟑","花灑","保鮮盒","折疊椅","Kirkland","科克蘭","ARM","HAMMER","Neoflam","Stakmore","Tissue","Paper","Detergent","Cleaner"]),
+    ("👕 服飾寢具", ["衣服","褲子","上衣","外套","羽絨","襪子","內衣","運動服","泳衣","鞋","包包","帽子","棉被","枕頭","床墊","床單","毛毯","毛巾","浴巾","寢具","Polo衫","Jacket","Shirt","Pants","Shoes","Bedding","Pillow","Blanket","Towel","Timberland","Advent","Well Worn"]),
+    ("🧸 玩具育兒", ["玩具","積木","嬰兒","尿布","拉拉褲","紙尿褲","奶粉","奶瓶","推車","兒童","童裝","桌遊","拼圖","幫寶適","好奇","Toy","Baby","Diaper","Kids","LEGO","Pampers","Huggies"]),
+    ("🏋️ 運動戶外", ["運動","健身","瑜珈","自行車","登山","露營","帳篷","球","球拍","游泳","跑步","舉重","按摩","Coleman","Sport","Fitness","Outdoor","Camping","Gym"]),
 ]
 OTHER_CATEGORY = "📦 其他"
 ALL_CATS = [r[0] for r in CATEGORY_RULES] + [OTHER_CATEGORY]
@@ -585,19 +585,39 @@ function updateTabCounts() {{
 }}
 
 // 初始化
+const OVERRIDES_URL = "https://raw.githubusercontent.com/s610034/costco-deals/main/data/overrides.json";
+
+// 從 GitHub 即時拉最新 overrides 並套用（每台設備都能拿到最新分類）
+async function applyGitHubOverrides() {{
+  try {{
+    const r = await fetch(OVERRIDES_URL + "?t=" + Date.now());
+    if (!r.ok) return;
+    const overrides = await r.json();
+    Object.entries(overrides).forEach(([id, data]) => {{
+      const catId = typeof data === "object" ? data.cat : data;
+      const card = document.getElementById(id);
+      if (card && catId) _applyCatToCard(card, catId, false);
+    }});
+    updateTabCounts();
+    applyFilter();
+  }} catch(e) {{}}
+}}
+
 window.addEventListener("DOMContentLoaded", () => {{
-  // 套用 DB 覆蓋（後端分好的，不加 badge）
+  // 套用 DB 覆蓋（後端分好的）
   Object.entries(DB_OVERRIDES).forEach(([id, catId]) => {{
     const card = document.getElementById(id);
     if (card) _applyCatToCard(card, catId, false);
   }});
-  // 套用 localStorage 覆蓋（使用者手動改的，加 badge）
+  // 套用 localStorage 覆蓋（離線備用）
   Object.entries(getOverrides()).forEach(([id, catId]) => {{
     const card = document.getElementById(id);
     if (card) _applyCatToCard(card, catId, true);
   }});
   updateTabCounts();
   applyFilter();
+  // 從 GitHub 即時拉最新 overrides（覆蓋上面的，確保所有設備同步）
+  applyGitHubOverrides();
 }});
 
 // 篩選
