@@ -300,6 +300,19 @@ def run():
                 except Exception:
                     pass
                 new_products = verify_all_products(new_products, _page)
+
+                # daybuy/PTT 來源：官網無折扣的排除
+                before = len(new_products)
+                new_products = [
+                    p for p in new_products
+                    if p.get("來源") not in ("daybuy_tg", "ptt_hypermall", "daybuy_sighting")
+                    or p.get("折扣金額")  # 官網驗證有折扣才保留
+                    or p.get("分類") in ("限時優惠", "精選優惠")  # 官網直接爬的保留
+                ]
+                removed = before - len(new_products)
+                if removed:
+                    print(f"  🗑️  移除社群來源無折扣商品：{removed} 筆")
+
                 _browser.close()
         else:
             print("  無商品編號可驗證，跳過")
@@ -362,11 +375,76 @@ def run():
     master_cnt = upsert_master(new_products, source="scraper")
     print(f"  📦 商品主資料庫：共 {get_master_count()} 個商品")
 
-    # Step 3：30天合併 + 附加歷史
-    print(f"\n【Step 3】30天合併...")
-    products_30d = get_products_last_30_days()
+    # Step 3：只顯示今天爬到的有效折扣（不再用30天合併）
+    print(f"\n【Step 3】整理今日有效折扣...")
+    # 用今天爬到的 new_products，再從 DB 撈今天的資料（包含去重後的最佳版本）
+    from database import get_conn
+    _conn = get_conn()
+    _rows = _conn.execute("""
+        SELECT p.*
+        FROM products p
+        INNER JOIN (
+            SELECT
+                CASE WHEN 商品編號 != '' AND 商品編號 IS NOT NULL
+                     THEN 商品編號
+                     ELSE 商品連結 END as group_key,
+                COALESCE(
+                    NULLIF(MAX(CASE WHEN 商品連結 LIKE '%costco.com.tw%/p/%'
+                                    THEN crawl_date ELSE '' END), ''),
+                    MAX(crawl_date)
+                ) as best_date,
+                MAX(CASE WHEN 商品連結 LIKE '%costco.com.tw%/p/%' THEN 1 ELSE 0 END) as has_official
+            FROM products
+            WHERE crawl_date = ?
+              AND 商品連結 != ''
+              AND 商品名稱 != ''
+              AND (折扣金額 IS NOT NULL OR 折扣後售價 IS NOT NULL)
+            GROUP BY group_key
+        ) latest ON (
+            CASE WHEN p.商品編號 != '' AND p.商品編號 IS NOT NULL
+                 THEN p.商品編號
+                 ELSE p.商品連結 END = latest.group_key
+        ) AND p.crawl_date = latest.best_date
+          AND (latest.has_official = 0
+               OR p.商品連結 LIKE '%costco.com.tw%/p/%')
+        WHERE (p.折扣金額 IS NOT NULL OR p.折扣後售價 IS NOT NULL)
+        ORDER BY p.折扣金額 DESC NULLS LAST
+    """, (today,)).fetchall()
+
+    import re as _re3
+    _disc_map = {}
+    for _r in _conn.execute(
+        "SELECT 商品編號, 討論連結 FROM products WHERE 商品編號 != '' AND 討論連結 LIKE '%daybuy.tw%' GROUP BY 商品編號"
+    ).fetchall():
+        _disc_map[_r[0]] = _r[1]
+
+    products_30d = []
+    _seen_pid = {}
+    for _row in _rows:
+        _p = dict(_row)
+        _link = _p.get("商品連結", "")
+        _code = _p.get("商品編號", "")
+        _pid  = ("code_" + _code) if _code else ("url_" + _link[-35:])
+
+        if _pid in _seen_pid:
+            continue
+        _seen_pid[_pid] = True
+
+        # 補充 討論連結
+        if _code and not _p.get("討論連結") and _code in _disc_map:
+            _p["討論連結"] = _disc_map[_code]
+
+        # 補充官網連結
+        if _code and ("daybuy.tw" in _link or "pttweb" in _link):
+            _p["官網連結"] = f"https://www.costco.com.tw/p/{_code}"
+
+        products_30d.append(_p)
+
+    print(f"  📦 今日有效折扣：{len(products_30d)} 筆（去重後）")
+
     if not products_30d:
         products_30d = new_products  # fallback
+
     products_30d = enrich_with_history(products_30d, today)
 
     # Step 4：產生 HTML

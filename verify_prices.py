@@ -127,8 +127,12 @@ def verify_all_products(products: List[Dict], page, max_verify: int = 30) -> Lis
             skipped += 1
             continue
 
-        # 已在 DB 有原價，直接套用（不進詳情頁）
-        if code in verified_codes:
+        # 社群來源（daybuy/PTT）：一定要去官網確認折扣，不能只用 DB 快取
+        source = p.get("來源", "")
+        is_social = source in ("daybuy_tg", "ptt_hypermall", "daybuy_sighting")
+
+        # 官網直接爬的商品：DB 有原價就套用，不重複進官網
+        if code in verified_codes and not is_social:
             db_orig = verified_codes[code]
             if db_orig and db_orig != p.get("原價"):
                 p["原價"] = db_orig

@@ -107,10 +107,12 @@ def get_products_last_30_days():
     conn = sqlite3.connect(db_path)
     conn.row_factory = sqlite3.Row
 
-    cutoff = (datetime.datetime.now() - datetime.timedelta(days=30)).strftime('%Y%m%d')
+    # 取得最新一次爬取的所有有折扣商品
+    # 找最新的 crawl_date
+    latest_date = conn.execute(
+        "SELECT MAX(crawl_date) FROM products WHERE 折扣金額 IS NOT NULL OR 折扣後售價 IS NOT NULL"
+    ).fetchone()[0]
 
-    # 取得最近30天內出現過的商品（取最新那筆，只保留有折扣的）
-    # 用商品編號優先去重，沒有商品編號才用商品連結
     rows = conn.execute("""
         SELECT p.*
         FROM products p
@@ -119,16 +121,9 @@ def get_products_last_30_days():
                 CASE WHEN 商品編號 != '' AND 商品編號 IS NOT NULL
                      THEN 商品編號
                      ELSE 商品連結 END as group_key,
-                -- 優先選官網版（/p/），沒有才選最新
-                COALESCE(
-                    NULLIF(MAX(CASE WHEN 商品連結 LIKE '%costco.com.tw%/p/%'
-                                    THEN crawl_date ELSE '' END), ''),
-                    MAX(crawl_date)
-                ) as best_date,
-                -- 同日期優先選官網連結
                 MAX(CASE WHEN 商品連結 LIKE '%costco.com.tw%/p/%' THEN 1 ELSE 0 END) as has_official
             FROM products
-            WHERE crawl_date >= ?
+            WHERE crawl_date = ?
               AND 商品連結 != ''
               AND 商品名稱 != ''
               AND (折扣金額 IS NOT NULL OR 折扣後售價 IS NOT NULL)
@@ -137,12 +132,12 @@ def get_products_last_30_days():
             CASE WHEN p.商品編號 != '' AND p.商品編號 IS NOT NULL
                  THEN p.商品編號
                  ELSE p.商品連結 END = latest.group_key
-        ) AND p.crawl_date = latest.best_date
+        ) AND p.crawl_date = ?
           AND (latest.has_official = 0
                OR p.商品連結 LIKE '%costco.com.tw%/p/%')
-        WHERE p.折扣金額 IS NOT NULL OR p.折扣後售價 IS NOT NULL
+        WHERE (p.折扣金額 IS NOT NULL OR p.折扣後售價 IS NOT NULL)
         ORDER BY p.折扣金額 DESC NULLS LAST
-    """, (cutoff,)).fetchall()
+    """, (latest_date, latest_date)).fetchall()
     conn.close()
 
     products = []
