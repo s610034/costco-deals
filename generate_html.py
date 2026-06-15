@@ -174,7 +174,12 @@ def generate_html(products: List[Dict], output_path: str) -> str:
                             pass
 
             if period:
-                period_html = f'<p class="deal-period">📅 {period}</p>'
+                # daybuy 來源的期間可能是從文章頁面推測的，加上標記
+                period_src = p.get("期間來源", "")
+                if period_src in ("daybuy_article", "daybuy_tg") and deal_val not in ("hotbuys",):
+                    period_html = f'<p class="deal-period">📅 {period} <span class="period-hint">（daybuy）</span></p>'
+                else:
+                    period_html = f'<p class="deal-period">📅 {period}</p>'
             elif "把握" in deal_cat:
                 period_html = '<p class="deal-period">🔥 把握優惠（數量有限）</p>'
             else:
@@ -188,10 +193,34 @@ def generate_html(products: List[Dict], output_path: str) -> str:
             orig_link = p.get("商品連結", "")
             has_daybuy = "daybuy.tw" in orig_link or ("daybuy.tw" in disc_url)
 
+            code = p.get("商品編號", "")
+
             if has_daybuy:
                 daybuy_url = orig_link if "daybuy.tw" in orig_link else disc_url
+                # 官網連結
+                official_url = p.get("官網連結", "") or (f"https://www.costco.com.tw/p/{code}" if code else "")
+                # 如果主連結是官網，官網連結就是主連結本身
+                if not official_url and "costco.com.tw" in orig_link:
+                    official_url = orig_link
                 src_icon = f'<a class="src-icon" href="{daybuy_url}" target="_blank" onclick="event.stopPropagation()" title="daybuy 情報">📰</a>'
-                daybuy_link_html = f'<a class="daybuy-link" href="{daybuy_url}" target="_blank" onclick="event.stopPropagation()">📰 daybuy 情報頁</a>'
+                if official_url and official_url != daybuy_url:
+                    daybuy_link_html = (
+                        f'<a class="daybuy-link official-link" href="{official_url}" target="_blank" onclick="event.stopPropagation()">🛒 好市多官網</a>'
+                        f'<a class="daybuy-link" href="{daybuy_url}" target="_blank" onclick="event.stopPropagation()">📰 daybuy 情報頁</a>'
+                    )
+                else:
+                    daybuy_link_html = f'<a class="daybuy-link" href="{daybuy_url}" target="_blank" onclick="event.stopPropagation()">📰 daybuy 情報頁</a>'
+            elif disc_url and "daybuy.tw" in disc_url:
+                # 主連結是官網但有 daybuy 討論連結
+                official_url = orig_link if "costco.com.tw" in orig_link else (f"https://www.costco.com.tw/p/{code}" if code else "")
+                src_icon = f'<a class="src-icon" href="{disc_url}" target="_blank" onclick="event.stopPropagation()" title="daybuy 情報">📰</a>'
+                if official_url:
+                    daybuy_link_html = (
+                        f'<a class="daybuy-link official-link" href="{official_url}" target="_blank" onclick="event.stopPropagation()">🛒 好市多官網</a>'
+                        f'<a class="daybuy-link" href="{disc_url}" target="_blank" onclick="event.stopPropagation()">📰 daybuy 情報頁</a>'
+                    )
+                else:
+                    daybuy_link_html = f'<a class="daybuy-link" href="{disc_url}" target="_blank" onclick="event.stopPropagation()">📰 daybuy 情報頁</a>'
             elif p.get("實體賣場"):
                 src_icon = '<span class="src-icon" title="線上售價與賣場相同">🏪</span>'
 
@@ -316,8 +345,11 @@ main{{padding:12px;max-width:960px;margin:0 auto}}
 .badge-hot{{background:#fef3c7;color:#92400e}}
 .badge-coup{{background:#ede9fe;color:#5b21b6}}
 .change-cat-btn{{position:absolute;bottom:6px;right:6px;border:none;background:transparent;font-size:.75rem;cursor:pointer;opacity:0;pointer-events:none;padding:2px;transition:opacity .2s}}
-.daybuy-link{{display:block;font-size:.65rem;color:#0369a1;text-align:center;padding:4px 8px;border-top:1px solid var(--border);background:#f0f9ff;text-decoration:none;margin-top:4px}}
+.daybuy-link{{display:block;font-size:.65rem;color:#0369a1;text-align:center;padding:4px 8px;border-top:1px solid var(--border);background:#f0f9ff;text-decoration:none}}
 .daybuy-link:hover{{background:#dbeafe}}
+.official-link{{background:#f0fdf4;color:#166534}}
+.official-link:hover{{background:#dcfce7}}
+.period-hint{{font-size:.6rem;color:#92400e;opacity:.75}}
 body.editor-mode .change-cat-btn{{opacity:.35;pointer-events:auto}}
 body.editor-mode .change-cat-btn:hover{{opacity:1}}
 .modal-overlay{{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;align-items:flex-end;justify-content:center}}

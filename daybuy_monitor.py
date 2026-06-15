@@ -404,13 +404,14 @@ def fetch_daybuy_channel(days_back: int = 7) -> List[Dict]:
             "網路討論": True,
             "討論來源": "daybuy @daybuy",
             "討論連結": daybuy_link,
-            "圖片URL": "",
+            "圖片URL": article_data.get("圖片URL", ""),
             "商品連結": daybuy_link,
+            "官網連結": ("https://www.costco.com.tw/p/" + article_data["商品編號"]) if article_data.get("商品編號") else "",
             "抓取時間": datetime.datetime.now().isoformat(timespec="seconds"),
             "來源": "daybuy_tg",
             "訊息時間": dt.strftime("%Y-%m-%d %H:%M"),
             "商品編號": article_data.get("商品編號", ""),
-            "圖片URL": article_data.get("圖片URL", ""),
+            "期間來源": "daybuy_article" if article_data.get("優惠期間") else ("daybuy_tg" if period else ""),
         }
         products.append(product)
 

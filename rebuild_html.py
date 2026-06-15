@@ -121,12 +121,12 @@ def get_products_last_30_days():
                      ELSE 商品連結 END as group_key,
                 -- 優先選官網版（/p/），沒有才選最新
                 COALESCE(
-                    NULLIF(MAX(CASE WHEN 商品連結 LIKE '%costco.com.tw/p/%'
+                    NULLIF(MAX(CASE WHEN 商品連結 LIKE '%costco.com.tw%/p/%'
                                     THEN crawl_date ELSE '' END), ''),
                     MAX(crawl_date)
                 ) as best_date,
                 -- 同日期優先選官網連結
-                MAX(CASE WHEN 商品連結 LIKE '%costco.com.tw/p/%' THEN 1 ELSE 0 END) as has_official
+                MAX(CASE WHEN 商品連結 LIKE '%costco.com.tw%/p/%' THEN 1 ELSE 0 END) as has_official
             FROM products
             WHERE crawl_date >= ?
               AND 商品連結 != ''
@@ -139,7 +139,7 @@ def get_products_last_30_days():
                  ELSE p.商品連結 END = latest.group_key
         ) AND p.crawl_date = latest.best_date
           AND (latest.has_official = 0
-               OR p.商品連結 LIKE '%costco.com.tw/p/%')
+               OR p.商品連結 LIKE '%costco.com.tw%/p/%')
         WHERE p.折扣金額 IS NOT NULL OR p.折扣後售價 IS NOT NULL
         ORDER BY p.折扣金額 DESC NULLS LAST
     """, (cutoff,)).fetchall()
@@ -162,6 +162,9 @@ def get_products_last_30_days():
             '商品連結':   p.get('商品連結', ''),
             '抓取時間':   p.get('抓取時間', ''),
             '討論連結':   p.get('討論連結', '') or '',
+            '官網連結':   p.get('官網連結', '') or '',
+            '期間來源':   p.get('期間來源', '') or '',
+            '商品編號':   p.get('商品編號', '') or '',
             '來源':       '',
         })
 
@@ -212,6 +215,35 @@ def get_products_last_30_days():
                 if not old_p.get("討論連結") and p.get("討論連結"):
                     old_p["討論連結"] = p["討論連結"]
     products = list(seen.values())
+
+    # 補充官網連結 + 討論連結（從 DB 找同商品編號的 daybuy 連結）
+    import sqlite3 as _sq
+    _db = _sq.connect(db_path)
+    _db.row_factory = _sq.Row
+
+    # 建立商品編號 → daybuy 討論連結的對照表
+    disc_map = {}
+    _rows = _db.execute("""
+        SELECT 商品編號, 討論連結 FROM products
+        WHERE 商品編號 != '' AND 討論連結 LIKE '%daybuy.tw%'
+        GROUP BY 商品編號
+    """).fetchall()
+    for r in _rows:
+        disc_map[r['商品編號']] = r['討論連結']
+    _db.close()
+
+    for p in products:
+        code = p.get('商品編號', '')
+        link = p.get('商品連結', '')
+
+        # daybuy 來源商品：補充官網連結
+        if code and ('daybuy.tw' in link or 'pttweb' in link):
+            p['官網連結'] = f'https://www.costco.com.tw/p/{code}'
+
+        # 所有商品：從 DB 找 daybuy 討論連結（如果自己沒有）
+        if code and not p.get('討論連結') and code in disc_map:
+            p['討論連結'] = disc_map[code]
+
     print(f"  📦 DB 30天合併：{len(products)} 筆（去重後）")
     return products
 
