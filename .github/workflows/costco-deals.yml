@@ -1,0 +1,39 @@
+name: 好市多折扣週報 (備援)
+
+on:
+  schedule:
+    # 週一、三 09:15 台灣時間 = UTC 01:15
+    - cron: '15 1 * * 1,3'
+  workflow_dispatch:  # 允許手動觸發
+
+jobs:
+  crawl-and-deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install playwright requests beautifulsoup4 python-dotenv
+          playwright install chromium
+          playwright install-deps chromium
+
+      - name: Create .env from secrets
+        run: |
+          echo "COSTCO_TG_BOT_TOKEN=${{ secrets.COSTCO_TG_BOT_TOKEN }}" >> .env
+          echo "COSTCO_TG_CHAT_ID=${{ secrets.COSTCO_TG_CHAT_ID }}" >> .env
+          echo "GITHUB_TOKEN=${{ secrets.GH_PAT }}" >> .env
+          echo "EDITOR_PASSWORD=${{ secrets.EDITOR_PASSWORD }}" >> .env
+
+      - name: Run costco scraper
+        run: python3 run_costco.py
+        env:
+          PYTHONUNBUFFERED: 1
