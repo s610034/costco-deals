@@ -245,13 +245,11 @@ def run():
         from ptt_monitor import fetch_ptt_costco, merge_ptt_with_existing
         ptt_products = fetch_ptt_costco(pages=3, fetch_content=True)
 
-        # PTT 商品需要去官網確認目前是否真的有折扣
-        # 沒有商品編號的直接排除，有商品編號的去詳情頁確認折扣還在
         if ptt_products:
-            from verify_prices import verify_product_price
+            # 用官網搜尋補商品編號，再驗證是否有折扣
+            from costco_search import enrich_ptt_products
             from playwright.sync_api import sync_playwright as _spw2
             import time as _t2
-            import re as _re2
 
             with _spw2() as _pw2:
                 _browser2 = _pw2.chromium.launch(headless=True)
@@ -265,33 +263,16 @@ def run():
                 try:
                     _btn2 = _page2.query_selector("button:has-text('同意')")
                     if _btn2: _btn2.click(); _t2.sleep(1)
-                except Exception: pass
-
-                verified_ptt = []
-                for pp in ptt_products:
-                    code = pp.get("商品編號", "")
-                    if not code:
-                        print(f"  ⏭️  跳過（無商品編號）：{pp['商品名稱'][:30]}")
-                        continue
-                    result = verify_product_price(code, _page2)
-                    if result and result.get("折扣金額"):
-                        # 官網確認有折扣，更新資料
-                        pp["原價"]       = result["原價"]
-                        pp["折扣金額"]   = result["折扣金額"]
-                        pp["折扣後售價"] = result["折扣後售價"]
-                        pp["折扣幅度"]   = result["折扣幅度"] or pp.get("折扣幅度","")
-                        pp["官網連結"]   = result["官網連結"]
-                        verified_ptt.append(pp)
-                        print(f"  ✅ PTT 驗證有折扣：{pp['商品名稱'][:30]} 折={result['折扣金額']}")
-                    else:
-                        print(f"  ❌ PTT 排除（官網無折扣）：{pp['商品名稱'][:30]}")
-
+                except Exception:
+                    pass
+                ptt_products = enrich_ptt_products(ptt_products, _page2)
                 _browser2.close()
-            ptt_products = verified_ptt
 
         new_products = merge_ptt_with_existing(new_products, ptt_products)
     except Exception as e:
+        import traceback
         print(f"  ⚠️  PTT 失敗（繼續）：{e}")
+        traceback.print_exc()
 
     # Step 1.7：用商品編號去官網詳情頁驗證正確價格
     print(f"\n【Step 1.7】官網詳情頁驗證價格...")
