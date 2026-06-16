@@ -282,6 +282,7 @@ def generate_html(products: List[Dict], output_path: str) -> str:
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 <title>好市多折扣週報 {date_str}</title>
@@ -417,14 +418,18 @@ footer{{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}}
 
 <div class="modal-overlay" id="tokenModal" onclick="if(event.target===this)closeTokenModal()">
   <div class="modal-box">
-    <h3>設定 GitHub Token</h3>
-    <p style="font-size:.8rem;color:var(--color-text-secondary);margin:.5rem 0">用於修改分類後自動同步到所有設備。<br>Token 只存在本裝置的 localStorage，不會上傳。</p>
-    <input type="password" id="ghTokenInput" placeholder="github_pat_..." style="width:100%;padding:8px;border:1px solid var(--color-border-tertiary);border-radius:6px;font-size:.85rem;margin:.5rem 0;background:var(--color-background-secondary);color:var(--color-text-primary)">
-    <div style="display:flex;gap:8px;margin-top:.5rem">
-      <button onclick="saveToken()" style="flex:1;padding:8px;background:#1d4ed8;color:#fff;border:none;border-radius:6px;cursor:pointer">儲存</button>
-      <button onclick="closeTokenModal()" style="flex:1;padding:8px;background:var(--color-background-tertiary);border:1px solid var(--color-border-tertiary);border-radius:6px;cursor:pointer">取消</button>
+    <h3>🔑 GitHub Token 設定</h3>
+    <div id="tokenCurrentStatus" style="font-size:.8rem;padding:8px;border-radius:6px;margin:.5rem 0;background:var(--color-background-secondary)">
+      載入中...
     </div>
-    <p id="tokenStatus" style="font-size:.75rem;margin-top:.5rem;color:var(--color-text-secondary)"></p>
+    <p style="font-size:.75rem;color:var(--color-text-secondary);margin:.25rem 0 .5rem">Token 僅存於本裝置，不會上傳至任何地方。<br>取得方式：github.com/settings/tokens → Generate new token (classic) → 勾選 repo + workflow</p>
+    <input type="password" id="ghTokenInput" placeholder="ghp_xxxx 或 github_pat_xxxx" style="width:100%;padding:8px;border:1px solid var(--color-border-tertiary);border-radius:6px;font-size:.82rem;margin:.25rem 0;background:var(--color-background-secondary);color:var(--color-text-primary);box-sizing:border-box">
+    <div style="display:flex;gap:8px;margin-top:.5rem">
+      <button onclick="testToken()" style="flex:1;padding:8px;background:var(--color-background-tertiary);border:1px solid var(--color-border-secondary);border-radius:6px;cursor:pointer;font-size:.82rem">🧪 測試</button>
+      <button onclick="saveToken()" style="flex:1;padding:8px;background:#1d4ed8;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:.82rem">💾 儲存</button>
+      <button onclick="clearToken()" style="padding:8px 12px;background:var(--color-background-tertiary);border:1px solid var(--color-border-secondary);border-radius:6px;cursor:pointer;font-size:.82rem">🗑️</button>
+    </div>
+    <p id="tokenStatus" style="font-size:.75rem;margin-top:.5rem;min-height:1.2em;color:var(--color-text-secondary)"></p>
   </div>
 </div>
 
@@ -652,25 +657,69 @@ async function syncNow() {{
 // Token 設定
 function openSetToken() {{
   const existing = localStorage.getItem("costco_gh_token") || "";
-  document.getElementById("ghTokenInput").value = existing;
-  document.getElementById("tokenStatus").textContent = existing ? "✅ 已設定 Token" : "";
+  document.getElementById("ghTokenInput").value = existing ? "●".repeat(20) : "";
+  document.getElementById("ghTokenInput").dataset.hasToken = existing ? "1" : "";
+  document.getElementById("tokenStatus").textContent = "";
+  // 顯示目前狀態
+  const statusEl = document.getElementById("tokenCurrentStatus");
+  if (existing) {{
+    const masked = existing.slice(0,8) + "..." + existing.slice(-4);
+    statusEl.innerHTML = "✅ 已設定 Token：<code style='background:var(--color-background-tertiary);padding:1px 4px;border-radius:3px'>" + masked + "</code>";
+    statusEl.style.color = "var(--color-text-success)";
+  }} else {{
+    statusEl.textContent = "❌ 尚未設定 Token，同步功能無法使用";
+    statusEl.style.color = "var(--color-text-danger)";
+  }}
   document.getElementById("tokenModal").classList.add("open");
   setTimeout(() => document.getElementById("ghTokenInput").focus(), 100);
 }}
 function closeTokenModal() {{
   document.getElementById("tokenModal").classList.remove("open");
 }}
+async function testToken() {{
+  const inputVal = document.getElementById("ghTokenInput").value.trim();
+  const hasExisting = document.getElementById("ghTokenInput").dataset.hasToken;
+  const token = (inputVal === "●".repeat(20) && hasExisting)
+    ? localStorage.getItem("costco_gh_token")
+    : inputVal;
+  if (!token) {{ document.getElementById("tokenStatus").textContent = "⚠️ 請先輸入 Token"; return; }}
+  document.getElementById("tokenStatus").textContent = "測試中...";
+  try {{
+    const r = await fetch("https://api.github.com/repos/s610034/costco-deals", {{
+      headers: {{"Authorization": "token " + token, "Accept": "application/vnd.github.v3+json"}}
+    }});
+    if (r.ok) {{
+      document.getElementById("tokenStatus").textContent = "✅ Token 有效！可以正常同步";
+    }} else if (r.status === 401) {{
+      document.getElementById("tokenStatus").textContent = "❌ Token 無效或已過期";
+    }} else {{
+      document.getElementById("tokenStatus").textContent = "⚠️ 狀態碼 " + r.status;
+    }}
+  }} catch(e) {{
+    document.getElementById("tokenStatus").textContent = "❌ 測試失敗：" + e.message;
+  }}
+}}
 function saveToken() {{
-  const token = document.getElementById("ghTokenInput").value.trim();
-  if (token) {{
+  const inputVal = document.getElementById("ghTokenInput").value.trim();
+  const hasExisting = document.getElementById("ghTokenInput").dataset.hasToken;
+  const token = (inputVal === "●".repeat(20) && hasExisting)
+    ? localStorage.getItem("costco_gh_token")
+    : inputVal;
+  if (token && token !== "●".repeat(20)) {{
     localStorage.setItem("costco_gh_token", token);
     document.getElementById("tokenStatus").textContent = "✅ 已儲存";
     setTimeout(closeTokenModal, 800);
-  }} else {{
-    localStorage.removeItem("costco_gh_token");
-    document.getElementById("tokenStatus").textContent = "已清除 Token";
-    setTimeout(closeTokenModal, 800);
+  }} else if (!token) {{
+    clearToken();
   }}
+}}
+function clearToken() {{
+  localStorage.removeItem("costco_gh_token");
+  document.getElementById("ghTokenInput").value = "";
+  document.getElementById("ghTokenInput").dataset.hasToken = "";
+  document.getElementById("tokenCurrentStatus").textContent = "❌ 尚未設定 Token";
+  document.getElementById("tokenStatus").textContent = "🗑️ Token 已清除";
+  setTimeout(closeTokenModal, 800);
 }}
 
 // GitHub overrides.json 同步
