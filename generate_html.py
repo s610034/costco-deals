@@ -6,28 +6,57 @@ import json, os, datetime, re, hashlib
 from typing import List, Dict
 
 
-def fetch_sighting_articles(max_articles: int = 5) -> list:
-    """從 daybuy 抓最新賣場目擊情報文章，用於隱藏優惠區塊"""
+def fetch_sighting_articles(days: int = 7) -> list:
+    """從 daybuy 抓最近 N 天內的賣場目擊情報文章"""
     try:
         import requests
         from bs4 import BeautifulSoup
+        import datetime
+
         headers = {"User-Agent": "Mozilla/5.0"}
         r = requests.get("https://www.daybuy.tw/costco/hypermarket-news/",
                          headers=headers, timeout=8)
         soup = BeautifulSoup(r.text, "html.parser")
+
+        today = datetime.date.today()
+        cutoff = today - datetime.timedelta(days=days)
+
         articles, seen = [], set()
         for a in soup.select('a[href*="/costco/"]'):
             href = a.get("href", "")
             title = a.get_text(strip=True)
             if not title or len(title) < 8 or href in seen:
                 continue
-            if re.search(r"/costco/\d+/", href) and any(
-                kw in title for kw in ["賣場", "隱藏", "情報", "目擊", "現場", "穿搭"]
-            ):
-                seen.add(href)
-                articles.append({"title": title, "url": href})
-            if len(articles) >= max_articles:
-                break
+            if not (re.search(r"/costco/\d+/", href) and any(
+                kw in title for kw in ["賣場", "隱藏", "情報", "目擊", "現場", "穿搭", "週報"]
+            )):
+                continue
+
+            # 從標題解析日期，取所有日期中最晚的（週報用結束日期）
+            # 支援 2026/06/09、2026.06.09、06.09(二) 等格式
+            year = today.year
+            parsed = []
+            # 完整日期 yyyy/mm/dd 或 yyyy.mm.dd
+            for y, m, d in re.findall(r"(\d{4})[/\.](\d{1,2})[/\.](\d{1,2})", title):
+                try: parsed.append(datetime.date(int(y), int(m), int(d)))
+                except ValueError: pass
+            # 短日期 mm.dd 或 mm/dd（補當年）
+            for m, d in re.findall(r"(?<!\d)(\d{1,2})[./](\d{2})(?![\d/.])", title):
+                try:
+                    dt = datetime.date(year, int(m), int(d))
+                    # 如果超過今天很多，可能是去年
+                    if dt > today + datetime.timedelta(days=30):
+                        dt = datetime.date(year - 1, int(m), int(d))
+                    parsed.append(dt)
+                except ValueError: pass
+            if parsed:
+                art_date = max(parsed)
+                if art_date < cutoff:
+                    continue
+
+            seen.add(href)
+            articles.append({"title": title, "url": href})
+
         return articles
     except Exception as e:
         print(f"  ⚠️  抓取目擊情報失敗：{e}")
