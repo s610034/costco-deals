@@ -77,6 +77,7 @@ body.editor-mode .change-cat-btn:hover{opacity:1}
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;align-items:flex-end;justify-content:center}
 .modal-overlay.open{display:flex}
 .modal{background:#fff;border-radius:20px 20px 0 0;width:100%;max-width:480px;padding:20px;max-height:80vh;overflow-y:auto}
+.modal-box{background:var(--color-background-primary);border-radius:12px;width:90%;max-width:360px;padding:20px;margin:auto}
 .modal-title{font-size:.95rem;font-weight:700;margin-bottom:4px}
 .modal-subtitle{font-size:.75rem;color:var(--sub);margin-bottom:16px}
 .modal-cats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
@@ -95,7 +96,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
 </style>
 <script>
   // 版本控制：每次部署時更新，強制瀏覽器重新載入
-  const BUILD_TIME = '20260616102028';
+  const BUILD_TIME = '20260616103440';
   const stored = localStorage.getItem('costco_build');
   if (stored && stored !== BUILD_TIME) {
     localStorage.setItem('costco_build', BUILD_TIME);
@@ -1266,7 +1267,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
   </div>
 </div>
 
-<footer>🤖 Hermes Agent 自動整理｜資料來源：costco.com.tw｜更新：2026-06-16 10:20<br>🏪=賣場同售 📰=daybuy情報 ✏️=登入後可修改分類</footer>
+<footer>🤖 Hermes Agent 自動整理｜資料來源：costco.com.tw｜更新：2026-06-16 10:34<br>🏪=賣場同售 📰=daybuy情報 ✏️=登入後可修改分類</footer>
 
 <!-- 分類 Modal -->
 <div class="modal-overlay" id="catModal" onclick="if(event.target===this)closeModal()">
