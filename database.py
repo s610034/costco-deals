@@ -467,3 +467,69 @@ def get_master_count():
     """取得 master 表商品總數"""
     conn = get_conn()
     return conn.execute("SELECT COUNT(*) FROM products_master").fetchone()[0]
+
+
+def get_discussion_map() -> dict:
+    """取得商品編號 → daybuy/PTT 討論連結的對照表"""
+    conn = get_conn()
+    rows = conn.execute("""
+        SELECT 商品編號, 討論連結
+        FROM products
+        WHERE 商品編號 != '' AND 討論連結 != '' AND 討論連結 IS NOT NULL
+        GROUP BY 商品編號
+    """).fetchall()
+    return {r[0]: r[1] for r in rows}
+
+
+def enrich_discussion_links(products: List[Dict]) -> List[Dict]:
+    """
+    補充商品的 討論連結 和 官網連結：
+    - 官網版商品：從 DB 找同商品編號的 daybuy 連結
+    - daybuy/PTT 版商品：補充官網連結（/p/商品編號）
+    """
+    disc_map = get_discussion_map()
+    for p in products:
+        code = p.get("商品編號", "")
+        link = p.get("商品連結", "")
+        if not code:
+            continue
+        # daybuy/PTT 來源：補充官網連結
+        if "daybuy.tw" in link or "pttweb" in link:
+            if not p.get("官網連結"):
+                p["官網連結"] = f"https://www.costco.com.tw/p/{code}"
+        # 所有商品：補充討論連結（從 DB 找）
+        if not p.get("討論連結") and code in disc_map:
+            p["討論連結"] = disc_map[code]
+    return products
+
+
+def get_discussion_map() -> dict:
+    """取得商品編號 → daybuy/PTT 討論連結的對照表"""
+    conn = get_conn()
+    rows = conn.execute("""
+        SELECT 商品編號, 討論連結
+        FROM products
+        WHERE 商品編號 != '' AND 討論連結 != '' AND 討論連結 IS NOT NULL
+        GROUP BY 商品編號
+    """).fetchall()
+    return {r[0]: r[1] for r in rows}
+
+
+def enrich_discussion_links(products: List[Dict]) -> List[Dict]:
+    """
+    補充商品的 討論連結 和 官網連結：
+    - daybuy/PTT 來源：補充官網連結 (/p/商品編號)
+    - 官網來源：從 DB 找同商品編號的 daybuy 討論連結
+    """
+    disc_map = get_discussion_map()
+    for p in products:
+        code = p.get("商品編號", "")
+        link = p.get("商品連結", "")
+        if not code:
+            continue
+        if "daybuy.tw" in link or "pttweb" in link:
+            if not p.get("官網連結"):
+                p["官網連結"] = f"https://www.costco.com.tw/p/{code}"
+        if not p.get("討論連結") and code in disc_map:
+            p["討論連結"] = disc_map[code]
+    return products

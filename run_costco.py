@@ -412,12 +412,6 @@ def run():
     """, (today,)).fetchall()
 
     import re as _re3
-    _disc_map = {}
-    for _r in _conn.execute(
-        "SELECT 商品編號, 討論連結 FROM products WHERE 商品編號 != '' AND 討論連結 LIKE '%daybuy.tw%' GROUP BY 商品編號"
-    ).fetchall():
-        _disc_map[_r[0]] = _r[1]
-
     products_30d = []
     _seen_pid = {}
     for _row in _rows:
@@ -425,21 +419,14 @@ def run():
         _link = _p.get("商品連結", "")
         _code = _p.get("商品編號", "")
         _pid  = ("code_" + _code) if _code else ("url_" + _link[-35:])
-
         if _pid in _seen_pid:
             continue
         _seen_pid[_pid] = True
-
-        # 補充 討論連結
-        if _code and not _p.get("討論連結") and _code in _disc_map:
-            _p["討論連結"] = _disc_map[_code]
-
-        # 補充官網連結
-        if _code and ("daybuy.tw" in _link or "pttweb" in _link):
-            _p["官網連結"] = f"https://www.costco.com.tw/p/{_code}"
-
         products_30d.append(_p)
 
+    # 補充討論連結和官網連結（統一從 database 模組處理）
+    from database import enrich_discussion_links
+    products_30d = enrich_discussion_links(products_30d)
     print(f"  📦 今日有效折扣：{len(products_30d)} 筆（去重後）")
 
     if not products_30d:

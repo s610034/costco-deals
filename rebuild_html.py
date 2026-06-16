@@ -211,35 +211,9 @@ def get_products_last_30_days():
                     old_p["討論連結"] = p["討論連結"]
     products = list(seen.values())
 
-    # 補充官網連結 + 討論連結（從 DB 找同商品編號的 daybuy 連結）
-    import sqlite3 as _sq
-    _db = _sq.connect(db_path)
-    _db.row_factory = _sq.Row
-
-    # 建立商品編號 → daybuy 討論連結的對照表
-    disc_map = {}
-    _rows = _db.execute("""
-        SELECT 商品編號, 討論連結 FROM products
-        WHERE 商品編號 != '' AND 討論連結 LIKE '%daybuy.tw%'
-        GROUP BY 商品編號
-    """).fetchall()
-    for r in _rows:
-        disc_map[r['商品編號']] = r['討論連結']
-    _db.close()
-
-    for p in products:
-        code = p.get('商品編號', '')
-        link = p.get('商品連結', '')
-
-        # daybuy 來源商品：補充官網連結
-        if code and ('daybuy.tw' in link or 'pttweb' in link):
-            p['官網連結'] = f'https://www.costco.com.tw/p/{code}'
-
-        # 所有商品：從 DB 找 daybuy 討論連結（如果自己沒有）
-        if code and not p.get('討論連結') and code in disc_map:
-            p['討論連結'] = disc_map[code]
-
-    print(f"  📦 DB 30天合併：{len(products)} 筆（去重後）")
+    from database import enrich_discussion_links
+    products = enrich_discussion_links(products)
+    print(f"  📦 今日有效折扣：{len(products)} 筆（去重後）")
     return products
 
 
