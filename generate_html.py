@@ -392,7 +392,9 @@ footer{{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}}
     <div class="login-wrap">
       <button class="login-btn" id="loginToggleBtn" onclick="toggleLogin()">🔐 登入</button>
       <div class="editor-menu" id="editorMenu">
-        <button onclick="openChangePw()">🔑 修改密碼</button>
+        <button onclick="syncNow()">☁️ 同步到雲端</button>
+        <button onclick="openSetToken()">🔑 設定 GitHub Token</button>
+        <button onclick="openChangePw()">🔒 修改密碼</button>
         <button class="logout-btn" onclick="logout()">🚪 登出</button>
       </div>
     </div>
@@ -411,6 +413,19 @@ footer{{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}}
   <div class="grid" id="grid">{all_cards_html}</div>
   <div class="empty" id="empty">😢 找不到符合的商品</div>
 </main>
+
+<div class="modal-overlay" id="tokenModal" onclick="if(event.target===this)closeTokenModal()">
+  <div class="modal-box">
+    <h3>設定 GitHub Token</h3>
+    <p style="font-size:.8rem;color:var(--color-text-secondary);margin:.5rem 0">用於修改分類後自動同步到所有設備。<br>Token 只存在本裝置的 localStorage，不會上傳。</p>
+    <input type="password" id="ghTokenInput" placeholder="github_pat_..." style="width:100%;padding:8px;border:1px solid var(--color-border-tertiary);border-radius:6px;font-size:.85rem;margin:.5rem 0;background:var(--color-background-secondary);color:var(--color-text-primary)">
+    <div style="display:flex;gap:8px;margin-top:.5rem">
+      <button onclick="saveToken()" style="flex:1;padding:8px;background:#1d4ed8;color:#fff;border:none;border-radius:6px;cursor:pointer">儲存</button>
+      <button onclick="closeTokenModal()" style="flex:1;padding:8px;background:var(--color-background-tertiary);border:1px solid var(--color-border-tertiary);border-radius:6px;cursor:pointer">取消</button>
+    </div>
+    <p id="tokenStatus" style="font-size:.75rem;margin-top:.5rem;color:var(--color-text-secondary)"></p>
+  </div>
+</div>
 
 <footer>🤖 Hermes Agent 自動整理｜資料來源：costco.com.tw｜更新：{today.strftime("%Y-%m-%d %H:%M")}<br>🏪=賣場同售 📰=daybuy情報 ✏️=登入後可修改分類</footer>
 
@@ -591,6 +606,70 @@ function getOverrides() {{
 function saveOverride(id, cat) {{
   const o = getOverrides(); o[id] = cat;
   localStorage.setItem(STORAGE_KEY, JSON.stringify(o));
+}}
+
+// 手動觸發同步
+async function syncNow() {{
+  document.getElementById("editorMenu").style.display = "none";
+  const token = localStorage.getItem("costco_gh_token") || "";
+  if (!token) {{
+    openSetToken();
+    return;
+  }}
+  const btn = document.querySelector('#editorMenu button');
+  const apiUrl = "https://api.github.com/repos/s610034/costco-deals/contents/data/overrides.json";
+  try {{
+    // 讀取現有 overrides
+    const getR = await fetch(apiUrl, {{headers: {{"Authorization": "token " + token, "Accept": "application/vnd.github.v3+json"}}}});
+    let sha = "", existing = {{}};
+    if (getR.ok) {{
+      const d = await getR.json();
+      sha = d.sha;
+      existing = JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(d.content.replace(/\n/g, "")), c => c.charCodeAt(0))));
+    }}
+    // 合併本地 overrides
+    const local = getOverrides();
+    Object.assign(existing, local);
+    const encoded = new TextEncoder().encode(JSON.stringify(existing, null, 2));
+    const encoded2 = btoa(String.fromCharCode(...encoded));
+    const putR = await fetch(apiUrl, {{
+      method: "PUT",
+      headers: {{"Authorization": "token " + token, "Content-Type": "application/json"}},
+      body: JSON.stringify({{"message": "sync: overrides " + Object.keys(existing).length + " 筆", "content": encoded2, "sha": sha}})
+    }});
+    if (putR.ok) {{
+      alert("✅ 同步成功！所有設備將在重整後看到最新分類");
+    }} else {{
+      const err = await putR.json();
+      alert("❌ 同步失敗：" + (err.message || putR.status));
+    }}
+  }} catch(e) {{
+    alert("❌ 同步失敗：" + e.message);
+  }}
+}}
+
+// Token 設定
+function openSetToken() {{
+  const existing = localStorage.getItem("costco_gh_token") || "";
+  document.getElementById("ghTokenInput").value = existing;
+  document.getElementById("tokenStatus").textContent = existing ? "✅ 已設定 Token" : "";
+  document.getElementById("tokenModal").classList.add("open");
+  setTimeout(() => document.getElementById("ghTokenInput").focus(), 100);
+}}
+function closeTokenModal() {{
+  document.getElementById("tokenModal").classList.remove("open");
+}}
+function saveToken() {{
+  const token = document.getElementById("ghTokenInput").value.trim();
+  if (token) {{
+    localStorage.setItem("costco_gh_token", token);
+    document.getElementById("tokenStatus").textContent = "✅ 已儲存";
+    setTimeout(closeTokenModal, 800);
+  }} else {{
+    localStorage.removeItem("costco_gh_token");
+    document.getElementById("tokenStatus").textContent = "已清除 Token";
+    setTimeout(closeTokenModal, 800);
+  }}
 }}
 
 // GitHub overrides.json 同步
