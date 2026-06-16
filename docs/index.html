@@ -95,7 +95,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
 </style>
 <script>
   // 版本控制：每次部署時更新，強制瀏覽器重新載入
-  const BUILD_TIME = '20260616090542';
+  const BUILD_TIME = '20260616095642';
   const stored = localStorage.getItem('costco_build');
   if (stored && stored !== BUILD_TIME) {
     localStorage.setItem('costco_build', BUILD_TIME);
@@ -110,7 +110,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
   <div class="header-row">
     <h1>🛒 好市多折扣週報</h1>
     <span class="meta">📅 2026/06/16（06/15～06/21）</span>
-    <span class="total">共 50 項</span>
+    <span class="total">共 58 項</span>
     <div class="login-wrap">
       <button class="login-btn" id="loginToggleBtn" onclick="toggleLogin()">🔐 登入</button>
       <div class="editor-menu" id="editorMenu">
@@ -120,23 +120,24 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
     </div>
   </div>
   <div class="header-filters">
-  <button class="hf-btn hf-all active" onclick="dealFilter('all',this)">全部 <span>50</span></button>
-  <button class="hf-btn hf-hot" onclick="dealFilter('hotbuys',this)">⏰ 限時優惠 <span>40</span></button>
+  <button class="hf-btn hf-all active" onclick="dealFilter('all',this)">全部 <span>58</span></button>
+  <button class="hf-btn hf-hot" onclick="dealFilter('hotbuys',this)">⏰ 限時優惠 <span>47</span></button>
   <button class="hf-btn hf-coup" onclick="dealFilter('coupon',this)">🏷️ 精選優惠 <span>10</span></button>
   
 </div>
 </header>
 
 <div class="tabs-wrap">
-<button class="tab active" data-catid="all" onclick="catFilter('all',this)">🏠 全部 <span class="tab-count">50</span></button>
+<button class="tab active" data-catid="all" onclick="catFilter('all',this)">🏠 全部 <span class="tab-count">58</span></button>
 <button class="tab" data-catid="__寵物用品" onclick="catFilter('__寵物用品',this)">🐾 寵物用品 <span class="tab-count">1</span></button>
 <button class="tab" data-catid="__食品飲料" onclick="catFilter('__食品飲料',this)">🍱 食品飲料 <span class="tab-count">22</span></button>
-<button class="tab" data-catid="__家電_3C" onclick="catFilter('__家電_3C',this)">📺 家電 3C <span class="tab-count">6</span></button>
+<button class="tab" data-catid="__家電_3C" onclick="catFilter('__家電_3C',this)">📺 家電 3C <span class="tab-count">8</span></button>
 <button class="tab" data-catid="__保健美妝" onclick="catFilter('__保健美妝',this)">🧴 保健美妝 <span class="tab-count">6</span></button>
-<button class="tab" data-catid="__生活用品" onclick="catFilter('__生活用品',this)">🏠 生活用品 <span class="tab-count">12</span></button>
+<button class="tab" data-catid="__生活用品" onclick="catFilter('__生活用品',this)">🏠 生活用品 <span class="tab-count">13</span></button>
 <button class="tab" data-catid="__服飾寢具" onclick="catFilter('__服飾寢具',this)">👕 服飾寢具 <span class="tab-count">1</span></button>
+<button class="tab" data-catid="__玩具育兒" onclick="catFilter('__玩具育兒',this)">🧸 玩具育兒 <span class="tab-count">1</span></button>
 <button class="tab" data-catid="___運動戶外" onclick="catFilter('___運動戶外',this)">🏋️ 運動戶外 <span class="tab-count">1</span></button>
-<button class="tab" data-catid="__其他" onclick="catFilter('__其他',this)">📦 其他 <span class="tab-count">1</span></button>
+<button class="tab" data-catid="__其他" onclick="catFilter('__其他',this)">📦 其他 <span class="tab-count">5</span></button>
 </div>
 
 <div class="search-wrap">
@@ -638,6 +639,25 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
   <button class="change-cat-btn" onclick="openCatModal('c_p_Load_Washer_WA80F13S5LTW_p_155133','__家電_3C','Samsung 13公斤 AI 智慧控制直立洗衣機 WA80F13S5LTW','https://www.costco.com.tw/Televisions-Appliances/Large-Appliances/Washers-Dryers/Washer-Size-10-15-kg/Samsung-13-kg-AI-Top-Load-Washer-WA80F13S5LTW/p/155133')" title="修改分類（需登入）">✏️</button>
   
 </div>
+<div class="card" id="c_Quiet_BP02_Filter_X_3_Pack_p_156487" data-cat="__家電_3C" data-deal="hotbuys">
+  <a href="https://www.costco.com.tw/Televisions-Appliances/Cooling-Heating-Air-Treatment/Air-Purifiers-Filters-Accessories/Dyson-Purifier-BigQuiet-BP02-Filter-X-3-Pack/p/156487" target="_blank" rel="noopener" class="card-link">
+    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h74/hce/382511682781214.jpg" alt="戴森 強效極靜抗敏空氣清淨機 BP02 + HEPA濾網 X 1入 + 活性碳濾網 X 2入" loading="lazy" onerror="this.style.display='none'"><div class="badge">-9.1%</div></div>
+    <div class="card-body">
+      <p class="card-name">戴森 強效極靜抗敏空氣清淨機 BP02 + HEPA濾網 X 1入 + 活性碳濾網 X 2入</p>
+      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 12 天</span>
+      
+      <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
+      <div class="card-price">
+        <span class="orig">$21,999</span><span class='arrow'>→</span>
+        <span class="sale">$19,999</span>
+      </div>
+      <p class="card-save">省 $2,000</p>
+      <p class="history">🆕 首次出現</p>
+    </div>
+  </a>
+  <button class="change-cat-btn" onclick="openCatModal('c_Quiet_BP02_Filter_X_3_Pack_p_156487','__家電_3C','戴森 強效極靜抗敏空氣清淨機 BP02 + HEPA濾網 X 1入 + 活性碳濾網 X 2入','https://www.costco.com.tw/Televisions-Appliances/Cooling-Heating-Air-Treatment/Air-Purifiers-Filters-Accessories/Dyson-Purifier-BigQuiet-BP02-Filter-X-3-Pack/p/156487')" title="修改分類（需登入）">✏️</button>
+  
+</div>
 <div class="card" id="c__Air_Purifier_HPA5350WTWV1_p_157137" data-cat="__家電_3C" data-deal="hotbuys">
   <a href="https://www.costco.com.tw/Televisions-Appliances/Cooling-Heating-Air-Treatment/Air-Purifiers-Filters-Accessories/Honeywell-Air-Purifier-HPA5350WTWV1/p/157137" target="_blank" rel="noopener" class="card-link">
     <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h68/h7e/401755896152094.jpg" alt="Honeywell 淨味空氣清淨機 HPA5350WTWV1" loading="lazy" onerror="this.style.display='none'"><div class="badge">-22.0%</div></div>
@@ -655,6 +675,25 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
     </div>
   </a>
   <button class="change-cat-btn" onclick="openCatModal('c__Air_Purifier_HPA5350WTWV1_p_157137','__家電_3C','Honeywell 淨味空氣清淨機 HPA5350WTWV1','https://www.costco.com.tw/Televisions-Appliances/Cooling-Heating-Air-Treatment/Air-Purifiers-Filters-Accessories/Honeywell-Air-Purifier-HPA5350WTWV1/p/157137')" title="修改分類（需登入）">✏️</button>
+  
+</div>
+<div class="card" id="c_Drape_Hair_Dryer_IB_WX1T_P_p_142741" data-cat="__家電_3C" data-deal="hotbuys">
+  <a href="https://www.costco.com.tw/Televisions-Appliances/Small-Appliances/Hair-Skin-Care-Tools/SHARP-Plasmacluster-Ion-Drape-Hair-Dryer-IB-WX1T-P/p/142741" target="_blank" rel="noopener" class="card-link">
+    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h0d/h71/187953433313310.jpg" alt="夏普 雙氣流智慧吹風機 IB-WX1T-P" loading="lazy" onerror="this.style.display='none'"><div class="badge">-29.4%</div></div>
+    <div class="card-body">
+      <p class="card-name">夏普 雙氣流智慧吹風機 IB-WX1T-P</p>
+      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 12 天</span>
+      
+      <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
+      <div class="card-price">
+        <span class="orig">$6,489</span><span class='arrow'>→</span>
+        <span class="sale">$4,579</span>
+      </div>
+      <p class="card-save">省 $1,910</p>
+      <p class="history">🆕 首次出現</p>
+    </div>
+  </a>
+  <button class="change-cat-btn" onclick="openCatModal('c_Drape_Hair_Dryer_IB_WX1T_P_p_142741','__家電_3C','夏普 雙氣流智慧吹風機 IB-WX1T-P','https://www.costco.com.tw/Televisions-Appliances/Small-Appliances/Hair-Skin-Care-Tools/SHARP-Plasmacluster-Ion-Drape-Hair-Dryer-IB-WX1T-P/p/142741')" title="修改分類（需登入）">✏️</button>
   
 </div>
 <div class="card" id="c_rushi_Rice_Cooker_NS_ZLF18_p_122731" data-cat="__家電_3C" data-deal="hotbuys">
@@ -866,6 +905,25 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
   <button class="change-cat-btn" onclick="openCatModal('c_olf_Ball_3_Count_X_8_Pack_p_1654518','__生活用品','科克蘭 高爾夫三層球 3入 X 8盒','https://www.costco.com.tw/Sports-Lifestyle/Sports-Fitness/Team-Sports/Kirkland-Signature-3-Piece-Urethane-Cover-Golf-Ball-3-Count-X-8-Pack/p/1654518')" title="修改分類（需登入）">✏️</button>
   
 </div>
+<div class="card" id="c_Towel_103_Sheet_X_12_Roll_p_1919326" data-cat="__生活用品" data-deal="hotbuys">
+  <a href="https://www.costco.com.tw/Household-Baby-Toys/Household-Essentials/Toilet-Paper-Paper-Towels/Bounty-Advanced-2-Ply-White-Paper-Towel-103-Sheet-X-12-Roll/p/1919326" target="_blank" rel="noopener" class="card-link">
+    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/hee/ha9/364687149269022.jpg" alt="Bounty 兩層隨意撕特級廚房紙巾 103張 X 12卷" loading="lazy" onerror="this.style.display='none'"><div class="badge">-20.0%</div></div>
+    <div class="card-body">
+      <p class="card-name">Bounty 兩層隨意撕特級廚房紙巾 103張 X 12卷</p>
+      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 12 天</span>
+      
+      <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
+      <div class="card-price">
+        <span class="orig">$999</span><span class='arrow'>→</span>
+        <span class="sale">$799</span>
+      </div>
+      <p class="card-save">省 $200</p>
+      <p class="history">🕐 距上次折扣 1 天</p>
+    </div>
+  </a>
+  <button class="change-cat-btn" onclick="openCatModal('c_Towel_103_Sheet_X_12_Roll_p_1919326','__生活用品','Bounty 兩層隨意撕特級廚房紙巾 103張 X 12卷','https://www.costco.com.tw/Household-Baby-Toys/Household-Essentials/Toilet-Paper-Paper-Towels/Bounty-Advanced-2-Ply-White-Paper-Towel-103-Sheet-X-12-Roll/p/1919326')" title="修改分類（需登入）">✏️</button>
+  
+</div>
 <div class="card" id="c_Glove_4_Pack_Right_Handed_p_1418682" data-cat="__生活用品" data-deal="hotbuys">
   <a href="https://www.costco.com.tw/Sports-Lifestyle/Sports-Fitness/Team-Sports/Kirkland-Signature-Leather-Golf-Glove-4-Pack-Right-Handed/p/1418682" target="_blank" rel="noopener" class="card-link">
     <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/hc3/h2d/87954007621662.jpg" alt="科克蘭 真皮高爾夫手套 4入左手套適用於右手打者" loading="lazy" onerror="this.style.display='none'"><div class="badge">-20.0%</div></div>
@@ -1056,6 +1114,25 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
   <button class="change-cat-btn" onclick="openCatModal('c_echers_Mens_Athletic_Shoe_p_1961251','__服飾寢具','Skechers 男運動鞋','https://www.costco.com.tw/Clothing-Accessories/Shoes/Mens-Shoes/Skechers-Mens-Athletic-Shoe/p/1961251')" title="修改分類（需登入）">✏️</button>
   
 </div>
+<div class="card" id="c_wer_Bath_Set_Ages_2_and_Up_p_152878" data-cat="__玩具育兒" data-deal="other">
+  <a href="https://www.costco.com.tw/Household-Baby-Toys/Toys/Outdoor-Play/Step2-Nautical-Rain-Shower-Bath-Set-Ages-2-and-Up/p/152878" target="_blank" rel="noopener" class="card-link">
+    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h8c/h35/381454828765214.jpg" alt="Step2 航海船造型泡澡玩具組 / 2歲以上" loading="lazy" onerror="this.style.display='none'"><div class="badge">-23.9%</div></div>
+    <div class="card-body">
+      <p class="card-name">Step2 航海船造型泡澡玩具組 / 2歲以上</p>
+      
+      
+      <p class="deal-period">🔥 把握優惠（數量有限）</p>
+      <div class="card-price">
+        <span class="orig">$897</span><span class='arrow'>→</span>
+        <span class="sale">$683</span>
+      </div>
+      <p class="card-save">省 $214</p>
+      <p class="history">🆕 首次出現</p>
+    </div>
+  </a>
+  <button class="change-cat-btn" onclick="openCatModal('c_wer_Bath_Set_Ages_2_and_Up_p_152878','__玩具育兒','Step2 航海船造型泡澡玩具組 / 2歲以上','https://www.costco.com.tw/Household-Baby-Toys/Toys/Outdoor-Play/Step2-Nautical-Rain-Shower-Bath-Set-Ages-2-and-Up/p/152878')" title="修改分類（需登入）">✏️</button>
+  
+</div>
 <div class="card" id="c_https___www_costco_com_tw_p_158560" data-cat="___運動戶外" data-deal="coupon">
   <a href="https://www.costco.com.tw/p/158560" target="_blank" rel="noopener" class="card-link">
     <div class="card-img"><img src="https://www.daybuy.tw/wp-content/uploads/2026/05/20260501_062011813_iOS.jpg?v=1777629853" alt="大牌 COLEMAN 摺疊露營椅" loading="lazy" onerror="this.style.display='none'"><div class="badge">-20.0%</div><a class="src-icon" href="https://www.daybuy.tw/costco/248853/" target="_blank" onclick="event.stopPropagation()" title="daybuy 情報">📰</a></div>
@@ -1074,6 +1151,82 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
   </a>
   <button class="change-cat-btn" onclick="openCatModal('c_https___www_costco_com_tw_p_158560','___運動戶外','大牌 COLEMAN 摺疊露營椅','https://www.costco.com.tw/p/158560')" title="修改分類（需登入）">✏️</button>
   <a class="daybuy-link official-link" href="https://www.costco.com.tw/p/158560" target="_blank" onclick="event.stopPropagation()">🛒 好市多官網</a><a class="daybuy-link" href="https://www.daybuy.tw/costco/248853/" target="_blank" onclick="event.stopPropagation()">📰 daybuy 情報頁</a>
+</div>
+<div class="card" id="c__Smart_Indoor_Cycling_Bike_p_140176" data-cat="__其他" data-deal="hotbuys">
+  <a href="https://www.costco.com.tw/Sports-Lifestyle/Sports-Fitness/Fitness-Equipment-Accessories/XTERRA-Fitness-MB550-Smart-Indoor-Cycling-Bike/p/140176" target="_blank" rel="noopener" class="card-link">
+    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h86/h11/140154738835486.jpg" alt="XTERRA MB550+ 智能飛輪車" loading="lazy" onerror="this.style.display='none'"><div class="badge">-20.4%</div></div>
+    <div class="card-body">
+      <p class="card-name">XTERRA MB550+ 智能飛輪車</p>
+      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 12 天</span>
+      
+      <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
+      <div class="card-price">
+        <span class="orig">$24,499</span><span class='arrow'>→</span>
+        <span class="sale">$19,499</span>
+      </div>
+      <p class="card-save">省 $5,000</p>
+      <p class="history">🆕 首次出現</p>
+    </div>
+  </a>
+  <button class="change-cat-btn" onclick="openCatModal('c__Smart_Indoor_Cycling_Bike_p_140176','__其他','XTERRA MB550+ 智能飛輪車','https://www.costco.com.tw/Sports-Lifestyle/Sports-Fitness/Fitness-Equipment-Accessories/XTERRA-Fitness-MB550-Smart-Indoor-Cycling-Bike/p/140176')" title="修改分類（需登入）">✏️</button>
+  
+</div>
+<div class="card" id="c_e_Eufy_Robot_Vacuum_Mop_S1_p_157134" data-cat="__其他" data-deal="hotbuys">
+  <a href="https://www.costco.com.tw/Televisions-Appliances/Small-Appliances/Vacuums-Floor-Care/Eufy-Robot-Vacuum-Mop-S1/p/157134" target="_blank" rel="noopener" class="card-link">
+    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/hb6/h91/400747423268894.jpg" alt="Eufy 自清潔掃拖一體全能機器人 S1" loading="lazy" onerror="this.style.display='none'"><div class="badge">-20.0%</div></div>
+    <div class="card-body">
+      <p class="card-name">Eufy 自清潔掃拖一體全能機器人 S1</p>
+      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 12 天</span>
+      
+      <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
+      <div class="card-price">
+        <span class="orig">$18,499</span><span class='arrow'>→</span>
+        <span class="sale">$14,799</span>
+      </div>
+      <p class="card-save">省 $3,700</p>
+      <p class="history">🆕 首次出現</p>
+    </div>
+  </a>
+  <button class="change-cat-btn" onclick="openCatModal('c_e_Eufy_Robot_Vacuum_Mop_S1_p_157134','__其他','Eufy 自清潔掃拖一體全能機器人 S1','https://www.costco.com.tw/Televisions-Appliances/Small-Appliances/Vacuums-Floor-Care/Eufy-Robot-Vacuum-Mop-S1/p/157134')" title="修改分類（需登入）">✏️</button>
+  
+</div>
+<div class="card" id="c_edon_3_Seater_Fabric_Sofa_p_1987637" data-cat="__其他" data-deal="hotbuys">
+  <a href="https://www.costco.com.tw/Furniture-Kitchen/Furniture/Sofas-Sectionals/Henredon-3-Seater-Fabric-Sofa/p/1987637" target="_blank" rel="noopener" class="card-link">
+    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h8b/hf8/467458975137822.jpg" alt="Henredon 三人座布面沙發" loading="lazy" onerror="this.style.display='none'"><div class="badge">-20.0%</div></div>
+    <div class="card-body">
+      <p class="card-name">Henredon 三人座布面沙發</p>
+      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 12 天</span>
+      
+      <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
+      <div class="card-price">
+        <span class="orig">$14,999</span><span class='arrow'>→</span>
+        <span class="sale">$11,999</span>
+      </div>
+      <p class="card-save">省 $3,000</p>
+      <p class="history">🆕 首次出現</p>
+    </div>
+  </a>
+  <button class="change-cat-btn" onclick="openCatModal('c_edon_3_Seater_Fabric_Sofa_p_1987637','__其他','Henredon 三人座布面沙發','https://www.costco.com.tw/Furniture-Kitchen/Furniture/Sofas-Sectionals/Henredon-3-Seater-Fabric-Sofa/p/1987637')" title="修改分類（需登入）">✏️</button>
+  
+</div>
+<div class="card" id="c_nverter_Stand_Fan_FS40125R_p_126487" data-cat="__其他" data-deal="hotbuys">
+  <a href="https://www.costco.com.tw/Televisions-Appliances/Cooling-Heating-Air-Treatment/Heating-Cooling/Airmate-16-inch-DC-Inverter-Stand-Fan-FS40125R/p/126487" target="_blank" rel="noopener" class="card-link">
+    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h05/h35/27585205338142.jpg" alt="艾美特 16吋DC直流立扇 FS40125R" loading="lazy" onerror="this.style.display='none'"><div class="badge">-20.2%</div></div>
+    <div class="card-body">
+      <p class="card-name">艾美特 16吋DC直流立扇 FS40125R</p>
+      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 12 天</span>
+      
+      <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
+      <div class="card-price">
+        <span class="orig">$3,359</span><span class='arrow'>→</span>
+        <span class="sale">$2,679</span>
+      </div>
+      <p class="card-save">省 $680</p>
+      <p class="history">🆕 首次出現</p>
+    </div>
+  </a>
+  <button class="change-cat-btn" onclick="openCatModal('c_nverter_Stand_Fan_FS40125R_p_126487','__其他','艾美特 16吋DC直流立扇 FS40125R','https://www.costco.com.tw/Televisions-Appliances/Cooling-Heating-Air-Treatment/Heating-Cooling/Airmate-16-inch-DC-Inverter-Stand-Fan-FS40125R/p/126487')" title="修改分類（需登入）">✏️</button>
+  
 </div>
 <div class="card" id="c_e_UC_II_Collagen_90_Tablet_p_127189" data-cat="__其他" data-deal="hotbuys">
   <a href="https://www.costco.com.tw/Health-Beauty/Supplements/Bone-Joint-Support/Caltrate-UC-II-Collagen-90-Tablet/p/127189" target="_blank" rel="noopener" class="card-link">
@@ -1098,7 +1251,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
   <div class="empty" id="empty">😢 找不到符合的商品</div>
 </main>
 
-<footer>🤖 Hermes Agent 自動整理｜資料來源：costco.com.tw｜更新：2026-06-16 09:05<br>🏪=賣場同售 📰=daybuy情報 ✏️=登入後可修改分類</footer>
+<footer>🤖 Hermes Agent 自動整理｜資料來源：costco.com.tw｜更新：2026-06-16 09:56<br>🏪=賣場同售 📰=daybuy情報 ✏️=登入後可修改分類</footer>
 
 <!-- 分類 Modal -->
 <div class="modal-overlay" id="catModal" onclick="if(event.target===this)closeModal()">
