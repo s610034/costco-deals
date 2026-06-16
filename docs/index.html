@@ -106,7 +106,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
 </style>
 <script>
   // 版本控制：每次部署時更新，強制瀏覽器重新載入
-  const BUILD_TIME = '20260616165624';
+  const BUILD_TIME = '20260616165918';
   const stored = localStorage.getItem('costco_build');
   if (stored && stored !== BUILD_TIME) {
     localStorage.setItem('costco_build', BUILD_TIME);
@@ -139,6 +139,36 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
   
 </div>
 </header>
+
+<div class="sighting-section" id="sightingSection">
+  <div class="sighting-header">🕵️ 賣場隱藏優惠情報 <span class="sighting-sub">（資料來源：daybuy，點擊查看圖片）</span></div>
+  <a class="sighting-card" href="https://www.daybuy.tw/costco/255345/" target="_blank" rel="noopener">
+  <span class="sighting-icon">🕵️</span>
+  <span class="sighting-title">COSTCO好市多 2026/06/16 週二賣場隱藏優惠目擊情報</span>
+  <span class="sighting-arrow">→</span>
+</a>
+<a class="sighting-card" href="https://www.daybuy.tw/costco/254973/" target="_blank" rel="noopener">
+  <span class="sighting-icon">🏪</span>
+  <span class="sighting-title">Costco好市多 2026/06/13(六) 現場優惠情報</span>
+  <span class="sighting-arrow">→</span>
+</a>
+<a class="sighting-card" href="https://www.daybuy.tw/costco/254769/" target="_blank" rel="noopener">
+  <span class="sighting-icon">👗</span>
+  <span class="sighting-title">Costco好市多 2026.06.12 穿搭商品目擊情報</span>
+  <span class="sighting-arrow">→</span>
+</a>
+<a class="sighting-card" href="https://www.daybuy.tw/costco/254351/" target="_blank" rel="noopener">
+  <span class="sighting-icon">🕵️</span>
+  <span class="sighting-title">COSTCO好市多 2026/06/09 週二賣場隱藏優惠目擊情報</span>
+  <span class="sighting-arrow">→</span>
+</a>
+<a class="sighting-card" href="https://www.daybuy.tw/costco/254459/" target="_blank" rel="noopener">
+  <span class="sighting-icon">🆕</span>
+  <span class="sighting-title">COSTCO好市多 賣場目擊新商品週報 2026 06.03(三)~06.09(二)</span>
+  <span class="sighting-arrow">→</span>
+</a>
+
+</div>
 
 <div class="tabs-wrap">
 <button class="tab active" data-catid="all" onclick="catFilter('all',this)">🏠 全部 <span class="tab-count">58</span></button>
@@ -1281,7 +1311,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
   </div>
 </div>
 
-<footer>🤖 Hermes Agent 自動整理｜資料來源：costco.com.tw｜更新：2026-06-16 16:56<br>🏪=賣場同售 📰=daybuy情報 ✏️=登入後可修改分類</footer>
+<footer>🤖 Hermes Agent 自動整理｜資料來源：costco.com.tw｜更新：2026-06-16 16:59<br>🏪=賣場同售 📰=daybuy情報 ✏️=登入後可修改分類</footer>
 
 <!-- 分類 Modal -->
 <div class="modal-overlay" id="catModal" onclick="if(event.target===this)closeModal()">
