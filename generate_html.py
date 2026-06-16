@@ -5,6 +5,34 @@
 import json, os, datetime, re, hashlib
 from typing import List, Dict
 
+
+def fetch_sighting_articles(max_articles: int = 5) -> list:
+    """從 daybuy 抓最新賣場目擊情報文章，用於隱藏優惠區塊"""
+    try:
+        import requests
+        from bs4 import BeautifulSoup
+        headers = {"User-Agent": "Mozilla/5.0"}
+        r = requests.get("https://www.daybuy.tw/costco/hypermarket-news/",
+                         headers=headers, timeout=8)
+        soup = BeautifulSoup(r.text, "html.parser")
+        articles, seen = [], set()
+        for a in soup.select('a[href*="/costco/"]'):
+            href = a.get("href", "")
+            title = a.get_text(strip=True)
+            if not title or len(title) < 8 or href in seen:
+                continue
+            if re.search(r"/costco/\d+/", href) and any(
+                kw in title for kw in ["賣場", "隱藏", "情報", "目擊", "現場", "穿搭"]
+            ):
+                seen.add(href)
+                articles.append({"title": title, "url": href})
+            if len(articles) >= max_articles:
+                break
+        return articles
+    except Exception as e:
+        print(f"  ⚠️  抓取目擊情報失敗：{e}")
+        return []
+
 CATEGORY_RULES = [
     ("🐾 寵物用品", ["貓","狗","寵物","貓糧","狗糧","貓砂","Mon Petit","貓倍麗","愛貓","愛犬","Cat","Dog","Pet","Litter"]),
     ("🍱 食品飲料", ["咖啡","茶","飲料","果汁","零食","餅乾","糖果","巧克力","堅果","麵包","蛋糕","米","麵","泡麵","醬","油","鹽","糖","牛奶","優格","起司","雞蛋","肉","魚","海鮮","蔬菜","水果","冷凍","罐頭","即食","披薩","烘焙","食品","料理","湯","粥","燕麥","穀物","蜂蜜","果醬","汽水","氣泡水","卡迪那","野村","椰子汁","乾酪","豆腐","蛋捲","果乾","洋芋片","果凍","奶酪","拿鐵","威化","乳酸菌","高麗蔘","Barista","Coffee","Tea","Snack","Food","A&W","KOH","Tree Top","Laughing Cow"]),
@@ -95,6 +123,8 @@ def generate_html(products: List[Dict], output_path: str) -> str:
 
     total       = len(products)
     hotbuys_cnt = sum(1 for p in products if "限時" in p.get("分類",""))
+    # 抓取最新目擊情報（隱藏優惠區塊用）
+    sighting_articles = fetch_sighting_articles(5)
     coupon_cnt  = sum(1 for p in products if "精選" in p.get("分類","") and "限時" not in p.get("分類",""))
     both_cnt    = sum(1 for p in products if "限時" in p.get("分類","") and "精選" in p.get("分類",""))
     all_cats_js = json.dumps(ALL_CATS, ensure_ascii=False)
@@ -256,6 +286,34 @@ def generate_html(products: List[Dict], output_path: str) -> str:
 
     # Header 篩選
     both_btn = f'<button class="hf-btn hf-both" onclick="dealFilter(\'both\',this)">🔥 兩者皆有 <span>{both_cnt}</span></button>' if both_cnt else ""
+    # 隱藏優惠區塊 HTML
+    if sighting_articles:
+        sighting_cards = ""
+        for art in sighting_articles:
+            title = art['title']
+            url = art['url']
+            # 判斷類型 emoji
+            if "隱藏" in title:
+                icon = "🕵️"
+            elif "穿搭" in title:
+                icon = "👗"
+            elif "新商品" in title or "週報" in title:
+                icon = "🆕"
+            else:
+                icon = "🏪"
+            sighting_cards += f'''<a class="sighting-card" href="{url}" target="_blank" rel="noopener">
+  <span class="sighting-icon">{icon}</span>
+  <span class="sighting-title">{title}</span>
+  <span class="sighting-arrow">→</span>
+</a>
+'''
+        sighting_section = f'''<div class="sighting-section" id="sightingSection">
+  <div class="sighting-header">🕵️ 賣場隱藏優惠情報 <span class="sighting-sub">（資料來源：daybuy，點擊查看圖片）</span></div>
+  {sighting_cards}
+</div>'''
+    else:
+        sighting_section = ""
+
     header_filters = f'''<div class="header-filters">
   <button class="hf-btn hf-all active" onclick="dealFilter(\'all\',this)">全部 <span>{total}</span></button>
   <button class="hf-btn hf-hot" onclick="dealFilter(\'hotbuys\',this)">⏰ 限時優惠 <span>{hotbuys_cnt}</span></button>
@@ -305,6 +363,15 @@ header .total{{background:rgba(255,255,255,.2);border-radius:20px;padding:2px 10
 .header-filters{{display:flex;gap:6px;margin-top:10px;overflow-x:auto;padding-bottom:10px;scrollbar-width:none}}
 .header-filters::-webkit-scrollbar{{display:none}}
 .hf-btn{{flex-shrink:0;border:none;border-radius:20px;padding:5px 13px;font-size:.75rem;font-weight:700;cursor:pointer;white-space:nowrap}}
+.sighting-section{{display:none;padding:12px 12px 4px;border-bottom:1px solid var(--color-border-tertiary)}}
+.sighting-section.visible{{display:block}}
+.sighting-header{{font-size:.78rem;font-weight:700;color:var(--color-text-secondary);margin-bottom:8px}}
+.sighting-sub{{font-weight:400;font-size:.72rem;opacity:.75}}
+.sighting-card{{display:flex;align-items:center;gap:8px;padding:8px 10px;margin-bottom:6px;background:var(--color-background-secondary);border-radius:8px;text-decoration:none;color:var(--color-text-primary);border:1px solid var(--color-border-tertiary);transition:.15s}}
+.sighting-card:hover{{background:var(--color-background-tertiary);border-color:var(--color-border-secondary)}}
+.sighting-icon{{font-size:1.1rem;flex-shrink:0}}
+.sighting-title{{flex:1;font-size:.78rem;line-height:1.3}}
+.sighting-arrow{{color:var(--color-text-secondary);font-size:.8rem;flex-shrink:0}}
 .hf-btn span{{background:rgba(0,0,0,.15);border-radius:20px;padding:1px 7px;margin-left:4px;font-size:.68rem}}
 .hf-all{{background:rgba(255,255,255,.2);color:#fff}}.hf-all.active{{background:#fff;color:var(--red)}}
 .hf-hot{{background:rgba(255,200,0,.3);color:#fff}}.hf-hot.active{{background:#fef9c3;color:#854d0e}}
@@ -403,6 +470,8 @@ footer{{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}}
   </div>
   {header_filters}
 </header>
+
+{sighting_section}
 
 <div class="tabs-wrap">
 {tabs_html}</div>
@@ -811,6 +880,11 @@ window.addEventListener("DOMContentLoaded", () => {{
 function dealFilter(val, el) {{
   // 再點一次同一個按鈕 → 取消篩選
   currentDeal = (currentDeal === val) ? "all" : val;
+  // 隱藏優惠區塊：全部或限時優惠時顯示
+  const sightEl = document.getElementById("sightingSection");
+  if (sightEl) {{
+    sightEl.classList.toggle("visible", currentDeal === "all" || currentDeal === "hotbuys");
+  }}
   // 更新 hf-btn active 狀態
   document.querySelectorAll(".hf-btn").forEach(t => t.classList.remove("active"));
   if (currentDeal === "all") {{
