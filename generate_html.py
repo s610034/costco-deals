@@ -355,6 +355,7 @@ body.editor-mode .change-cat-btn:hover{{opacity:1}}
 .modal-overlay{{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;align-items:flex-end;justify-content:center}}
 .modal-overlay.open{{display:flex}}
 .modal{{background:#fff;border-radius:20px 20px 0 0;width:100%;max-width:480px;padding:20px;max-height:80vh;overflow-y:auto}}
+.modal-box{{background:var(--color-background-primary);border-radius:12px;width:90%;max-width:360px;padding:20px;margin:auto}}
 .modal-title{{font-size:.95rem;font-weight:700;margin-bottom:4px}}
 .modal-subtitle{{font-size:.75rem;color:var(--sub);margin-bottom:16px}}
 .modal-cats{{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}}
@@ -625,7 +626,7 @@ async function syncNow() {{
     if (getR.ok) {{
       const d = await getR.json();
       sha = d.sha;
-      existing = JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(d.content.replace(/\n/g, "")), c => c.charCodeAt(0))));
+      existing = JSON.parse(atob(d.content.replaceAll(String.fromCharCode(10), "")));
     }}
     // 合併本地 overrides
     const local = getOverrides();
@@ -683,7 +684,7 @@ async function syncToGitHub(cardId, catId, productName, productLink) {{
     if (getR.ok) {{
       const d = await getR.json();
       sha = d.sha;
-      existing = JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(d.content.replace(/\\n/g, "")), c => c.charCodeAt(0))));
+      existing = JSON.parse(atob(d.content.replaceAll(String.fromCharCode(10), "")));
     }}
     existing[cardId] = {{cat: catId, name: productName, link: productLink}};
     const encoded = new TextEncoder().encode(JSON.stringify(existing, null, 2)); const content = btoa(String.fromCharCode(...encoded));
