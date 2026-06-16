@@ -106,7 +106,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
 </style>
 <script>
   // 版本控制：每次部署時更新，強制瀏覽器重新載入
-  const BUILD_TIME = '20260616172531';
+  const BUILD_TIME = '20260616174027';
   const stored = localStorage.getItem('costco_build');
   if (stored && stored !== BUILD_TIME) {
     localStorage.setItem('costco_build', BUILD_TIME);
@@ -121,7 +121,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
   <div class="header-row">
     <h1>🛒 好市多折扣週報</h1>
     <span class="meta">📅 2026/06/16（06/15～06/21）</span>
-    <span class="total">共 62 項</span>
+    <span class="total">共 67 項</span>
     <div class="login-wrap">
       <button class="login-btn" id="loginToggleBtn" onclick="toggleLogin()">🔐 登入</button>
       <div class="editor-menu" id="editorMenu">
@@ -133,7 +133,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
     </div>
   </div>
   <div class="header-filters">
-  <button class="hf-btn hf-all active" onclick="dealFilter('all',this)">全部 <span>62</span></button>
+  <button class="hf-btn hf-all active" onclick="dealFilter('all',this)">全部 <span>67</span></button>
   <button class="hf-btn hf-hot" onclick="dealFilter('hotbuys',this)">⏰ 限時優惠 <span>47</span></button>
   <button class="hf-btn hf-coup" onclick="dealFilter('coupon',this)">🏷️ 精選優惠 <span>10</span></button>
   
@@ -171,16 +171,16 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
 </div>
 
 <div class="tabs-wrap">
-<button class="tab active" data-catid="all" onclick="catFilter('all',this)">🏠 全部 <span class="tab-count">62</span></button>
+<button class="tab active" data-catid="all" onclick="catFilter('all',this)">🏠 全部 <span class="tab-count">67</span></button>
 <button class="tab" data-catid="__寵物用品" onclick="catFilter('__寵物用品',this)">🐾 寵物用品 <span class="tab-count">1</span></button>
-<button class="tab" data-catid="__食品飲料" onclick="catFilter('__食品飲料',this)">🍱 食品飲料 <span class="tab-count">22</span></button>
+<button class="tab" data-catid="__食品飲料" onclick="catFilter('__食品飲料',this)">🍱 食品飲料 <span class="tab-count">24</span></button>
 <button class="tab" data-catid="__家電_3C" onclick="catFilter('__家電_3C',this)">📺 家電 3C <span class="tab-count">8</span></button>
 <button class="tab" data-catid="__保健美妝" onclick="catFilter('__保健美妝',this)">🧴 保健美妝 <span class="tab-count">6</span></button>
 <button class="tab" data-catid="__生活用品" onclick="catFilter('__生活用品',this)">🏠 生活用品 <span class="tab-count">13</span></button>
 <button class="tab" data-catid="__服飾寢具" onclick="catFilter('__服飾寢具',this)">👕 服飾寢具 <span class="tab-count">5</span></button>
 <button class="tab" data-catid="__玩具育兒" onclick="catFilter('__玩具育兒',this)">🧸 玩具育兒 <span class="tab-count">1</span></button>
 <button class="tab" data-catid="___運動戶外" onclick="catFilter('___運動戶外',this)">🏋️ 運動戶外 <span class="tab-count">1</span></button>
-<button class="tab" data-catid="__其他" onclick="catFilter('__其他',this)">📦 其他 <span class="tab-count">5</span></button>
+<button class="tab" data-catid="__其他" onclick="catFilter('__其他',this)">📦 其他 <span class="tab-count">8</span></button>
 </div>
 
 <div class="search-wrap">
@@ -340,6 +340,25 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
   <button class="change-cat-btn" onclick="openCatModal('c_hirteen_Spices_Breast_5_kg_p_157706','__食品飲料','大成 冷凍蜜汁去骨清雞腿與十三香清雞胸 5公斤','https://www.costco.com.tw/Food-Dining/Frozen-Fresh-Food/Frozen-Seafood-Meat/Dachan-Frozen-Sweet-Sauce-Boneless-Thigh-Thirteen-Spices-Breast-5-kg/p/157706')" title="修改分類（需登入）">✏️</button>
   
 </div>
+<div class="card" id="c_https___www_costco_com_tw_p_328912" data-cat="__食品飲料" data-deal="other">
+  <a href="https://www.costco.com.tw/p/328912" target="_blank" rel="noopener" class="card-link">
+    <div class="card-img"><div class="no-img">📦</div><div class="badge">-20.0%</div><a class="src-icon" href="https://www.daybuy.tw/costco/255145/" target="_blank" onclick="event.stopPropagation()" title="daybuy 情報">📰</a></div>
+    <div class="card-body">
+      <p class="card-name">NATIONAL VITA 顧可飛 DHA魚油晶球膠囊 30包</p>
+      
+      
+      <p class="deal-period">📅 06/15(一)~06/21(日)</p>
+      <div class="card-price">
+        <span class="orig">$599</span><span class='arrow'>→</span>
+        <span class="sale">$479</span>
+      </div>
+      <p class="card-save">省 $120</p>
+      <p class="history">🆕 首次出現</p>
+    </div>
+  </a>
+  <button class="change-cat-btn" onclick="openCatModal('c_https___www_costco_com_tw_p_328912','__食品飲料','NATIONAL VITA 顧可飛 DHA魚油晶球膠囊 30包','https://www.costco.com.tw/p/328912')" title="修改分類（需登入）">✏️</button>
+  <a class="daybuy-link official-link" href="https://www.costco.com.tw/p/328912" target="_blank" onclick="event.stopPropagation()">🛒 好市多官網</a><a class="daybuy-link" href="https://www.daybuy.tw/costco/255145/" target="_blank" onclick="event.stopPropagation()">📰 daybuy 情報頁</a>
+</div>
 <div class="card" id="c_est_Grove_Trail_Mix_907_g_p_1056107" data-cat="__é£åé£²æ" data-deal="hotbuys">
   <a href="https://www.costco.com.tw/Food-Dining/Snacks/Nuts-Jerky/Hoodys-Harvest-Grove-Trail-Mix-907-g/p/1056107" target="_blank" rel="noopener" class="card-link">
     <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/hf1/hd2/65765251252254.jpg" alt="Hoody's 精緻果乾混綜合果仁 907公克" loading="lazy" onerror="this.style.display='none'"><div class="badge">-18.6%</div></div>
@@ -472,6 +491,25 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
   </a>
   <button class="change-cat-btn" onclick="openCatModal('c_esso_Shot_16_ml_X_40_Count_p_234436','__食品飲料','西雅圖 榛果風味濃淬咖啡球 16毫升 X 40入','https://www.costco.com.tw/Food-Dining/Drinks/Coffee/Barista-Hazelnut-Flavor-Espresso-Shot-16-ml-X-40-Count/p/234436')" title="修改分類（需登入）">✏️</button>
   
+</div>
+<div class="card" id="c_https___www_costco_com_tw_p_160080" data-cat="__食品飲料" data-deal="other">
+  <a href="https://www.costco.com.tw/p/160080" target="_blank" rel="noopener" class="card-link">
+    <div class="card-img"><div class="no-img">📦</div><div class="badge">-20.1%</div><a class="src-icon" href="https://www.daybuy.tw/costco/255145/" target="_blank" onclick="event.stopPropagation()" title="daybuy 情報">📰</a></div>
+    <div class="card-body">
+      <p class="card-name">ASAHI 朝日十六茶零咖啡因複方茶 990毫升 X 12罐</p>
+      
+      
+      <p class="deal-period">📅 06/15(一)~06/21(日)</p>
+      <div class="card-price">
+        <span class="orig">$399</span><span class='arrow'>→</span>
+        <span class="sale">$319</span>
+      </div>
+      <p class="card-save">省 $80</p>
+      <p class="history">🆕 首次出現</p>
+    </div>
+  </a>
+  <button class="change-cat-btn" onclick="openCatModal('c_https___www_costco_com_tw_p_160080','__食品飲料','ASAHI 朝日十六茶零咖啡因複方茶 990毫升 X 12罐','https://www.costco.com.tw/p/160080')" title="修改分類（需登入）">✏️</button>
+  <a class="daybuy-link official-link" href="https://www.costco.com.tw/p/160080" target="_blank" onclick="event.stopPropagation()">🛒 好市多官網</a><a class="daybuy-link" href="https://www.daybuy.tw/costco/255145/" target="_blank" onclick="event.stopPropagation()">📰 daybuy 情報頁</a>
 </div>
 <div class="card" id="c_Bou_Stuffed_Egg_Roll_480_g_p_144711" data-cat="__é£åé£²æ" data-deal="hotbuys">
   <a href="https://www.costco.com.tw/Food-Dining/Snacks/Cookies-Chips/Shu-Shin-Bou-Stuffed-Egg-Roll-480-g/p/144711" target="_blank" rel="noopener" class="card-link">
@@ -1366,6 +1404,63 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
   <button class="change-cat-btn" onclick="openCatModal('c_e_UC_II_Collagen_90_Tablet_p_127189','__保健美妝','挺立 關鍵迷你錠 90錠','https://www.costco.com.tw/Health-Beauty/Supplements/Bone-Joint-Support/Caltrate-UC-II-Collagen-90-Tablet/p/127189')" title="修改分類（需登入）">✏️</button>
   
 </div>
+<div class="card" id="c_https___www_costco_com_tw_p_2189436" data-cat="__其他" data-deal="other">
+  <a href="https://www.costco.com.tw/p/2189436" target="_blank" rel="noopener" class="card-link">
+    <div class="card-img"><div class="no-img">📦</div><div class="badge">-20.6%</div><a class="src-icon" href="https://www.daybuy.tw/costco/255145/" target="_blank" onclick="event.stopPropagation()" title="daybuy 情報">📰</a></div>
+    <div class="card-body">
+      <p class="card-name">CLOROX 萬用清潔擦拭濕巾 85抽 X 5罐</p>
+      
+      
+      <p class="deal-period">📅 06/15(一)~06/21(日)</p>
+      <div class="card-price">
+        <span class="orig">$679</span><span class='arrow'>→</span>
+        <span class="sale">$539</span>
+      </div>
+      <p class="card-save">省 $140</p>
+      <p class="history">🆕 首次出現</p>
+    </div>
+  </a>
+  <button class="change-cat-btn" onclick="openCatModal('c_https___www_costco_com_tw_p_2189436','__其他','CLOROX 萬用清潔擦拭濕巾 85抽 X 5罐','https://www.costco.com.tw/p/2189436')" title="修改分類（需登入）">✏️</button>
+  <a class="daybuy-link official-link" href="https://www.costco.com.tw/p/2189436" target="_blank" onclick="event.stopPropagation()">🛒 好市多官網</a><a class="daybuy-link" href="https://www.daybuy.tw/costco/255145/" target="_blank" onclick="event.stopPropagation()">📰 daybuy 情報頁</a>
+</div>
+<div class="card" id="c_https___www_costco_com_tw_p_158979" data-cat="__其他" data-deal="other">
+  <a href="https://www.costco.com.tw/p/158979" target="_blank" rel="noopener" class="card-link">
+    <div class="card-img"><div class="no-img">📦</div><div class="badge">-20.5%</div><a class="src-icon" href="https://www.daybuy.tw/costco/255145/" target="_blank" onclick="event.stopPropagation()" title="daybuy 情報">📰</a></div>
+    <div class="card-body">
+      <p class="card-name">PIAA 車用遮陽傘</p>
+      
+      
+      <p class="deal-period">📅 06/15(一)~06/21(日)</p>
+      <div class="card-price">
+        <span class="orig">$439</span><span class='arrow'>→</span>
+        <span class="sale">$349</span>
+      </div>
+      <p class="card-save">省 $90</p>
+      <p class="history">🆕 首次出現</p>
+    </div>
+  </a>
+  <button class="change-cat-btn" onclick="openCatModal('c_https___www_costco_com_tw_p_158979','__其他','PIAA 車用遮陽傘','https://www.costco.com.tw/p/158979')" title="修改分類（需登入）">✏️</button>
+  <a class="daybuy-link official-link" href="https://www.costco.com.tw/p/158979" target="_blank" onclick="event.stopPropagation()">🛒 好市多官網</a><a class="daybuy-link" href="https://www.daybuy.tw/costco/255145/" target="_blank" onclick="event.stopPropagation()">📰 daybuy 情報頁</a>
+</div>
+<div class="card" id="c_https___www_costco_com_tw_p_144759" data-cat="__其他" data-deal="other">
+  <a href="https://www.costco.com.tw/p/144759" target="_blank" rel="noopener" class="card-link">
+    <div class="card-img"><div class="no-img">📦</div><div class="badge">-20.1%</div><a class="src-icon" href="https://www.daybuy.tw/costco/255145/" target="_blank" onclick="event.stopPropagation()" title="daybuy 情報">📰</a></div>
+    <div class="card-body">
+      <p class="card-name">CP卜蜂 冷藏紅燒棒腿 1200公克</p>
+      
+      
+      <p class="deal-period">📅 06/15(一)~06/21(日)</p>
+      <div class="card-price">
+        <span class="orig">$399</span><span class='arrow'>→</span>
+        <span class="sale">$319</span>
+      </div>
+      <p class="card-save">省 $80</p>
+      <p class="history">🆕 首次出現</p>
+    </div>
+  </a>
+  <button class="change-cat-btn" onclick="openCatModal('c_https___www_costco_com_tw_p_144759','__其他','CP卜蜂 冷藏紅燒棒腿 1200公克','https://www.costco.com.tw/p/144759')" title="修改分類（需登入）">✏️</button>
+  <a class="daybuy-link official-link" href="https://www.costco.com.tw/p/144759" target="_blank" onclick="event.stopPropagation()">🛒 好市多官網</a><a class="daybuy-link" href="https://www.daybuy.tw/costco/255145/" target="_blank" onclick="event.stopPropagation()">📰 daybuy 情報頁</a>
+</div>
 </div>
   <div class="empty" id="empty">😢 找不到符合的商品</div>
 </main>
@@ -1387,7 +1482,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
   </div>
 </div>
 
-<footer>🤖 Hermes Agent 自動整理｜資料來源：costco.com.tw｜更新：2026-06-16 17:25<br>🏪=賣場同售 📰=daybuy情報 ✏️=登入後可修改分類</footer>
+<footer>🤖 Hermes Agent 自動整理｜資料來源：costco.com.tw｜更新：2026-06-16 17:40<br>🏪=賣場同售 📰=daybuy情報 ✏️=登入後可修改分類</footer>
 
 <!-- 分類 Modal -->
 <div class="modal-overlay" id="catModal" onclick="if(event.target===this)closeModal()">
