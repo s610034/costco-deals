@@ -106,7 +106,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
 </style>
 <script>
   // 版本控制：每次部署時更新，強制瀏覽器重新載入
-  const BUILD_TIME = '20260616170749';
+  const BUILD_TIME = '20260616172531';
   const stored = localStorage.getItem('costco_build');
   if (stored && stored !== BUILD_TIME) {
     localStorage.setItem('costco_build', BUILD_TIME);
@@ -121,7 +121,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
   <div class="header-row">
     <h1>🛒 好市多折扣週報</h1>
     <span class="meta">📅 2026/06/16（06/15～06/21）</span>
-    <span class="total">共 58 項</span>
+    <span class="total">共 62 項</span>
     <div class="login-wrap">
       <button class="login-btn" id="loginToggleBtn" onclick="toggleLogin()">🔐 登入</button>
       <div class="editor-menu" id="editorMenu">
@@ -133,7 +133,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
     </div>
   </div>
   <div class="header-filters">
-  <button class="hf-btn hf-all active" onclick="dealFilter('all',this)">全部 <span>58</span></button>
+  <button class="hf-btn hf-all active" onclick="dealFilter('all',this)">全部 <span>62</span></button>
   <button class="hf-btn hf-hot" onclick="dealFilter('hotbuys',this)">⏰ 限時優惠 <span>47</span></button>
   <button class="hf-btn hf-coup" onclick="dealFilter('coupon',this)">🏷️ 精選優惠 <span>10</span></button>
   
@@ -171,13 +171,13 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
 </div>
 
 <div class="tabs-wrap">
-<button class="tab active" data-catid="all" onclick="catFilter('all',this)">🏠 全部 <span class="tab-count">58</span></button>
+<button class="tab active" data-catid="all" onclick="catFilter('all',this)">🏠 全部 <span class="tab-count">62</span></button>
 <button class="tab" data-catid="__寵物用品" onclick="catFilter('__寵物用品',this)">🐾 寵物用品 <span class="tab-count">1</span></button>
 <button class="tab" data-catid="__食品飲料" onclick="catFilter('__食品飲料',this)">🍱 食品飲料 <span class="tab-count">22</span></button>
 <button class="tab" data-catid="__家電_3C" onclick="catFilter('__家電_3C',this)">📺 家電 3C <span class="tab-count">8</span></button>
 <button class="tab" data-catid="__保健美妝" onclick="catFilter('__保健美妝',this)">🧴 保健美妝 <span class="tab-count">6</span></button>
 <button class="tab" data-catid="__生活用品" onclick="catFilter('__生活用品',this)">🏠 生活用品 <span class="tab-count">13</span></button>
-<button class="tab" data-catid="__服飾寢具" onclick="catFilter('__服飾寢具',this)">👕 服飾寢具 <span class="tab-count">1</span></button>
+<button class="tab" data-catid="__服飾寢具" onclick="catFilter('__服飾寢具',this)">👕 服飾寢具 <span class="tab-count">5</span></button>
 <button class="tab" data-catid="__玩具育兒" onclick="catFilter('__玩具育兒',this)">🧸 玩具育兒 <span class="tab-count">1</span></button>
 <button class="tab" data-catid="___運動戶外" onclick="catFilter('___運動戶外',this)">🏋️ 運動戶外 <span class="tab-count">1</span></button>
 <button class="tab" data-catid="__其他" onclick="catFilter('__其他',this)">📦 其他 <span class="tab-count">5</span></button>
@@ -1157,6 +1157,82 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
   <button class="change-cat-btn" onclick="openCatModal('c_echers_Mens_Athletic_Shoe_p_1961251','__服飾寢具','Skechers 男運動鞋','https://www.costco.com.tw/Clothing-Accessories/Shoes/Mens-Shoes/Skechers-Mens-Athletic-Shoe/p/1961251')" title="修改分類（需登入）">✏️</button>
   
 </div>
+<div class="card" id="c_https___www_costco_com_tw_p_1846417" data-cat="__服飾寢具" data-deal="other">
+  <a href="https://www.costco.com.tw/p/1846417" target="_blank" rel="noopener" class="card-link">
+    <div class="card-img"><div class="no-img">📦</div><div class="badge">-25.0%</div><a class="src-icon" href="https://www.daybuy.tw/costco/255345/" target="_blank" onclick="event.stopPropagation()" title="daybuy 情報">📰</a></div>
+    <div class="card-body">
+      <p class="card-name">TOMMY HILFIGER 女短袖POLO衫</p>
+      
+      
+      <p class="deal-period">📅 06/15(一)~06/21(日)</p>
+      <div class="card-price">
+        <span class="orig">$799</span><span class='arrow'>→</span>
+        <span class="sale">$599</span>
+      </div>
+      <p class="card-save">省 $200</p>
+      <p class="history">🆕 首次出現</p>
+    </div>
+  </a>
+  <button class="change-cat-btn" onclick="openCatModal('c_https___www_costco_com_tw_p_1846417','__服飾寢具','TOMMY HILFIGER 女短袖POLO衫','https://www.costco.com.tw/p/1846417')" title="修改分類（需登入）">✏️</button>
+  <a class="daybuy-link official-link" href="https://www.costco.com.tw/p/1846417" target="_blank" onclick="event.stopPropagation()">🛒 好市多官網</a><a class="daybuy-link" href="https://www.daybuy.tw/costco/255345/" target="_blank" onclick="event.stopPropagation()">📰 daybuy 情報頁</a>
+</div>
+<div class="card" id="c_https___www_costco_com_tw_p_1846337" data-cat="__服飾寢具" data-deal="other">
+  <a href="https://www.costco.com.tw/p/1846337" target="_blank" rel="noopener" class="card-link">
+    <div class="card-img"><div class="no-img">📦</div><div class="badge">-27.3%</div><a class="src-icon" href="https://www.daybuy.tw/costco/255345/" target="_blank" onclick="event.stopPropagation()" title="daybuy 情報">📰</a></div>
+    <div class="card-body">
+      <p class="card-name">KANGOL 女圓領短袖上衣</p>
+      
+      
+      <p class="deal-period">📅 06/15(一)~06/21(日)</p>
+      <div class="card-price">
+        <span class="orig">$549</span><span class='arrow'>→</span>
+        <span class="sale">$399</span>
+      </div>
+      <p class="card-save">省 $150</p>
+      <p class="history">🆕 首次出現</p>
+    </div>
+  </a>
+  <button class="change-cat-btn" onclick="openCatModal('c_https___www_costco_com_tw_p_1846337','__服飾寢具','KANGOL 女圓領短袖上衣','https://www.costco.com.tw/p/1846337')" title="修改分類（需登入）">✏️</button>
+  <a class="daybuy-link official-link" href="https://www.costco.com.tw/p/1846337" target="_blank" onclick="event.stopPropagation()">🛒 好市多官網</a><a class="daybuy-link" href="https://www.daybuy.tw/costco/255345/" target="_blank" onclick="event.stopPropagation()">📰 daybuy 情報頁</a>
+</div>
+<div class="card" id="c_https___www_costco_com_tw_p_1956376" data-cat="__服飾寢具" data-deal="other">
+  <a href="https://www.costco.com.tw/p/1956376" target="_blank" rel="noopener" class="card-link">
+    <div class="card-img"><div class="no-img">📦</div><div class="badge">-20.3%</div><a class="src-icon" href="https://www.daybuy.tw/costco/255345/" target="_blank" onclick="event.stopPropagation()" title="daybuy 情報">📰</a></div>
+    <div class="card-body">
+      <p class="card-name">WELL WORN 女牛仔寬褲</p>
+      
+      
+      <p class="deal-period">📅 06/15(一)~06/28(日)</p>
+      <div class="card-price">
+        <span class="orig">$739</span><span class='arrow'>→</span>
+        <span class="sale">$589</span>
+      </div>
+      <p class="card-save">省 $150</p>
+      <p class="history">🆕 首次出現</p>
+    </div>
+  </a>
+  <button class="change-cat-btn" onclick="openCatModal('c_https___www_costco_com_tw_p_1956376','__服飾寢具','WELL WORN 女牛仔寬褲','https://www.costco.com.tw/p/1956376')" title="修改分類（需登入）">✏️</button>
+  <a class="daybuy-link official-link" href="https://www.costco.com.tw/p/1956376" target="_blank" onclick="event.stopPropagation()">🛒 好市多官網</a><a class="daybuy-link" href="https://www.daybuy.tw/costco/255345/" target="_blank" onclick="event.stopPropagation()">📰 daybuy 情報頁</a>
+</div>
+<div class="card" id="c_https___www_costco_com_tw_p_1966321" data-cat="__服飾寢具" data-deal="other">
+  <a href="https://www.costco.com.tw/p/1966321" target="_blank" rel="noopener" class="card-link">
+    <div class="card-img"><div class="no-img">📦</div><div class="badge">-20.0%</div><a class="src-icon" href="https://www.daybuy.tw/costco/255345/" target="_blank" onclick="event.stopPropagation()" title="daybuy 情報">📰</a></div>
+    <div class="card-body">
+      <p class="card-name">LEVI'S 兒童短袖上衣三件組</p>
+      
+      
+      <p class="deal-period">📅 06/15(一)~06/28(日)</p>
+      <div class="card-price">
+        <span class="orig">$569</span><span class='arrow'>→</span>
+        <span class="sale">$455</span>
+      </div>
+      <p class="card-save">省 $114</p>
+      <p class="history">🆕 首次出現</p>
+    </div>
+  </a>
+  <button class="change-cat-btn" onclick="openCatModal('c_https___www_costco_com_tw_p_1966321','__服飾寢具','LEVI\'S 兒童短袖上衣三件組','https://www.costco.com.tw/p/1966321')" title="修改分類（需登入）">✏️</button>
+  <a class="daybuy-link official-link" href="https://www.costco.com.tw/p/1966321" target="_blank" onclick="event.stopPropagation()">🛒 好市多官網</a><a class="daybuy-link" href="https://www.daybuy.tw/costco/255345/" target="_blank" onclick="event.stopPropagation()">📰 daybuy 情報頁</a>
+</div>
 <div class="card" id="c_wer_Bath_Set_Ages_2_and_Up_p_152878" data-cat="__玩具育兒" data-deal="other">
   <a href="https://www.costco.com.tw/Household-Baby-Toys/Toys/Outdoor-Play/Step2-Nautical-Rain-Shower-Bath-Set-Ages-2-and-Up/p/152878" target="_blank" rel="noopener" class="card-link">
     <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h8c/h35/381454828765214.jpg" alt="Step2 航海船造型泡澡玩具組 / 2歲以上" loading="lazy" onerror="this.style.display='none'"><div class="badge">-23.9%</div></div>
@@ -1311,7 +1387,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
   </div>
 </div>
 
-<footer>🤖 Hermes Agent 自動整理｜資料來源：costco.com.tw｜更新：2026-06-16 17:07<br>🏪=賣場同售 📰=daybuy情報 ✏️=登入後可修改分類</footer>
+<footer>🤖 Hermes Agent 自動整理｜資料來源：costco.com.tw｜更新：2026-06-16 17:25<br>🏪=賣場同售 📰=daybuy情報 ✏️=登入後可修改分類</footer>
 
 <!-- 分類 Modal -->
 <div class="modal-overlay" id="catModal" onclick="if(event.target===this)closeModal()">
