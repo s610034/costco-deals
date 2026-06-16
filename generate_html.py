@@ -7,16 +7,26 @@ from typing import List, Dict
 
 
 def fetch_sighting_articles(days: int = 7) -> list:
-    """從 daybuy 抓最近 N 天內的賣場目擊情報文章"""
+    """從 daybuy 抓最近 N 天內的賣場目擊情報文章（兩個來源）"""
     try:
         import requests
         from bs4 import BeautifulSoup
         import datetime
 
         headers = {"User-Agent": "Mozilla/5.0"}
-        r = requests.get("https://www.daybuy.tw/costco/hypermarket-news/",
-                         headers=headers, timeout=8)
-        soup = BeautifulSoup(r.text, "html.parser")
+        # 兩個來源：賣場優惠目擊 + 隱藏優惠懶人包
+        sources = [
+            "https://www.daybuy.tw/costco/hypermarket-news/",
+            "https://www.daybuy.tw/costco/hypermarket-news/hypermarket-sale/",
+        ]
+        combined_html = ""
+        for src_url in sources:
+            try:
+                r = requests.get(src_url, headers=headers, timeout=8)
+                combined_html += r.text
+            except Exception:
+                pass
+        soup = BeautifulSoup(combined_html, "html.parser")
 
         today = datetime.date.today()
         cutoff = today - datetime.timedelta(days=days)
@@ -153,7 +163,7 @@ def generate_html(products: List[Dict], output_path: str) -> str:
     total       = len(products)
     hotbuys_cnt = sum(1 for p in products if "限時" in p.get("分類",""))
     # 抓取最新目擊情報（隱藏優惠區塊用）
-    sighting_articles = fetch_sighting_articles(5)
+    sighting_articles = fetch_sighting_articles(days=7)
     coupon_cnt  = sum(1 for p in products if "精選" in p.get("分類","") and "限時" not in p.get("分類",""))
     both_cnt    = sum(1 for p in products if "限時" in p.get("分類","") and "精選" in p.get("分類",""))
     all_cats_js = json.dumps(ALL_CATS, ensure_ascii=False)
@@ -322,12 +332,16 @@ def generate_html(products: List[Dict], output_path: str) -> str:
             title = art['title']
             url = art['url']
             # 判斷類型 emoji
-            if "隱藏" in title:
+            if "懶人包" in title:
+                icon = "📋"
+            elif "隱藏" in title:
                 icon = "🕵️"
             elif "穿搭" in title:
                 icon = "👗"
             elif "新商品" in title or "週報" in title:
                 icon = "🆕"
+            elif "試吃" in title:
+                icon = "🍽️"
             else:
                 icon = "🏪"
             sighting_cards += f'''<a class="sighting-card" href="{url}" target="_blank" rel="noopener">
