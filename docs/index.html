@@ -84,6 +84,7 @@ main{padding:12px;max-width:960px;margin:0 auto}
 .official-link{background:#f0fdf4;color:#166534}
 .official-link:hover{background:#dcfce7}
 .period-hint{font-size:.6rem;color:#92400e;opacity:.75}
+.confirm-date-hint{font-size:.6rem;color:#9d174d;opacity:.8;margin-left:4px;background:#fce7f3;padding:1px 5px;border-radius:8px}
 .confirm-date-hint{font-size:.6rem;color:#9d174d;opacity:.85;margin-left:4px;background:#fce7f3;padding:1px 5px;border-radius:8px}
 body.editor-mode .change-cat-btn{opacity:.35;pointer-events:auto}
 body.editor-mode .change-cat-btn:hover{opacity:1}
@@ -109,7 +110,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
 </style>
 <script>
   // 版本控制：每次部署時更新，強制瀏覽器重新載入
-  const BUILD_TIME = '20260617131011';
+  const BUILD_TIME = '20260617131511';
   const stored = localStorage.getItem('costco_build');
   if (stored && stored !== BUILD_TIME) {
     localStorage.setItem('costco_build', BUILD_TIME);
@@ -1237,7 +1238,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
   </div>
 </div>
 
-<footer>🤖 Hermes Agent 自動整理｜資料來源：costco.com.tw｜更新：2026-06-17 13:10<br>🏪=賣場同售 📰=daybuy情報 ✏️=登入後可修改分類</footer>
+<footer>🤖 Hermes Agent 自動整理｜資料來源：costco.com.tw｜更新：2026-06-17 13:15<br>🏪=賣場同售 📰=daybuy情報 ✏️=登入後可修改分類</footer>
 
 <!-- 分類 Modal -->
 <div class="modal-overlay" id="catModal" onclick="if(event.target===this)closeModal()">
