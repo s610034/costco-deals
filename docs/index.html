@@ -110,7 +110,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
 </style>
 <script>
   // 版本控制：每次部署時更新，強制瀏覽器重新載入
-  const BUILD_TIME = '20260617131511';
+  const BUILD_TIME = '20260617131819';
   const stored = localStorage.getItem('costco_build');
   if (stored && stored !== BUILD_TIME) {
     localStorage.setItem('costco_build', BUILD_TIME);
@@ -125,7 +125,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
   <div class="header-row">
     <h1>🛒 好市多折扣週報</h1>
     <span class="meta">📅 2026/06/17（06/15～06/21）</span>
-    <span class="total">共 54 項</span>
+    <span class="total">共 64 項</span>
     <div class="login-wrap">
       <button class="login-btn" id="loginToggleBtn" onclick="toggleLogin()">🔐 登入</button>
       <div class="editor-menu" id="editorMenu">
@@ -137,7 +137,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
     </div>
   </div>
   <div class="header-filters">
-  <button class="hf-btn hf-all active" onclick="dealFilter('all',this)">全部 <span>54</span></button>
+  <button class="hf-btn hf-all active" onclick="dealFilter('all',this)">全部 <span>64</span></button>
   <button class="hf-btn hf-hot" onclick="dealFilter('hotbuys',this)">⏰ 限時優惠 <span>41</span></button>
   <button class="hf-btn hf-coup" onclick="dealFilter('coupon',this)">🏷️ 精選優惠 <span>12</span></button>
   
@@ -175,15 +175,16 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
 </div>
 
 <div class="tabs-wrap">
-<button class="tab active" data-catid="all" onclick="catFilter('all',this)">🏠 全部 <span class="tab-count">54</span></button>
+<button class="tab active" data-catid="all" onclick="catFilter('all',this)">🏠 全部 <span class="tab-count">64</span></button>
 <button class="tab" data-catid="__寵物用品" onclick="catFilter('__寵物用品',this)">🐾 寵物用品 <span class="tab-count">1</span></button>
-<button class="tab" data-catid="__食品飲料" onclick="catFilter('__食品飲料',this)">🍱 食品飲料 <span class="tab-count">20</span></button>
+<button class="tab" data-catid="__食品飲料" onclick="catFilter('__食品飲料',this)">🍱 食品飲料 <span class="tab-count">22</span></button>
 <button class="tab" data-catid="__家電_3C" onclick="catFilter('__家電_3C',this)">📺 家電 3C <span class="tab-count">5</span></button>
 <button class="tab" data-catid="__保健美妝" onclick="catFilter('__保健美妝',this)">🧴 保健美妝 <span class="tab-count">5</span></button>
-<button class="tab" data-catid="__生活用品" onclick="catFilter('__生活用品',this)">🏠 生活用品 <span class="tab-count">11</span></button>
+<button class="tab" data-catid="__生活用品" onclick="catFilter('__生活用品',this)">🏠 生活用品 <span class="tab-count">12</span></button>
+<button class="tab" data-catid="__服飾寢具" onclick="catFilter('__服飾寢具',this)">👕 服飾寢具 <span class="tab-count">4</span></button>
 <button class="tab" data-catid="__玩具育兒" onclick="catFilter('__玩具育兒',this)">🧸 玩具育兒 <span class="tab-count">2</span></button>
 <button class="tab" data-catid="___運動戶外" onclick="catFilter('___運動戶外',this)">🏋️ 運動戶外 <span class="tab-count">1</span></button>
-<button class="tab" data-catid="__其他" onclick="catFilter('__其他',this)">📦 其他 <span class="tab-count">9</span></button>
+<button class="tab" data-catid="__其他" onclick="catFilter('__其他',this)">📦 其他 <span class="tab-count">12</span></button>
 </div>
 
 <div class="search-wrap">
@@ -305,6 +306,25 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
   <button class="change-cat-btn" onclick="openCatModal('c__No_Sugar_196_ml_X_24_Pack_p_137161','__食品飲料','格力高 杏仁果飲 無糖 196毫升 X 24入','https://www.costco.com.tw/Food-Dining/Drinks/Beverages-Juice/Glico-Almond-Beverage-No-Sugar-196-ml-X-24-Pack/p/137161')" title="修改分類（需登入）">✏️</button>
   
 </div>
+<div class="card" id="c_https___www_costco_com_tw_p_328912" data-cat="__食品飲料" data-deal="other">
+  <a href="https://www.costco.com.tw/p/328912" target="_blank" rel="noopener" class="card-link">
+    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h68/h33/133324530876446.jpg" alt="NATIONAL VITA 顧可飛 DHA魚油晶球膠囊 30包" loading="lazy" onerror="this.style.display='none'"><div class="badge">-20.0%</div><a class="src-icon" href="https://www.daybuy.tw/costco/255145/" target="_blank" onclick="event.stopPropagation()" title="daybuy 情報">📰</a></div>
+    <div class="card-body">
+      <p class="card-name">NATIONAL VITA 顧可飛 DHA魚油晶球膠囊 30包</p>
+      <span class="deal-type-badge badge-hidden" title="人工confirm的賣場隱藏優惠，折扣可能隨時異動">🏪 賣場隱藏</span>
+      
+      <p class="deal-period">📅 06/15(一)~06/21(日)</p>
+      <div class="card-price">
+        <span class="orig">$599</span><span class='arrow'>→</span>
+        <span class="sale">$479</span>
+      </div>
+      <p class="card-save">省 $120</p>
+      <p class="history">🕐 距上次折扣 1 天</p>
+    </div>
+  </a>
+  <button class="change-cat-btn" onclick="openCatModal('c_https___www_costco_com_tw_p_328912','__食品飲料','NATIONAL VITA 顧可飛 DHA魚油晶球膠囊 30包','https://www.costco.com.tw/p/328912')" title="修改分類（需登入）">✏️</button>
+  <a class="daybuy-link official-link" href="https://www.costco.com.tw/p/328912" target="_blank" onclick="event.stopPropagation()">🛒 好市多官網</a><a class="daybuy-link" href="https://www.daybuy.tw/costco/255145/" target="_blank" onclick="event.stopPropagation()">📰 daybuy 情報頁</a>
+</div>
 <div class="card" id="c_est_Grove_Trail_Mix_907_g_p_1056107" data-cat="__é£åé£²æ" data-deal="hotbuys">
   <a href="https://www.costco.com.tw/Food-Dining/Snacks/Nuts-Jerky/Hoodys-Harvest-Grove-Trail-Mix-907-g/p/1056107" target="_blank" rel="noopener" class="card-link">
     <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/hf1/hd2/65765251252254.jpg" alt="Hoody's 精緻果乾混綜合果仁 907公克" loading="lazy" onerror="this.style.display='none'"><div class="badge">-22.8%</div></div>
@@ -361,6 +381,25 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
   </a>
   <button class="change-cat-btn" onclick="openCatModal('c_Lemon_Flavor_5_g_X_40_Pack_p_141460','__食品飲料','TEAZEN 康普茶 檸檬口味 5公克 X 40包','https://www.costco.com.tw/Food-Dining/Drinks/Tea/TEAZEN-Kombucha-Lemon-Flavor-5-g-X-40-Pack/p/141460')" title="修改分類（需登入）">✏️</button>
   
+</div>
+<div class="card" id="c_https___www_costco_com_tw_p_160080" data-cat="__食品飲料" data-deal="other">
+  <a href="https://www.costco.com.tw/p/160080" target="_blank" rel="noopener" class="card-link">
+    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h9d/h5f/451293459480606.jpg" alt="ASAHI 朝日十六茶零咖啡因複方茶 990毫升 X 12罐" loading="lazy" onerror="this.style.display='none'"><div class="badge">-20.1%</div><a class="src-icon" href="https://www.daybuy.tw/costco/255145/" target="_blank" onclick="event.stopPropagation()" title="daybuy 情報">📰</a></div>
+    <div class="card-body">
+      <p class="card-name">ASAHI 朝日十六茶零咖啡因複方茶 990毫升 X 12罐</p>
+      <span class="deal-type-badge badge-hidden" title="人工confirm的賣場隱藏優惠，折扣可能隨時異動">🏪 賣場隱藏</span>
+      
+      <p class="deal-period">📅 06/15(一)~06/21(日)</p>
+      <div class="card-price">
+        <span class="orig">$399</span><span class='arrow'>→</span>
+        <span class="sale">$319</span>
+      </div>
+      <p class="card-save">省 $80</p>
+      <p class="history">🕐 距上次折扣 1 天</p>
+    </div>
+  </a>
+  <button class="change-cat-btn" onclick="openCatModal('c_https___www_costco_com_tw_p_160080','__食品飲料','ASAHI 朝日十六茶零咖啡因複方茶 990毫升 X 12罐','https://www.costco.com.tw/p/160080')" title="修改分類（需登入）">✏️</button>
+  <a class="daybuy-link official-link" href="https://www.costco.com.tw/p/160080" target="_blank" onclick="event.stopPropagation()">🛒 好市多官網</a><a class="daybuy-link" href="https://www.daybuy.tw/costco/255145/" target="_blank" onclick="event.stopPropagation()">📰 daybuy 情報頁</a>
 </div>
 <div class="card" id="c_tin_10000_mcg_X_100_Tablet_p_115609" data-cat="__食品飲料" data-deal="hotbuys">
   <a href="https://www.costco.com.tw/Health-Beauty/Supplements/Multi-Letter-Vitamins/Natrol-Biotin-10000-mcg-X-100-Tablet/p/115609" target="_blank" rel="noopener" class="card-link">
@@ -837,6 +876,25 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
   <button class="change-cat-btn" onclick="openCatModal('c_ture_Ladies_Hoodie_Jacket_p_7771776','__生活用品','科克蘭 女連帽外套','https://www.costco.com.tw/Clothing-Accessories/Womens-Clothing/Womens-Coats-Jackets/Kirkland-Signature-Ladies-Hoodie-Jacket/p/7771776')" title="修改分類（需登入）">✏️</button>
   
 </div>
+<div class="card" id="c_https___www_costco_com_tw_p_1491575" data-cat="__生活用品" data-deal="other">
+  <a href="https://www.costco.com.tw/p/1491575" target="_blank" rel="noopener" class="card-link">
+    <div class="card-img"><img src="https://www.daybuy.tw/wp-content/uploads/2026/06/LINE_ALBUM_%E9%9A%B1%E8%97%8F%E5%84%AA%E6%83%A0_260615_7.jpg" alt="UNDER ARMOUR 女短袖上衣" loading="lazy" onerror="this.style.display='none'"><a class="src-icon" href="https://www.daybuy.tw/costco/255345/" target="_blank" onclick="event.stopPropagation()" title="daybuy 情報">📰</a></div>
+    <div class="card-body">
+      <p class="card-name">UNDER ARMOUR 女短袖上衣</p>
+      <span class="deal-type-badge badge-hidden" title="人工confirm的賣場隱藏優惠，折扣可能隨時異動">🏪 賣場隱藏</span>
+      
+      <p class="deal-period">📅 06/15(一)~06/28(日)</p>
+      <div class="card-price">
+        <span class="orig">$679</span><span class='arrow'>→</span>
+        <span class="sale">$529</span>
+      </div>
+      <p class="card-save">省 $150</p>
+      <p class="history">🕐 距上次折扣 1 天</p>
+    </div>
+  </a>
+  <button class="change-cat-btn" onclick="openCatModal('c_https___www_costco_com_tw_p_1491575','__生活用品','UNDER ARMOUR 女短袖上衣','https://www.costco.com.tw/p/1491575')" title="修改分類（需登入）">✏️</button>
+  <a class="daybuy-link official-link" href="https://www.costco.com.tw/p/1491575" target="_blank" onclick="event.stopPropagation()">🛒 好市多官網</a><a class="daybuy-link" href="https://www.daybuy.tw/costco/255345/" target="_blank" onclick="event.stopPropagation()">📰 daybuy 情報頁</a>
+</div>
 <div class="card" id="c_Mens_Boxer_Brief_4_Pack_p_7700015_B" data-cat="__生活用品" data-deal="hotbuys">
   <a href="https://www.costco.com.tw/Clothing-Accessories/Mens-Clothing/Mens-Socks-Underwear/Kirkland-Signature-Mens-Boxer-Brief-4-Pack/p/7700015-B" target="_blank" rel="noopener" class="card-link">
     <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h4e/h25/11444340588574.jpg" alt="科克蘭 男彈性平口褲 4入" loading="lazy" onerror="this.style.display='none'"><div class="badge">-26.1%</div></div>
@@ -988,6 +1046,82 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
   </a>
   <button class="change-cat-btn" onclick="openCatModal('c_ls_Pest_Control_Air_Care__s_p_73655','__çæ´»ç¨å','威滅滅蟑隊-s','https://www.costco.com.tw/Household-Baby-Toys/Household-Essentials/Pest-Control-Air-Care/-s/p/73655')" title="修改分類（需登入）">✏️</button>
   
+</div>
+<div class="card" id="c_https___www_costco_com_tw_p_1846417" data-cat="__服飾寢具" data-deal="other">
+  <a href="https://www.costco.com.tw/p/1846417" target="_blank" rel="noopener" class="card-link">
+    <div class="card-img"><img src="https://www.costco.com.tw/mediaurl/product/0/product" alt="TOMMY HILFIGER 女短袖POLO衫" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.0%</div><a class="src-icon" href="https://www.daybuy.tw/costco/255345/" target="_blank" onclick="event.stopPropagation()" title="daybuy 情報">📰</a></div>
+    <div class="card-body">
+      <p class="card-name">TOMMY HILFIGER 女短袖POLO衫</p>
+      <span class="deal-type-badge badge-hidden" title="人工confirm的賣場隱藏優惠，折扣可能隨時異動">🏪 賣場隱藏</span>
+      
+      <p class="deal-period">📅 06/15(一)~06/21(日)</p>
+      <div class="card-price">
+        <span class="orig">$799</span><span class='arrow'>→</span>
+        <span class="sale">$599</span>
+      </div>
+      <p class="card-save">省 $200</p>
+      <p class="history">🕐 距上次折扣 1 天</p>
+    </div>
+  </a>
+  <button class="change-cat-btn" onclick="openCatModal('c_https___www_costco_com_tw_p_1846417','__服飾寢具','TOMMY HILFIGER 女短袖POLO衫','https://www.costco.com.tw/p/1846417')" title="修改分類（需登入）">✏️</button>
+  <a class="daybuy-link official-link" href="https://www.costco.com.tw/p/1846417" target="_blank" onclick="event.stopPropagation()">🛒 好市多官網</a><a class="daybuy-link" href="https://www.daybuy.tw/costco/255345/" target="_blank" onclick="event.stopPropagation()">📰 daybuy 情報頁</a>
+</div>
+<div class="card" id="c_https___www_costco_com_tw_p_1846337" data-cat="__服飾寢具" data-deal="other">
+  <a href="https://www.costco.com.tw/p/1846337" target="_blank" rel="noopener" class="card-link">
+    <div class="card-img"><img src="https://www.daybuy.tw/wp-content/uploads/2026/06/LINE_ALBUM_%E9%9A%B1%E8%97%8F%E5%84%AA%E6%83%A0_260615_3.jpg" alt="KANGOL 女圓領短袖上衣" loading="lazy" onerror="this.style.display='none'"><div class="badge">-27.3%</div><a class="src-icon" href="https://www.daybuy.tw/costco/255345/" target="_blank" onclick="event.stopPropagation()" title="daybuy 情報">📰</a></div>
+    <div class="card-body">
+      <p class="card-name">KANGOL 女圓領短袖上衣</p>
+      <span class="deal-type-badge badge-hidden" title="人工confirm的賣場隱藏優惠，折扣可能隨時異動">🏪 賣場隱藏</span>
+      
+      <p class="deal-period">📅 06/15(一)~06/21(日)</p>
+      <div class="card-price">
+        <span class="orig">$549</span><span class='arrow'>→</span>
+        <span class="sale">$399</span>
+      </div>
+      <p class="card-save">省 $150</p>
+      <p class="history">🕐 距上次折扣 1 天</p>
+    </div>
+  </a>
+  <button class="change-cat-btn" onclick="openCatModal('c_https___www_costco_com_tw_p_1846337','__服飾寢具','KANGOL 女圓領短袖上衣','https://www.costco.com.tw/p/1846337')" title="修改分類（需登入）">✏️</button>
+  <a class="daybuy-link official-link" href="https://www.costco.com.tw/p/1846337" target="_blank" onclick="event.stopPropagation()">🛒 好市多官網</a><a class="daybuy-link" href="https://www.daybuy.tw/costco/255345/" target="_blank" onclick="event.stopPropagation()">📰 daybuy 情報頁</a>
+</div>
+<div class="card" id="c_https___www_costco_com_tw_p_1956376" data-cat="__服飾寢具" data-deal="other">
+  <a href="https://www.costco.com.tw/p/1956376" target="_blank" rel="noopener" class="card-link">
+    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h4a/haa/439234223702046.jpg" alt="WELL WORN 女牛仔寬褲" loading="lazy" onerror="this.style.display='none'"><div class="badge">-20.3%</div><a class="src-icon" href="https://www.daybuy.tw/costco/255345/" target="_blank" onclick="event.stopPropagation()" title="daybuy 情報">📰</a></div>
+    <div class="card-body">
+      <p class="card-name">WELL WORN 女牛仔寬褲</p>
+      <span class="deal-type-badge badge-hidden" title="人工confirm的賣場隱藏優惠，折扣可能隨時異動">🏪 賣場隱藏</span>
+      
+      <p class="deal-period">📅 06/15(一)~06/28(日)</p>
+      <div class="card-price">
+        <span class="orig">$739</span><span class='arrow'>→</span>
+        <span class="sale">$589</span>
+      </div>
+      <p class="card-save">省 $150</p>
+      <p class="history">🕐 距上次折扣 1 天</p>
+    </div>
+  </a>
+  <button class="change-cat-btn" onclick="openCatModal('c_https___www_costco_com_tw_p_1956376','__服飾寢具','WELL WORN 女牛仔寬褲','https://www.costco.com.tw/p/1956376')" title="修改分類（需登入）">✏️</button>
+  <a class="daybuy-link official-link" href="https://www.costco.com.tw/p/1956376" target="_blank" onclick="event.stopPropagation()">🛒 好市多官網</a><a class="daybuy-link" href="https://www.daybuy.tw/costco/255345/" target="_blank" onclick="event.stopPropagation()">📰 daybuy 情報頁</a>
+</div>
+<div class="card" id="c_https___www_costco_com_tw_p_1966321" data-cat="__服飾寢具" data-deal="other">
+  <a href="https://www.costco.com.tw/p/1966321" target="_blank" rel="noopener" class="card-link">
+    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/he0/h87/466199217602590.jpg" alt="LEVI'S 兒童短袖上衣三件組" loading="lazy" onerror="this.style.display='none'"><div class="badge">-20.0%</div><a class="src-icon" href="https://www.daybuy.tw/costco/255345/" target="_blank" onclick="event.stopPropagation()" title="daybuy 情報">📰</a></div>
+    <div class="card-body">
+      <p class="card-name">LEVI'S 兒童短袖上衣三件組</p>
+      <span class="deal-type-badge badge-hidden" title="人工confirm的賣場隱藏優惠，折扣可能隨時異動">🏪 賣場隱藏</span>
+      
+      <p class="deal-period">📅 06/15(一)~06/28(日)</p>
+      <div class="card-price">
+        <span class="orig">$569</span><span class='arrow'>→</span>
+        <span class="sale">$455</span>
+      </div>
+      <p class="card-save">省 $114</p>
+      <p class="history">🕐 距上次折扣 1 天</p>
+    </div>
+  </a>
+  <button class="change-cat-btn" onclick="openCatModal('c_https___www_costco_com_tw_p_1966321','__服飾寢具','LEVI\'S 兒童短袖上衣三件組','https://www.costco.com.tw/p/1966321')" title="修改分類（需登入）">✏️</button>
+  <a class="daybuy-link official-link" href="https://www.costco.com.tw/p/1966321" target="_blank" onclick="event.stopPropagation()">🛒 好市多官網</a><a class="daybuy-link" href="https://www.daybuy.tw/costco/255345/" target="_blank" onclick="event.stopPropagation()">📰 daybuy 情報頁</a>
 </div>
 <div class="card" id="c_wer_Bath_Set_Ages_2_and_Up_p_152878" data-cat="__玩具育兒" data-deal="other">
   <a href="https://www.costco.com.tw/Household-Baby-Toys/Toys/Outdoor-Play/Step2-Nautical-Rain-Shower-Bath-Set-Ages-2-and-Up/p/152878" target="_blank" rel="noopener" class="card-link">
@@ -1160,6 +1294,25 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
   <button class="change-cat-btn" onclick="openCatModal('c_a_2_Pack_43_inch_46_inch_p_155776_B','__其他','F-SEASONS 降溫省力自動傘兩入 43吋+46吋','https://www.costco.com.tw/Clothing-Accessories/Womens-Clothing/Accessories/F-SEASONS-Cooling-Auto-Umbrella-2-Pack-43-inch-46-inch/p/155776-B')" title="修改分類（需登入）">✏️</button>
   
 </div>
+<div class="card" id="c_https___www_costco_com_tw_p_2189436" data-cat="__其他" data-deal="other">
+  <a href="https://www.costco.com.tw/p/2189436" target="_blank" rel="noopener" class="card-link">
+    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h27/h61/86343576682526.jpg" alt="CLOROX 萬用清潔擦拭濕巾 85抽 X 5罐" loading="lazy" onerror="this.style.display='none'"><div class="badge">-20.6%</div><a class="src-icon" href="https://www.daybuy.tw/costco/255145/" target="_blank" onclick="event.stopPropagation()" title="daybuy 情報">📰</a></div>
+    <div class="card-body">
+      <p class="card-name">CLOROX 萬用清潔擦拭濕巾 85抽 X 5罐</p>
+      <span class="deal-type-badge badge-hidden" title="人工confirm的賣場隱藏優惠，折扣可能隨時異動">🏪 賣場隱藏</span>
+      
+      <p class="deal-period">📅 06/15(一)~06/21(日)</p>
+      <div class="card-price">
+        <span class="orig">$679</span><span class='arrow'>→</span>
+        <span class="sale">$539</span>
+      </div>
+      <p class="card-save">省 $140</p>
+      <p class="history">🕐 距上次折扣 1 天</p>
+    </div>
+  </a>
+  <button class="change-cat-btn" onclick="openCatModal('c_https___www_costco_com_tw_p_2189436','__其他','CLOROX 萬用清潔擦拭濕巾 85抽 X 5罐','https://www.costco.com.tw/p/2189436')" title="修改分類（需登入）">✏️</button>
+  <a class="daybuy-link official-link" href="https://www.costco.com.tw/p/2189436" target="_blank" onclick="event.stopPropagation()">🛒 好市多官網</a><a class="daybuy-link" href="https://www.daybuy.tw/costco/255145/" target="_blank" onclick="event.stopPropagation()">📰 daybuy 情報頁</a>
+</div>
 <div class="card" id="c_haped_Pad_Size_XL_24_Piece_p_134645" data-cat="__其他" data-deal="coupon">
   <a href="https://www.costco.com.tw/Health-Beauty/Personal-Care/Feminine-Care/Sofy-Deep-Sleep-Night-Shorts-Shaped-Pad-Size-XL-24-Piece/p/134645" target="_blank" rel="noopener" class="card-link">
     <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/hb5/h64/350548248297502.jpg" alt="蘇菲 超熟睡安心褲 XL尺寸 24片" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.3%</div></div>
@@ -1217,6 +1370,44 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
   <button class="change-cat-btn" onclick="openCatModal('c_ofiber_Towels_80_Piece_Box_p_148155','__其他','GRAB-A-RAG 超細纖維拭布 每盒 80 抽','https://www.costco.com.tw/Sports-Lifestyle/Automotive/Automotive/GRAB-A-RAG-Microfiber-Towels-80-Piece-Box/p/148155')" title="修改分類（需登入）">✏️</button>
   
 </div>
+<div class="card" id="c_https___www_costco_com_tw_p_158979" data-cat="__其他" data-deal="other">
+  <a href="https://www.costco.com.tw/p/158979" target="_blank" rel="noopener" class="card-link">
+    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h0b/h4f/454001600102430.jpg" alt="PIAA 車用遮陽傘" loading="lazy" onerror="this.style.display='none'"><div class="badge">-20.5%</div><a class="src-icon" href="https://www.daybuy.tw/costco/255145/" target="_blank" onclick="event.stopPropagation()" title="daybuy 情報">📰</a></div>
+    <div class="card-body">
+      <p class="card-name">PIAA 車用遮陽傘</p>
+      <span class="deal-type-badge badge-hidden" title="人工confirm的賣場隱藏優惠，折扣可能隨時異動">🏪 賣場隱藏</span>
+      
+      <p class="deal-period">📅 06/15(一)~06/21(日)</p>
+      <div class="card-price">
+        <span class="orig">$439</span><span class='arrow'>→</span>
+        <span class="sale">$349</span>
+      </div>
+      <p class="card-save">省 $90</p>
+      <p class="history">🕐 距上次折扣 1 天</p>
+    </div>
+  </a>
+  <button class="change-cat-btn" onclick="openCatModal('c_https___www_costco_com_tw_p_158979','__其他','PIAA 車用遮陽傘','https://www.costco.com.tw/p/158979')" title="修改分類（需登入）">✏️</button>
+  <a class="daybuy-link official-link" href="https://www.costco.com.tw/p/158979" target="_blank" onclick="event.stopPropagation()">🛒 好市多官網</a><a class="daybuy-link" href="https://www.daybuy.tw/costco/255145/" target="_blank" onclick="event.stopPropagation()">📰 daybuy 情報頁</a>
+</div>
+<div class="card" id="c_https___www_costco_com_tw_p_144759" data-cat="__其他" data-deal="other">
+  <a href="https://www.costco.com.tw/p/144759" target="_blank" rel="noopener" class="card-link">
+    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/hc7/h8f/239138120237086.jpg" alt="CP卜蜂 冷藏紅燒棒腿 1200公克" loading="lazy" onerror="this.style.display='none'"><div class="badge">-20.1%</div><a class="src-icon" href="https://www.daybuy.tw/costco/255145/" target="_blank" onclick="event.stopPropagation()" title="daybuy 情報">📰</a></div>
+    <div class="card-body">
+      <p class="card-name">CP卜蜂 冷藏紅燒棒腿 1200公克</p>
+      <span class="deal-type-badge badge-hidden" title="人工confirm的賣場隱藏優惠，折扣可能隨時異動">🏪 賣場隱藏</span>
+      
+      <p class="deal-period">📅 06/15(一)~06/21(日)</p>
+      <div class="card-price">
+        <span class="orig">$399</span><span class='arrow'>→</span>
+        <span class="sale">$319</span>
+      </div>
+      <p class="card-save">省 $80</p>
+      <p class="history">🕐 距上次折扣 1 天</p>
+    </div>
+  </a>
+  <button class="change-cat-btn" onclick="openCatModal('c_https___www_costco_com_tw_p_144759','__其他','CP卜蜂 冷藏紅燒棒腿 1200公克','https://www.costco.com.tw/p/144759')" title="修改分類（需登入）">✏️</button>
+  <a class="daybuy-link official-link" href="https://www.costco.com.tw/p/144759" target="_blank" onclick="event.stopPropagation()">🛒 好市多官網</a><a class="daybuy-link" href="https://www.daybuy.tw/costco/255145/" target="_blank" onclick="event.stopPropagation()">📰 daybuy 情報頁</a>
+</div>
 </div>
   <div class="empty" id="empty">😢 找不到符合的商品</div>
 </main>
@@ -1238,7 +1429,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
   </div>
 </div>
 
-<footer>🤖 Hermes Agent 自動整理｜資料來源：costco.com.tw｜更新：2026-06-17 13:15<br>🏪=賣場同售 📰=daybuy情報 ✏️=登入後可修改分類</footer>
+<footer>🤖 Hermes Agent 自動整理｜資料來源：costco.com.tw｜更新：2026-06-17 13:18<br>🏪=賣場同售 📰=daybuy情報 ✏️=登入後可修改分類</footer>
 
 <!-- 分類 Modal -->
 <div class="modal-overlay" id="catModal" onclick="if(event.target===this)closeModal()">
