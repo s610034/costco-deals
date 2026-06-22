@@ -206,6 +206,14 @@ def generate_html(products: List[Dict], output_path: str) -> str:
             else:
                 deal_badge_html = ''
 
+            # 資料來源標籤（動態判斷，反映折扣資料時效性，不寫死 DB）
+            disc_url = p.get("討論連結", "") or ""
+            data_src = p.get("資料來源", "") or ""
+            is_hidden = data_src == "hidden_sighting" or ("daybuy.tw" in disc_url and p.get("實體賣場"))
+            if is_hidden:
+                deal_badge_html += '<span class="deal-type-badge badge-hidden" title="人工confirm的賣場隱藏優惠，折扣可能隨時異動">🏪 賣場隱藏</span>'
+            elif "daybuy.tw" in disc_url and not p.get("分類","") in ("限時優惠","精選優惠"):
+                deal_badge_html += '<span class="deal-type-badge badge-daybuy" title="daybuy情報來源，建議以官網現場為準">📰 daybuy</span>'
 
             orig_str = f"${orig:,}" if orig else ""
             sale_str = f"${sale:,}" if sale else ""
@@ -242,13 +250,21 @@ def generate_html(products: List[Dict], output_path: str) -> str:
                         except ValueError:
                             pass
 
+            # 賣場隱藏優惠：顯示「最後確認日」暫時性標籤（折扣可能已變動，提醒使用者）
+            confirm_date_html = ""
+            if is_hidden:
+                cdate = p.get("crawl_date", "")
+                if cdate and len(cdate) == 8:
+                    cdate_fmt = f"{cdate[4:6]}/{cdate[6:8]}"
+                    confirm_date_html = f'<span class="confirm-date-hint" title="此折扣為人工confirm的暫時性資料，僅代表{cdate_fmt}當時確認狀態，可能已變動">🕐 {cdate_fmt}確認</span>'
+
             if period:
                 # daybuy 來源的期間可能是從文章頁面推測的，加上標記
                 period_src = p.get("期間來源", "")
                 if period_src in ("daybuy_article", "daybuy_tg") and deal_val not in ("hotbuys",):
-                    period_html = f'<p class="deal-period">📅 {period} <span class="period-hint">（daybuy）</span></p>'
+                    period_html = f'<p class="deal-period">📅 {period} <span class="period-hint">（daybuy）</span>{confirm_date_html}</p>'
                 else:
-                    period_html = f'<p class="deal-period">📅 {period}</p>'
+                    period_html = f'<p class="deal-period">📅 {period}{confirm_date_html}</p>'
             elif "把握" in deal_cat:
                 period_html = '<p class="deal-period">🔥 把握優惠（數量有限）</p>'
             else:
@@ -451,6 +467,8 @@ main{{padding:12px;max-width:960px;margin:0 auto}}
 .location-badge{{display:inline-block;font-size:.62rem;font-weight:700;color:#fff;background:#dc2626;padding:1px 7px;border-radius:10px;margin-top:2px}}
 .deal-type-badge{{display:inline-block;font-size:.6rem;font-weight:600;padding:1px 6px;border-radius:8px;margin-top:2px}}
 .countdown{{display:inline-block;font-size:.6rem;font-weight:700;padding:1px 6px;border-radius:8px;margin-top:2px;margin-left:3px;background:#fef9c3;color:#854d0e}}
+.badge-hidden{{background:#fce7f3;color:#9d174d}}
+.badge-daybuy{{background:#e0f2fe;color:#075985}}
 .countdown.urgent{{background:#fee2e2;color:#991b1b;animation:pulse 1.5s infinite}}
 @keyframes pulse{{0%,100%{{opacity:1}}50%{{opacity:.6}}}}
 .badge-hot{{background:#fef3c7;color:#92400e}}
@@ -461,6 +479,8 @@ main{{padding:12px;max-width:960px;margin:0 auto}}
 .official-link{{background:#f0fdf4;color:#166534}}
 .official-link:hover{{background:#dcfce7}}
 .period-hint{{font-size:.6rem;color:#92400e;opacity:.75}}
+.confirm-date-hint{{font-size:.6rem;color:#9d174d;opacity:.8;margin-left:4px;background:#fce7f3;padding:1px 5px;border-radius:8px}}
+.confirm-date-hint{{font-size:.6rem;color:#9d174d;opacity:.85;margin-left:4px;background:#fce7f3;padding:1px 5px;border-radius:8px}}
 body.editor-mode .change-cat-btn{{opacity:.35;pointer-events:auto}}
 body.editor-mode .change-cat-btn:hover{{opacity:1}}
 .modal-overlay{{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;align-items:flex-end;justify-content:center}}

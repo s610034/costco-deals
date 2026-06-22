@@ -408,8 +408,36 @@ def run():
           AND (latest.has_official = 0
                OR p.商品連結 LIKE '%costco.com.tw%/p/%')
         WHERE (p.折扣金額 IS NOT NULL OR p.折扣後售價 IS NOT NULL)
-        ORDER BY p.折扣金額 DESC NULLS LAST
+
+        UNION ALL
+
+        -- 賣場隱藏優惠：人工confirm的暫時性資料，不受「當天」限制
+        SELECT p.*
+        FROM products p
+        WHERE p.資料來源 = 'hidden_sighting'
+          AND p.id IN (
+              SELECT MAX(id) FROM products
+              WHERE 資料來源 = 'hidden_sighting'
+              GROUP BY 商品編號
+          )
+          AND (
+              CAST(strftime('%Y%m%d', 'now', 'localtime') AS INTEGER) <=
+              CAST(crawl_date AS INTEGER) + 14
+          )
+
+        ORDER BY 折扣金額 DESC NULLS LAST
     """, (today,)).fetchall()
+
+    # 去重：保留先出現的版本（今日資料優先）
+    _seen_dedupe = set()
+    _deduped_rows = []
+    for _r in _rows:
+        _c = _r["商品編號"] if _r["商品編號"] else _r["商品連結"]
+        if _c in _seen_dedupe:
+            continue
+        _seen_dedupe.add(_c)
+        _deduped_rows.append(_r)
+    _rows = _deduped_rows
 
     import re as _re3
     products_30d = []

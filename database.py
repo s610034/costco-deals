@@ -481,28 +481,6 @@ def get_discussion_map() -> dict:
     return {r[0]: r[1] for r in rows}
 
 
-def enrich_discussion_links(products: List[Dict]) -> List[Dict]:
-    """
-    補充商品的 討論連結 和 官網連結：
-    - 官網版商品：從 DB 找同商品編號的 daybuy 連結
-    - daybuy/PTT 版商品：補充官網連結（/p/商品編號）
-    """
-    disc_map = get_discussion_map()
-    for p in products:
-        code = p.get("商品編號", "")
-        link = p.get("商品連結", "")
-        if not code:
-            continue
-        # daybuy/PTT 來源：補充官網連結
-        if "daybuy.tw" in link or "pttweb" in link:
-            if not p.get("官網連結"):
-                p["官網連結"] = f"https://www.costco.com.tw/p/{code}"
-        # 所有商品：補充討論連結（從 DB 找）
-        if not p.get("討論連結") and code in disc_map:
-            p["討論連結"] = disc_map[code]
-    return products
-
-
 def get_discussion_map() -> dict:
     """取得商品編號 → daybuy/PTT 討論連結的對照表"""
     conn = get_conn()
@@ -517,11 +495,19 @@ def get_discussion_map() -> dict:
 
 def enrich_discussion_links(products: List[Dict]) -> List[Dict]:
     """
-    補充商品的 討論連結 和 官網連結：
+    補充商品的 討論連結、官網連結、圖片URL：
     - daybuy/PTT 來源：補充官網連結 (/p/商品編號)
     - 官網來源：從 DB 找同商品編號的 daybuy 討論連結
+    - 所有商品：沒有圖片時從 products_master 找（之前任何時候爬過就有）
     """
     disc_map = get_discussion_map()
+
+    conn = get_conn()
+    img_rows = conn.execute(
+        "SELECT 商品編號, 圖片URL FROM products_master WHERE 商品編號 != '' AND 圖片URL != ''"
+    ).fetchall()
+    img_map = {r[0]: r[1] for r in img_rows}
+
     for p in products:
         code = p.get("商品編號", "")
         link = p.get("商品連結", "")
@@ -532,4 +518,6 @@ def enrich_discussion_links(products: List[Dict]) -> List[Dict]:
                 p["官網連結"] = f"https://www.costco.com.tw/p/{code}"
         if not p.get("討論連結") and code in disc_map:
             p["討論連結"] = disc_map[code]
+        if not p.get("圖片URL") and code in img_map:
+            p["圖片URL"] = img_map[code]
     return products

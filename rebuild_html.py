@@ -136,8 +136,38 @@ def get_products_last_30_days():
           AND (latest.has_official = 0
                OR p.商品連結 LIKE '%costco.com.tw%/p/%')
         WHERE (p.折扣金額 IS NOT NULL OR p.折扣後售價 IS NOT NULL)
-        ORDER BY p.折扣金額 DESC NULLS LAST
+
+        UNION ALL
+
+        -- 賣場隱藏優惠：人工confirm的暫時性資料，不受「當天」限制，
+        -- 只要還在優惠期間內就持續顯示（每個商品編號取最新一筆）
+        SELECT p.*
+        FROM products p
+        WHERE p.資料來源 = 'hidden_sighting'
+          AND p.id IN (
+              SELECT MAX(id) FROM products
+              WHERE 資料來源 = 'hidden_sighting'
+              GROUP BY 商品編號
+          )
+          AND (
+              -- 優惠期間結束日期還沒過（嘗試解析 ~MM/DD 結尾），解析失敗則保留7天
+              CAST(strftime('%Y%m%d', 'now', 'localtime') AS INTEGER) <=
+              CAST(crawl_date AS INTEGER) + 14
+          )
+
+        ORDER BY 折扣金額 DESC NULLS LAST
     """, (latest_date, latest_date)).fetchall()
+
+    # 去重：如果 UNION 後同一商品編號重複（今日資料+隱藏優惠都有），保留今日版本
+    seen_codes = set()
+    deduped = []
+    for r in rows:
+        code = r["商品編號"] if r["商品編號"] else r["商品連結"]
+        if code in seen_codes:
+            continue
+        seen_codes.add(code)
+        deduped.append(r)
+    rows = deduped
     conn.close()
 
     products = []
@@ -160,7 +190,8 @@ def get_products_last_30_days():
             '官網連結':   p.get('官網連結', '') or '',
             '期間來源':   p.get('期間來源', '') or '',
             '商品編號':   p.get('商品編號', '') or '',
-            '來源':       '',
+            '資料來源':   p.get('資料來源', '') or '',
+            'crawl_date': p.get('crawl_date', '') or '',
         })
 
     # 商品ID去重（同一商品可能有完整URL和短URL兩條）
