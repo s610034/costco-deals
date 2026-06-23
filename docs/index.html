@@ -7,7 +7,7 @@
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<title>好市多折扣週報 2026/06/22</title>
+<title>好市多折扣週報 2026/06/23</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{--red:#E3001B;--orange:#d97706;--bg:#f4f4f4;--text:#1a1a1a;--sub:#666;--border:#e0e0e0;--radius:12px;--shadow:0 2px 12px rgba(0,0,0,.08)}
@@ -110,7 +110,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
 </style>
 <script>
   // 版本控制：每次部署時更新，強制瀏覽器重新載入
-  const BUILD_TIME = '20260622092256';
+  const BUILD_TIME = '20260623091208';
   const stored = localStorage.getItem('costco_build');
   if (stored && stored !== BUILD_TIME) {
     localStorage.setItem('costco_build', BUILD_TIME);
@@ -124,8 +124,8 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
 <header>
   <div class="header-row">
     <h1>🛒 好市多折扣週報</h1>
-    <span class="meta">📅 2026/06/22（06/22～06/28）</span>
-    <span class="total">共 62 項</span>
+    <span class="meta">📅 2026/06/23（06/22～06/28）</span>
+    <span class="total">共 61 項</span>
     <div class="login-wrap">
       <button class="login-btn" id="loginToggleBtn" onclick="toggleLogin()">🔐 登入</button>
       <div class="editor-menu" id="editorMenu">
@@ -137,56 +137,24 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
     </div>
   </div>
   <div class="header-filters">
-  <button class="hf-btn hf-all active" onclick="dealFilter('all',this)">全部 <span>62</span></button>
-  <button class="hf-btn hf-hot" onclick="dealFilter('hotbuys',this)">⏰ 限時優惠 <span>45</span></button>
-  <button class="hf-btn hf-coup" onclick="dealFilter('coupon',this)">🏷️ 精選優惠 <span>8</span></button>
+  <button class="hf-btn hf-all active" onclick="dealFilter('all',this)">全部 <span>61</span></button>
+  <button class="hf-btn hf-hot" onclick="dealFilter('hotbuys',this)">⏰ 限時優惠 <span>40</span></button>
+  <button class="hf-btn hf-coup" onclick="dealFilter('coupon',this)">🏷️ 精選優惠 <span>12</span></button>
   
 </div>
 </header>
 
-<div class="sighting-section" id="sightingSection">
-  <div class="sighting-header">🕵️ 賣場隱藏優惠情報 <span class="sighting-sub">（資料來源：daybuy，點擊查看圖片）</span></div>
-  <a class="sighting-card" href="https://www.daybuy.tw/costco/255791/" target="_blank" rel="noopener">
-  <span class="sighting-icon">🏪</span>
-  <span class="sighting-title">Costco好市多 2026/06/20(六) 現場優惠情報</span>
-  <span class="sighting-arrow">→</span>
-</a>
-<a class="sighting-card" href="https://www.daybuy.tw/costco/255648/" target="_blank" rel="noopener">
-  <span class="sighting-icon">👗</span>
-  <span class="sighting-title">Costco好市多 2026.06.19 穿搭商品目擊情報</span>
-  <span class="sighting-arrow">→</span>
-</a>
-<a class="sighting-card" href="https://www.daybuy.tw/costco/255345/" target="_blank" rel="noopener">
-  <span class="sighting-icon">🕵️</span>
-  <span class="sighting-title">COSTCO好市多 2026/06/16 週二賣場隱藏優惠目擊情報</span>
-  <span class="sighting-arrow">→</span>
-</a>
-<a class="sighting-card" href="https://www.daybuy.tw/costco/255465/" target="_blank" rel="noopener">
-  <span class="sighting-icon">🆕</span>
-  <span class="sighting-title">COSTCO好市多 賣場目擊新商品週報 2026 06.10(三)~06.16(二)</span>
-  <span class="sighting-arrow">→</span>
-</a>
-<a class="sighting-card" href="https://www.daybuy.tw/costco/255130/" target="_blank" rel="noopener">
-  <span class="sighting-icon">🍽️</span>
-  <span class="sighting-title">COSTCO好市多 6月份賣場試吃活動預告目擊情報 06.15(一)～06.21(日)</span>
-  <span class="sighting-arrow">→</span>
-</a>
-<a class="sighting-card" href="https://www.daybuy.tw/costco/255145/" target="_blank" rel="noopener">
-  <span class="sighting-icon">📋</span>
-  <span class="sighting-title">COSTCO好市多 本週限時隱藏優惠懶人包 2026 06.15(一)~06.21(日)</span>
-  <span class="sighting-arrow">→</span>
-</a>
 
-</div>
 
 <div class="tabs-wrap">
-<button class="tab active" data-catid="all" onclick="catFilter('all',this)">🏠 全部 <span class="tab-count">62</span></button>
-<button class="tab" data-catid="__寵物用品" onclick="catFilter('__寵物用品',this)">🐾 寵物用品 <span class="tab-count">3</span></button>
-<button class="tab" data-catid="__食品飲料" onclick="catFilter('__食品飲料',this)">🍱 食品飲料 <span class="tab-count">15</span></button>
-<button class="tab" data-catid="__家電_3C" onclick="catFilter('__家電_3C',this)">📺 家電 3C <span class="tab-count">3</span></button>
-<button class="tab" data-catid="__保健美妝" onclick="catFilter('__保健美妝',this)">🧴 保健美妝 <span class="tab-count">8</span></button>
-<button class="tab" data-catid="__生活用品" onclick="catFilter('__生活用品',this)">🏠 生活用品 <span class="tab-count">9</span></button>
+<button class="tab active" data-catid="all" onclick="catFilter('all',this)">🏠 全部 <span class="tab-count">61</span></button>
+<button class="tab" data-catid="__寵物用品" onclick="catFilter('__寵物用品',this)">🐾 寵物用品 <span class="tab-count">1</span></button>
+<button class="tab" data-catid="__食品飲料" onclick="catFilter('__食品飲料',this)">🍱 食品飲料 <span class="tab-count">11</span></button>
+<button class="tab" data-catid="__家電_3C" onclick="catFilter('__家電_3C',this)">📺 家電 3C <span class="tab-count">6</span></button>
+<button class="tab" data-catid="__保健美妝" onclick="catFilter('__保健美妝',this)">🧴 保健美妝 <span class="tab-count">7</span></button>
+<button class="tab" data-catid="__生活用品" onclick="catFilter('__生活用品',this)">🏠 生活用品 <span class="tab-count">11</span></button>
 <button class="tab" data-catid="__服飾寢具" onclick="catFilter('__服飾寢具',this)">👕 服飾寢具 <span class="tab-count">4</span></button>
+<button class="tab" data-catid="__玩具育兒" onclick="catFilter('__玩具育兒',this)">🧸 玩具育兒 <span class="tab-count">1</span></button>
 <button class="tab" data-catid="___運動戶外" onclick="catFilter('___運動戶外',this)">🏋️ 運動戶外 <span class="tab-count">1</span></button>
 <button class="tab" data-catid="__其他" onclick="catFilter('__其他',this)">📦 其他 <span class="tab-count">19</span></button>
 </div>
@@ -201,7 +169,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
     <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/he8/h75/419358172807198.jpg" alt="Cat Chow 貓乾糧完整均衡配方 6.8公斤" loading="lazy" onerror="this.style.display='none'"><div class="badge">-20.5%</div></div>
     <div class="card-body">
       <p class="card-name">Cat Chow 貓乾糧完整均衡配方 6.8公斤</p>
-      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 6 天</span>
+      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 5 天</span>
       
       <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
       <div class="card-price">
@@ -209,86 +177,29 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
         <span class="sale">$619</span>
       </div>
       <p class="card-save">省 $160</p>
-      <p class="history">🕐 距上次折扣 7 天</p>
+      <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
   <button class="change-cat-btn" onclick="openCatModal('c_od_Cat_Chow_Cat_Food_68_kg_p_126098','__寵物用品','Cat Chow 貓乾糧完整均衡配方 6.8公斤','https://www.costco.com.tw/Household-Baby-Toys/Pet-Supplies/Pet-Dry-Wet-Food/Cat-Chow-Cat-Food-68-kg/p/126098')" title="修改分類（需登入）">✏️</button>
   
 </div>
-<div class="card" id="c_d_Cat_Food_85_g_X_24_Count_p_120408" data-cat="__寵物用品" data-deal="coupon">
-  <a href="https://www.costco.com.tw/Household-Baby-Toys/Pet-Supplies/Pet-Dry-Wet-Food/Mon-Petit-Salmon-Shrimp-Canned-Cat-Food-85-g-X-24-Count/p/120408" target="_blank" rel="noopener" class="card-link">
-    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/hf7/h75/11133447077918.jpg" alt="貓倍麗 香烤鮭魚佐鮮蝦主食罐 85公克 X 24入" loading="lazy" onerror="this.style.display='none'"><div class="badge">-26.1%</div></div>
+<div class="card" id="c_d_Whole_Bean_Coffee_113_kg_p_648080" data-cat="__食品飲料" data-deal="hotbuys">
+  <a href="https://www.costco.com.tw/c/Starbucks-Veranda-Blend-Whole-Bean-Coffee-113-kg/p/648080" target="_blank" rel="noopener" class="card-link">
+    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h4e/h53/210494080909342.jpg" alt="星巴克 黃金烘焙綜合咖啡豆 1.13公斤" loading="lazy" onerror="this.style.display='none'"><div class="badge">-19.3%</div></div>
     <div class="card-body">
-      <p class="card-name">貓倍麗 香烤鮭魚佐鮮蝦主食罐 85公克 X 24入</p>
-      <span class="deal-type-badge badge-coup">🏷️ 精選優惠</span>
-      
-      
-      <div class="card-price">
-        <span class="orig">$459</span><span class='arrow'>→</span>
-        <span class="sale">$339</span>
-      </div>
-      <p class="card-save">省 $120</p>
-      <p class="history">🆕 首次出現</p>
-    </div>
-  </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_d_Cat_Food_85_g_X_24_Count_p_120408','__寵物用品','貓倍麗 香烤鮭魚佐鮮蝦主食罐 85公克 X 24入','https://www.costco.com.tw/Household-Baby-Toys/Pet-Supplies/Pet-Dry-Wet-Food/Mon-Petit-Salmon-Shrimp-Canned-Cat-Food-85-g-X-24-Count/p/120408')" title="修改分類（需登入）">✏️</button>
-  
-</div>
-<div class="card" id="c_d_Cat_Food_85_g_X_24_Count_p_120407" data-cat="__寵物用品" data-deal="coupon">
-  <a href="https://www.costco.com.tw/Household-Baby-Toys/Pet-Supplies/Pet-Dry-Wet-Food/Mon-Petit-Chicken-Canned-Cat-Food-85-g-X-24-Count/p/120407" target="_blank" rel="noopener" class="card-link">
-    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/hf3/h34/11133446750238.jpg" alt="貓倍麗 香烤嫩雞主食罐 85公克 X 24入" loading="lazy" onerror="this.style.display='none'"><div class="badge">-26.1%</div></div>
-    <div class="card-body">
-      <p class="card-name">貓倍麗 香烤嫩雞主食罐 85公克 X 24入</p>
-      <span class="deal-type-badge badge-coup">🏷️ 精選優惠</span>
-      
-      
-      <div class="card-price">
-        <span class="orig">$459</span><span class='arrow'>→</span>
-        <span class="sale">$339</span>
-      </div>
-      <p class="card-save">省 $120</p>
-      <p class="history">🆕 首次出現</p>
-    </div>
-  </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_d_Cat_Food_85_g_X_24_Count_p_120407','__寵物用品','貓倍麗 香烤嫩雞主食罐 85公克 X 24入','https://www.costco.com.tw/Household-Baby-Toys/Pet-Supplies/Pet-Dry-Wet-Food/Mon-Petit-Chicken-Canned-Cat-Food-85-g-X-24-Count/p/120407')" title="修改分類（需登入）">✏️</button>
-  
-</div>
-<div class="card" id="c_en_Essence_68_ml_X_50_Pack_p_218552" data-cat="__食品飲料" data-deal="hotbuys">
-  <a href="https://www.costco.com.tw/Food-Dining/Frozen-Fresh-Food/Frozen-Meals/Lao-Xie-Zhen-Frozen-Chicken-Essence-68-ml-X-50-Pack/p/218552" target="_blank" rel="noopener" class="card-link">
-    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h21/hc3/400747761336350.jpg" alt="老協珍 冷凍熬雞精 68毫升 X 50入" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.0%</div></div>
-    <div class="card-body">
-      <p class="card-name">老協珍 冷凍熬雞精 68毫升 X 50入</p>
-      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 6 天</span>
+      <p class="card-name">星巴克 黃金烘焙綜合咖啡豆 1.13公斤</p>
+      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 5 天</span>
       
       <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
       <div class="card-price">
-        <span class="orig">$5,279</span><span class='arrow'>→</span>
-        <span class="sale">$3,959</span>
+        <span class="orig">$1,035</span><span class='arrow'>→</span>
+        <span class="sale">$835</span>
       </div>
-      <p class="card-save">省 $1,320</p>
-      <p class="history">🆕 首次出現</p>
+      <p class="card-save">省 $200</p>
+      <p class="history">🕐 距上次折扣 6 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_en_Essence_68_ml_X_50_Pack_p_218552','__食品飲料','老協珍 冷凍熬雞精 68毫升 X 50入','https://www.costco.com.tw/Food-Dining/Frozen-Fresh-Food/Frozen-Meals/Lao-Xie-Zhen-Frozen-Chicken-Essence-68-ml-X-50-Pack/p/218552')" title="修改分類（需登入）">✏️</button>
-  
-</div>
-<div class="card" id="c_ate_Milk_Tea_Flavour_25_kg_p_150748" data-cat="__食品飲料" data-deal="hotbuys">
-  <a href="https://www.costco.com.tw/Health-Beauty/Supplements/Sports-Performance/Myprotein-Soy-Protein-Isolate-Milk-Tea-Flavour-25-kg/p/150748" target="_blank" rel="noopener" class="card-link">
-    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/he4/h55/350052581474334.jpg" alt="Myprotein 大豆分離蛋白粉 奶茶風味 2.5公斤" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.0%</div></div>
-    <div class="card-body">
-      <p class="card-name">Myprotein 大豆分離蛋白粉 奶茶風味 2.5公斤</p>
-      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 6 天</span>
-      
-      <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
-      <div class="card-price">
-        <span class="orig">$1,039</span><span class='arrow'>→</span>
-        <span class="sale">$779</span>
-      </div>
-      <p class="card-save">省 $260</p>
-      <p class="history">🆕 首次出現</p>
-    </div>
-  </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_ate_Milk_Tea_Flavour_25_kg_p_150748','__食品飲料','Myprotein 大豆分離蛋白粉 奶茶風味 2.5公斤','https://www.costco.com.tw/Health-Beauty/Supplements/Sports-Performance/Myprotein-Soy-Protein-Isolate-Milk-Tea-Flavour-25-kg/p/150748')" title="修改分類（需登入）">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_d_Whole_Bean_Coffee_113_kg_p_648080','__食品飲料','星巴克 黃金烘焙綜合咖啡豆 1.13公斤','https://www.costco.com.tw/c/Starbucks-Veranda-Blend-Whole-Bean-Coffee-113-kg/p/648080')" title="修改分類（需登入）">✏️</button>
   
 </div>
 <div class="card" id="c__No_Sugar_196_ml_X_24_Pack_p_137161" data-cat="__食品飲料" data-deal="hotbuys">
@@ -296,7 +207,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
     <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h56/h24/115203661070366.jpg" alt="格力高 杏仁果飲 無糖 196毫升 X 24入" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.0%</div></div>
     <div class="card-body">
       <p class="card-name">格力高 杏仁果飲 無糖 196毫升 X 24入</p>
-      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 6 天</span>
+      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 5 天</span>
       
       <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
       <div class="card-price">
@@ -304,18 +215,18 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
         <span class="sale">$509</span>
       </div>
       <p class="card-save">省 $170</p>
-      <p class="history">🕐 距上次折扣 5 天</p>
+      <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
   <button class="change-cat-btn" onclick="openCatModal('c__No_Sugar_196_ml_X_24_Pack_p_137161','__食品飲料','格力高 杏仁果飲 無糖 196毫升 X 24入','https://www.costco.com.tw/Food-Dining/Drinks/Beverages-Juice/Glico-Almond-Beverage-No-Sugar-196-ml-X-24-Pack/p/137161')" title="修改分類（需登入）">✏️</button>
   
 </div>
-<div class="card" id="c_lled_Edamame_1_kg_X_5_Pack_p_863731" data-cat="__食品飲料" data-deal="hotbuys">
-  <a href="https://www.costco.com.tw/Food-Dining/Frozen-Fresh-Food/Frozen-Fruits-Vegetables/Asia-Frozen-Shelled-Edamame-1-kg-X-5-Pack/p/863731" target="_blank" rel="noopener" class="card-link">
+<div class="card" id="c_d_Frozen_Fruits_Vegetables_p_863731" data-cat="__食品飲料" data-deal="hotbuys">
+  <a href="https://www.costco.com.tw/Food-Dining/Frozen-Fresh-Food/Frozen-Fruits-Vegetables/p/863731" target="_blank" rel="noopener" class="card-link">
     <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h7e/hbf/292858610614302.jpg" alt="亞細亞田園 冷凍生毛豆仁 1公斤 X 5入" loading="lazy" onerror="this.style.display='none'"><div class="badge">-20.0%</div></div>
     <div class="card-body">
       <p class="card-name">亞細亞田園 冷凍生毛豆仁 1公斤 X 5入</p>
-      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 6 天</span>
+      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 5 天</span>
       
       <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
       <div class="card-price">
@@ -326,23 +237,23 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🆕 首次出現</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_lled_Edamame_1_kg_X_5_Pack_p_863731','__食品飲料','亞細亞田園 冷凍生毛豆仁 1公斤 X 5入','https://www.costco.com.tw/Food-Dining/Frozen-Fresh-Food/Frozen-Fruits-Vegetables/Asia-Frozen-Shelled-Edamame-1-kg-X-5-Pack/p/863731')" title="修改分類（需登入）">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_d_Frozen_Fruits_Vegetables_p_863731','__食品飲料','亞細亞田園 冷凍生毛豆仁 1公斤 X 5入','https://www.costco.com.tw/Food-Dining/Frozen-Fresh-Food/Frozen-Fruits-Vegetables/p/863731')" title="修改分類（需登入）">✏️</button>
   
 </div>
-<div class="card" id="c_Chopped_Leg_1_kg_X_4_Count_p_133313" data-cat="__食品飲料" data-deal="hotbuys">
+<div class="card" id="c_Chopped_Leg_1_kg_X_4_Count_p_133313" data-cat="__食品飲料" data-deal="coupon">
   <a href="https://www.costco.com.tw/Food-Dining/Frozen-Fresh-Food/Frozen-Seafood-Meat/Kaishing-Taiwan-Frozen-Faros-Native-Chopped-Leg-1-kg-X-4-Count/p/133313" target="_blank" rel="noopener" class="card-link">
     <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/haa/hae/70333716365342.jpg" alt="凱馨 台灣冷凍法洛斯土雞骨腿切塊 1公斤 X 4入" loading="lazy" onerror="this.style.display='none'"><div class="badge">-12.2%</div></div>
     <div class="card-body">
       <p class="card-name">凱馨 台灣冷凍法洛斯土雞骨腿切塊 1公斤 X 4入</p>
-      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 6 天</span>
+      <span class="deal-type-badge badge-coup">🏷️ 精選優惠</span>
       
-      <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
+      
       <div class="card-price">
         <span class="orig">$1,069</span><span class='arrow'>→</span>
         <span class="sale">$939</span>
       </div>
       <p class="card-save">省 $130</p>
-      <p class="history">🆕 首次出現</p>
+      <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
   <button class="change-cat-btn" onclick="openCatModal('c_Chopped_Leg_1_kg_X_4_Count_p_133313','__食品飲料','凱馨 台灣冷凍法洛斯土雞骨腿切塊 1公斤 X 4入','https://www.costco.com.tw/Food-Dining/Frozen-Fresh-Food/Frozen-Seafood-Meat/Kaishing-Taiwan-Frozen-Faros-Native-Chopped-Leg-1-kg-X-4-Count/p/133313')" title="修改分類（需登入）">✏️</button>
@@ -361,68 +272,11 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
         <span class="sale">$479</span>
       </div>
       <p class="card-save">省 $120</p>
-      <p class="history">🕐 距上次折扣 6 天</p>
+      <p class="history">🕐 距上次折扣 7 天</p>
     </div>
   </a>
   <button class="change-cat-btn" onclick="openCatModal('c_https___www_costco_com_tw_p_328912','__食品飲料','NATIONAL VITA 顧可飛 DHA魚油晶球膠囊 30包','https://www.costco.com.tw/p/328912')" title="修改分類（需登入）">✏️</button>
   <a class="daybuy-link official-link" href="https://www.costco.com.tw/p/328912" target="_blank" onclick="event.stopPropagation()">🛒 好市多官網</a><a class="daybuy-link" href="https://www.daybuy.tw/costco/255145/" target="_blank" onclick="event.stopPropagation()">📰 daybuy 情報頁</a>
-</div>
-<div class="card" id="c_ack_Sesame_18_g_X_12_Count_p_960661" data-cat="__食品飲料" data-deal="hotbuys">
-  <a href="https://www.costco.com.tw/Food-Dining/Snacks/Cookies-Chips/Vilson-Seaweed-Crisps-with-Black-Sesame-18-g-X-12-Count/p/960661" target="_blank" rel="noopener" class="card-link">
-    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h9a/h1c/384010445783070.jpg" alt="米森 芝麻海苔脆片 18公克 X 12包" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.1%</div></div>
-    <div class="card-body">
-      <p class="card-name">米森 芝麻海苔脆片 18公克 X 12包</p>
-      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 6 天</span>
-      
-      <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
-      <div class="card-price">
-        <span class="orig">$499</span><span class='arrow'>→</span>
-        <span class="sale">$299</span>
-      </div>
-      <p class="card-save">省 $100</p>
-      <p class="history">🆕 首次出現</p>
-    </div>
-  </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_ack_Sesame_18_g_X_12_Count_p_960661','__食品飲料','米森 芝麻海苔脆片 18公克 X 12包','https://www.costco.com.tw/Food-Dining/Snacks/Cookies-Chips/Vilson-Seaweed-Crisps-with-Black-Sesame-18-g-X-12-Count/p/960661')" title="修改分類（需登入）">✏️</button>
-  
-</div>
-<div class="card" id="c_th_Almonds_18_g_X_12_Count_p_960660" data-cat="__食品飲料" data-deal="hotbuys">
-  <a href="https://www.costco.com.tw/Food-Dining/Snacks/Cookies-Chips/Vilson-Seaweed-Crisps-with-Almonds-18-g-X-12-Count/p/960660" target="_blank" rel="noopener" class="card-link">
-    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h77/hd0/384010442113054.jpg" alt="米森 杏仁海苔脆片 18公克 X 12包" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.1%</div></div>
-    <div class="card-body">
-      <p class="card-name">米森 杏仁海苔脆片 18公克 X 12包</p>
-      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 6 天</span>
-      
-      <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
-      <div class="card-price">
-        <span class="orig">$399</span><span class='arrow'>→</span>
-        <span class="sale">$299</span>
-      </div>
-      <p class="card-save">省 $100</p>
-      <p class="history">🆕 首次出現</p>
-    </div>
-  </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_th_Almonds_18_g_X_12_Count_p_960660','__食品飲料','米森 杏仁海苔脆片 18公克 X 12包','https://www.costco.com.tw/Food-Dining/Snacks/Cookies-Chips/Vilson-Seaweed-Crisps-with-Almonds-18-g-X-12-Count/p/960660')" title="修改分類（需登入）">✏️</button>
-  
-</div>
-<div class="card" id="c_xtra_Virgin_Olive_Oil_2_L_p_1058619" data-cat="__食品飲料" data-deal="hotbuys">
-  <a href="https://www.costco.com.tw/Food-Dining/Groceries/Cooking-Oil-Sauces/Kirkland-Signature-Extra-Virgin-Olive-Oil-2-L/p/1058619" target="_blank" rel="noopener" class="card-link">
-    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/hf8/h7f/472591303573534.jpg" alt="科克蘭 冷萃特級初榨橄欖油 2公升" loading="lazy" onerror="this.style.display='none'"><div class="badge">-10.2%</div></div>
-    <div class="card-body">
-      <p class="card-name">科克蘭 冷萃特級初榨橄欖油 2公升</p>
-      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 6 天</span>
-      
-      <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
-      <div class="card-price">
-        <span class="orig">$879</span><span class='arrow'>→</span>
-        <span class="sale">$789</span>
-      </div>
-      <p class="card-save">省 $90</p>
-      <p class="history">🆕 首次出現</p>
-    </div>
-  </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_xtra_Virgin_Olive_Oil_2_L_p_1058619','__食品飲料','科克蘭 冷萃特級初榨橄欖油 2公升','https://www.costco.com.tw/Food-Dining/Groceries/Cooking-Oil-Sauces/Kirkland-Signature-Extra-Virgin-Olive-Oil-2-L/p/1058619')" title="修改分類（需登入）">✏️</button>
-  
 </div>
 <div class="card" id="c_https___www_costco_com_tw_p_160080" data-cat="__食品飲料" data-deal="other">
   <a href="https://www.costco.com.tw/p/160080" target="_blank" rel="noopener" class="card-link">
@@ -437,18 +291,18 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
         <span class="sale">$319</span>
       </div>
       <p class="card-save">省 $80</p>
-      <p class="history">🕐 距上次折扣 6 天</p>
+      <p class="history">🕐 距上次折扣 7 天</p>
     </div>
   </a>
   <button class="change-cat-btn" onclick="openCatModal('c_https___www_costco_com_tw_p_160080','__食品飲料','ASAHI 朝日十六茶零咖啡因複方茶 990毫升 X 12罐','https://www.costco.com.tw/p/160080')" title="修改分類（需登入）">✏️</button>
   <a class="daybuy-link official-link" href="https://www.costco.com.tw/p/160080" target="_blank" onclick="event.stopPropagation()">🛒 好市多官網</a><a class="daybuy-link" href="https://www.daybuy.tw/costco/255145/" target="_blank" onclick="event.stopPropagation()">📰 daybuy 情報頁</a>
 </div>
-<div class="card" id="c_tin_10000_mcg_X_100_Tablet_p_115609" data-cat="__食品飲料" data-deal="hotbuys">
-  <a href="https://www.costco.com.tw/Health-Beauty/Supplements/Multi-Letter-Vitamins/Natrol-Biotin-10000-mcg-X-100-Tablet/p/115609" target="_blank" rel="noopener" class="card-link">
+<div class="card" id="c_https___www_costco_com_tw_p_115609" data-cat="__食品飲料" data-deal="hotbuys">
+  <a href="https://www.costco.com.tw/p/115609" target="_blank" rel="noopener" class="card-link">
     <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h94/h66/378821315919902.jpg" alt="Natrol 納妥 生物素10,000微克(食品) 100錠" loading="lazy" onerror="this.style.display='none'"><div class="badge">-22.2%</div></div>
     <div class="card-body">
       <p class="card-name">Natrol 納妥 生物素10,000微克(食品) 100錠</p>
-      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 6 天</span>
+      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 5 天</span>
       
       <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
       <div class="card-price">
@@ -456,10 +310,10 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
         <span class="sale">$245</span>
       </div>
       <p class="card-save">省 $70</p>
-      <p class="history">🕐 距上次折扣 5 天</p>
+      <p class="history">🆕 首次出現</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_tin_10000_mcg_X_100_Tablet_p_115609','__食品飲料','Natrol 納妥 生物素10,000微克(食品) 100錠','https://www.costco.com.tw/Health-Beauty/Supplements/Multi-Letter-Vitamins/Natrol-Biotin-10000-mcg-X-100-Tablet/p/115609')" title="修改分類（需登入）">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_https___www_costco_com_tw_p_115609','__食品飲料','Natrol 納妥 生物素10,000微克(食品) 100錠','https://www.costco.com.tw/p/115609')" title="修改分類（需登入）">✏️</button>
   
 </div>
 <div class="card" id="c_ocoa_Flavor_30_g_X_20_Pack_p_263941" data-cat="__食品飲料" data-deal="hotbuys">
@@ -467,7 +321,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
     <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/hdf/hcd/361958094733342.jpg" alt="My Motto 威化餅 雙重巧克力風味 30公克 X 20包" loading="lazy" onerror="this.style.display='none'"><div class="badge">-21.3%</div></div>
     <div class="card-body">
       <p class="card-name">My Motto 威化餅 雙重巧克力風味 30公克 X 20包</p>
-      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 6 天</span>
+      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 5 天</span>
       
       <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
       <div class="card-price">
@@ -475,7 +329,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
         <span class="sale">$259</span>
       </div>
       <p class="card-save">省 $70</p>
-      <p class="history">🕐 距上次折扣 5 天</p>
+      <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
   <button class="change-cat-btn" onclick="openCatModal('c_ocoa_Flavor_30_g_X_20_Pack_p_263941','__食品飲料','My Motto 威化餅 雙重巧克力風味 30公克 X 20包','https://www.costco.com.tw/Food-Dining/Snacks/Cookies-Chips/My-Motto-Premium-Wafers-Cocoa-Cocoa-Flavor-30-g-X-20-Pack/p/263941')" title="修改分類（需登入）">✏️</button>
@@ -486,7 +340,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
     <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h0a/h12/346355632242718.jpg" alt="久世福 長崎蛋糕原味 314公克" loading="lazy" onerror="this.style.display='none'"><div class="badge">-26.0%</div></div>
     <div class="card-body">
       <p class="card-name">久世福 長崎蛋糕原味 314公克</p>
-      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 6 天</span>
+      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 5 天</span>
       
       <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
       <div class="card-price">
@@ -494,29 +348,10 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
         <span class="sale">$185</span>
       </div>
       <p class="card-save">省 $65</p>
-      <p class="history">🕐 距上次折扣 5 天</p>
+      <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
   <button class="change-cat-btn" onclick="openCatModal('c_gasaki_Castella_Cake_314_g_p_138425','__食品飲料','久世福 長崎蛋糕原味 314公克','https://www.costco.com.tw/Food-Dining/Snacks/Snack-Cakes/Kuze-Fuku-Nagasaki-Castella-Cake-314-g/p/138425')" title="修改分類（需登入）">✏️</button>
-  
-</div>
-<div class="card" id="c_g_Medium_44_Bag_X_6_Count_p_1882069" data-cat="__食品飲料" data-deal="hotbuys">
-  <a href="https://www.costco.com.tw/Furniture-Kitchen/Kitchen-Dining/Food-Preservation/Kirkland-Signature-Freezer-Bag-Medium-44-Bag-X-6-Count/p/1882069" target="_blank" rel="noopener" class="card-link">
-    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h1e/h95/343414016507934.jpg" alt="科克蘭 雙層夾鏈冷凍保鮮袋 (中) 44入 X 6盒" loading="lazy" onerror="this.style.display='none'"><div class="badge">-15.8%</div></div>
-    <div class="card-body">
-      <p class="card-name">科克蘭 雙層夾鏈冷凍保鮮袋 (中) 44入 X 6盒</p>
-      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 6 天</span>
-      
-      <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
-      <div class="card-price">
-        <span class="orig">$405</span><span class='arrow'>→</span>
-        <span class="sale">$341</span>
-      </div>
-      <p class="card-save">省 $64</p>
-      <p class="history">🆕 首次出現</p>
-    </div>
-  </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_g_Medium_44_Bag_X_6_Count_p_1882069','__食品飲料','科克蘭 雙層夾鏈冷凍保鮮袋 (中) 44入 X 6盒','https://www.costco.com.tw/Furniture-Kitchen/Kitchen-Dining/Food-Preservation/Kirkland-Signature-Freezer-Bag-Medium-44-Bag-X-6-Count/p/1882069')" title="修改分類（需登入）">✏️</button>
   
 </div>
 <div class="card" id="c_ck_14_g_X_20_Pack_X_2_Box_p_1116888" data-cat="__食品飲料" data-deal="hotbuys">
@@ -524,7 +359,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
     <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/hb2/h0a/312933354536990.jpg" alt="翠果子櫻花米果禮盒 14公克 X 20包 X 2盒" loading="lazy" onerror="this.style.display='none'"><div class="badge">-20.1%</div></div>
     <div class="card-body">
       <p class="card-name">翠果子櫻花米果禮盒 14公克 X 20包 X 2盒</p>
-      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 6 天</span>
+      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 5 天</span>
       
       <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
       <div class="card-price">
@@ -532,56 +367,113 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
         <span class="sale">$255</span>
       </div>
       <p class="card-save">省 $64</p>
-      <p class="history">🕐 距上次折扣 5 天</p>
+      <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
   <button class="change-cat-btn" onclick="openCatModal('c_ck_14_g_X_20_Pack_X_2_Box_p_1116888','__食品飲料','翠果子櫻花米果禮盒 14公克 X 20包 X 2盒','https://www.costco.com.tw/Food-Dining/Snacks/Cookies-Chips/Trygoodz-Rice-Crackers-with-Almond-Gift-Pack-14-g-X-20-Pack-X-2-Box/p/1116888')" title="修改分類（需登入）">✏️</button>
   
 </div>
-<div class="card" id="c_r_Starry_Gray_RS70F65Q4TTW_p_155431" data-cat="__家電_3C" data-deal="hotbuys">
-  <a href="https://www.costco.com.tw/Televisions-Appliances/Large-Appliances/Fridges-Freezers/Overall-Capacity-500-L-Above/Samsung-655-L-French-Door-AI-Refrigerator-Starry-Gray-RS70F65Q4TTW/p/155431" target="_blank" rel="noopener" class="card-link">
-    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/hb6/hac/396189713563678.jpg" alt="Samsung 655公升 美式對開 AI 冰箱 星空灰 RS70F65Q4TTW" loading="lazy" onerror="this.style.display='none'"><div class="badge">-18.9%</div></div>
+<div class="card" id="c_g_Medium_44_Bag_X_6_Count_p_1882069" data-cat="__食品飲料" data-deal="hotbuys">
+  <a href="https://www.costco.com.tw/Furniture-Kitchen/Kitchen-Dining/Food-Preservation/Kirkland-Signature-Freezer-Bag-Medium-44-Bag-X-6-Count/p/1882069" target="_blank" rel="noopener" class="card-link">
+    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h1e/h95/343414016507934.jpg" alt="科克蘭 雙層夾鏈冷凍保鮮袋 (中) 44入 X 6盒" loading="lazy" onerror="this.style.display='none'"><div class="badge">-15.8%</div></div>
     <div class="card-body">
-      <p class="card-name">Samsung 655公升 美式對開 AI 冰箱 星空灰 RS70F65Q4TTW</p>
-      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 6 天</span>
+      <p class="card-name">科克蘭 雙層夾鏈冷凍保鮮袋 (中) 44入 X 6盒</p>
+      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 5 天</span>
       
       <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
       <div class="card-price">
-        <span class="orig">$52,999</span><span class='arrow'>→</span>
-        <span class="sale">$42,999</span>
+        <span class="orig">$405</span><span class='arrow'>→</span>
+        <span class="sale">$341</span>
       </div>
-      <p class="card-save">省 $10,000</p>
-      <p class="history">🕐 距上次折扣 6 天</p>
+      <p class="card-save">省 $64</p>
+      <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_r_Starry_Gray_RS70F65Q4TTW_p_155431','__家電_3C','Samsung 655公升 美式對開 AI 冰箱 星空灰 RS70F65Q4TTW','https://www.costco.com.tw/Televisions-Appliances/Large-Appliances/Fridges-Freezers/Overall-Capacity-500-L-Above/Samsung-655-L-French-Door-AI-Refrigerator-Starry-Gray-RS70F65Q4TTW/p/155431')" title="修改分類（需登入）">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_g_Medium_44_Bag_X_6_Count_p_1882069','__食品飲料','科克蘭 雙層夾鏈冷凍保鮮袋 (中) 44入 X 6盒','https://www.costco.com.tw/Furniture-Kitchen/Kitchen-Dining/Food-Preservation/Kirkland-Signature-Freezer-Bag-Medium-44-Bag-X-6-Count/p/1882069')" title="修改分類（需登入）">✏️</button>
   
 </div>
-<div class="card" id="c_with_Lamp_2_Pack_DHF_T7092_p_151121" data-cat="__家電_3C" data-deal="coupon">
-  <a href="https://www.costco.com.tw/Sports-Lifestyle/Camping-Outdoors/Pest-Control/SUPA-FINE-2-in-1-Rechargeable-Electric-Mosquito-Swatter-with-Lamp-2-Pack-DHF-T7092/p/151121" target="_blank" rel="noopener" class="card-link">
-    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h7d/h16/329850513555486.jpg" alt="勳風 充電式二合一捕蚊燈拍 DHF-T7092" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.0%</div></div>
+<div class="card" id="c_art_Monitor_QA55QN87DAXXZW_p_152564" data-cat="__家電_3C" data-deal="coupon">
+  <a href="https://www.costco.com.tw/Televisions-Appliances/TV-Home-Entertainment/Televisions-TV-Accessories/50-59-TVs/Samsung-55-inch-Neo-QLED-AI-Smart-Monitor-QA55QN87DAXXZW/p/152564" target="_blank" rel="noopener" class="card-link">
+    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h03/h28/438072160256030.jpg" alt="Samsung 55吋 Neo QLED AI 智慧顯示器 QA55QN87DAXXZW" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.0%</div></div>
     <div class="card-body">
-      <p class="card-name">勳風 充電式二合一捕蚊燈拍 DHF-T7092</p>
+      <p class="card-name">Samsung 55吋 Neo QLED AI 智慧顯示器 QA55QN87DAXXZW</p>
       <span class="deal-type-badge badge-coup">🏷️ 精選優惠</span>
       
       
       <div class="card-price">
-        <span class="orig">$575</span><span class='arrow'>→</span>
-        <span class="sale">$431</span>
+        <span class="orig">$29,999</span><span class='arrow'>→</span>
+        <span class="sale">$17,999</span>
       </div>
-      <p class="card-save">省 $144</p>
+      <p class="card-save">省 $6,000</p>
       <p class="history">🆕 首次出現</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_with_Lamp_2_Pack_DHF_T7092_p_151121','__家電_3C','勳風 充電式二合一捕蚊燈拍 DHF-T7092','https://www.costco.com.tw/Sports-Lifestyle/Camping-Outdoors/Pest-Control/SUPA-FINE-2-in-1-Rechargeable-Electric-Mosquito-Swatter-with-Lamp-2-Pack-DHF-T7092/p/151121')" title="修改分類（需登入）">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_art_Monitor_QA55QN87DAXXZW_p_152564','__家電_3C','Samsung 55吋 Neo QLED AI 智慧顯示器 QA55QN87DAXXZW','https://www.costco.com.tw/Televisions-Appliances/TV-Home-Entertainment/Televisions-TV-Accessories/50-59-TVs/Samsung-55-inch-Neo-QLED-AI-Smart-Monitor-QA55QN87DAXXZW/p/152564')" title="修改分類（需登入）">✏️</button>
   
 </div>
-<div class="card" id="c_t_and_2_USB_Charging_Ports_p_157739" data-cat="__家電_3C" data-deal="hotbuys">
-  <a href="https://www.costco.com.tw/Furniture-Kitchen/Hardware-DIY/Power-Tools-Electrical/CyberPower-Surge-Protector-with-8-Outlet-and-2-USB-Charging-Ports/p/157739" target="_blank" rel="noopener" class="card-link">
+<div class="card" id="c__Cool_HP11_Filter_X_3_Pack_p_158445" data-cat="__家電_3C" data-deal="hotbuys">
+  <a href="https://www.costco.com.tw/Televisions-Appliances/Cooling-Heating-Air-Treatment/Air-Purifiers-Filters-Accessories/Dyson-Purifier-Hot-Cool-HP11-Filter-X-3-Pack/p/158445" target="_blank" rel="noopener" class="card-link">
+    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/hbf/hf8/414650697285662.jpg" alt="戴森 三合一涼暖空氣清淨機 HP11 + 綜合濾網 X 3入" loading="lazy" onerror="this.style.display='none'"><div class="badge">-6.7%</div></div>
+    <div class="card-body">
+      <p class="card-name">戴森 三合一涼暖空氣清淨機 HP11 + 綜合濾網 X 3入</p>
+      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 5 天</span>
+      
+      <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
+      <div class="card-price">
+        <span class="orig">$18,999</span><span class='arrow'>→</span>
+        <span class="sale">$16,599</span>
+      </div>
+      <p class="card-save">省 $1,200</p>
+      <p class="history">🆕 首次出現</p>
+    </div>
+  </a>
+  <button class="change-cat-btn" onclick="openCatModal('c__Cool_HP11_Filter_X_3_Pack_p_158445','__家電_3C','戴森 三合一涼暖空氣清淨機 HP11 + 綜合濾網 X 3入','https://www.costco.com.tw/Televisions-Appliances/Cooling-Heating-Air-Treatment/Air-Purifiers-Filters-Accessories/Dyson-Purifier-Hot-Cool-HP11-Filter-X-3-Pack/p/158445')" title="修改分類（需登入）">✏️</button>
+  
+</div>
+<div class="card" id="c_andle_2_Brush_Heads_HX3792_p_160016" data-cat="__家電_3C" data-deal="hotbuys">
+  <a href="https://www.costco.com.tw/Televisions-Appliances/Small-Appliances/Electric-Toothbrushes-Water-Flossers/Philips-Sonicare-Rechargeable-Toothbrush-1-Handle-2-Brush-Heads-HX3792/p/160016" target="_blank" rel="noopener" class="card-link">
+    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/hdc/h90/468568630689822.jpg" alt="飛利浦 Sonicare 充電式智能電動護齦牙刷 單握柄+2刷頭 HX3792" loading="lazy" onerror="this.style.display='none'"><div class="badge">-29.7%</div></div>
+    <div class="card-body">
+      <p class="card-name">飛利浦 Sonicare 充電式智能電動護齦牙刷 單握柄+2刷頭 HX3792</p>
+      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 5 天</span>
+      
+      <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
+      <div class="card-price">
+        <span class="orig">$4,369</span><span class='arrow'>→</span>
+        <span class="sale">$2,369</span>
+      </div>
+      <p class="card-save">省 $1,000</p>
+      <p class="history">🆕 首次出現</p>
+    </div>
+  </a>
+  <button class="change-cat-btn" onclick="openCatModal('c_andle_2_Brush_Heads_HX3792_p_160016','__家電_3C','飛利浦 Sonicare 充電式智能電動護齦牙刷 單握柄+2刷頭 HX3792','https://www.costco.com.tw/Televisions-Appliances/Small-Appliances/Electric-Toothbrushes-Water-Flossers/Philips-Sonicare-Rechargeable-Toothbrush-1-Handle-2-Brush-Heads-HX3792/p/160016')" title="修改分類（需登入）">✏️</button>
+  
+</div>
+<div class="card" id="c_ty_4_True_Wireless_Earbuds_p_146926" data-cat="__家電_3C" data-deal="coupon">
+  <a href="https://www.costco.com.tw/Digital-Mobile/Wearables-Audio/Headphones-Audio-Devices/Soundcore-Liberty-4-True-Wireless-Earbuds/p/146926" target="_blank" rel="noopener" class="card-link">
+    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/ha4/h78/329850355318814.jpg" alt="Soundcore Liberty 4 主動降噪真無線藍牙耳機" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.4%</div></div>
+    <div class="card-body">
+      <p class="card-name">Soundcore Liberty 4 主動降噪真無線藍牙耳機</p>
+      <span class="deal-type-badge badge-coup">🏷️ 精選優惠</span>
+      
+      
+      <div class="card-price">
+        <span class="orig">$2,569</span><span class='arrow'>→</span>
+        <span class="sale">$1,529</span>
+      </div>
+      <p class="card-save">省 $520</p>
+      <p class="history">🆕 首次出現</p>
+    </div>
+  </a>
+  <button class="change-cat-btn" onclick="openCatModal('c_ty_4_True_Wireless_Earbuds_p_146926','__家電_3C','Soundcore Liberty 4 主動降噪真無線藍牙耳機','https://www.costco.com.tw/Digital-Mobile/Wearables-Audio/Headphones-Audio-Devices/Soundcore-Liberty-4-True-Wireless-Earbuds/p/146926')" title="修改分類（需登入）">✏️</button>
+  
+</div>
+<div class="card" id="c_https___www_costco_com_tw_p_157739" data-cat="__家電_3C" data-deal="hotbuys">
+  <a href="https://www.costco.com.tw/p/157739" target="_blank" rel="noopener" class="card-link">
     <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/hc5/h64/431395279863838.jpg" alt="CyberPower 防突波 8 插座 2 USB 充電延長線" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.1%</div></div>
     <div class="card-body">
       <p class="card-name">CyberPower 防突波 8 插座 2 USB 充電延長線</p>
-      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 6 天</span>
+      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 5 天</span>
       
       <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
       <div class="card-price">
@@ -592,45 +484,45 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🆕 首次出現</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_t_and_2_USB_Charging_Ports_p_157739','__家電_3C','CyberPower 防突波 8 插座 2 USB 充電延長線','https://www.costco.com.tw/Furniture-Kitchen/Hardware-DIY/Power-Tools-Electrical/CyberPower-Surge-Protector-with-8-Outlet-and-2-USB-Charging-Ports/p/157739')" title="修改分類（需登入）">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_https___www_costco_com_tw_p_157739','__家電_3C','CyberPower 防突波 8 插座 2 USB 充電延長線','https://www.costco.com.tw/p/157739')" title="修改分類（需登入）">✏️</button>
   
 </div>
-<div class="card" id="c__Isolate_Unflavoured_25_kg_p_150747" data-cat="__保健美妝" data-deal="hotbuys">
-  <a href="https://www.costco.com.tw/Health-Beauty/Supplements/Sports-Performance/Myprotein-Soy-Protein-Isolate-Unflavoured-25-kg/p/150747" target="_blank" rel="noopener" class="card-link">
-    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/hc4/h4c/472952133779486.jpg" alt="Myprotein 大豆分離蛋白粉 原味 2.5公斤" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.0%</div></div>
+<div class="card" id="c_https___www_costco_com_tw_p_1285702" data-cat="__家電_3C" data-deal="coupon">
+  <a href="https://www.costco.com.tw/p/1285702" target="_blank" rel="noopener" class="card-link">
+    <div class="card-img"><img src="https://static.daybuy.tw/wp-content/uploads/2019/06/IMG_0432.jpeg" alt="COLGATE 高露潔全效潔白牙膏" loading="lazy" onerror="this.style.display='none'"><a class="src-icon" href="https://www.daybuy.tw/costco/40365/" target="_blank" onclick="event.stopPropagation()" title="daybuy 情報">📰</a></div>
     <div class="card-body">
-      <p class="card-name">Myprotein 大豆分離蛋白粉 原味 2.5公斤</p>
-      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 6 天</span>
+      <p class="card-name">COLGATE 高露潔全效潔白牙膏</p>
+      <span class="deal-type-badge badge-coup">🏷️ 精選優惠</span><span class="deal-type-badge badge-hidden" title="人工confirm的賣場隱藏優惠，折扣可能隨時異動">🏪 賣場隱藏</span>
       
-      <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
+      <p class="deal-period">📅 2026.06.22~2026.07.05<span class="confirm-date-hint" title="此折扣為人工confirm的暫時性資料，僅代表06/23當時確認狀態，可能已變動">🕐 06/23確認</span></p>
       <div class="card-price">
-        <span class="orig">$1,039</span><span class='arrow'>→</span>
-        <span class="sale">$779</span>
+        <span class="orig">$549</span><span class='arrow'>→</span>
+        <span class="sale">$80</span>
       </div>
-      <p class="card-save">省 $260</p>
-      <p class="history">🆕 首次出現</p>
+      <p class="card-save"></p>
+      <p class="history">🕐 距上次折扣 9 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c__Isolate_Unflavoured_25_kg_p_150747','__保健美妝','Myprotein 大豆分離蛋白粉 原味 2.5公斤','https://www.costco.com.tw/Health-Beauty/Supplements/Sports-Performance/Myprotein-Soy-Protein-Isolate-Unflavoured-25-kg/p/150747')" title="修改分類（需登入）">✏️</button>
-  
+  <button class="change-cat-btn" onclick="openCatModal('c_https___www_costco_com_tw_p_1285702','__家電_3C','COLGATE 高露潔全效潔白牙膏','https://www.costco.com.tw/p/1285702')" title="修改分類（需登入）">✏️</button>
+  <a class="daybuy-link official-link" href="https://www.costco.com.tw/p/1285702" target="_blank" onclick="event.stopPropagation()">🛒 好市多官網</a><a class="daybuy-link" href="https://www.daybuy.tw/costco/40365/" target="_blank" onclick="event.stopPropagation()">📰 daybuy 情報頁</a>
 </div>
-<div class="card" id="c_ttps___www_daybuy_tw_costco_193766_" data-cat="__保健美妝" data-deal="coupon">
-  <a href="https://www.daybuy.tw/costco/193766/" target="_blank" rel="noopener" class="card-link">
+<div class="card" id="c_https___www_costco_com_tw_p_335354" data-cat="__保健美妝" data-deal="coupon">
+  <a href="https://www.costco.com.tw/p/335354" target="_blank" rel="noopener" class="card-link">
     <div class="card-img"><img src="https://static.daybuy.tw/wp-content/uploads/2025/06/IMG_9552.jpeg" alt="NATURE MADE 葉黃素20毫克綜合軟膠囊" loading="lazy" onerror="this.style.display='none'"><div class="badge">-20.4%</div><a class="src-icon" href="https://www.daybuy.tw/costco/193766/" target="_blank" onclick="event.stopPropagation()" title="daybuy 情報">📰</a></div>
     <div class="card-body">
       <p class="card-name">NATURE MADE 葉黃素20毫克綜合軟膠囊</p>
       <span class="deal-type-badge badge-coup">🏷️ 精選優惠</span><span class="deal-type-badge badge-hidden" title="人工confirm的賣場隱藏優惠，折扣可能隨時異動">🏪 賣場隱藏</span>
       
-      <p class="deal-period">📅 2026.06.12~2026.07.05<span class="confirm-date-hint" title="此折扣為人工confirm的暫時性資料，僅代表06/22當時確認狀態，可能已變動">🕐 06/22確認</span></p>
+      <p class="deal-period">📅 2026.06.22~2026.07.05<span class="confirm-date-hint" title="此折扣為人工confirm的暫時性資料，僅代表06/23當時確認狀態，可能已變動">🕐 06/23確認</span></p>
       <div class="card-price">
-        <span class="orig">$1,129</span><span class='arrow'>→</span>
+        <span class="orig">$1,159</span><span class='arrow'>→</span>
         <span class="sale">$899</span>
       </div>
       <p class="card-save">省 $230</p>
-      <p class="history">🆕 首次出現</p>
+      <p class="history">🕐 距上次折扣 9 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_ttps___www_daybuy_tw_costco_193766_','__保健美妝','NATURE MADE 葉黃素20毫克綜合軟膠囊','https://www.daybuy.tw/costco/193766/')" title="修改分類（需登入）">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_https___www_costco_com_tw_p_335354','__保健美妝','NATURE MADE 葉黃素20毫克綜合軟膠囊','https://www.costco.com.tw/p/335354')" title="修改分類（需登入）">✏️</button>
   <a class="daybuy-link official-link" href="https://www.costco.com.tw/p/335354" target="_blank" onclick="event.stopPropagation()">🛒 好市多官網</a><a class="daybuy-link" href="https://www.daybuy.tw/costco/193766/" target="_blank" onclick="event.stopPropagation()">📰 daybuy 情報頁</a>
 </div>
 <div class="card" id="c_engthening_115_ml_X_2_Pack_p_157054" data-cat="__保健美妝" data-deal="hotbuys">
@@ -638,7 +530,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
     <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/he7/h8d/400800624115742.jpg" alt="艾瑪絲 草本強健養髮精華液 (橙皮苷強韌版) 115毫升 2入組" loading="lazy" onerror="this.style.display='none'"><div class="badge">-20.4%</div></div>
     <div class="card-body">
       <p class="card-name">艾瑪絲 草本強健養髮精華液 (橙皮苷強韌版) 115毫升 2入組</p>
-      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 6 天</span>
+      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 5 天</span>
       
       <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
       <div class="card-price">
@@ -646,29 +538,29 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
         <span class="sale">$875</span>
       </div>
       <p class="card-save">省 $224</p>
-      <p class="history">🆕 首次出現</p>
+      <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
   <button class="change-cat-btn" onclick="openCatModal('c_engthening_115_ml_X_2_Pack_p_157054','__保健美妝','艾瑪絲 草本強健養髮精華液 (橙皮苷強韌版) 115毫升 2入組','https://www.costco.com.tw/Health-Beauty/Personal-Care/Shampoo-Conditioner/AROMASE-Herbal-Cooling-Scalp-Care-Spray-Strengthening-115-ml-X-2-Pack/p/157054')" title="修改分類（需登入）">✏️</button>
   
 </div>
-<div class="card" id="c_k_Currant_Flavor_45_Tablet_p_200763" data-cat="__保健美妝" data-deal="coupon">
-  <a href="https://www.costco.com.tw/Redoxon/Redoxon-CDZinc-Effervescent-Black-Currant-Flavor-45-Tablet/p/200763" target="_blank" rel="noopener" class="card-link">
-    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h37/hb2/386020540678174.jpg" alt="Redoxon 力度伸 維他命 C+D+鋅 發泡錠(黑醋栗口味) 45錠(15錠 X 3條)" loading="lazy" onerror="this.style.display='none'"><div class="badge">-20.0%</div></div>
+<div class="card" id="c_CARE_Probiotic_70_Lozenges_p_152089" data-cat="__保健美妝" data-deal="coupon">
+  <a href="https://www.costco.com.tw/Health-Beauty/Supplements/Supplements-Digestive-Support/MeridLife-ORAL-CARE-Probiotic-70-Lozenges/p/152089" target="_blank" rel="noopener" class="card-link">
+    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/he8/h36/346620855975966.jpg" alt="樂益活 菌護口口益保健益生菌 70錠" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.2%</div></div>
     <div class="card-body">
-      <p class="card-name">Redoxon 力度伸 維他命 C+D+鋅 發泡錠(黑醋栗口味) 45錠(15錠 X 3條)</p>
+      <p class="card-name">樂益活 菌護口口益保健益生菌 70錠</p>
       <span class="deal-type-badge badge-coup">🏷️ 精選優惠</span>
       
       
       <div class="card-price">
-        <span class="orig">$799</span><span class='arrow'>→</span>
-        <span class="sale">$639</span>
+        <span class="orig">$869</span><span class='arrow'>→</span>
+        <span class="sale">$519</span>
       </div>
-      <p class="card-save">省 $160</p>
-      <p class="history">🕐 距上次折扣 5 天</p>
+      <p class="card-save">省 $175</p>
+      <p class="history">🆕 首次出現</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_k_Currant_Flavor_45_Tablet_p_200763','__保健美妝','Redoxon 力度伸 維他命 C+D+鋅 發泡錠(黑醋栗口味) 45錠(15錠 X 3條)','https://www.costco.com.tw/Redoxon/Redoxon-CDZinc-Effervescent-Black-Currant-Flavor-45-Tablet/p/200763')" title="修改分類（需登入）">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_CARE_Probiotic_70_Lozenges_p_152089','__保健美妝','樂益活 菌護口口益保健益生菌 70錠','https://www.costco.com.tw/Health-Beauty/Supplements/Supplements-Digestive-Support/MeridLife-ORAL-CARE-Probiotic-70-Lozenges/p/152089')" title="修改分類（需登入）">✏️</button>
   
 </div>
 <div class="card" id="c__Essential_Shampoo_1000_ml_p_156489" data-cat="__保健美妝" data-deal="hotbuys">
@@ -676,7 +568,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
     <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/hc2/h15/400800484294686.jpg" alt="艾瑪絲 烏木沁涼強健豐盈洗髮精 1000毫升" loading="lazy" onerror="this.style.display='none'"><div class="badge">-26.7%</div></div>
     <div class="card-body">
       <p class="card-name">艾瑪絲 烏木沁涼強健豐盈洗髮精 1000毫升</p>
-      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 6 天</span>
+      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 5 天</span>
       
       <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
       <div class="card-price">
@@ -684,10 +576,29 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
         <span class="sale">$385</span>
       </div>
       <p class="card-save">省 $140</p>
-      <p class="history">🕐 距上次折扣 5 天</p>
+      <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
   <button class="change-cat-btn" onclick="openCatModal('c__Essential_Shampoo_1000_ml_p_156489','__保健美妝','艾瑪絲 烏木沁涼強健豐盈洗髮精 1000毫升','https://www.costco.com.tw/Health-Beauty/Personal-Care/Shampoo-Conditioner/AROMASE-Hair-Thickening-Woodsy-Scented-Essential-Shampoo-1000-ml/p/156489')" title="修改分類（需登入）">✏️</button>
+  
+</div>
+<div class="card" id="c_https___www_costco_com_tw_p_159648" data-cat="__保健美妝" data-deal="hotbuys">
+  <a href="https://www.costco.com.tw/p/159648" target="_blank" rel="noopener" class="card-link">
+    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/hae/h51/451293410131998.jpg" alt="AHC 超能玻尿酸保濕肌亮機能乳液 100毫升 X 2入" loading="lazy" onerror="this.style.display='none'"><div class="badge">-26.7%</div></div>
+    <div class="card-body">
+      <p class="card-name">AHC 超能玻尿酸保濕肌亮機能乳液 100毫升 X 2入</p>
+      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 5 天</span>
+      
+      <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
+      <div class="card-price">
+        <span class="orig">$665</span><span class='arrow'>→</span>
+        <span class="sale">$385</span>
+      </div>
+      <p class="card-save">省 $140</p>
+      <p class="history">🆕 首次出現</p>
+    </div>
+  </a>
+  <button class="change-cat-btn" onclick="openCatModal('c_https___www_costco_com_tw_p_159648','__保健美妝','AHC 超能玻尿酸保濕肌亮機能乳液 100毫升 X 2入','https://www.costco.com.tw/p/159648')" title="修改分類（需登入）">✏️</button>
   
 </div>
 <div class="card" id="c_Up_Shampoo_460_ml_X_2_Pack_p_122398" data-cat="__保健美妝" data-deal="hotbuys">
@@ -695,7 +606,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
     <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/hf9/h97/12090613825566.jpg" alt="Maro 起立 3D 豐盈洗髮精 460毫升 X 2入" loading="lazy" onerror="this.style.display='none'"><div class="badge">-20.7%</div></div>
     <div class="card-body">
       <p class="card-name">Maro 起立 3D 豐盈洗髮精 460毫升 X 2入</p>
-      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 6 天</span>
+      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 5 天</span>
       
       <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
       <div class="card-price">
@@ -703,29 +614,10 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
         <span class="sale">$499</span>
       </div>
       <p class="card-save">省 $130</p>
-      <p class="history">🆕 首次出現</p>
+      <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
   <button class="change-cat-btn" onclick="openCatModal('c_Up_Shampoo_460_ml_X_2_Pack_p_122398','__保健美妝','Maro 起立 3D 豐盈洗髮精 460毫升 X 2入','https://www.costco.com.tw/Health-Beauty/Personal-Care/Shampoo-Conditioner/Maro-3D-Volume-Up-Shampoo-460-ml-X-2-Pack/p/122398')" title="修改分類（需登入）">✏️</button>
-  
-</div>
-<div class="card" id="c_h_1000_ml_Citrus_Cedarwood_p_150878" data-cat="__保健美妝" data-deal="hotbuys">
-  <a href="https://www.costco.com.tw/Health-Beauty/Personal-Care/Shampoo-Conditioner/Aromase-Herbal-Daily-Shampoo-Body-Wash-1000-ml-Citrus-Cedarwood/p/150878" target="_blank" rel="noopener" class="card-link">
-    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h8b/hbf/349916536504350.jpg" alt="艾瑪絲 草本胺基酸每日健康洗髮沐浴露 1000毫升 清橙雪松" loading="lazy" onerror="this.style.display='none'"><div class="badge">-20.8%</div></div>
-    <div class="card-body">
-      <p class="card-name">艾瑪絲 草本胺基酸每日健康洗髮沐浴露 1000毫升 清橙雪松</p>
-      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 6 天</span>
-      
-      <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
-      <div class="card-price">
-        <span class="orig">$529</span><span class='arrow'>→</span>
-        <span class="sale">$419</span>
-      </div>
-      <p class="card-save">省 $110</p>
-      <p class="history">🕐 距上次折扣 5 天</p>
-    </div>
-  </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_h_1000_ml_Citrus_Cedarwood_p_150878','__保健美妝','艾瑪絲 草本胺基酸每日健康洗髮沐浴露 1000毫升 清橙雪松','https://www.costco.com.tw/Health-Beauty/Personal-Care/Shampoo-Conditioner/Aromase-Herbal-Daily-Shampoo-Body-Wash-1000-ml-Citrus-Cedarwood/p/150878')" title="修改分類（需登入）">✏️</button>
   
 </div>
 <div class="card" id="c_and_Aloe_Body_Soap_1200_ml_p_133093" data-cat="__保健美妝" data-deal="hotbuys">
@@ -733,7 +625,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
     <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h4d/ha2/103644530737182.jpg" alt="牛乳石鹼 蘆薈精華沐浴乳 1200毫升" loading="lazy" onerror="this.style.display='none'"><div class="badge">-22.0%</div></div>
     <div class="card-body">
       <p class="card-name">牛乳石鹼 蘆薈精華沐浴乳 1200毫升</p>
-      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 6 天</span>
+      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 5 天</span>
       
       <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
       <div class="card-price">
@@ -741,7 +633,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
         <span class="sale">$355</span>
       </div>
       <p class="card-save">省 $100</p>
-      <p class="history">🕐 距上次折扣 5 天</p>
+      <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
   <button class="change-cat-btn" onclick="openCatModal('c_and_Aloe_Body_Soap_1200_ml_p_133093','__保健美妝','牛乳石鹼 蘆薈精華沐浴乳 1200毫升','https://www.costco.com.tw/Health-Beauty/Personal-Care/Bath-Body/Cow-Brand-Aloe-Body-Soap-1200-ml/p/133093')" title="修改分類（需登入）">✏️</button>
@@ -752,7 +644,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
     <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/ha7/h59/157819020804126.jpg" alt="科克蘭 高爾夫三層球 3入 X 8盒" loading="lazy" onerror="this.style.display='none'"><div class="badge">-20.0%</div></div>
     <div class="card-body">
       <p class="card-name">科克蘭 高爾夫三層球 3入 X 8盒</p>
-      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 6 天</span>
+      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 5 天</span>
       
       <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
       <div class="card-price">
@@ -760,7 +652,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
         <span class="sale">$839</span>
       </div>
       <p class="card-save">省 $210</p>
-      <p class="history">🕐 距上次折扣 5 天</p>
+      <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
   <button class="change-cat-btn" onclick="openCatModal('c_olf_Ball_3_Count_X_8_Pack_p_1654518','__生活用品','科克蘭 高爾夫三層球 3入 X 8盒','https://www.costco.com.tw/Sports-Lifestyle/Sports-Fitness/Team-Sports/Kirkland-Signature-3-Piece-Urethane-Cover-Golf-Ball-3-Count-X-8-Pack/p/1654518')" title="修改分類（需登入）">✏️</button>
@@ -771,7 +663,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
     <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/hc3/h2d/87954007621662.jpg" alt="科克蘭 真皮高爾夫手套 4入左手套適用於右手打者" loading="lazy" onerror="this.style.display='none'"><div class="badge">-20.0%</div></div>
     <div class="card-body">
       <p class="card-name">科克蘭 真皮高爾夫手套 4入左手套適用於右手打者</p>
-      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 6 天</span>
+      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 5 天</span>
       
       <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
       <div class="card-price">
@@ -779,7 +671,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
         <span class="sale">$759</span>
       </div>
       <p class="card-save">省 $190</p>
-      <p class="history">🕐 距上次折扣 5 天</p>
+      <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
   <button class="change-cat-btn" onclick="openCatModal('c_Glove_4_Pack_Right_Handed_p_1418682','__生活用品','科克蘭 真皮高爾夫手套 4入左手套適用於右手打者','https://www.costco.com.tw/Sports-Lifestyle/Sports-Fitness/Team-Sports/Kirkland-Signature-Leather-Golf-Glove-4-Pack-Right-Handed/p/1418682')" title="修改分類（需登入）">✏️</button>
@@ -790,7 +682,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
     <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h28/h0b/379898465910814.jpg" alt="科克蘭 女連帽外套" loading="lazy" onerror="this.style.display='none'"><div class="badge">-20.0%</div></div>
     <div class="card-body">
       <p class="card-name">科克蘭 女連帽外套</p>
-      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 6 天</span>
+      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 5 天</span>
       
       <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
       <div class="card-price">
@@ -798,29 +690,10 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
         <span class="sale">$639</span>
       </div>
       <p class="card-save">省 $160</p>
-      <p class="history">🕐 距上次折扣 5 天</p>
+      <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
   <button class="change-cat-btn" onclick="openCatModal('c_ture_Ladies_Hoodie_Jacket_p_7771776','__生活用品','科克蘭 女連帽外套','https://www.costco.com.tw/Clothing-Accessories/Womens-Clothing/Womens-Coats-Jackets/Kirkland-Signature-Ladies-Hoodie-Jacket/p/7771776')" title="修改分類（需登入）">✏️</button>
-  
-</div>
-<div class="card" id="c_School_Utensil_4_Piece_Set_p_160481" data-cat="__生活用品" data-deal="hotbuys">
-  <a href="https://www.costco.com.tw/Furniture-Kitchen/Kitchen-Dining/Cooking-Accessories/HOUSUXI-Kids-Back-To-School-Utensil-4-Piece-Set/p/160481" target="_blank" rel="noopener" class="card-link">
-    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h76/hb1/449275405238302.jpg" alt="HOUSUXI 舒希 兒童開學餐具 4件組" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.5%</div></div>
-    <div class="card-body">
-      <p class="card-name">HOUSUXI 舒希 兒童開學餐具 4件組</p>
-      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 6 天</span>
-      
-      <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
-      <div class="card-price">
-        <span class="orig">$589</span><span class='arrow'>→</span>
-        <span class="sale">$439</span>
-      </div>
-      <p class="card-save">省 $150</p>
-      <p class="history">🆕 首次出現</p>
-    </div>
-  </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_School_Utensil_4_Piece_Set_p_160481','__生活用品','HOUSUXI 舒希 兒童開學餐具 4件組','https://www.costco.com.tw/Furniture-Kitchen/Kitchen-Dining/Cooking-Accessories/HOUSUXI-Kids-Back-To-School-Utensil-4-Piece-Set/p/160481')" title="修改分類（需登入）">✏️</button>
   
 </div>
 <div class="card" id="c_https___www_costco_com_tw_p_1491575" data-cat="__生活用品" data-deal="other">
@@ -836,29 +709,48 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
         <span class="sale">$529</span>
       </div>
       <p class="card-save">省 $150</p>
-      <p class="history">🕐 距上次折扣 6 天</p>
+      <p class="history">🕐 距上次折扣 7 天</p>
     </div>
   </a>
   <button class="change-cat-btn" onclick="openCatModal('c_https___www_costco_com_tw_p_1491575','__生活用品','UNDER ARMOUR 女短袖上衣','https://www.costco.com.tw/p/1491575')" title="修改分類（需登入）">✏️</button>
   <a class="daybuy-link official-link" href="https://www.costco.com.tw/p/1491575" target="_blank" onclick="event.stopPropagation()">🛒 好市多官網</a><a class="daybuy-link" href="https://www.daybuy.tw/costco/255345/" target="_blank" onclick="event.stopPropagation()">📰 daybuy 情報頁</a>
 </div>
-<div class="card" id="c_th_Lid_4_Piece_Set_1300_ml_p_158744" data-cat="__生活用品" data-deal="hotbuys">
+<div class="card" id="c_th_Lid_4_Piece_Set_1300_ml_p_158744" data-cat="__生活用品" data-deal="coupon">
   <a href="https://www.costco.com.tw/Furniture-Kitchen/Kitchen-Dining/Food-Storage-Containers/Fenger-Microwavable-304-Stainless-Steel-Compartment-Storage-with-Lid-4-Piece-Set-1300-ml/p/158744" target="_blank" rel="noopener" class="card-link">
     <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h13/h0c/415044018077726.jpg" alt="Fenger 可微波304不鏽鋼分隔保鮮盒 含蓋4件組 三隔1300毫升" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.1%</div></div>
     <div class="card-body">
       <p class="card-name">Fenger 可微波304不鏽鋼分隔保鮮盒 含蓋4件組 三隔1300毫升</p>
-      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 6 天</span>
+      <span class="deal-type-badge badge-coup">🏷️ 精選優惠</span>
       
-      <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
+      
       <div class="card-price">
         <span class="orig">$479</span><span class='arrow'>→</span>
         <span class="sale">$359</span>
       </div>
       <p class="card-save">省 $120</p>
-      <p class="history">🆕 首次出現</p>
+      <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
   <button class="change-cat-btn" onclick="openCatModal('c_th_Lid_4_Piece_Set_1300_ml_p_158744','__生活用品','Fenger 可微波304不鏽鋼分隔保鮮盒 含蓋4件組 三隔1300毫升','https://www.costco.com.tw/Furniture-Kitchen/Kitchen-Dining/Food-Storage-Containers/Fenger-Microwavable-304-Stainless-Steel-Compartment-Storage-with-Lid-4-Piece-Set-1300-ml/p/158744')" title="修改分類（需登入）">✏️</button>
+  
+</div>
+<div class="card" id="c_Mens_Boxer_Brief_4_Pack_p_7700015_B" data-cat="__生活用品" data-deal="hotbuys">
+  <a href="https://www.costco.com.tw/Clothing-Accessories/Mens-Clothing/Mens-Socks-Underwear/Kirkland-Signature-Mens-Boxer-Brief-4-Pack/p/7700015-B" target="_blank" rel="noopener" class="card-link">
+    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h4e/h25/11444340588574.jpg" alt="科克蘭 男彈性平口褲 4入" loading="lazy" onerror="this.style.display='none'"><div class="badge">-26.1%</div></div>
+    <div class="card-body">
+      <p class="card-name">科克蘭 男彈性平口褲 4入</p>
+      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 5 天</span>
+      
+      <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
+      <div class="card-price">
+        <span class="orig">$459</span><span class='arrow'>→</span>
+        <span class="sale">$339</span>
+      </div>
+      <p class="card-save">省 $120</p>
+      <p class="history">🕐 距上次折扣 6 天</p>
+    </div>
+  </a>
+  <button class="change-cat-btn" onclick="openCatModal('c_Mens_Boxer_Brief_4_Pack_p_7700015_B','__生活用品','科克蘭 男彈性平口褲 4入','https://www.costco.com.tw/Clothing-Accessories/Mens-Clothing/Mens-Socks-Underwear/Kirkland-Signature-Mens-Boxer-Brief-4-Pack/p/7700015-B')" title="修改分類（需登入）">✏️</button>
   
 </div>
 <div class="card" id="c_ure_Mens_Short_Sleeve_Tee_p_7771459" data-cat="__生活用品" data-deal="hotbuys">
@@ -866,7 +758,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
     <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h20/h50/333077037318174.jpg" alt="科克蘭 男短袖上衣" loading="lazy" onerror="this.style.display='none'"><div class="badge">-21.3%</div></div>
     <div class="card-body">
       <p class="card-name">科克蘭 男短袖上衣</p>
-      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 6 天</span>
+      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 5 天</span>
       
       <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
       <div class="card-price">
@@ -874,7 +766,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
         <span class="sale">$369</span>
       </div>
       <p class="card-save">省 $100</p>
-      <p class="history">🕐 距上次折扣 5 天</p>
+      <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
   <button class="change-cat-btn" onclick="openCatModal('c_ure_Mens_Short_Sleeve_Tee_p_7771459','__生活用品','科克蘭 男短袖上衣','https://www.costco.com.tw/Clothing-Accessories/Mens-Clothing/Mens-Tops/Kirkland-Signature-Mens-Short-Sleeve-Tee/p/7771459')" title="修改分類（需登入）">✏️</button>
@@ -885,7 +777,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
     <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/hce/hcc/437687799644190.jpg" alt="科克蘭 女輕量休閒短褲" loading="lazy" onerror="this.style.display='none'"><div class="badge">-21.5%</div></div>
     <div class="card-body">
       <p class="card-name">科克蘭 女輕量休閒短褲</p>
-      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 6 天</span>
+      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 5 天</span>
       
       <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
       <div class="card-price">
@@ -893,18 +785,37 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
         <span class="sale">$329</span>
       </div>
       <p class="card-save">省 $90</p>
-      <p class="history">🕐 距上次折扣 5 天</p>
+      <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
   <button class="change-cat-btn" onclick="openCatModal('c__Ladies_Lightweight_Short_p_7771782','__生活用品','科克蘭 女輕量休閒短褲','https://www.costco.com.tw/Clothing-Accessories/Womens-Clothing/Womens-Bottoms-Dresses/Kirkland-Signature-Ladies-Lightweight-Short/p/7771782')" title="修改分類（需登入）">✏️</button>
   
+</div>
+<div class="card" id="c_https___www_costco_com_tw_p_1739180" data-cat="__生活用品" data-deal="hotbuys">
+  <a href="https://www.costco.com.tw/p/1739180" target="_blank" rel="noopener" class="card-link">
+    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/hf1/h10/226673733468190.jpg" alt="科克蘭 烘衣柔軟去靜電紙 250張 X 2入" loading="lazy" onerror="this.style.display='none'"><div class="badge">-21.7%</div><a class="src-icon" href="https://www.daybuy.tw/costco/118322/" target="_blank" onclick="event.stopPropagation()" title="daybuy 情報">📰</a></div>
+    <div class="card-body">
+      <p class="card-name">科克蘭 烘衣柔軟去靜電紙 250張 X 2入</p>
+      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 5 天</span>
+      
+      <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
+      <div class="card-price">
+        <span class="orig">$449</span><span class='arrow'>→</span>
+        <span class="sale">$289</span>
+      </div>
+      <p class="card-save">省 $80</p>
+      <p class="history">🆕 首次出現</p>
+    </div>
+  </a>
+  <button class="change-cat-btn" onclick="openCatModal('c_https___www_costco_com_tw_p_1739180','__生活用品','科克蘭 烘衣柔軟去靜電紙 250張 X 2入','https://www.costco.com.tw/p/1739180')" title="修改分類（需登入）">✏️</button>
+  <a class="daybuy-link official-link" href="https://www.costco.com.tw/p/1739180" target="_blank" onclick="event.stopPropagation()">🛒 好市多官網</a><a class="daybuy-link" href="https://www.daybuy.tw/costco/118322/" target="_blank" onclick="event.stopPropagation()">📰 daybuy 情報頁</a>
 </div>
 <div class="card" id="c_rew_Neck_Short_Sleeve_Tee_p_7771755" data-cat="__生活用品" data-deal="hotbuys">
   <a href="https://www.costco.com.tw/Clothing-Accessories/Womens-Clothing/Womens-Tops/Kirkland-Signature-Logo-Unisex-Crew-Neck-Short-Sleeve-Tee/p/7771755" target="_blank" rel="noopener" class="card-link">
     <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h68/heb/451293860986910.jpg" alt="科克蘭 男女同款圓領短袖T恤" loading="lazy" onerror="this.style.display='none'"><div class="badge">-20.1%</div></div>
     <div class="card-body">
       <p class="card-name">科克蘭 男女同款圓領短袖T恤</p>
-      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 6 天</span>
+      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 5 天</span>
       
       <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
       <div class="card-price">
@@ -912,10 +823,29 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
         <span class="sale">$279</span>
       </div>
       <p class="card-save">省 $70</p>
-      <p class="history">🕐 距上次折扣 5 天</p>
+      <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
   <button class="change-cat-btn" onclick="openCatModal('c_rew_Neck_Short_Sleeve_Tee_p_7771755','__生活用品','科克蘭 男女同款圓領短袖T恤','https://www.costco.com.tw/Clothing-Accessories/Womens-Clothing/Womens-Tops/Kirkland-Signature-Logo-Unisex-Crew-Neck-Short-Sleeve-Tee/p/7771755')" title="修改分類（需登入）">✏️</button>
+  
+</div>
+<div class="card" id="c_ER_Pure_Baking_Soda_612_kg_p_488431" data-cat="__çæ´»ç¨å" data-deal="hotbuys">
+  <a href="https://www.costco.com.tw/Food-Dining/Groceries/Baking-Dried-Goods/ARM-HAMMER-Pure-Baking-Soda-612-kg/p/488431" target="_blank" rel="noopener" class="card-link">
+    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h3b/ha1/188147730710558.jpg" alt="ARM & HAMMER 多功能小蘇打粉 6.12公斤" loading="lazy" onerror="this.style.display='none'"><div class="badge">-17.3%</div></div>
+    <div class="card-body">
+      <p class="card-name">ARM & HAMMER 多功能小蘇打粉 6.12公斤</p>
+      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 5 天</span>
+      
+      <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
+      <div class="card-price">
+        <span class="orig">$369</span><span class='arrow'>→</span>
+        <span class="sale">$305</span>
+      </div>
+      <p class="card-save">省 $64</p>
+      <p class="history">🕐 距上次折扣 6 天</p>
+    </div>
+  </a>
+  <button class="change-cat-btn" onclick="openCatModal('c_ER_Pure_Baking_Soda_612_kg_p_488431','__çæ´»ç¨å','ARM & HAMMER 多功能小蘇打粉 6.12公斤','https://www.costco.com.tw/Food-Dining/Groceries/Baking-Dried-Goods/ARM-HAMMER-Pure-Baking-Soda-612-kg/p/488431')" title="修改分類（需登入）">✏️</button>
   
 </div>
 <div class="card" id="c_https___www_costco_com_tw_p_1846417" data-cat="__服飾寢具" data-deal="other">
@@ -931,7 +861,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
         <span class="sale">$599</span>
       </div>
       <p class="card-save">省 $200</p>
-      <p class="history">🕐 距上次折扣 6 天</p>
+      <p class="history">🕐 距上次折扣 7 天</p>
     </div>
   </a>
   <button class="change-cat-btn" onclick="openCatModal('c_https___www_costco_com_tw_p_1846417','__服飾寢具','TOMMY HILFIGER 女短袖POLO衫','https://www.costco.com.tw/p/1846417')" title="修改分類（需登入）">✏️</button>
@@ -950,7 +880,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
         <span class="sale">$399</span>
       </div>
       <p class="card-save">省 $150</p>
-      <p class="history">🕐 距上次折扣 6 天</p>
+      <p class="history">🕐 距上次折扣 7 天</p>
     </div>
   </a>
   <button class="change-cat-btn" onclick="openCatModal('c_https___www_costco_com_tw_p_1846337','__服飾寢具','KANGOL 女圓領短袖上衣','https://www.costco.com.tw/p/1846337')" title="修改分類（需登入）">✏️</button>
@@ -969,7 +899,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
         <span class="sale">$589</span>
       </div>
       <p class="card-save">省 $150</p>
-      <p class="history">🕐 距上次折扣 6 天</p>
+      <p class="history">🕐 距上次折扣 7 天</p>
     </div>
   </a>
   <button class="change-cat-btn" onclick="openCatModal('c_https___www_costco_com_tw_p_1956376','__服飾寢具','WELL WORN 女牛仔寬褲','https://www.costco.com.tw/p/1956376')" title="修改分類（需登入）">✏️</button>
@@ -988,18 +918,37 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
         <span class="sale">$455</span>
       </div>
       <p class="card-save">省 $114</p>
-      <p class="history">🕐 距上次折扣 6 天</p>
+      <p class="history">🕐 距上次折扣 7 天</p>
     </div>
   </a>
   <button class="change-cat-btn" onclick="openCatModal('c_https___www_costco_com_tw_p_1966321','__服飾寢具','LEVI\'S 兒童短袖上衣三件組','https://www.costco.com.tw/p/1966321')" title="修改分類（需登入）">✏️</button>
   <a class="daybuy-link official-link" href="https://www.costco.com.tw/p/1966321" target="_blank" onclick="event.stopPropagation()">🛒 好市多官網</a><a class="daybuy-link" href="https://www.daybuy.tw/costco/255345/" target="_blank" onclick="event.stopPropagation()">📰 daybuy 情報頁</a>
+</div>
+<div class="card" id="c__MJ01_20_Chariot_Mini_Gray_p_158382" data-cat="__玩具育兒" data-deal="hotbuys">
+  <a href="https://www.costco.com.tw/Household-Baby-Toys/Baby/Baby-Bath-Care/Familidoo-MJ01-20-Chariot-Mini-Gray/p/158382" target="_blank" rel="noopener" class="card-link">
+    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/hb4/hfc/403520304250910.jpg" alt="Familidoo MJ01-2.0 單人座多功能推車 灰" loading="lazy" onerror="this.style.display='none'"><div class="badge">-45.5%</div></div>
+    <div class="card-body">
+      <p class="card-name">Familidoo MJ01-2.0 單人座多功能推車 灰</p>
+      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 5 天</span>
+      
+      <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
+      <div class="card-price">
+        <span class="orig">$15,999</span><span class='arrow'>→</span>
+        <span class="sale">$5,999</span>
+      </div>
+      <p class="card-save">省 $5,000</p>
+      <p class="history">🆕 首次出現</p>
+    </div>
+  </a>
+  <button class="change-cat-btn" onclick="openCatModal('c__MJ01_20_Chariot_Mini_Gray_p_158382','__玩具育兒','Familidoo MJ01-2.0 單人座多功能推車 灰','https://www.costco.com.tw/Household-Baby-Toys/Baby/Baby-Bath-Care/Familidoo-MJ01-20-Chariot-Mini-Gray/p/158382')" title="修改分類（需登入）">✏️</button>
+  
 </div>
 <div class="card" id="c_000_with_1_Year_Membership_p_142634" data-cat="___運動戶外" data-deal="hotbuys">
   <a href="https://www.costco.com.tw/Sports-Lifestyle/Garden-Lifestyle/Tickets-Voucher/TAROKO-App-E-money-NT2000-with-1-Year-Membership/p/142634" target="_blank" rel="noopener" class="card-link">
     <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h0e/h0f/187953428856862.jpg" alt="大魯閣儲值金 NT$2,000 附棒壘球打擊場會員一年" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.0%</div></div>
     <div class="card-body">
       <p class="card-name">大魯閣儲值金 NT$2,000 附棒壘球打擊場會員一年</p>
-      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 6 天</span>
+      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 5 天</span>
       
       <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
       <div class="card-price">
@@ -1007,48 +956,67 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
         <span class="sale">$1,229</span>
       </div>
       <p class="card-save">省 $410</p>
-      <p class="history">🕐 距上次折扣 5 天</p>
+      <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
   <button class="change-cat-btn" onclick="openCatModal('c_000_with_1_Year_Membership_p_142634','___運動戶外','大魯閣儲值金 NT$2,000 附棒壘球打擊場會員一年','https://www.costco.com.tw/Sports-Lifestyle/Garden-Lifestyle/Tickets-Voucher/TAROKO-App-E-money-NT2000-with-1-Year-Membership/p/142634')" title="修改分類（需登入）">✏️</button>
   
 </div>
-<div class="card" id="c__Outdoor_Deep_Seating_Set_p_1934246" data-cat="__其他" data-deal="hotbuys">
-  <a href="https://www.costco.com.tw/Lawn-Garden/Patio-Furniture/Outdoor-Patio-Furniture/AGIO-Stockholm-4-Piece-Outdoor-Deep-Seating-Set/p/1934246" target="_blank" rel="noopener" class="card-link">
-    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/heb/h44/436453739823134.jpg" alt="AGIO Stockholm 戶外休閒沙發四件組" loading="lazy" onerror="this.style.display='none'"><div class="badge">-20.0%</div></div>
+<div class="card" id="c_agull_Series_3_Blade_White_p_160092" data-cat="__其他" data-deal="hotbuys">
+  <a href="https://www.costco.com.tw/Televisions-Appliances/Cooling-Heating-Air-Treatment/Heating-Cooling/Delta-DC-52-inch-Ceiling-Fan-Seagull-Series-3-Blade-White/p/160092" target="_blank" rel="noopener" class="card-link">
+    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h7e/h94/439234182217758.jpg" alt="台達電子DC 52吋 直流吊扇 海鷗系列 三葉 白色款" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.4%</div></div>
     <div class="card-body">
-      <p class="card-name">AGIO Stockholm 戶外休閒沙發四件組</p>
-      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 6 天</span>
+      <p class="card-name">台達電子DC 52吋 直流吊扇 海鷗系列 三葉 白色款</p>
+      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 5 天</span>
       
       <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
       <div class="card-price">
-        <span class="orig">$45,999</span><span class='arrow'>→</span>
-        <span class="sale">$36,799</span>
+        <span class="orig">$8,399</span><span class='arrow'>→</span>
+        <span class="sale">$4,999</span>
       </div>
-      <p class="card-save">省 $9,200</p>
+      <p class="card-save">省 $1,700</p>
       <p class="history">🆕 首次出現</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c__Outdoor_Deep_Seating_Set_p_1934246','__其他','AGIO Stockholm 戶外休閒沙發四件組','https://www.costco.com.tw/Lawn-Garden/Patio-Furniture/Outdoor-Patio-Furniture/AGIO-Stockholm-4-Piece-Outdoor-Deep-Seating-Set/p/1934246')" title="修改分類（需登入）">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_agull_Series_3_Blade_White_p_160092','__其他','台達電子DC 52吋 直流吊扇 海鷗系列 三葉 白色款','https://www.costco.com.tw/Televisions-Appliances/Cooling-Heating-Air-Treatment/Heating-Cooling/Delta-DC-52-inch-Ceiling-Fan-Seagull-Series-3-Blade-White/p/160092')" title="修改分類（需登入）">✏️</button>
   
 </div>
-<div class="card" id="c__Series_7_Electric_Scooter_p_151497" data-cat="__其他" data-deal="hotbuys">
-  <a href="https://www.costco.com.tw/Sports-Lifestyle/Sports-Fitness/Bikes/Acer-ES-Series-7-Electric-Scooter/p/151497" target="_blank" rel="noopener" class="card-link">
-    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h53/h41/346355760201758.jpg" alt="Acer ES 7系列 電動滑板車" loading="lazy" onerror="this.style.display='none'"><div class="badge">-20.1%</div></div>
+<div class="card" id="c_igmore_Fabric_Lounge_Chair_p_157766" data-cat="__其他" data-deal="hotbuys">
+  <a href="https://www.costco.com.tw/Furniture-Kitchen/Furniture/Sofas-Sectionals/Gallery-Wigmore-Fabric-Lounge-Chair/p/157766" target="_blank" rel="noopener" class="card-link">
+    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h09/h3e/433249467039774.jpg" alt="Gallery Wigmore 布面休閒躺椅" loading="lazy" onerror="this.style.display='none'"><div class="badge">-27.3%</div></div>
     <div class="card-body">
-      <p class="card-name">Acer ES 7系列 電動滑板車</p>
-      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 6 天</span>
+      <p class="card-name">Gallery Wigmore 布面休閒躺椅</p>
+      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 5 天</span>
       
       <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
       <div class="card-price">
-        <span class="orig">$27,399</span><span class='arrow'>→</span>
-        <span class="sale">$21,899</span>
+        <span class="orig">$6,999</span><span class='arrow'>→</span>
+        <span class="sale">$3,999</span>
       </div>
-      <p class="card-save">省 $5,500</p>
+      <p class="card-save">省 $1,500</p>
       <p class="history">🆕 首次出現</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c__Series_7_Electric_Scooter_p_151497','__其他','Acer ES 7系列 電動滑板車','https://www.costco.com.tw/Sports-Lifestyle/Sports-Fitness/Bikes/Acer-ES-Series-7-Electric-Scooter/p/151497')" title="修改分類（需登入）">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_igmore_Fabric_Lounge_Chair_p_157766','__其他','Gallery Wigmore 布面休閒躺椅','https://www.costco.com.tw/Furniture-Kitchen/Furniture/Sofas-Sectionals/Gallery-Wigmore-Fabric-Lounge-Chair/p/157766')" title="修改分類（需登入）">✏️</button>
+  
+</div>
+<div class="card" id="c_ra_With_32GB_Micro_SD_Card_p_134447" data-cat="__其他" data-deal="hotbuys">
+  <a href="https://www.costco.com.tw/Sports-Lifestyle/Automotive/Automotive/Mio-MiVue-850-28K-High-Quality-GPS-WIFI-Dash-Camera-With-32GB-Micro-SD-Card/p/134447" target="_blank" rel="noopener" class="card-link">
+    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h8c/h60/100246350954526.jpg" alt="Mio MiVue 850 2.8K 高畫質汽車行車紀錄器 附32GB記憶卡" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.0%</div></div>
+    <div class="card-body">
+      <p class="card-name">Mio MiVue 850 2.8K 高畫質汽車行車紀錄器 附32GB記憶卡</p>
+      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 5 天</span>
+      
+      <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
+      <div class="card-price">
+        <span class="orig">$3,699</span><span class='arrow'>→</span>
+        <span class="sale">$2,219</span>
+      </div>
+      <p class="card-save">省 $740</p>
+      <p class="history">🆕 首次出現</p>
+    </div>
+  </a>
+  <button class="change-cat-btn" onclick="openCatModal('c_ra_With_32GB_Micro_SD_Card_p_134447','__其他','Mio MiVue 850 2.8K 高畫質汽車行車紀錄器 附32GB記憶卡','https://www.costco.com.tw/Sports-Lifestyle/Automotive/Automotive/Mio-MiVue-850-28K-High-Quality-GPS-WIFI-Dash-Camera-With-32GB-Micro-SD-Card/p/134447')" title="修改分類（需登入）">✏️</button>
   
 </div>
 <div class="card" id="c_e_UC_II_Collagen_90_Tablet_p_127189" data-cat="__保健美妝" data-deal="hotbuys">
@@ -1056,7 +1024,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
     <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/hf5/haf/396189517676574.jpg" alt="挺立 關鍵迷你錠 90錠" loading="lazy" onerror="this.style.display='none'"><div class="badge">-19.7%</div></div>
     <div class="card-body">
       <p class="card-name">挺立 關鍵迷你錠 90錠</p>
-      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 6 天</span>
+      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 5 天</span>
       
       <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
       <div class="card-price">
@@ -1064,10 +1032,29 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
         <span class="sale">$1,469</span>
       </div>
       <p class="card-save">省 $360</p>
-      <p class="history">🕐 距上次折扣 5 天</p>
+      <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
   <button class="change-cat-btn" onclick="openCatModal('c_e_UC_II_Collagen_90_Tablet_p_127189','__保健美妝','挺立 關鍵迷你錠 90錠','https://www.costco.com.tw/Health-Beauty/Supplements/Bone-Joint-Support/Caltrate-UC-II-Collagen-90-Tablet/p/127189')" title="修改分類（需登入）">✏️</button>
+  
+</div>
+<div class="card" id="c_https___www_costco_com_tw_p_152051" data-cat="__其他" data-deal="hotbuys">
+  <a href="https://www.costco.com.tw/p/152051" target="_blank" rel="noopener" class="card-link">
+    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/hc4/heb/344500502691870.jpg" alt="順天本草 青木瓜四物飲 100毫升 X 42入" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.4%</div></div>
+    <div class="card-body">
+      <p class="card-name">順天本草 青木瓜四物飲 100毫升 X 42入</p>
+      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 5 天</span>
+      
+      <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
+      <div class="card-price">
+        <span class="orig">$1,679</span><span class='arrow'>→</span>
+        <span class="sale">$999</span>
+      </div>
+      <p class="card-save">省 $340</p>
+      <p class="history">🆕 首次出現</p>
+    </div>
+  </a>
+  <button class="change-cat-btn" onclick="openCatModal('c_https___www_costco_com_tw_p_152051','__其他','順天本草 青木瓜四物飲 100毫升 X 42入','https://www.costco.com.tw/p/152051')" title="修改分類（需登入）">✏️</button>
   
 </div>
 <div class="card" id="c_atomugi_Gel_100_g_x_2_Pack_p_139220" data-cat="__其他" data-deal="hotbuys">
@@ -1075,7 +1062,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
     <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h3e/h0d/151586323071006.jpg" alt="肌研 極水薏仁保濕凝露 100公克 X 2入" loading="lazy" onerror="this.style.display='none'"><div class="badge">-44.5%</div></div>
     <div class="card-body">
       <p class="card-name">肌研 極水薏仁保濕凝露 100公克 X 2入</p>
-      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 6 天</span>
+      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 5 天</span>
       
       <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
       <div class="card-price">
@@ -1083,86 +1070,48 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
         <span class="sale">$399</span>
       </div>
       <p class="card-save">省 $320</p>
-      <p class="history">🆕 首次出現</p>
+      <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
   <button class="change-cat-btn" onclick="openCatModal('c_atomugi_Gel_100_g_x_2_Pack_p_139220','__其他','肌研 極水薏仁保濕凝露 100公克 X 2入','https://www.costco.com.tw/Health-Beauty/Beauty-Skin-Care/Skin-Care/Hada-Labo-Kiwamizu-Hatomugi-Gel-100-g-x-2-Pack/p/139220')" title="修改分類（需登入）">✏️</button>
   
 </div>
-<div class="card" id="c_Tablets_70_Tablet_X_4_Pack_p_890910" data-cat="__其他" data-deal="coupon">
-  <a href="https://www.costco.com.tw/Health-Beauty/Supplements/Supplements-Digestive-Support/Caltrate-Mini-Tablets-70-Tablet-X-4-Pack/p/890910" target="_blank" rel="noopener" class="card-link">
-    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h58/he4/397823981879326.jpg" alt="挺立鈣迷你錠 70錠 X 4入" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.0%</div></div>
-    <div class="card-body">
-      <p class="card-name">挺立鈣迷你錠 70錠 X 4入</p>
-      <span class="deal-type-badge badge-coup">🏷️ 精選優惠</span>
-      
-      
-      <div class="card-price">
-        <span class="orig">$1,039</span><span class='arrow'>→</span>
-        <span class="sale">$779</span>
-      </div>
-      <p class="card-save">省 $260</p>
-      <p class="history">🆕 首次出現</p>
-    </div>
-  </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_Tablets_70_Tablet_X_4_Pack_p_890910','__其他','挺立鈣迷你錠 70錠 X 4入','https://www.costco.com.tw/Health-Beauty/Supplements/Supplements-Digestive-Support/Caltrate-Mini-Tablets-70-Tablet-X-4-Pack/p/890910')" title="修改分類（需登入）">✏️</button>
-  
-</div>
-<div class="card" id="c_ction_500_ml_X_5_Piece_Set_p_154537" data-cat="__其他" data-deal="hotbuys">
-  <a href="https://www.costco.com.tw/Health-Beauty/Beauty-Skin-Care/Scented-Candles-Diffusers/COCODOR-Premium-Diffuser-Collection-500-ml-X-5-Piece-Set/p/154537" target="_blank" rel="noopener" class="card-link">
-    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h7b/ha3/366249565749278.jpg" alt="COCODOR 格調系列 擴香瓶禮盒組 500毫升 X 5入組" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.0%</div></div>
-    <div class="card-body">
-      <p class="card-name">COCODOR 格調系列 擴香瓶禮盒組 500毫升 X 5入組</p>
-      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 6 天</span>
-      
-      <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
-      <div class="card-price">
-        <span class="orig">$799</span><span class='arrow'>→</span>
-        <span class="sale">$599</span>
-      </div>
-      <p class="card-save">省 $200</p>
-      <p class="history">🆕 首次出現</p>
-    </div>
-  </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_ction_500_ml_X_5_Piece_Set_p_154537','__其他','COCODOR 格調系列 擴香瓶禮盒組 500毫升 X 5入組','https://www.costco.com.tw/Health-Beauty/Beauty-Skin-Care/Scented-Candles-Diffusers/COCODOR-Premium-Diffuser-Collection-500-ml-X-5-Piece-Set/p/154537')" title="修改分類（需登入）">✏️</button>
-  
-</div>
-<div class="card" id="c_ain_Cleaner_1_L_X_2_Count_p_1137346" data-cat="__其他" data-deal="coupon">
-  <a href="https://www.costco.com.tw/Household-Baby-Toys/Household-Essentials/Cleaning-Supplies/Ecodoo-Drain-Cleaner-1-L-X-2-Count/p/1137346" target="_blank" rel="noopener" class="card-link">
-    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h96/h44/403519328190494.jpg" alt="易可多 環保水管疏通劑 1公升 X 2入" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.0%</div></div>
-    <div class="card-body">
-      <p class="card-name">易可多 環保水管疏通劑 1公升 X 2入</p>
-      <span class="deal-type-badge badge-coup">🏷️ 精選優惠</span>
-      
-      
-      <div class="card-price">
-        <span class="orig">$719</span><span class='arrow'>→</span>
-        <span class="sale">$539</span>
-      </div>
-      <p class="card-save">省 $180</p>
-      <p class="history">🆕 首次出現</p>
-    </div>
-  </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_ain_Cleaner_1_L_X_2_Count_p_1137346','__其他','易可多 環保水管疏通劑 1公升 X 2入','https://www.costco.com.tw/Household-Baby-Toys/Household-Essentials/Cleaning-Supplies/Ecodoo-Drain-Cleaner-1-L-X-2-Count/p/1137346')" title="修改分類（需登入）">✏️</button>
-  
-</div>
-<div class="card" id="c_ials_Pest_Control_Air_Care_p_153787" data-cat="__其他" data-deal="hotbuys">
+<div class="card" id="c_ials_Pest_Control_Air_Care_p_153787" data-cat="__其他" data-deal="coupon">
   <a href="https://www.costco.com.tw/Household-Baby-Toys/Household-Essentials/Pest-Control-Air-Care/p/153787" target="_blank" rel="noopener" class="card-link">
     <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h24/h49/364687041527838.jpg" alt="興家安速果蠅餌劑" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.4%</div></div>
     <div class="card-body">
       <p class="card-name">興家安速果蠅餌劑</p>
-      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 6 天</span>
+      <span class="deal-type-badge badge-coup">🏷️ 精選優惠</span>
       
-      <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
+      
       <div class="card-price">
         <span class="orig">$685</span><span class='arrow'>→</span>
         <span class="sale">$511</span>
       </div>
       <p class="card-save">省 $174</p>
-      <p class="history">🆕 首次出現</p>
+      <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
   <button class="change-cat-btn" onclick="openCatModal('c_ials_Pest_Control_Air_Care_p_153787','__其他','興家安速果蠅餌劑','https://www.costco.com.tw/Household-Baby-Toys/Household-Essentials/Pest-Control-Air-Care/p/153787')" title="修改分類（需登入）">✏️</button>
+  
+</div>
+<div class="card" id="c_a_2_Pack_43_inch_46_inch_p_155776_B" data-cat="__其他" data-deal="hotbuys">
+  <a href="https://www.costco.com.tw/Clothing-Accessories/Womens-Clothing/Accessories/F-SEASONS-Cooling-Auto-Umbrella-2-Pack-43-inch-46-inch/p/155776-B" target="_blank" rel="noopener" class="card-link">
+    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h5f/hce/332150510256158.jpg" alt="F-SEASONS 降溫省力自動傘兩入 43吋+46吋" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.6%</div></div>
+    <div class="card-body">
+      <p class="card-name">F-SEASONS 降溫省力自動傘兩入 43吋+46吋</p>
+      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 5 天</span>
+      
+      <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
+      <div class="card-price">
+        <span class="orig">$665</span><span class='arrow'>→</span>
+        <span class="sale">$495</span>
+      </div>
+      <p class="card-save">省 $170</p>
+      <p class="history">🕐 距上次折扣 6 天</p>
+    </div>
+  </a>
+  <button class="change-cat-btn" onclick="openCatModal('c_a_2_Pack_43_inch_46_inch_p_155776_B','__其他','F-SEASONS 降溫省力自動傘兩入 43吋+46吋','https://www.costco.com.tw/Clothing-Accessories/Womens-Clothing/Accessories/F-SEASONS-Cooling-Auto-Umbrella-2-Pack-43-inch-46-inch/p/155776-B')" title="修改分類（需登入）">✏️</button>
   
 </div>
 <div class="card" id="c_https___www_costco_com_tw_p_2189436" data-cat="__其他" data-deal="other">
@@ -1178,48 +1127,48 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
         <span class="sale">$539</span>
       </div>
       <p class="card-save">省 $140</p>
-      <p class="history">🕐 距上次折扣 6 天</p>
+      <p class="history">🕐 距上次折扣 7 天</p>
     </div>
   </a>
   <button class="change-cat-btn" onclick="openCatModal('c_https___www_costco_com_tw_p_2189436','__其他','CLOROX 萬用清潔擦拭濕巾 85抽 X 5罐','https://www.costco.com.tw/p/2189436')" title="修改分類（需登入）">✏️</button>
   <a class="daybuy-link official-link" href="https://www.costco.com.tw/p/2189436" target="_blank" onclick="event.stopPropagation()">🛒 好市多官網</a><a class="daybuy-link" href="https://www.daybuy.tw/costco/255145/" target="_blank" onclick="event.stopPropagation()">📰 daybuy 情報頁</a>
 </div>
-<div class="card" id="c_ong_33cm_6_Piece_X_16_Pack_p_139917" data-cat="__其他" data-deal="hotbuys">
+<div class="card" id="c_ong_33cm_6_Piece_X_16_Pack_p_139917" data-cat="__其他" data-deal="coupon">
   <a href="https://www.costco.com.tw/Health-Beauty/Personal-Care/Feminine-Care/ICON-Cooling-Sanitary-Pad-Long-33cm-6-Piece-X-16-Pack/p/139917" target="_blank" rel="noopener" class="card-link">
     <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h83/h29/202920732033054.jpg" alt="愛康涼感衛生棉 加長型 33公分 6片 X 16包" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.1%</div></div>
     <div class="card-body">
       <p class="card-name">愛康涼感衛生棉 加長型 33公分 6片 X 16包</p>
-      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 6 天</span>
+      <span class="deal-type-badge badge-coup">🏷️ 精選優惠</span>
       
-      <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
+      
       <div class="card-price">
         <span class="orig">$479</span><span class='arrow'>→</span>
         <span class="sale">$359</span>
       </div>
       <p class="card-save">省 $120</p>
-      <p class="history">🆕 首次出現</p>
+      <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
   <button class="change-cat-btn" onclick="openCatModal('c_ong_33cm_6_Piece_X_16_Pack_p_139917','__其他','愛康涼感衛生棉 加長型 33公分 6片 X 16包','https://www.costco.com.tw/Health-Beauty/Personal-Care/Feminine-Care/ICON-Cooling-Sanitary-Pad-Long-33cm-6-Piece-X-16-Pack/p/139917')" title="修改分類（需登入）">✏️</button>
   
 </div>
-<div class="card" id="c_haped_Pad_Size_XL_24_Piece_p_134645" data-cat="__其他" data-deal="hotbuys">
-  <a href="https://www.costco.com.tw/Health-Beauty/Personal-Care/Feminine-Care/Sofy-Deep-Sleep-Night-Shorts-Shaped-Pad-Size-XL-24-Piece/p/134645" target="_blank" rel="noopener" class="card-link">
-    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/hb5/h64/350548248297502.jpg" alt="蘇菲 超熟睡安心褲 XL尺寸 24片" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.3%</div></div>
+<div class="card" id="c_Shaped_Pad_Size_M_24_Piece_p_134643" data-cat="__其他" data-deal="coupon">
+  <a href="https://www.costco.com.tw/Health-Beauty/Personal-Care/Feminine-Care/Sofy-Deep-Sleep-Night-Shorts-Shaped-Pad-Size-M-24-Piece/p/134643" target="_blank" rel="noopener" class="card-link">
+    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/ha8/h42/350548248100894.jpg" alt="蘇菲 超熟睡安心褲 M尺寸 24片" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.3%</div></div>
     <div class="card-body">
-      <p class="card-name">蘇菲 超熟睡安心褲 XL尺寸 24片</p>
-      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 6 天</span>
+      <p class="card-name">蘇菲 超熟睡安心褲 M尺寸 24片</p>
+      <span class="deal-type-badge badge-coup">🏷️ 精選優惠</span>
       
-      <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
+      
       <div class="card-price">
         <span class="orig">$435</span><span class='arrow'>→</span>
         <span class="sale">$325</span>
       </div>
       <p class="card-save">省 $110</p>
-      <p class="history">🕐 距上次折扣 5 天</p>
+      <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_haped_Pad_Size_XL_24_Piece_p_134645','__其他','蘇菲 超熟睡安心褲 XL尺寸 24片','https://www.costco.com.tw/Health-Beauty/Personal-Care/Feminine-Care/Sofy-Deep-Sleep-Night-Shorts-Shaped-Pad-Size-XL-24-Piece/p/134645')" title="修改分類（需登入）">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_Shaped_Pad_Size_M_24_Piece_p_134643','__其他','蘇菲 超熟睡安心褲 M尺寸 24片','https://www.costco.com.tw/Health-Beauty/Personal-Care/Feminine-Care/Sofy-Deep-Sleep-Night-Shorts-Shaped-Pad-Size-M-24-Piece/p/134643')" title="修改分類（需登入）">✏️</button>
   
 </div>
 <div class="card" id="c_Shaped_Pad_Size_L_24_Piece_p_134644" data-cat="__其他" data-deal="hotbuys">
@@ -1227,7 +1176,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
     <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h73/h71/350548248363038.jpg" alt="蘇菲 超熟睡安心褲 L尺寸 24片" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.3%</div></div>
     <div class="card-body">
       <p class="card-name">蘇菲 超熟睡安心褲 L尺寸 24片</p>
-      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 6 天</span>
+      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 5 天</span>
       
       <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
       <div class="card-price">
@@ -1235,18 +1184,18 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
         <span class="sale">$325</span>
       </div>
       <p class="card-save">省 $110</p>
-      <p class="history">🕐 距上次折扣 5 天</p>
+      <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
   <button class="change-cat-btn" onclick="openCatModal('c_Shaped_Pad_Size_L_24_Piece_p_134644','__其他','蘇菲 超熟睡安心褲 L尺寸 24片','https://www.costco.com.tw/Health-Beauty/Personal-Care/Feminine-Care/Sofy-Deep-Sleep-Night-Shorts-Shaped-Pad-Size-L-24-Piece/p/134644')" title="修改分類（需登入）">✏️</button>
   
 </div>
-<div class="card" id="c_Shaped_Pad_Size_M_24_Piece_p_134643" data-cat="__其他" data-deal="hotbuys">
-  <a href="https://www.costco.com.tw/Health-Beauty/Personal-Care/Feminine-Care/Sofy-Deep-Sleep-Night-Shorts-Shaped-Pad-Size-M-24-Piece/p/134643" target="_blank" rel="noopener" class="card-link">
-    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/ha8/h42/350548248100894.jpg" alt="蘇菲 超熟睡安心褲 M尺寸 24片" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.3%</div></div>
+<div class="card" id="c_haped_Pad_Size_XL_24_Piece_p_134645" data-cat="__其他" data-deal="hotbuys">
+  <a href="https://www.costco.com.tw/Health-Beauty/Personal-Care/Feminine-Care/Sofy-Deep-Sleep-Night-Shorts-Shaped-Pad-Size-XL-24-Piece/p/134645" target="_blank" rel="noopener" class="card-link">
+    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/hb5/h64/350548248297502.jpg" alt="蘇菲 超熟睡安心褲 XL尺寸 24片" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.3%</div></div>
     <div class="card-body">
-      <p class="card-name">蘇菲 超熟睡安心褲 M尺寸 24片</p>
-      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 6 天</span>
+      <p class="card-name">蘇菲 超熟睡安心褲 XL尺寸 24片</p>
+      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 5 天</span>
       
       <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
       <div class="card-price">
@@ -1254,29 +1203,10 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
         <span class="sale">$325</span>
       </div>
       <p class="card-save">省 $110</p>
-      <p class="history">🆕 首次出現</p>
+      <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_Shaped_Pad_Size_M_24_Piece_p_134643','__其他','蘇菲 超熟睡安心褲 M尺寸 24片','https://www.costco.com.tw/Health-Beauty/Personal-Care/Feminine-Care/Sofy-Deep-Sleep-Night-Shorts-Shaped-Pad-Size-M-24-Piece/p/134643')" title="修改分類（需登入）">✏️</button>
-  
-</div>
-<div class="card" id="c__Le_Food_White_Quinoa_2_kg_p_158290" data-cat="__其他" data-deal="hotbuys">
-  <a href="https://www.costco.com.tw/Food-Dining/Groceries/Rice-Noodles/Le-Food-White-Quinoa-2-kg/p/158290" target="_blank" rel="noopener" class="card-link">
-    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h59/hbe/414650693877790.jpg" alt="樂腹 白藜麥 2公斤" loading="lazy" onerror="this.style.display='none'"><div class="badge">-26.1%</div></div>
-    <div class="card-body">
-      <p class="card-name">樂腹 白藜麥 2公斤</p>
-      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 6 天</span>
-      
-      <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
-      <div class="card-price">
-        <span class="orig">$364</span><span class='arrow'>→</span>
-        <span class="sale">$269</span>
-      </div>
-      <p class="card-save">省 $95</p>
-      <p class="history">🆕 首次出現</p>
-    </div>
-  </a>
-  <button class="change-cat-btn" onclick="openCatModal('c__Le_Food_White_Quinoa_2_kg_p_158290','__其他','樂腹 白藜麥 2公斤','https://www.costco.com.tw/Food-Dining/Groceries/Rice-Noodles/Le-Food-White-Quinoa-2-kg/p/158290')" title="修改分類（需登入）">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_haped_Pad_Size_XL_24_Piece_p_134645','__其他','蘇菲 超熟睡安心褲 XL尺寸 24片','https://www.costco.com.tw/Health-Beauty/Personal-Care/Feminine-Care/Sofy-Deep-Sleep-Night-Shorts-Shaped-Pad-Size-XL-24-Piece/p/134645')" title="修改分類（需登入）">✏️</button>
   
 </div>
 <div class="card" id="c_ofiber_Towels_80_Piece_Box_p_148155" data-cat="__其他" data-deal="hotbuys">
@@ -1284,7 +1214,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
     <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/ha0/hd0/294120769749022.jpg" alt="GRAB-A-RAG 超細纖維拭布 每盒 80 抽" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.8%</div></div>
     <div class="card-body">
       <p class="card-name">GRAB-A-RAG 超細纖維拭布 每盒 80 抽</p>
-      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 6 天</span>
+      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 5 天</span>
       
       <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
       <div class="card-price">
@@ -1292,7 +1222,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
         <span class="sale">$259</span>
       </div>
       <p class="card-save">省 $90</p>
-      <p class="history">🕐 距上次折扣 5 天</p>
+      <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
   <button class="change-cat-btn" onclick="openCatModal('c_ofiber_Towels_80_Piece_Box_p_148155','__其他','GRAB-A-RAG 超細纖維拭布 每盒 80 抽','https://www.costco.com.tw/Sports-Lifestyle/Automotive/Automotive/GRAB-A-RAG-Microfiber-Towels-80-Piece-Box/p/148155')" title="修改分類（需登入）">✏️</button>
@@ -1311,18 +1241,37 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
         <span class="sale">$349</span>
       </div>
       <p class="card-save">省 $90</p>
-      <p class="history">🕐 距上次折扣 6 天</p>
+      <p class="history">🕐 距上次折扣 7 天</p>
     </div>
   </a>
   <button class="change-cat-btn" onclick="openCatModal('c_https___www_costco_com_tw_p_158979','__其他','PIAA 車用遮陽傘','https://www.costco.com.tw/p/158979')" title="修改分類（需登入）">✏️</button>
   <a class="daybuy-link official-link" href="https://www.costco.com.tw/p/158979" target="_blank" onclick="event.stopPropagation()">🛒 好市多官網</a><a class="daybuy-link" href="https://www.daybuy.tw/costco/255145/" target="_blank" onclick="event.stopPropagation()">📰 daybuy 情報頁</a>
+</div>
+<div class="card" id="c_https___www_costco_com_tw_p_144759" data-cat="__其他" data-deal="coupon">
+  <a href="https://www.costco.com.tw/p/144759" target="_blank" rel="noopener" class="card-link">
+    <div class="card-img"><img src="https://static.daybuy.tw/wp-content/uploads/2024/04/IMG_8416.jpeg" alt="這包 卜蜂紅燒棒腿" loading="lazy" onerror="this.style.display='none'"><div class="badge">-20.1%</div><a class="src-icon" href="https://www.daybuy.tw/costco/115883/" target="_blank" onclick="event.stopPropagation()" title="daybuy 情報">📰</a></div>
+    <div class="card-body">
+      <p class="card-name">這包 卜蜂紅燒棒腿</p>
+      <span class="deal-type-badge badge-coup">🏷️ 精選優惠</span><span class="deal-type-badge badge-hidden" title="人工confirm的賣場隱藏優惠，折扣可能隨時異動">🏪 賣場隱藏</span>
+      
+      <p class="deal-period">📅 2026.06.22~2026.07.05<span class="confirm-date-hint" title="此折扣為人工confirm的暫時性資料，僅代表06/23當時確認狀態，可能已變動">🕐 06/23確認</span></p>
+      <div class="card-price">
+        <span class="orig">$399</span><span class='arrow'>→</span>
+        <span class="sale">$319</span>
+      </div>
+      <p class="card-save">省 $80</p>
+      <p class="history">🕐 距上次折扣 7 天</p>
+    </div>
+  </a>
+  <button class="change-cat-btn" onclick="openCatModal('c_https___www_costco_com_tw_p_144759','__其他','這包 卜蜂紅燒棒腿','https://www.costco.com.tw/p/144759')" title="修改分類（需登入）">✏️</button>
+  <a class="daybuy-link official-link" href="https://www.costco.com.tw/p/144759" target="_blank" onclick="event.stopPropagation()">🛒 好市多官網</a><a class="daybuy-link" href="https://www.daybuy.tw/costco/115883/" target="_blank" onclick="event.stopPropagation()">📰 daybuy 情報頁</a>
 </div>
 <div class="card" id="c_ials_Pest_Control_Air_Care_p_152666" data-cat="__其他" data-deal="hotbuys">
   <a href="https://www.costco.com.tw/Household-Baby-Toys/Household-Essentials/Pest-Control-Air-Care/p/152666" target="_blank" rel="noopener" class="card-link">
     <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h2a/h93/345530296991774.jpg" alt="必安住白蟻蟑螂跳蚤藥" loading="lazy" onerror="this.style.display='none'"><div class="badge">-37.2%</div></div>
     <div class="card-body">
       <p class="card-name">必安住白蟻蟑螂跳蚤藥</p>
-      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 6 天</span>
+      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 5 天</span>
       
       <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
       <div class="card-price">
@@ -1330,37 +1279,18 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
         <span class="sale">$135</span>
       </div>
       <p class="card-save">省 $80</p>
-      <p class="history">🆕 首次出現</p>
+      <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
   <button class="change-cat-btn" onclick="openCatModal('c_ials_Pest_Control_Air_Care_p_152666','__其他','必安住白蟻蟑螂跳蚤藥','https://www.costco.com.tw/Household-Baby-Toys/Household-Essentials/Pest-Control-Air-Care/p/152666')" title="修改分類（需登入）">✏️</button>
   
-</div>
-<div class="card" id="c_ttps___www_daybuy_tw_costco_115883_" data-cat="__其他" data-deal="coupon">
-  <a href="https://www.daybuy.tw/costco/115883/" target="_blank" rel="noopener" class="card-link">
-    <div class="card-img"><img src="https://static.daybuy.tw/wp-content/uploads/2024/04/IMG_8416.jpeg" alt="這包 卜蜂紅燒棒腿" loading="lazy" onerror="this.style.display='none'"><div class="badge">-20.1%</div><a class="src-icon" href="https://www.daybuy.tw/costco/115883/" target="_blank" onclick="event.stopPropagation()" title="daybuy 情報">📰</a></div>
-    <div class="card-body">
-      <p class="card-name">這包 卜蜂紅燒棒腿</p>
-      <span class="deal-type-badge badge-coup">🏷️ 精選優惠</span><span class="deal-type-badge badge-hidden" title="人工confirm的賣場隱藏優惠，折扣可能隨時異動">🏪 賣場隱藏</span>
-      
-      <p class="deal-period">📅 2026.06.12~2026.07.05<span class="confirm-date-hint" title="此折扣為人工confirm的暫時性資料，僅代表06/22當時確認狀態，可能已變動">🕐 06/22確認</span></p>
-      <div class="card-price">
-        <span class="orig">$399</span><span class='arrow'>→</span>
-        <span class="sale">$319</span>
-      </div>
-      <p class="card-save">省 $80</p>
-      <p class="history">🆕 首次出現</p>
-    </div>
-  </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_ttps___www_daybuy_tw_costco_115883_','__其他','這包 卜蜂紅燒棒腿','https://www.daybuy.tw/costco/115883/')" title="修改分類（需登入）">✏️</button>
-  <a class="daybuy-link official-link" href="https://www.costco.com.tw/p/144759" target="_blank" onclick="event.stopPropagation()">🛒 好市多官網</a><a class="daybuy-link" href="https://www.daybuy.tw/costco/115883/" target="_blank" onclick="event.stopPropagation()">📰 daybuy 情報頁</a>
 </div>
 <div class="card" id="c_avy_Day_Pad_27_cm_32_Piece_p_115672" data-cat="__其他" data-deal="hotbuys">
   <a href="https://www.costco.com.tw/Health-Beauty/Personal-Care/Feminine-Care/Whisper-Infinity-Heavy-Day-Pad-27-cm-32-Piece/p/115672" target="_blank" rel="noopener" class="card-link">
     <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h4a/he4/255087284682782.jpg" alt="好自在 液體衛生棉量多日用 27公分 32片" loading="lazy" onerror="this.style.display='none'"><div class="badge">-27.0%</div></div>
     <div class="card-body">
       <p class="card-name">好自在 液體衛生棉量多日用 27公分 32片</p>
-      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 6 天</span>
+      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 5 天</span>
       
       <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
       <div class="card-price">
@@ -1368,10 +1298,29 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
         <span class="sale">$189</span>
       </div>
       <p class="card-save">省 $70</p>
-      <p class="history">🆕 首次出現</p>
+      <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
   <button class="change-cat-btn" onclick="openCatModal('c_avy_Day_Pad_27_cm_32_Piece_p_115672','__其他','好自在 液體衛生棉量多日用 27公分 32片','https://www.costco.com.tw/Health-Beauty/Personal-Care/Feminine-Care/Whisper-Infinity-Heavy-Day-Pad-27-cm-32-Piece/p/115672')" title="修改分類（需登入）">✏️</button>
+  
+</div>
+<div class="card" id="c_umpkin_Seed_Kernels_835_g_p_2038563" data-cat="__其他" data-deal="coupon">
+  <a href="https://www.costco.com.tw/Food-Dining/Snacks/Nuts-Jerky/BASSE-Pumpkin-Seed-Kernels-835-g/p/2038563" target="_blank" rel="noopener" class="card-link">
+    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/had/h5d/397823965986846.jpg" alt="BASSÉ 南瓜籽仁 835公克" loading="lazy" onerror="this.style.display='none'"><div class="badge">-23.4%</div></div>
+    <div class="card-body">
+      <p class="card-name">BASSÉ 南瓜籽仁 835公克</p>
+      <span class="deal-type-badge badge-coup">🏷️ 精選優惠</span>
+      
+      
+      <div class="card-price">
+        <span class="orig">$369</span><span class='arrow'>→</span>
+        <span class="sale">$229</span>
+      </div>
+      <p class="card-save">省 $70</p>
+      <p class="history">🆕 首次出現</p>
+    </div>
+  </a>
+  <button class="change-cat-btn" onclick="openCatModal('c_umpkin_Seed_Kernels_835_g_p_2038563','__其他','BASSÉ 南瓜籽仁 835公克','https://www.costco.com.tw/Food-Dining/Snacks/Nuts-Jerky/BASSE-Pumpkin-Seed-Kernels-835-g/p/2038563')" title="修改分類（需登入）">✏️</button>
   
 </div>
 </div>
@@ -1395,7 +1344,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
   </div>
 </div>
 
-<footer>🤖 Hermes Agent 自動整理｜資料來源：costco.com.tw｜更新：2026-06-22 09:22<br>🏪=賣場同售 📰=daybuy情報 ✏️=登入後可修改分類</footer>
+<footer>🤖 Hermes Agent 自動整理｜資料來源：costco.com.tw｜更新：2026-06-23 09:12<br>🏪=賣場同售 📰=daybuy情報 ✏️=登入後可修改分類</footer>
 
 <!-- 分類 Modal -->
 <div class="modal-overlay" id="catModal" onclick="if(event.target===this)closeModal()">
@@ -1438,7 +1387,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
 
 <script>
 const ALL_CATS = ["🐾 寵物用品", "🍱 食品飲料", "📺 家電 3C", "🧴 保健美妝", "🏠 生活用品", "👕 服飾寢具", "🧸 玩具育兒", "🏋️ 運動戶外", "📦 其他"];
-const DB_OVERRIDES = {"c_ng_Water_500_ml_X_24_Count_p_151543": "__é£åé£²æ", "c_an_Pants_Size_XL_116_Piece_p_246574": "__ç©å·è²å", "c_Coconut_Water_1_L_X_6_Count_p_75130": "__é£åé£²æ", "c__Calbee_Fruit_Granola_1_kg_p_216971": "__é£åé£²æ", "c_iban_Tape_Size_L_156_Piece_p_246571": "__ç©å·è²å", "c_sule_60_Capsule_X_2_Bottle_p_125360": "__ä¿å¥ç¾å¦", "c_ban_Pants_Size_L_144_Piece_p_246573": "__ç©å·è²å", "c_ban_Tape_Size_XL_124_Piece_p_246572": "__ç©å·è²å", "c_iban_Tape_Size_M_186_Piece_p_246570": "__ç©å·è²å", "c_an_Pants_Size_XXL_93_Piece_p_246575": "__ç©å·è²å", "c_ns_Short_Sleeve_Polo_Shirt_p_134126": "__æé£¾å¯¢å·", "c_lavored_Potato_Chips_580_g_p_123855": "__é£åé£²æ", "c_weet_Potato_38_g_X_16_Pack_p_132366": "__é£åé£²æ", "c_ntial_Probiotic_120_Capsule_p_97716": "__ä¿å¥ç¾å¦", "c_iban_Tape_Size_S_232_Piece_p_246569": "__ç©å·è²å", "c_in_Drink_300_ml_X_12_Count_p_136603": "__ä¿å¥ç¾å¦", "c_nd_Strawberry_Jelly_186_kg_p_123003": "__é£åé£²æ", "c_ge_Assorted_Pack_200_Piece_p_231119": "__é£åé£²æ", "c__EVERYTIME_10_ml_X_30_Pack_p_186999": "__ä¿å¥ç¾å¦", "c_ore_Folding_Chair_2_Piece_p_1276530": "__çæ´»ç¨å", "c_ive_ion_Hair_Dryer_TD570TW_p_152520": "__çæ´»ç¨å", "c_age_with_Lid_12_Piece_Set_p_8523323": "__çæ´»ç¨å", "c_n_Pants_Size_XXXL_93_Piece_p_246576": "__ç©å·è²å", "c__Oatmeal_Mini_Bite_1000_g_p_1212068": "__é£åé£²æ", "c_ence_Drink_25_ml_X_30_Pack_p_142927": "__ä¿å¥ç¾å¦", "c__Flexispot_Adjustable_Desk_p_158513": "__çæ´»ç¨å", "c_ter_Gel_Cream_120_ml_50_ml_p_681601": "__ä¿å¥ç¾å¦", "c_ll_Cream_Milk_Powder_25_kg_p_230352": "__ç©å·è²å", "c_Mire_Biscuit_70g_X_10_Pack_p_145475": "__é£åé£²æ", "c_Bou_Stuffed_Egg_Roll_480_g_p_144711": "__é£åé£²æ", "c_ER_Pure_Baking_Soda_612_kg_p_488431": "__çæ´»ç¨å", "c_est_Grove_Trail_Mix_907_g_p_1056107": "__é£åé£²æ", "c_ls_Pest_Control_Air_Care__s_p_73655": "__çæ´»ç¨å", "c_Seaweed_Potato_Chips_550_g_p_125733": "__é£åé£²æ", "c_min_Soda_330_ml_X_24_Count_p_141523": "__é£åé£²æ", "c_ling_Orange_320ml_X_24_Can_p_149152": "__é£åé£²æ", "c_conut_Latte_16_g_X_50_Pack_p_149178": "__é£åé£²æ", "c_asting_AA_Battery_40_Pack_p_1012891": "__çæ´»ç¨å", "c_DClean_shower_head_package_p_127125": "__çæ´»ç¨å", "c_Ladies_Casual_Denim_Jeans_p_1956376": "__æé£¾å¯¢å·", "c_No_Label_500_ml_X_24_Count_p_150350": "__食品飲料", "c_es_Long_Sleeve_Pajama_Set_p_1846321": "__服飾寢具", "c_led_Belcube_250_g_X_2_Pack_p_113041": "__食品飲料", "c_https___www_daybuy_tw_costco_37195_": "__食品飲料", "c_Mango_Milk_Pudding_6_Count_p_124007": "__食品飲料", "c_https___www_daybuy_tw_costco_43837_": "__生活用品", "c_ttps___www_daybuy_tw_costco_121418_": "__食品飲料", "c_ttps___www_daybuy_tw_costco_213783_": "__生活用品", "c_House_100_Baking_Soda_4_kg_p_134566": "__生活用品", "c_https___www_costco_com_tw_p_125978": "__食品飲料", "c_sting_AAA_Battery_40_Pack_p_1012885": "__家電_3C", "c_https___www_daybuy_tw_costco_32970_": "__食品飲料", "c_https___www_costco_com_tw_p_681601": "__生活用品", "c_com_tw_Household_Baby_Toys_p_246575": "__玩具育兒", "c_od_Great_Day_Seafood_Congee_40_g_X_30_Pack_p_96387": "__é£åé£²æ", "c_anging_Dehumidifier_Bag_385_ml_X_15_Count_p_157762": "__å®¶é»_3C", "c_ormance_Plus_Cat_Litter_476_kg_X_4_Count_p_1529177": "__çæ´»ç¨å", "c__Megumi_Hair_Essence_160_ml_Refill_150_ml_p_157761": "__å¥åº·ç¾å¦", "c_www_pttweb_cc_bbs_hypermall_M_1779184003_A_4D2": "__å®¶é»_3C", "c_www_daybuy_tw_costco_248853_": "__å®¶å·é¤å»", "c__Pet_Dry_Wet_Food_Cat_Chow_Cat_Food_68_kg_p_126098": "__çæ´»ç¨å", "c_e_No_Extra_Added_Sweetness_Soy_Milk_25_kg_p_141611": "__é£åé£²æ", "c_hoes_Mens_Shoes_Adidas_Mens_Runvista_Shoe_p_154456": "__æé£¾æå°", "c__Full_Synthetic_Motor_Oil_946_ml_X_6_Pack_p_125482": "__é£åé£²æ", "c_ffee_Nescafe_Sicily_Coffee_15_g_X_40_Pack_p_150636": "__é£åé£²æ", "c__Almond_Gift_Pack_14_g_X_20_Pack_X_2_Box_p_1116888": "__é£åé£²æ", "c__Womens_Shoes_Adidas_Runvista_Womens_Shoe_p_154454": "__æé£¾æå°", "c_mins_Youtheory_Collagen_Biotin_390_Tablet_p_554059": "__é£åé£²æ", "c_oneless_Thigh_Thirteen_Spices_Breast_5_kg_p_157706": "__é£åé£²æ", "c_s_Mens_Shoes_Skechers_Mens_Athletic_Shoe_p_1961251": "__æé£¾æå°", "c__Iced_Latte_Caramel_Flavor_30_g_X_40_Pack_p_146963": "__é£åé£²æ", "c_aPop_Sweet_and_Salty_Kettle_Popcorn_652_g_p_979885": "__é£åé£²æ", "c_ol_Multi_Surface_Cleaner_177_L_X_2_Count_p_1805039": "__çæ´»ç¨å", "c_EAZEN_Kombucha_Lemon_Flavor_5_g_X_40_Pack_p_141460": "__é£åé£²æ", "c_inks_Tea_I_Mei_Milk_Tea_250_ml_X_24_Count_p_133087": "__é£åé£²æ", "c_ong_Yu_Frozen_Seafood_Shrimp_Pancake_2_kg_p_247284": "__é£åé£²æ", "c__c_AGV_100_Oatmeal_Drink_340_ml_X_12_Count_p_97313": "__é£åé£²æ", "c_ks_Veranda_Blend_Whole_Bean_Coffee_113_kg_p_648080": "__é£åé£²æ", "c_orts_Kirkland_Signature_Players_Iron_Set_p_1740556": "__éåæ¶å¤", "c__Kirkland_Signature_Ladies_Hoodie_Jacket_p_7771776": "__æé£¾æå°", "c_e_Leather_Golf_Glove_4_Pack_Right_Handed_p_1418682": "__æé£¾æå°", "c_rethane_Cover_Golf_Ball_3_Count_X_8_Pack_p_1654518": "__éåæ¶å¤", "c_e_Logo_Unisex_Crew_Neck_Short_Sleeve_Tee_p_7771755": "__æé£¾æå°", "c_Kirkland_Signature_Mens_Short_Sleeve_Tee_p_7771459": "__æé£¾æå°", "c_and_Signature_Mens_Classic_5_Pocket_Pant_p_7771464": "__æé£¾æå°", "c_kland_Signature_Ladies_Lightweight_Short_p_7771782": "__æé£¾æå°", "c_es_Shoes_Womens_Shoes_Lacoste_Ladies_Shoe_p_154493": "__æé£¾æå°", "c_cks_Nuts_Jerky_North_Sea_Fish_Snacks_600_g_p_78623": "__é£åé£²æ", "c__L_Top_Mount_Freezer_Fridge_RT62N704HS9TW_p_126223": "__å®¶é»_3C", "c__with_Cheese_Rice_Burger_195_g_X_10_Count_p_155717": "__é£åé£²æ", "c_ranberry_Milk_Cereal_Bar_235_g_X_32_Count_p_227818": "__é£åé£²æ", "c_nut_Flavored_Milk_Drink_200_ml_X_24_Count_p_298724": "__é£åé£²æ", "c_Steel_Travel_Tumbler_750_ml_X_2_Piece_Set_p_147551": "__å®¶å·é¤å»", "c_ces_Shampoo_Blue_Ginger_and_Micellar_12_L_p_139521": "__å¥åº·ç¾å¦", "c_nced_Whitening_Toothpaste_181_g_X_5_Pack_p_1285702": "__å¥åº·ç¾å¦", "c_ad_To_Toe_Shampoo_Body_Wash_1000_ml_80_ml_p_133118": "__å¥åº·ç¾å¦", "c_rae_Melon_Flavored_Milk_200_ml_X_24_Count_p_298723": "__é£åé£²æ", "c_hampoo_Body_Wash_1000_ml_Citrus_Cedarwood_p_150878": "__å¥åº·ç¾å¦", "c_Brazil_Cerrado_Drip_Coffee_11_g_X_50_Count_p_37742": "__é£åé£²æ", "c_s_Socks_Intimates_Gunze_Soft_Wirefree_Bra_p_160561": "__æé£¾æå°", "c_g_White_Coffee_Cappuccino_30_g_X_80_Count_p_274199": "__é£åé£²æ", "c__20mg_with_Minerals_Vitamins_150_Softgels_p_335354": "__å¥åº·ç¾å¦", "c_Power_OXI_Liquid_Laundry_Detergent_408_L_p_3160440": "__çæ´»ç¨å", "c_Premium_Roast_Drip_Coffee_12_g_X_50_Count_p_101940": "__é£åé£²æ", "c_ed_Cat_Food_with_3_Flavors_80_g_X_24_Count_p_95452": "__é£åé£²æ", "c_n_1_Instant_Coffee_Latte_21_g_X_100_Count_p_109399": "__é£åé£²æ", "c_ung_13_kg_AI_Top_Load_Washer_WA80F13S5LTW_p_155133": "__å®¶é»_3C", "c_te_Machine_Zojirushi_Rice_Cooker_NS_ZLF18_p_122731": "__å®¶é»_3C", "c_ories_Honeywell_Air_Purifier_HPA5350WTWV1_p_157137": "__å®¶é»_3C", "c_www_costco_com_tw_Food_Dining_Snacks_p_78623": "__é£åé£²æ", "c_com_tw_Food_Dining_Drinks_Beverages_Juice_p_298724": "__é£åé£²æ", "c_com_tw_Food_Dining_Drinks_Beverages_Juice_p_298723": "__é£åé£²æ", "c_www_costco_com_tw_Household_Baby_Toys_p_1805039": "__çæ´»ç¨å", "c_www_costco_com_tw_Food_Dining_Snacks_p_120108": "__é£åé£²æ", "c_www_costco_com_tw_Food_Dining_Snacks_p_1056107": "__é£åé£²æ", "c_ood_Dining_Frozen_Fresh_Food_Frozen_Meals_p_247284": "__é£åé£²æ", "c_www_costco_com_tw_Food_Dining_Snacks_p_125733": "__é£åé£²æ", "c_www_costco_com_tw_Household_Baby_Toys_p_139234": "__ç©å·è²å", "c_www_costco_com_tw_Food_Dining_Snacks_p_1212068": "__é£åé£²æ", "c_www_costco_com_tw_p_1276530": "__å®¶å·é¤å»", "c_www_costco_com_tw_p_8523323": "__å®¶é»_3C", "c_www_costco_com_tw_p_186999": "__å¥åº·ç¾å¦", "c_www_costco_com_tw_Household_Baby_Toys_p_246569": "__æé£¾æå°", "c_www_costco_com_tw_p_1285702": "__å¥åº·ç¾å¦", "c_www_costco_com_tw_Household_Baby_Toys_p_246572": "__æé£¾æå°", "c_www_costco_com_tw_p_150878": "__å¥åº·ç¾å¦", "c_www_costco_com_tw_Food_Dining_Drinks_p_274199": "__é£åé£²æ", "c_www_costco_com_tw_p_125360": "__é£åé£²æ", "c_www_costco_com_tw_p_335354": "__å¥åº·ç¾å¦", "c_www_costco_com_tw_p_122731": "__å®¶é»_3C", "c_eatment_Air_Purifiers_Filters_Accessories_p_157137": "__å®¶é»_3C", "c_aturals_Cranberry_Concentrate_250_Capsule_p_994336": "__å¥åº·ç¾å¦", "c_www_costco_com_tw_p_137510": "__å®¶é»_3C", "c_www_daybuy_tw_costco_241312_": "__å¥åº·ç¾å¦", "c_i_Kinoko_Chocolate_Biscuits_66_g_X_8_Pack_p_203565": "__é£åé£²æ", "c_nchy_Nut_Chia_Seeds_Cereal_31_g_X_50_Pack_p_140611": "__é£åé£²æ", "c_ed_Goods_Vilson_Organic_Black_Bean_1500_g_p_208632": "__é£åé£²æ", "c_ed_Food_Heinz_Lobster_Bisque_1_L_X_2_Pack_p_150603": "__é£åé£²æ", "c_ps_Want_Want_Assorted_Rice_Crackers_827_g_p_120108": "__é£åé£²æ", "c_ps_New_Choice_Crispiroll_Mocha_Flavor_1_kg_p_67643": "__é£åé£²æ", "c_rm_Wet_Wipes_Unscented_72_Sheet_X_16_Pack_p_139234": "__ç©å·è²å", "c_nd_Tofu_Cat_Litter_Original_5_L_X_6_Count_p_121647": "__é£åé£²æ", "c__Wafers_Cocoa_Cocoa_Flavor_30_g_X_20_Pack_p_263941": "__é£åé£²æ", "c_eenex_Flushable_Wipes_46_Sheet_X_32_Count_p_123333": "__çæ´»ç¨å", "c_www_costco_com_tw_p_994336": "__å¥åº·ç¾å¦", "c_neloop_AAA_Rechargeable_Batteries_10_Pack_p_137510": "__å®¶é»_3C", "c_www_costco_com_tw_p_158560": "__å®¶å·é¤å»", "c_n_Care_Torriden_DIVE_IN_Mask_Set_24_Piece_p_158784": "__å¥åº·ç¾å¦", "c_www_daybuy_tw_costco_31177_": "__é£åé£²æ", "c_www_costco_com_tw_Food_Dining_Drinks_p_150636": "__é£åé£²æ", "c_ing_Frozen_Fresh_Food_Frozen_Seafood_Meat_p_157706": "__é£åé£²æ", "c_com_tw_Food_Dining_Drinks_Beverages_Juice_p_141523": "__é£åé£²æ", "c_www_costco_com_tw_Food_Dining_Snacks_p_67643": "__é£åé£²æ", "c_www_costco_com_tw_Food_Dining_Snacks_p_144711": "__é£åé£²æ", "c_www_costco_com_tw_Large_Appliances_p_126223": "__å®¶é»_3C", "c_www_costco_com_tw_p_97716": "__å¥åº·ç¾å¦", "c_www_costco_com_tw_Household_Baby_Toys_p_246570": "__æé£¾æå°", "c_www_costco_com_tw_Large_Appliances_p_155133": "__å®¶é»_3C", "c_d_BeeTouched_Honey_Milk_250_ml_X_24_Count_p_135879": "__é£åé£²æ", "c_riginal_Fried_Chicken_Breast_Strips_17_kg_p_153647": "__é£åé£²æ", "c_IKO_Coffee_Candy_Sharebox_150_g_X_10_Pack_p_555551": "__é£åé£²æ", "c_oods_Marukome_Miso_Soup_Less_Salt_36_Pack_p_156759": "__é£åé£²æ", "c_ks_Tea_Blossom_Jinxuan_Tea_300_g_X_2_Pack_p_210915": "__é£åé£²æ", "c_nt_Ladies_Advent_Draped_Pleated_Wide_Pant_p_156457": "__æé£¾æå°", "c_mas_Advent_Ladies_Short_Sleeve_Pajama_Set_p_156611": "__æé£¾æå°", "c_ages_Juice_AW_Root_Beer_325_ml_X_24_Count_p_316384": "__é£åé£²æ", "c_ion_Shaving_Set_Razor_X_1_Blades_X_7_Pack_p_394744": "__å®¶å·é¤å»", "c__Tree_Top_Sparkling_Orange_320ml_X_24_Can_p_149152": "__é£åé£²æ", "c_com_tw_Food_Dining_Drinks_Beverages_Juice_p_149152": "__é£åé£²æ", "c__Potato_Clam_Chowder_Soup_169_g_X_32_Pack_p_157484": "__é£åé£²æ", "c_mins_Natrol_Biotin_10000_mcg_X_100_Tablet_p_115609": "__å¥åº·ç¾å¦", "c_itamins_WEIDER_Daily_Nutripack_50_30_Pack_p_217619": "__å¥åº·ç¾å¦", "c_ly_White_Paper_Towel_103_Sheet_X_12_Roll_p_1919326": "__çæ´»ç¨å", "c_va_3_ply_Kitchen_Towel_60_Sheet_X_16_Roll_p_127295": "__çæ´»ç¨å", "c_www_costco_com_tw_Household_Baby_Toys_p_127295": "__çæ´»ç¨å", "c_sehold_Essentials_Pest_Control_Air_Care__s_p_73655": "__çæ´»ç¨å", "c_www_costco_com_tw_Household_Baby_Toys_p_73655": "__çæ´»ç¨å", "c__Smart_Indoor_Cycling_Bike_p_140176": "___運動戶外", "c_e_Eufy_Robot_Vacuum_Mop_S1_p_157134": "__家電_3C", "c_nverter_Stand_Fan_FS40125R_p_126487": "__家電_3C", "c_edon_3_Seater_Fabric_Sofa_p_1987637": "__服飾寢具", "c_e_UC_II_Collagen_90_Tablet_p_127189": "__保健美妝", "c_Daily_Nutripack_50_30_Pack_p_217619": "__保健美妝", "c_es_Short_Sleeve_Pajama_Set_p_156611": "__服飾寢具", "c_t_Draped_Pleated_Wide_Pant_p_156457": "__服飾寢具", "c_oot_Beer_325_ml_X_24_Count_p_316384": "__食品飲料", "c__Razor_X_1_Blades_X_7_Pack_p_394744": "__保健美妝", "c__com_tw_Household_Baby_Toys_p_73655": "__生活用品"};
+const DB_OVERRIDES = {"c_ng_Water_500_ml_X_24_Count_p_151543": "__é£åé£²æ", "c_an_Pants_Size_XL_116_Piece_p_246574": "__ç©å·è²å", "c_Coconut_Water_1_L_X_6_Count_p_75130": "__é£åé£²æ", "c__Calbee_Fruit_Granola_1_kg_p_216971": "__é£åé£²æ", "c_iban_Tape_Size_L_156_Piece_p_246571": "__ç©å·è²å", "c_sule_60_Capsule_X_2_Bottle_p_125360": "__ä¿å¥ç¾å¦", "c_ban_Pants_Size_L_144_Piece_p_246573": "__ç©å·è²å", "c_ban_Tape_Size_XL_124_Piece_p_246572": "__ç©å·è²å", "c_iban_Tape_Size_M_186_Piece_p_246570": "__ç©å·è²å", "c_an_Pants_Size_XXL_93_Piece_p_246575": "__ç©å·è²å", "c_ns_Short_Sleeve_Polo_Shirt_p_134126": "__æé£¾å¯¢å·", "c_lavored_Potato_Chips_580_g_p_123855": "__é£åé£²æ", "c_weet_Potato_38_g_X_16_Pack_p_132366": "__é£åé£²æ", "c_ntial_Probiotic_120_Capsule_p_97716": "__ä¿å¥ç¾å¦", "c_iban_Tape_Size_S_232_Piece_p_246569": "__ç©å·è²å", "c_in_Drink_300_ml_X_12_Count_p_136603": "__ä¿å¥ç¾å¦", "c_nd_Strawberry_Jelly_186_kg_p_123003": "__é£åé£²æ", "c_ge_Assorted_Pack_200_Piece_p_231119": "__é£åé£²æ", "c__EVERYTIME_10_ml_X_30_Pack_p_186999": "__ä¿å¥ç¾å¦", "c_ore_Folding_Chair_2_Piece_p_1276530": "__çæ´»ç¨å", "c_ive_ion_Hair_Dryer_TD570TW_p_152520": "__çæ´»ç¨å", "c_age_with_Lid_12_Piece_Set_p_8523323": "__çæ´»ç¨å", "c_n_Pants_Size_XXXL_93_Piece_p_246576": "__ç©å·è²å", "c__Oatmeal_Mini_Bite_1000_g_p_1212068": "__é£åé£²æ", "c_ence_Drink_25_ml_X_30_Pack_p_142927": "__ä¿å¥ç¾å¦", "c__Flexispot_Adjustable_Desk_p_158513": "__çæ´»ç¨å", "c_ter_Gel_Cream_120_ml_50_ml_p_681601": "__ä¿å¥ç¾å¦", "c_ll_Cream_Milk_Powder_25_kg_p_230352": "__ç©å·è²å", "c_Mire_Biscuit_70g_X_10_Pack_p_145475": "__é£åé£²æ", "c_Bou_Stuffed_Egg_Roll_480_g_p_144711": "__é£åé£²æ", "c_ER_Pure_Baking_Soda_612_kg_p_488431": "__çæ´»ç¨å", "c_est_Grove_Trail_Mix_907_g_p_1056107": "__é£åé£²æ", "c_ls_Pest_Control_Air_Care__s_p_73655": "__çæ´»ç¨å", "c_Seaweed_Potato_Chips_550_g_p_125733": "__é£åé£²æ", "c_min_Soda_330_ml_X_24_Count_p_141523": "__é£åé£²æ", "c_ling_Orange_320ml_X_24_Can_p_149152": "__é£åé£²æ", "c_conut_Latte_16_g_X_50_Pack_p_149178": "__é£åé£²æ", "c_asting_AA_Battery_40_Pack_p_1012891": "__çæ´»ç¨å", "c_DClean_shower_head_package_p_127125": "__çæ´»ç¨å", "c_Ladies_Casual_Denim_Jeans_p_1956376": "__æé£¾å¯¢å·", "c_No_Label_500_ml_X_24_Count_p_150350": "__食品飲料", "c_es_Long_Sleeve_Pajama_Set_p_1846321": "__服飾寢具", "c_led_Belcube_250_g_X_2_Pack_p_113041": "__食品飲料", "c_https___www_daybuy_tw_costco_37195_": "__食品飲料", "c_Mango_Milk_Pudding_6_Count_p_124007": "__食品飲料", "c_https___www_daybuy_tw_costco_43837_": "__生活用品", "c_ttps___www_daybuy_tw_costco_121418_": "__食品飲料", "c_ttps___www_daybuy_tw_costco_213783_": "__生活用品", "c_House_100_Baking_Soda_4_kg_p_134566": "__生活用品", "c_https___www_costco_com_tw_p_125978": "__食品飲料", "c_sting_AAA_Battery_40_Pack_p_1012885": "__家電_3C", "c_https___www_daybuy_tw_costco_32970_": "__食品飲料", "c_https___www_costco_com_tw_p_681601": "__生活用品", "c_com_tw_Household_Baby_Toys_p_246575": "__玩具育兒", "c_od_Great_Day_Seafood_Congee_40_g_X_30_Pack_p_96387": "__é£åé£²æ", "c_anging_Dehumidifier_Bag_385_ml_X_15_Count_p_157762": "__å®¶é»_3C", "c_ormance_Plus_Cat_Litter_476_kg_X_4_Count_p_1529177": "__çæ´»ç¨å", "c__Megumi_Hair_Essence_160_ml_Refill_150_ml_p_157761": "__å¥åº·ç¾å¦", "c_www_pttweb_cc_bbs_hypermall_M_1779184003_A_4D2": "__å®¶é»_3C", "c_www_daybuy_tw_costco_248853_": "__å®¶å·é¤å»", "c__Pet_Dry_Wet_Food_Cat_Chow_Cat_Food_68_kg_p_126098": "__çæ´»ç¨å", "c_e_No_Extra_Added_Sweetness_Soy_Milk_25_kg_p_141611": "__é£åé£²æ", "c_hoes_Mens_Shoes_Adidas_Mens_Runvista_Shoe_p_154456": "__æé£¾æå°", "c__Full_Synthetic_Motor_Oil_946_ml_X_6_Pack_p_125482": "__é£åé£²æ", "c_ffee_Nescafe_Sicily_Coffee_15_g_X_40_Pack_p_150636": "__é£åé£²æ", "c__Almond_Gift_Pack_14_g_X_20_Pack_X_2_Box_p_1116888": "__é£åé£²æ", "c__Womens_Shoes_Adidas_Runvista_Womens_Shoe_p_154454": "__æé£¾æå°", "c_mins_Youtheory_Collagen_Biotin_390_Tablet_p_554059": "__é£åé£²æ", "c_oneless_Thigh_Thirteen_Spices_Breast_5_kg_p_157706": "__é£åé£²æ", "c_s_Mens_Shoes_Skechers_Mens_Athletic_Shoe_p_1961251": "__æé£¾æå°", "c__Iced_Latte_Caramel_Flavor_30_g_X_40_Pack_p_146963": "__é£åé£²æ", "c_aPop_Sweet_and_Salty_Kettle_Popcorn_652_g_p_979885": "__é£åé£²æ", "c_ol_Multi_Surface_Cleaner_177_L_X_2_Count_p_1805039": "__çæ´»ç¨å", "c_EAZEN_Kombucha_Lemon_Flavor_5_g_X_40_Pack_p_141460": "__é£åé£²æ", "c_inks_Tea_I_Mei_Milk_Tea_250_ml_X_24_Count_p_133087": "__é£åé£²æ", "c_ong_Yu_Frozen_Seafood_Shrimp_Pancake_2_kg_p_247284": "__é£åé£²æ", "c__c_AGV_100_Oatmeal_Drink_340_ml_X_12_Count_p_97313": "__é£åé£²æ", "c_ks_Veranda_Blend_Whole_Bean_Coffee_113_kg_p_648080": "__é£åé£²æ", "c_orts_Kirkland_Signature_Players_Iron_Set_p_1740556": "__éåæ¶å¤", "c__Kirkland_Signature_Ladies_Hoodie_Jacket_p_7771776": "__æé£¾æå°", "c_e_Leather_Golf_Glove_4_Pack_Right_Handed_p_1418682": "__æé£¾æå°", "c_rethane_Cover_Golf_Ball_3_Count_X_8_Pack_p_1654518": "__éåæ¶å¤", "c_e_Logo_Unisex_Crew_Neck_Short_Sleeve_Tee_p_7771755": "__æé£¾æå°", "c_Kirkland_Signature_Mens_Short_Sleeve_Tee_p_7771459": "__æé£¾æå°", "c_and_Signature_Mens_Classic_5_Pocket_Pant_p_7771464": "__æé£¾æå°", "c_kland_Signature_Ladies_Lightweight_Short_p_7771782": "__æé£¾æå°", "c_es_Shoes_Womens_Shoes_Lacoste_Ladies_Shoe_p_154493": "__æé£¾æå°", "c_cks_Nuts_Jerky_North_Sea_Fish_Snacks_600_g_p_78623": "__é£åé£²æ", "c__L_Top_Mount_Freezer_Fridge_RT62N704HS9TW_p_126223": "__å®¶é»_3C", "c__with_Cheese_Rice_Burger_195_g_X_10_Count_p_155717": "__é£åé£²æ", "c_ranberry_Milk_Cereal_Bar_235_g_X_32_Count_p_227818": "__é£åé£²æ", "c_nut_Flavored_Milk_Drink_200_ml_X_24_Count_p_298724": "__é£åé£²æ", "c_Steel_Travel_Tumbler_750_ml_X_2_Piece_Set_p_147551": "__å®¶å·é¤å»", "c_ces_Shampoo_Blue_Ginger_and_Micellar_12_L_p_139521": "__å¥åº·ç¾å¦", "c_nced_Whitening_Toothpaste_181_g_X_5_Pack_p_1285702": "__å¥åº·ç¾å¦", "c_ad_To_Toe_Shampoo_Body_Wash_1000_ml_80_ml_p_133118": "__å¥åº·ç¾å¦", "c_rae_Melon_Flavored_Milk_200_ml_X_24_Count_p_298723": "__é£åé£²æ", "c_hampoo_Body_Wash_1000_ml_Citrus_Cedarwood_p_150878": "__å¥åº·ç¾å¦", "c_Brazil_Cerrado_Drip_Coffee_11_g_X_50_Count_p_37742": "__é£åé£²æ", "c_s_Socks_Intimates_Gunze_Soft_Wirefree_Bra_p_160561": "__æé£¾æå°", "c_g_White_Coffee_Cappuccino_30_g_X_80_Count_p_274199": "__é£åé£²æ", "c__20mg_with_Minerals_Vitamins_150_Softgels_p_335354": "__å¥åº·ç¾å¦", "c_Power_OXI_Liquid_Laundry_Detergent_408_L_p_3160440": "__çæ´»ç¨å", "c_Premium_Roast_Drip_Coffee_12_g_X_50_Count_p_101940": "__é£åé£²æ", "c_ed_Cat_Food_with_3_Flavors_80_g_X_24_Count_p_95452": "__é£åé£²æ", "c_n_1_Instant_Coffee_Latte_21_g_X_100_Count_p_109399": "__é£åé£²æ", "c_ung_13_kg_AI_Top_Load_Washer_WA80F13S5LTW_p_155133": "__å®¶é»_3C", "c_te_Machine_Zojirushi_Rice_Cooker_NS_ZLF18_p_122731": "__å®¶é»_3C", "c_ories_Honeywell_Air_Purifier_HPA5350WTWV1_p_157137": "__å®¶é»_3C", "c_www_costco_com_tw_Food_Dining_Snacks_p_78623": "__é£åé£²æ", "c_com_tw_Food_Dining_Drinks_Beverages_Juice_p_298724": "__é£åé£²æ", "c_com_tw_Food_Dining_Drinks_Beverages_Juice_p_298723": "__é£åé£²æ", "c_www_costco_com_tw_Household_Baby_Toys_p_1805039": "__çæ´»ç¨å", "c_www_costco_com_tw_Food_Dining_Snacks_p_120108": "__é£åé£²æ", "c_www_costco_com_tw_Food_Dining_Snacks_p_1056107": "__é£åé£²æ", "c_ood_Dining_Frozen_Fresh_Food_Frozen_Meals_p_247284": "__é£åé£²æ", "c_www_costco_com_tw_Food_Dining_Snacks_p_125733": "__é£åé£²æ", "c_www_costco_com_tw_Household_Baby_Toys_p_139234": "__ç©å·è²å", "c_www_costco_com_tw_Food_Dining_Snacks_p_1212068": "__é£åé£²æ", "c_www_costco_com_tw_p_1276530": "__å®¶å·é¤å»", "c_www_costco_com_tw_p_8523323": "__å®¶é»_3C", "c_www_costco_com_tw_p_186999": "__å¥åº·ç¾å¦", "c_www_costco_com_tw_Household_Baby_Toys_p_246569": "__æé£¾æå°", "c_www_costco_com_tw_p_1285702": "__å¥åº·ç¾å¦", "c_www_costco_com_tw_Household_Baby_Toys_p_246572": "__æé£¾æå°", "c_www_costco_com_tw_p_150878": "__å¥åº·ç¾å¦", "c_www_costco_com_tw_Food_Dining_Drinks_p_274199": "__é£åé£²æ", "c_www_costco_com_tw_p_125360": "__é£åé£²æ", "c_www_costco_com_tw_p_335354": "__å¥åº·ç¾å¦", "c_www_costco_com_tw_p_122731": "__å®¶é»_3C", "c_eatment_Air_Purifiers_Filters_Accessories_p_157137": "__å®¶é»_3C", "c_aturals_Cranberry_Concentrate_250_Capsule_p_994336": "__å¥åº·ç¾å¦", "c_www_costco_com_tw_p_137510": "__å®¶é»_3C", "c_www_daybuy_tw_costco_241312_": "__å¥åº·ç¾å¦", "c_i_Kinoko_Chocolate_Biscuits_66_g_X_8_Pack_p_203565": "__é£åé£²æ", "c_nchy_Nut_Chia_Seeds_Cereal_31_g_X_50_Pack_p_140611": "__é£åé£²æ", "c_ed_Goods_Vilson_Organic_Black_Bean_1500_g_p_208632": "__é£åé£²æ", "c_ed_Food_Heinz_Lobster_Bisque_1_L_X_2_Pack_p_150603": "__é£åé£²æ", "c_ps_Want_Want_Assorted_Rice_Crackers_827_g_p_120108": "__é£åé£²æ", "c_ps_New_Choice_Crispiroll_Mocha_Flavor_1_kg_p_67643": "__é£åé£²æ", "c_rm_Wet_Wipes_Unscented_72_Sheet_X_16_Pack_p_139234": "__ç©å·è²å", "c_nd_Tofu_Cat_Litter_Original_5_L_X_6_Count_p_121647": "__é£åé£²æ", "c__Wafers_Cocoa_Cocoa_Flavor_30_g_X_20_Pack_p_263941": "__é£åé£²æ", "c_eenex_Flushable_Wipes_46_Sheet_X_32_Count_p_123333": "__çæ´»ç¨å", "c_www_costco_com_tw_p_994336": "__å¥åº·ç¾å¦", "c_neloop_AAA_Rechargeable_Batteries_10_Pack_p_137510": "__å®¶é»_3C", "c_www_costco_com_tw_p_158560": "__å®¶å·é¤å»", "c_n_Care_Torriden_DIVE_IN_Mask_Set_24_Piece_p_158784": "__å¥åº·ç¾å¦", "c_www_daybuy_tw_costco_31177_": "__é£åé£²æ", "c_www_costco_com_tw_Food_Dining_Drinks_p_150636": "__é£åé£²æ", "c_ing_Frozen_Fresh_Food_Frozen_Seafood_Meat_p_157706": "__é£åé£²æ", "c_com_tw_Food_Dining_Drinks_Beverages_Juice_p_141523": "__é£åé£²æ", "c_www_costco_com_tw_Food_Dining_Snacks_p_67643": "__é£åé£²æ", "c_www_costco_com_tw_Food_Dining_Snacks_p_144711": "__é£åé£²æ", "c_www_costco_com_tw_Large_Appliances_p_126223": "__å®¶é»_3C", "c_www_costco_com_tw_p_97716": "__å¥åº·ç¾å¦", "c_www_costco_com_tw_Household_Baby_Toys_p_246570": "__æé£¾æå°", "c_www_costco_com_tw_Large_Appliances_p_155133": "__å®¶é»_3C", "c_d_BeeTouched_Honey_Milk_250_ml_X_24_Count_p_135879": "__é£åé£²æ", "c_riginal_Fried_Chicken_Breast_Strips_17_kg_p_153647": "__é£åé£²æ", "c_IKO_Coffee_Candy_Sharebox_150_g_X_10_Pack_p_555551": "__é£åé£²æ", "c_oods_Marukome_Miso_Soup_Less_Salt_36_Pack_p_156759": "__é£åé£²æ", "c_ks_Tea_Blossom_Jinxuan_Tea_300_g_X_2_Pack_p_210915": "__é£åé£²æ", "c_nt_Ladies_Advent_Draped_Pleated_Wide_Pant_p_156457": "__æé£¾æå°", "c_mas_Advent_Ladies_Short_Sleeve_Pajama_Set_p_156611": "__æé£¾æå°", "c_ages_Juice_AW_Root_Beer_325_ml_X_24_Count_p_316384": "__é£åé£²æ", "c_ion_Shaving_Set_Razor_X_1_Blades_X_7_Pack_p_394744": "__å®¶å·é¤å»", "c__Tree_Top_Sparkling_Orange_320ml_X_24_Can_p_149152": "__é£åé£²æ", "c_com_tw_Food_Dining_Drinks_Beverages_Juice_p_149152": "__é£åé£²æ", "c__Potato_Clam_Chowder_Soup_169_g_X_32_Pack_p_157484": "__é£åé£²æ", "c_mins_Natrol_Biotin_10000_mcg_X_100_Tablet_p_115609": "__å¥åº·ç¾å¦", "c_itamins_WEIDER_Daily_Nutripack_50_30_Pack_p_217619": "__å¥åº·ç¾å¦", "c_ly_White_Paper_Towel_103_Sheet_X_12_Roll_p_1919326": "__çæ´»ç¨å", "c_va_3_ply_Kitchen_Towel_60_Sheet_X_16_Roll_p_127295": "__çæ´»ç¨å", "c_www_costco_com_tw_Household_Baby_Toys_p_127295": "__çæ´»ç¨å", "c_sehold_Essentials_Pest_Control_Air_Care__s_p_73655": "__çæ´»ç¨å", "c_www_costco_com_tw_Household_Baby_Toys_p_73655": "__çæ´»ç¨å", "c__Smart_Indoor_Cycling_Bike_p_140176": "___運動戶外", "c_e_Eufy_Robot_Vacuum_Mop_S1_p_157134": "__家電_3C", "c_nverter_Stand_Fan_FS40125R_p_126487": "__家電_3C", "c_edon_3_Seater_Fabric_Sofa_p_1987637": "__服飾寢具", "c_e_UC_II_Collagen_90_Tablet_p_127189": "__保健美妝", "c_Daily_Nutripack_50_30_Pack_p_217619": "__保健美妝", "c_es_Short_Sleeve_Pajama_Set_p_156611": "__服飾寢具", "c_t_Draped_Pleated_Wide_Pant_p_156457": "__服飾寢具", "c_oot_Beer_325_ml_X_24_Count_p_316384": "__食品飲料", "c__Razor_X_1_Blades_X_7_Pack_p_394744": "__保健美妝", "c__com_tw_Household_Baby_Toys_p_73655": "__生活用品", "c_www_daybuy_tw_costco_193766_": "__健康美妝", "c_t_Chicken_Canned_Cat_Food_85_g_X_24_Count_p_120407": "__生活用品", "c_squito_Swatter_with_Lamp_2_Pack_DHF_T7092_p_151121": "__家電_3C", "c_on_Shrimp_Canned_Cat_Food_85_g_X_24_Count_p_120408": "__食品飲料", "c_fervescent_Black_Currant_Flavor_45_Tablet_p_200763": "__食品飲料", "c_oy_Protein_Isolate_Milk_Tea_Flavour_25_kg_p_150748": "__食品飲料", "c_ein_Soy_Protein_Isolate_Unflavoured_25_kg_p_150747": "__食品飲料", "c_n_Faros_Native_Chopped_Leg_1_kg_X_4_Count_p_133313": "__食品飲料", "c_p_Night_Shorts_Shaped_Pad_Size_M_24_Piece_p_134643": "__服飾時尚", "c_I_Kids_Back_To_School_Utensil_4_Piece_Set_p_160481": "__玩具育兒", "c_ment_Storage_with_Lid_4_Piece_Set_1300_ml_p_158744": "__家電_3C", "c_or_with_8_Outlet_and_2_USB_Charging_Ports_p_157739": "__家電_3C", "c_Maro_3D_Volume_Up_Shampoo_460_ml_X_2_Pack_p_122398": "__健康美妝", "c__Care_Spray_Strengthening_115_ml_X_2_Pack_p_157054": "__健康美妝", "c_Asia_Frozen_Shelled_Edamame_1_kg_X_5_Pack_p_863731": "__食品飲料", "c_p_Night_Shorts_Shaped_Pad_Size_L_24_Piece_p_134644": "__服飾時尚", "c_App_E_money_NT2000_with_1_Year_Membership_p_142634": "__運動戶外", "c__Night_Shorts_Shaped_Pad_Size_XL_24_Piece_p_134645": "__服飾時尚", "c_es_Kuze_Fuku_Nagasaki_Castella_Cake_314_g_p_138425": "__食品飲料", "c_Almond_Beverage_No_Sugar_196_ml_X_24_Pack_p_137161": "__食品飲料", "c__Woodsy_Scented_Essential_Shampoo_1000_ml_p_156489": "__健康美妝", "c_ath_Body_Cow_Brand_Aloe_Body_Soap_1200_ml_p_133093": "__健康美妝", "c_ture_Freezer_Bag_Medium_44_Bag_X_6_Count_p_1882069": "__食品飲料", "c_and_Signature_Extra_Virgin_Olive_Oil_2_L_p_1058619": "__食品飲料", "c_ockholm_4_Piece_Outdoor_Deep_Seating_Set_p_1934246": "__家具餐廚", "c__AI_Refrigerator_Starry_Gray_RS70F65Q4TTW_p_155431": "__家電_3C", "c_en_Frozen_Chicken_Essence_68_ml_X_50_Pack_p_218552": "__食品飲料", "c_www_costco_com_tw_p_8526947": "__玩具育兒", "c_www_costco_com_tw_Household_Baby_Toys_p_157762": "__家電_3C", "c_ein_No_Extra_Added_Sweetness_Sesame_25_kg_p_145509": "__食品飲料", "c_www_costco_com_tw_p_1882069": "__食品飲料", "c_land_Signature_Mens_Boxer_Brief_4_Pack_p_7700015_B": "__服飾時尚", "c_smacluster_Ion_Drape_Hair_Dryer_IB_WX1T_P_p_142741": "__家電_3C", "c_on_Purifier_BigQuiet_BP02_Filter_X_3_Pack_p_156487": "__家電_3C", "c_nut_Flavor_Espresso_Shot_16_ml_X_40_Count_p_234436": "__食品飲料", "c_otein_Isolate_Jin_Xuan_Latte_Flavor_750_g_p_156473": "__食品飲料", "c_ght_Weathered_Oak_Narrow_Sideboard_103_cm_p_157437": "__家具餐廚", "c_www_daybuy_tw_costco_115883_": "__其他", "c_plies_Ecodoo_Drain_Cleaner_1_L_X_2_Count_p_1137346": "__其他", "c__Caltrate_Mini_Tablets_70_Tablet_X_4_Pack_p_890910": "__其他", "c_es_Rice_Noodles_Le_Food_White_Quinoa_2_kg_p_158290": "__其他", "c_per_Infinity_Heavy_Day_Pad_27_cm_32_Piece_p_115672": "__其他", "c__Sanitary_Pad_Long_33cm_6_Piece_X_16_Pack_p_139917": "__其他", "c__Diffuser_Collection_500_ml_X_5_Piece_Set_p_154537": "__其他", "c_ousehold_Essentials_Pest_Control_Air_Care_p_153787": "__其他", "c_aweed_Crisps_with_Almonds_18_g_X_12_Count_p_960660": "__其他", "c__Crisps_with_Black_Sesame_18_g_X_12_Count_p_960661": "__其他", "c_GRAB_A_RAG_Microfiber_Towels_80_Piece_Box_p_148155": "__其他", "c_Labo_Kiwamizu_Hatomugi_Gel_100_g_x_2_Pack_p_139220": "__其他", "c_ousehold_Essentials_Pest_Control_Air_Care_p_152666": "__其他", "c_s_Bikes_Acer_ES_Series_7_Electric_Scooter_p_151497": "__其他", "c_www_costco_com_tw_p_216971": "__其他", "c_ng_Auto_Umbrella_2_Pack_43_inch_46_inch_p_155776_B": "__其他"};
 const PW_HASH_DEFAULT = "c322e3a7a451e26a03c85e48a515ba33238c203579314b9635a16745c72ad7ee";
 const CONFIG_URL = "https://raw.githubusercontent.com/s610034/costco-deals/main/data/config.json";
 const CONFIG_API = "https://api.github.com/repos/s610034/costco-deals/contents/data/config.json";
