@@ -30,7 +30,7 @@ from scraper        import scrape_all, save_json
 from formatter      import format_summary
 from generate_html  import generate_html
 from deploy         import deploy
-from notify         import tg_send
+from notify         import tg_send, line_send
 from database       import init_db, upsert_products, enrich_with_history, get_summary_stats, update_product_category
 
 DATA_DIR = os.path.join(BASE_DIR, "data")
@@ -477,14 +477,16 @@ def run():
     deployed = deploy()
     sync_overrides_to_github()  # DB overrides → GitHub
 
-    # Step 6：Telegram 推播
-    print(f"\n【Step 6】推播 Telegram...")
+    # Step 6：推播 Telegram + Line
+    print(f"\n【Step 6】推播通知...")
     summary = format_summary(new_products)
     msg = summary + f"\n\n📱 完整折扣清單：\n{PAGE_URL}"
     if not deployed:
         msg += "\n\n⚠️ 部署失敗，連結稍後更新"
     tg_send(msg)
     print("  ✅ Telegram 已發送")
+    line_send(msg)
+    print("  ✅ Line 已發送")
 
     elapsed = (datetime.datetime.now() - start).seconds
     print(f"\n{'='*52}")

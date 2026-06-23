@@ -16,7 +16,7 @@ with open(os.path.join(BASE_DIR, '.env')) as f:
 from database import init_db, enrich_with_history, get_summary_stats, update_product_category
 from generate_html import generate_html
 from deploy import deploy
-from notify import tg_send
+from notify import tg_send, line_send
 from formatter import format_summary
 
 init_db()
@@ -282,5 +282,7 @@ summary = format_summary(products)
 msg = summary + f"\n\n📱 完整折扣清單：\n{report_url}"
 tg_send(msg)
 print("  ✅ Telegram 已發送")
+line_send(msg)
+print("  ✅ Line 已發送")
 
 print('\n✅ 完成！')
