@@ -68,6 +68,19 @@ def fetch_sighting_articles(days: int = 7) -> list:
             seen.add(href)
             articles.append({"title": title, "url": href})
 
+        # 列表頁若暫時故障(如 daybuy 500 錯誤)，文章抓不到時用已知清單 fallback
+        # 這份清單會隨時間過期，daybuy 恢復正常後上面的爬取邏輯會自動取代它
+        if not articles:
+            fallback = [
+                {"title": "COSTCO好市多 本週限時隱藏優惠懶人包 2026 06.22(一)~06.28(日)",
+                 "url": "https://www.daybuy.tw/costco/256120/"},
+                {"title": "COSTCO好市多 2026/06/23 週二賣場隱藏優惠目擊情報",
+                 "url": "https://www.daybuy.tw/costco/256283/"},
+                {"title": "HAAGEN DAZS 哈根達斯冰淇淋特展 2026.06.08~2026.07.05",
+                 "url": "https://www.daybuy.tw/costco/256402/"},
+            ]
+            return fallback
+
         return articles
     except Exception as e:
         print(f"  ⚠️  抓取目擊情報失敗：{e}")
