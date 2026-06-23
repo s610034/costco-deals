@@ -164,8 +164,8 @@ def scrape_page(page, url: str, category_tag: str) -> List[Dict]:
             orig_el = card.query_selector(".original-price .product-price-amount, .product-price-amount")
             original_price = parse_number(orig_el.inner_text() if orig_el else "")
 
-            # 折扣金額
-            saving_el = card.query_selector(".savings, [class*='saving'], [class*='discount-amount']")
+            # 折扣金額（官網改版後 class 變為 discount-row-message，文字格式「商品已折價$1,200」）
+            saving_el = card.query_selector(".discount-row-message, .savings, [class*='saving'], [class*='discount-amount']")
             saving_text = saving_el.inner_text() if saving_el else ""
             if not saving_text:
                 panel_el = card.query_selector(".price-panel, .product-price")
