@@ -777,7 +777,9 @@ async function syncNow() {{
     if (getR.ok) {{
       const d = await getR.json();
       sha = d.sha;
-      existing = JSON.parse(atob(d.content.replaceAll(String.fromCharCode(10), "")));
+      const _b64 = d.content.replaceAll(String.fromCharCode(10), "");
+      const _bytes = Uint8Array.from(atob(_b64), c => c.charCodeAt(0));
+      existing = JSON.parse(new TextDecoder("utf-8").decode(_bytes));
     }}
     // 合併本地 overrides
     const local = getOverrides();
@@ -879,7 +881,9 @@ async function syncToGitHub(cardId, catId, productName, productLink) {{
     if (getR.ok) {{
       const d = await getR.json();
       sha = d.sha;
-      existing = JSON.parse(atob(d.content.replaceAll(String.fromCharCode(10), "")));
+      const _b64 = d.content.replaceAll(String.fromCharCode(10), "");
+      const _bytes = Uint8Array.from(atob(_b64), c => c.charCodeAt(0));
+      existing = JSON.parse(new TextDecoder("utf-8").decode(_bytes));
     }}
     existing[cardId] = {{cat: catId, name: productName, link: productLink}};
     const encoded = new TextEncoder().encode(JSON.stringify(existing, null, 2)); const content = btoa(String.fromCharCode(...encoded));

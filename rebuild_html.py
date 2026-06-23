@@ -72,7 +72,7 @@ def sync_overrides_from_github():
     try:
         with urllib.request.urlopen(req, timeout=10) as r:
             data = json.loads(r.read())
-        content = json.loads(base64.b64decode(data["content"].replace("\n", "")).decode())
+        content = json.loads(base64.b64decode(data["content"].replace("\n", "")).decode("utf-8"))
         count = 0
         for card_id, info in content.items():
             if isinstance(info, dict):
