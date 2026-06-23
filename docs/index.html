@@ -110,7 +110,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
 </style>
 <script>
   // 版本控制：每次部署時更新，強制瀏覽器重新載入
-  const BUILD_TIME = '20260623100206';
+  const BUILD_TIME = '20260623105438';
   const stored = localStorage.getItem('costco_build');
   if (stored && stored !== BUILD_TIME) {
     localStorage.setItem('costco_build', BUILD_TIME);
@@ -125,7 +125,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
   <div class="header-row">
     <h1>🛒 好市多折扣週報</h1>
     <span class="meta">📅 2026/06/23（06/22～06/28）</span>
-    <span class="total">共 71 項</span>
+    <span class="total">共 73 項</span>
     <div class="login-wrap">
       <button class="login-btn" id="loginToggleBtn" onclick="toggleLogin()">🔐 登入</button>
       <div class="editor-menu" id="editorMenu">
@@ -137,8 +137,8 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
     </div>
   </div>
   <div class="header-filters">
-  <button class="hf-btn hf-all active" onclick="dealFilter('all',this)">全部 <span>71</span></button>
-  <button class="hf-btn hf-hot" onclick="dealFilter('hotbuys',this)">⏰ 限時優惠 <span>40</span></button>
+  <button class="hf-btn hf-all active" onclick="dealFilter('all',this)">全部 <span>73</span></button>
+  <button class="hf-btn hf-hot" onclick="dealFilter('hotbuys',this)">⏰ 限時優惠 <span>42</span></button>
   <button class="hf-btn hf-coup" onclick="dealFilter('coupon',this)">🏷️ 精選優惠 <span>12</span></button>
   
 </div>
@@ -147,12 +147,12 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
 
 
 <div class="tabs-wrap">
-<button class="tab active" data-catid="all" onclick="catFilter('all',this)">🏠 全部 <span class="tab-count">71</span></button>
+<button class="tab active" data-catid="all" onclick="catFilter('all',this)">🏠 全部 <span class="tab-count">73</span></button>
 <button class="tab" data-catid="__寵物用品" onclick="catFilter('__寵物用品',this)">🐾 寵物用品 <span class="tab-count">1</span></button>
-<button class="tab" data-catid="__食品飲料" onclick="catFilter('__食品飲料',this)">🍱 食品飲料 <span class="tab-count">14</span></button>
+<button class="tab" data-catid="__食品飲料" onclick="catFilter('__食品飲料',this)">🍱 食品飲料 <span class="tab-count">15</span></button>
 <button class="tab" data-catid="__家電_3C" onclick="catFilter('__家電_3C',this)">📺 家電 3C <span class="tab-count">9</span></button>
 <button class="tab" data-catid="__保健美妝" onclick="catFilter('__保健美妝',this)">🧴 保健美妝 <span class="tab-count">9</span></button>
-<button class="tab" data-catid="__生活用品" onclick="catFilter('__生活用品',this)">🏠 生活用品 <span class="tab-count">11</span></button>
+<button class="tab" data-catid="__生活用品" onclick="catFilter('__生活用品',this)">🏠 生活用品 <span class="tab-count">12</span></button>
 <button class="tab" data-catid="__服飾寢具" onclick="catFilter('__服飾寢具',this)">👕 服飾寢具 <span class="tab-count">4</span></button>
 <button class="tab" data-catid="__玩具育兒" onclick="catFilter('__玩具育兒',this)">🧸 玩具育兒 <span class="tab-count">1</span></button>
 <button class="tab" data-catid="___運動戶外" onclick="catFilter('___運動戶外',this)">🏋️ 運動戶外 <span class="tab-count">1</span></button>
@@ -297,6 +297,25 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
   <button class="change-cat-btn" onclick="openCatModal('c_https___www_costco_com_tw_p_1786475','__食品飲料','RODEO JOE\'S 冷凍綜合炸物','https://www.costco.com.tw/p/1786475')" title="修改分類（需登入）">✏️</button>
   <a class="daybuy-link official-link" href="https://www.costco.com.tw/p/1786475" target="_blank" onclick="event.stopPropagation()">🛒 好市多官網</a><a class="daybuy-link" href="https://www.daybuy.tw/costco/256120/" target="_blank" onclick="event.stopPropagation()">📰 daybuy 情報頁</a>
 </div>
+<div class="card" id="c_xtra_Virgin_Olive_Oil_2_L_p_1058619" data-cat="__食品飲料" data-deal="hotbuys">
+  <a href="https://www.costco.com.tw/Food-Dining/Groceries/Cooking-Oil-Sauces/Kirkland-Signature-Extra-Virgin-Olive-Oil-2-L/p/1058619" target="_blank" rel="noopener" class="card-link">
+    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/hf8/h7f/472591303573534.jpg" alt="科克蘭 冷萃特級初榨橄欖油 2公升" loading="lazy" onerror="this.style.display='none'"><div class="badge">-10.2%</div></div>
+    <div class="card-body">
+      <p class="card-name">科克蘭 冷萃特級初榨橄欖油 2公升</p>
+      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 5 天</span>
+      
+      <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
+      <div class="card-price">
+        <span class="orig">$879</span><span class='arrow'>→</span>
+        <span class="sale">$789</span>
+      </div>
+      <p class="card-save">省 $90</p>
+      <p class="history">🕐 距上次折扣 1 天</p>
+    </div>
+  </a>
+  <button class="change-cat-btn" onclick="openCatModal('c_xtra_Virgin_Olive_Oil_2_L_p_1058619','__食品飲料','科克蘭 冷萃特級初榨橄欖油 2公升','https://www.costco.com.tw/Food-Dining/Groceries/Cooking-Oil-Sauces/Kirkland-Signature-Extra-Virgin-Olive-Oil-2-L/p/1058619')" title="修改分類（需登入）">✏️</button>
+  
+</div>
 <div class="card" id="c_https___www_costco_com_tw_p_160080" data-cat="__食品飲料" data-deal="other">
   <a href="https://www.costco.com.tw/p/160080" target="_blank" rel="noopener" class="card-link">
     <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h9d/h5f/451293459480606.jpg" alt="ASAHI 朝日十六茶零咖啡因複方茶 990毫升 X 12罐" loading="lazy" onerror="this.style.display='none'"><div class="badge">-20.1%</div><a class="src-icon" href="https://www.daybuy.tw/costco/255145/" target="_blank" onclick="event.stopPropagation()" title="daybuy 情報">📰</a></div>
@@ -373,25 +392,6 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
   <button class="change-cat-btn" onclick="openCatModal('c_gasaki_Castella_Cake_314_g_p_138425','__食品飲料','久世福 長崎蛋糕原味 314公克','https://www.costco.com.tw/Food-Dining/Snacks/Snack-Cakes/Kuze-Fuku-Nagasaki-Castella-Cake-314-g/p/138425')" title="修改分類（需登入）">✏️</button>
   
 </div>
-<div class="card" id="c_g_Medium_44_Bag_X_6_Count_p_1882069" data-cat="__食品飲料" data-deal="hotbuys">
-  <a href="https://www.costco.com.tw/Furniture-Kitchen/Kitchen-Dining/Food-Preservation/Kirkland-Signature-Freezer-Bag-Medium-44-Bag-X-6-Count/p/1882069" target="_blank" rel="noopener" class="card-link">
-    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h1e/h95/343414016507934.jpg" alt="科克蘭 雙層夾鏈冷凍保鮮袋 (中) 44入 X 6盒" loading="lazy" onerror="this.style.display='none'"><div class="badge">-15.8%</div></div>
-    <div class="card-body">
-      <p class="card-name">科克蘭 雙層夾鏈冷凍保鮮袋 (中) 44入 X 6盒</p>
-      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 5 天</span>
-      
-      <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
-      <div class="card-price">
-        <span class="orig">$405</span><span class='arrow'>→</span>
-        <span class="sale">$341</span>
-      </div>
-      <p class="card-save">省 $64</p>
-      <p class="history">🕐 距上次折扣 1 天</p>
-    </div>
-  </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_g_Medium_44_Bag_X_6_Count_p_1882069','__食品飲料','科克蘭 雙層夾鏈冷凍保鮮袋 (中) 44入 X 6盒','https://www.costco.com.tw/Furniture-Kitchen/Kitchen-Dining/Food-Preservation/Kirkland-Signature-Freezer-Bag-Medium-44-Bag-X-6-Count/p/1882069')" title="修改分類（需登入）">✏️</button>
-  
-</div>
 <div class="card" id="c_ck_14_g_X_20_Pack_X_2_Box_p_1116888" data-cat="__食品飲料" data-deal="hotbuys">
   <a href="https://www.costco.com.tw/Food-Dining/Snacks/Cookies-Chips/Trygoodz-Rice-Crackers-with-Almond-Gift-Pack-14-g-X-20-Pack-X-2-Box/p/1116888" target="_blank" rel="noopener" class="card-link">
     <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/hb2/h0a/312933354536990.jpg" alt="翠果子櫻花米果禮盒 14公克 X 20包 X 2盒" loading="lazy" onerror="this.style.display='none'"><div class="badge">-20.1%</div></div>
@@ -409,6 +409,25 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
     </div>
   </a>
   <button class="change-cat-btn" onclick="openCatModal('c_ck_14_g_X_20_Pack_X_2_Box_p_1116888','__食品飲料','翠果子櫻花米果禮盒 14公克 X 20包 X 2盒','https://www.costco.com.tw/Food-Dining/Snacks/Cookies-Chips/Trygoodz-Rice-Crackers-with-Almond-Gift-Pack-14-g-X-20-Pack-X-2-Box/p/1116888')" title="修改分類（需登入）">✏️</button>
+  
+</div>
+<div class="card" id="c_g_Medium_44_Bag_X_6_Count_p_1882069" data-cat="__食品飲料" data-deal="hotbuys">
+  <a href="https://www.costco.com.tw/Furniture-Kitchen/Kitchen-Dining/Food-Preservation/Kirkland-Signature-Freezer-Bag-Medium-44-Bag-X-6-Count/p/1882069" target="_blank" rel="noopener" class="card-link">
+    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h1e/h95/343414016507934.jpg" alt="科克蘭 雙層夾鏈冷凍保鮮袋 (中) 44入 X 6盒" loading="lazy" onerror="this.style.display='none'"><div class="badge">-15.8%</div></div>
+    <div class="card-body">
+      <p class="card-name">科克蘭 雙層夾鏈冷凍保鮮袋 (中) 44入 X 6盒</p>
+      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 5 天</span>
+      
+      <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
+      <div class="card-price">
+        <span class="orig">$405</span><span class='arrow'>→</span>
+        <span class="sale">$341</span>
+      </div>
+      <p class="card-save">省 $64</p>
+      <p class="history">🕐 距上次折扣 1 天</p>
+    </div>
+  </a>
+  <button class="change-cat-btn" onclick="openCatModal('c_g_Medium_44_Bag_X_6_Count_p_1882069','__食品飲料','科克蘭 雙層夾鏈冷凍保鮮袋 (中) 44入 X 6盒','https://www.costco.com.tw/Furniture-Kitchen/Kitchen-Dining/Food-Preservation/Kirkland-Signature-Freezer-Bag-Medium-44-Bag-X-6-Count/p/1882069')" title="修改分類（需登入）">✏️</button>
   
 </div>
 <div class="card" id="c_https___www_costco_com_tw_p_177996" data-cat="__食品飲料" data-deal="other">
@@ -867,6 +886,25 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
   <button class="change-cat-btn" onclick="openCatModal('c_https___www_costco_com_tw_p_1491575','__生活用品','UNDER ARMOUR 女短袖上衣','https://www.costco.com.tw/p/1491575')" title="修改分類（需登入）">✏️</button>
   <a class="daybuy-link official-link" href="https://www.costco.com.tw/p/1491575" target="_blank" onclick="event.stopPropagation()">🛒 好市多官網</a><a class="daybuy-link" href="https://www.daybuy.tw/costco/255345/" target="_blank" onclick="event.stopPropagation()">📰 daybuy 情報頁</a>
 </div>
+<div class="card" id="c_th_Lid_4_Piece_Set_1300_ml_p_158744" data-cat="__生活用品" data-deal="coupon">
+  <a href="https://www.costco.com.tw/Furniture-Kitchen/Kitchen-Dining/Food-Storage-Containers/Fenger-Microwavable-304-Stainless-Steel-Compartment-Storage-with-Lid-4-Piece-Set-1300-ml/p/158744" target="_blank" rel="noopener" class="card-link">
+    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h13/h0c/415044018077726.jpg" alt="Fenger 可微波304不鏽鋼分隔保鮮盒 含蓋4件組 三隔1300毫升" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.1%</div></div>
+    <div class="card-body">
+      <p class="card-name">Fenger 可微波304不鏽鋼分隔保鮮盒 含蓋4件組 三隔1300毫升</p>
+      <span class="deal-type-badge badge-coup">🏷️ 精選優惠</span>
+      
+      
+      <div class="card-price">
+        <span class="orig">$479</span><span class='arrow'>→</span>
+        <span class="sale">$359</span>
+      </div>
+      <p class="card-save">省 $120</p>
+      <p class="history">🕐 距上次折扣 1 天</p>
+    </div>
+  </a>
+  <button class="change-cat-btn" onclick="openCatModal('c_th_Lid_4_Piece_Set_1300_ml_p_158744','__生活用品','Fenger 可微波304不鏽鋼分隔保鮮盒 含蓋4件組 三隔1300毫升','https://www.costco.com.tw/Furniture-Kitchen/Kitchen-Dining/Food-Storage-Containers/Fenger-Microwavable-304-Stainless-Steel-Compartment-Storage-with-Lid-4-Piece-Set-1300-ml/p/158744')" title="修改分類（需登入）">✏️</button>
+  
+</div>
 <div class="card" id="c_Mens_Boxer_Brief_4_Pack_p_7700015_B" data-cat="__生活用品" data-deal="hotbuys">
   <a href="https://www.costco.com.tw/Clothing-Accessories/Mens-Clothing/Mens-Socks-Underwear/Kirkland-Signature-Mens-Boxer-Brief-4-Pack/p/7700015-B" target="_blank" rel="noopener" class="card-link">
     <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h4e/h25/11444340588574.jpg" alt="科克蘭 男彈性平口褲 4入" loading="lazy" onerror="this.style.display='none'"><div class="badge">-26.1%</div></div>
@@ -886,23 +924,23 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
   <button class="change-cat-btn" onclick="openCatModal('c_Mens_Boxer_Brief_4_Pack_p_7700015_B','__生活用品','科克蘭 男彈性平口褲 4入','https://www.costco.com.tw/Clothing-Accessories/Mens-Clothing/Mens-Socks-Underwear/Kirkland-Signature-Mens-Boxer-Brief-4-Pack/p/7700015-B')" title="修改分類（需登入）">✏️</button>
   
 </div>
-<div class="card" id="c_th_Lid_4_Piece_Set_1300_ml_p_158744" data-cat="__生活用品" data-deal="coupon">
-  <a href="https://www.costco.com.tw/Furniture-Kitchen/Kitchen-Dining/Food-Storage-Containers/Fenger-Microwavable-304-Stainless-Steel-Compartment-Storage-with-Lid-4-Piece-Set-1300-ml/p/158744" target="_blank" rel="noopener" class="card-link">
-    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h13/h0c/415044018077726.jpg" alt="Fenger 可微波304不鏽鋼分隔保鮮盒 含蓋4件組 三隔1300毫升" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.1%</div></div>
+<div class="card" id="c_issue_425_Sheet_X_30_Roll_p_1713045" data-cat="__生活用品" data-deal="hotbuys">
+  <a href="https://www.costco.com.tw/c/Kirkland-Signature-Bath-Tissue-425-Sheet-X-30-Roll/p/1713045" target="_blank" rel="noopener" class="card-link">
+    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h80/h37/186846817419294.jpg" alt="科克蘭 捲筒衛生紙 425張 X 30捲" loading="lazy" onerror="this.style.display='none'"><div class="badge">-19.3%</div></div>
     <div class="card-body">
-      <p class="card-name">Fenger 可微波304不鏽鋼分隔保鮮盒 含蓋4件組 三隔1300毫升</p>
-      <span class="deal-type-badge badge-coup">🏷️ 精選優惠</span>
+      <p class="card-name">科克蘭 捲筒衛生紙 425張 X 30捲</p>
+      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 5 天</span>
       
-      
+      <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
       <div class="card-price">
-        <span class="orig">$479</span><span class='arrow'>→</span>
-        <span class="sale">$359</span>
+        <span class="orig">$569</span><span class='arrow'>→</span>
+        <span class="sale">$459</span>
       </div>
-      <p class="card-save">省 $120</p>
-      <p class="history">🕐 距上次折扣 1 天</p>
+      <p class="card-save">省 $110</p>
+      <p class="history">🆕 首次出現</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_th_Lid_4_Piece_Set_1300_ml_p_158744','__生活用品','Fenger 可微波304不鏽鋼分隔保鮮盒 含蓋4件組 三隔1300毫升','https://www.costco.com.tw/Furniture-Kitchen/Kitchen-Dining/Food-Storage-Containers/Fenger-Microwavable-304-Stainless-Steel-Compartment-Storage-with-Lid-4-Piece-Set-1300-ml/p/158744')" title="修改分類（需登入）">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_issue_425_Sheet_X_30_Roll_p_1713045','__生活用品','科克蘭 捲筒衛生紙 425張 X 30捲','https://www.costco.com.tw/c/Kirkland-Signature-Bath-Tissue-425-Sheet-X-30-Roll/p/1713045')" title="修改分類（需登入）">✏️</button>
   
 </div>
 <div class="card" id="c_ure_Mens_Short_Sleeve_Tee_p_7771459" data-cat="__生活用品" data-deal="hotbuys">
@@ -1323,14 +1361,14 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
   <button class="change-cat-btn" onclick="openCatModal('c_ong_33cm_6_Piece_X_16_Pack_p_139917','__其他','愛康涼感衛生棉 加長型 33公分 6片 X 16包','https://www.costco.com.tw/Health-Beauty/Personal-Care/Feminine-Care/ICON-Cooling-Sanitary-Pad-Long-33cm-6-Piece-X-16-Pack/p/139917')" title="修改分類（需登入）">✏️</button>
   
 </div>
-<div class="card" id="c_haped_Pad_Size_XL_24_Piece_p_134645" data-cat="__其他" data-deal="hotbuys">
-  <a href="https://www.costco.com.tw/Health-Beauty/Personal-Care/Feminine-Care/Sofy-Deep-Sleep-Night-Shorts-Shaped-Pad-Size-XL-24-Piece/p/134645" target="_blank" rel="noopener" class="card-link">
-    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/hb5/h64/350548248297502.jpg" alt="蘇菲 超熟睡安心褲 XL尺寸 24片" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.3%</div></div>
+<div class="card" id="c_Shaped_Pad_Size_M_24_Piece_p_134643" data-cat="__其他" data-deal="coupon">
+  <a href="https://www.costco.com.tw/Health-Beauty/Personal-Care/Feminine-Care/Sofy-Deep-Sleep-Night-Shorts-Shaped-Pad-Size-M-24-Piece/p/134643" target="_blank" rel="noopener" class="card-link">
+    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/ha8/h42/350548248100894.jpg" alt="蘇菲 超熟睡安心褲 M尺寸 24片" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.3%</div></div>
     <div class="card-body">
-      <p class="card-name">蘇菲 超熟睡安心褲 XL尺寸 24片</p>
-      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 5 天</span>
+      <p class="card-name">蘇菲 超熟睡安心褲 M尺寸 24片</p>
+      <span class="deal-type-badge badge-coup">🏷️ 精選優惠</span>
       
-      <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
+      
       <div class="card-price">
         <span class="orig">$435</span><span class='arrow'>→</span>
         <span class="sale">$325</span>
@@ -1339,7 +1377,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_haped_Pad_Size_XL_24_Piece_p_134645','__其他','蘇菲 超熟睡安心褲 XL尺寸 24片','https://www.costco.com.tw/Health-Beauty/Personal-Care/Feminine-Care/Sofy-Deep-Sleep-Night-Shorts-Shaped-Pad-Size-XL-24-Piece/p/134645')" title="修改分類（需登入）">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_Shaped_Pad_Size_M_24_Piece_p_134643','__其他','蘇菲 超熟睡安心褲 M尺寸 24片','https://www.costco.com.tw/Health-Beauty/Personal-Care/Feminine-Care/Sofy-Deep-Sleep-Night-Shorts-Shaped-Pad-Size-M-24-Piece/p/134643')" title="修改分類（需登入）">✏️</button>
   
 </div>
 <div class="card" id="c_Shaped_Pad_Size_L_24_Piece_p_134644" data-cat="__其他" data-deal="hotbuys">
@@ -1361,14 +1399,14 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
   <button class="change-cat-btn" onclick="openCatModal('c_Shaped_Pad_Size_L_24_Piece_p_134644','__其他','蘇菲 超熟睡安心褲 L尺寸 24片','https://www.costco.com.tw/Health-Beauty/Personal-Care/Feminine-Care/Sofy-Deep-Sleep-Night-Shorts-Shaped-Pad-Size-L-24-Piece/p/134644')" title="修改分類（需登入）">✏️</button>
   
 </div>
-<div class="card" id="c_Shaped_Pad_Size_M_24_Piece_p_134643" data-cat="__其他" data-deal="coupon">
-  <a href="https://www.costco.com.tw/Health-Beauty/Personal-Care/Feminine-Care/Sofy-Deep-Sleep-Night-Shorts-Shaped-Pad-Size-M-24-Piece/p/134643" target="_blank" rel="noopener" class="card-link">
-    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/ha8/h42/350548248100894.jpg" alt="蘇菲 超熟睡安心褲 M尺寸 24片" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.3%</div></div>
+<div class="card" id="c_haped_Pad_Size_XL_24_Piece_p_134645" data-cat="__其他" data-deal="hotbuys">
+  <a href="https://www.costco.com.tw/Health-Beauty/Personal-Care/Feminine-Care/Sofy-Deep-Sleep-Night-Shorts-Shaped-Pad-Size-XL-24-Piece/p/134645" target="_blank" rel="noopener" class="card-link">
+    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/hb5/h64/350548248297502.jpg" alt="蘇菲 超熟睡安心褲 XL尺寸 24片" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.3%</div></div>
     <div class="card-body">
-      <p class="card-name">蘇菲 超熟睡安心褲 M尺寸 24片</p>
-      <span class="deal-type-badge badge-coup">🏷️ 精選優惠</span>
+      <p class="card-name">蘇菲 超熟睡安心褲 XL尺寸 24片</p>
+      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 5 天</span>
       
-      
+      <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
       <div class="card-price">
         <span class="orig">$435</span><span class='arrow'>→</span>
         <span class="sale">$325</span>
@@ -1377,7 +1415,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🕐 距上次折扣 1 天</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_Shaped_Pad_Size_M_24_Piece_p_134643','__其他','蘇菲 超熟睡安心褲 M尺寸 24片','https://www.costco.com.tw/Health-Beauty/Personal-Care/Feminine-Care/Sofy-Deep-Sleep-Night-Shorts-Shaped-Pad-Size-M-24-Piece/p/134643')" title="修改分類（需登入）">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_haped_Pad_Size_XL_24_Piece_p_134645','__其他','蘇菲 超熟睡安心褲 XL尺寸 24片','https://www.costco.com.tw/Health-Beauty/Personal-Care/Feminine-Care/Sofy-Deep-Sleep-Night-Shorts-Shaped-Pad-Size-XL-24-Piece/p/134645')" title="修改分類（需登入）">✏️</button>
   
 </div>
 <div class="card" id="c_https___www_costco_com_tw_p_3055" data-cat="__其他" data-deal="other">
@@ -1437,25 +1475,6 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
   <button class="change-cat-btn" onclick="openCatModal('c_https___www_costco_com_tw_p_158979','__其他','PIAA 車用遮陽傘','https://www.costco.com.tw/p/158979')" title="修改分類（需登入）">✏️</button>
   <a class="daybuy-link official-link" href="https://www.costco.com.tw/p/158979" target="_blank" onclick="event.stopPropagation()">🛒 好市多官網</a><a class="daybuy-link" href="https://www.daybuy.tw/costco/255145/" target="_blank" onclick="event.stopPropagation()">📰 daybuy 情報頁</a>
 </div>
-<div class="card" id="c_ials_Pest_Control_Air_Care_p_152666" data-cat="__其他" data-deal="hotbuys">
-  <a href="https://www.costco.com.tw/Household-Baby-Toys/Household-Essentials/Pest-Control-Air-Care/p/152666" target="_blank" rel="noopener" class="card-link">
-    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h2a/h93/345530296991774.jpg" alt="必安住白蟻蟑螂跳蚤藥" loading="lazy" onerror="this.style.display='none'"><div class="badge">-37.2%</div></div>
-    <div class="card-body">
-      <p class="card-name">必安住白蟻蟑螂跳蚤藥</p>
-      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 5 天</span>
-      
-      <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
-      <div class="card-price">
-        <span class="orig">$215</span><span class='arrow'>→</span>
-        <span class="sale">$135</span>
-      </div>
-      <p class="card-save">省 $80</p>
-      <p class="history">🕐 距上次折扣 1 天</p>
-    </div>
-  </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_ials_Pest_Control_Air_Care_p_152666','__其他','必安住白蟻蟑螂跳蚤藥','https://www.costco.com.tw/Household-Baby-Toys/Household-Essentials/Pest-Control-Air-Care/p/152666')" title="修改分類（需登入）">✏️</button>
-  
-</div>
 <div class="card" id="c_https___www_costco_com_tw_p_144759" data-cat="__其他" data-deal="coupon">
   <a href="https://www.costco.com.tw/p/144759" target="_blank" rel="noopener" class="card-link">
     <div class="card-img"><img src="https://static.daybuy.tw/wp-content/uploads/2024/04/IMG_8416.jpeg" alt="這包 卜蜂紅燒棒腿" loading="lazy" onerror="this.style.display='none'"><div class="badge">-20.1%</div><a class="src-icon" href="https://www.daybuy.tw/costco/115883/" target="_blank" onclick="event.stopPropagation()" title="daybuy 情報">📰</a></div>
@@ -1474,6 +1493,25 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
   </a>
   <button class="change-cat-btn" onclick="openCatModal('c_https___www_costco_com_tw_p_144759','__其他','這包 卜蜂紅燒棒腿','https://www.costco.com.tw/p/144759')" title="修改分類（需登入）">✏️</button>
   <a class="daybuy-link official-link" href="https://www.costco.com.tw/p/144759" target="_blank" onclick="event.stopPropagation()">🛒 好市多官網</a><a class="daybuy-link" href="https://www.daybuy.tw/costco/115883/" target="_blank" onclick="event.stopPropagation()">📰 daybuy 情報頁</a>
+</div>
+<div class="card" id="c_ials_Pest_Control_Air_Care_p_152666" data-cat="__其他" data-deal="hotbuys">
+  <a href="https://www.costco.com.tw/Household-Baby-Toys/Household-Essentials/Pest-Control-Air-Care/p/152666" target="_blank" rel="noopener" class="card-link">
+    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h2a/h93/345530296991774.jpg" alt="必安住白蟻蟑螂跳蚤藥" loading="lazy" onerror="this.style.display='none'"><div class="badge">-37.2%</div></div>
+    <div class="card-body">
+      <p class="card-name">必安住白蟻蟑螂跳蚤藥</p>
+      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 5 天</span>
+      
+      <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
+      <div class="card-price">
+        <span class="orig">$215</span><span class='arrow'>→</span>
+        <span class="sale">$135</span>
+      </div>
+      <p class="card-save">省 $80</p>
+      <p class="history">🕐 距上次折扣 1 天</p>
+    </div>
+  </a>
+  <button class="change-cat-btn" onclick="openCatModal('c_ials_Pest_Control_Air_Care_p_152666','__其他','必安住白蟻蟑螂跳蚤藥','https://www.costco.com.tw/Household-Baby-Toys/Household-Essentials/Pest-Control-Air-Care/p/152666')" title="修改分類（需登入）">✏️</button>
+  
 </div>
 <div class="card" id="c_avy_Day_Pad_27_cm_32_Piece_p_115672" data-cat="__其他" data-deal="hotbuys">
   <a href="https://www.costco.com.tw/Health-Beauty/Personal-Care/Feminine-Care/Whisper-Infinity-Heavy-Day-Pad-27-cm-32-Piece/p/115672" target="_blank" rel="noopener" class="card-link">
@@ -1534,7 +1572,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
   </div>
 </div>
 
-<footer>🤖 Hermes Agent 自動整理｜資料來源：costco.com.tw｜更新：2026-06-23 10:02<br>🏪=賣場同售 📰=daybuy情報 ✏️=登入後可修改分類</footer>
+<footer>🤖 Hermes Agent 自動整理｜資料來源：costco.com.tw｜更新：2026-06-23 10:54<br>🏪=賣場同售 📰=daybuy情報 ✏️=登入後可修改分類</footer>
 
 <!-- 分類 Modal -->
 <div class="modal-overlay" id="catModal" onclick="if(event.target===this)closeModal()">
