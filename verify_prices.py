@@ -54,14 +54,21 @@ def verify_product_price(item_code: str, page) -> Optional[Dict]:
         const walletText = w ? w.innerText.trim() : '';
         const actualUrl = window.location.href;
 
-        // 商品圖片：找第一個夠大的 medias 圖
+        // 商品圖片：找 alt 跟頁面標題(商品名稱)一致、且夠大的 medias 圖
+        // 避免抓到頁面下方「您可能也喜歡」等推薦商品的圖片
+        const pageTitle = document.title.split('|')[0].trim();
         let imgUrl = '';
+        let fallbackImg = '';
         for (const img of document.querySelectorAll('img')) {
-            if (img.src && img.src.includes('medias') && img.naturalWidth > 200) {
+            if (!img.src || !img.src.includes('medias') || img.naturalWidth < 200) continue;
+            if (!fallbackImg) fallbackImg = img.src;  // 保底：第一張夠大的圖
+            const alt = (img.alt || '').trim();
+            if (alt && pageTitle && (pageTitle.includes(alt) || alt.includes(pageTitle.slice(0, 10)))) {
                 imgUrl = img.src;
                 break;
             }
         }
+        if (!imgUrl) imgUrl = fallbackImg;
 
         return {origPrice, disc, sale, walletText, actualUrl, imgUrl};
     }""")
