@@ -54,7 +54,16 @@ def verify_product_price(item_code: str, page) -> Optional[Dict]:
         const walletText = w ? w.innerText.trim() : '';
         const actualUrl = window.location.href;
 
-        return {origPrice, disc, sale, walletText, actualUrl};
+        // 商品圖片：找第一個夠大的 medias 圖
+        let imgUrl = '';
+        for (const img of document.querySelectorAll('img')) {
+            if (img.src && img.src.includes('medias') && img.naturalWidth > 200) {
+                imgUrl = img.src;
+                break;
+            }
+        }
+
+        return {origPrice, disc, sale, walletText, actualUrl, imgUrl};
     }""")
 
     if not result or result.get("actualUrl", "").endswith("/404"):
@@ -94,6 +103,7 @@ def verify_product_price(item_code: str, page) -> Optional[Dict]:
         "折扣幅度": f"{round(disc/orig*100, 1)}%" if orig and disc else None,
         "優惠期間_官網": period,
         "官網連結": f"{BASE_URL}/p/{item_code}",
+        "圖片URL":  result.get("imgUrl", ""),
     }
 
 
