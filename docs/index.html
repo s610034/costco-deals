@@ -110,7 +110,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
 </style>
 <script>
   // 版本控制：每次部署時更新，強制瀏覽器重新載入
-  const BUILD_TIME = '20260623133907';
+  const BUILD_TIME = '20260623134036';
   const stored = localStorage.getItem('costco_build');
   if (stored && stored !== BUILD_TIME) {
     localStorage.setItem('costco_build', BUILD_TIME);
@@ -167,14 +167,14 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
 <div class="tabs-wrap">
 <button class="tab active" data-catid="all" onclick="catFilter('all',this)">🏠 全部 <span class="tab-count">73</span></button>
 <button class="tab" data-catid="__寵物用品" onclick="catFilter('__寵物用品',this)">🐾 寵物用品 <span class="tab-count">1</span></button>
-<button class="tab" data-catid="__食品飲料" onclick="catFilter('__食品飲料',this)">🍱 食品飲料 <span class="tab-count">15</span></button>
-<button class="tab" data-catid="__家電_3C" onclick="catFilter('__家電_3C',this)">📺 家電 3C <span class="tab-count">9</span></button>
-<button class="tab" data-catid="__保健美妝" onclick="catFilter('__保健美妝',this)">🧴 保健美妝 <span class="tab-count">10</span></button>
+<button class="tab" data-catid="__食品飲料" onclick="catFilter('__食品飲料',this)">🍱 食品飲料 <span class="tab-count">16</span></button>
+<button class="tab" data-catid="__保健美妝" onclick="catFilter('__保健美妝',this)">🧴 保健美妝 <span class="tab-count">14</span></button>
+<button class="tab" data-catid="__家電_3C" onclick="catFilter('__家電_3C',this)">📺 家電 3C <span class="tab-count">5</span></button>
 <button class="tab" data-catid="__生活用品" onclick="catFilter('__生活用品',this)">🏠 生活用品 <span class="tab-count">12</span></button>
 <button class="tab" data-catid="__服飾寢具" onclick="catFilter('__服飾寢具',this)">👕 服飾寢具 <span class="tab-count">4</span></button>
 <button class="tab" data-catid="__玩具育兒" onclick="catFilter('__玩具育兒',this)">🧸 玩具育兒 <span class="tab-count">1</span></button>
 <button class="tab" data-catid="___運動戶外" onclick="catFilter('___運動戶外',this)">🏋️ 運動戶外 <span class="tab-count">1</span></button>
-<button class="tab" data-catid="__其他" onclick="catFilter('__其他',this)">📦 其他 <span class="tab-count">20</span></button>
+<button class="tab" data-catid="__其他" onclick="catFilter('__其他',this)">📦 其他 <span class="tab-count">19</span></button>
 </div>
 
 <div class="search-wrap">
@@ -314,6 +314,25 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
   </a>
   <button class="change-cat-btn" onclick="openCatModal('c_https___www_costco_com_tw_p_1786475','__食品飲料','RODEO JOE\'S 冷凍綜合炸物','https://www.costco.com.tw/p/1786475')" title="修改分類（需登入）">✏️</button>
   <a class="daybuy-link official-link" href="https://www.costco.com.tw/p/1786475" target="_blank" onclick="event.stopPropagation()">🛒 好市多官網</a><a class="daybuy-link" href="https://www.daybuy.tw/costco/256120/" target="_blank" onclick="event.stopPropagation()">📰 daybuy 情報頁</a>
+</div>
+<div class="card" id="c_https___www_costco_com_tw_p_3055" data-cat="__食品飲料" data-deal="hotbuys">
+  <a href="https://www.costco.com.tw/p/3055" target="_blank" rel="noopener" class="card-link">
+    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h0c/h0a/169396953251870.jpg" alt="KIRIN 麒麟一番榨啤酒" loading="lazy" onerror="this.style.display='none'"><a class="src-icon" href="https://www.daybuy.tw/costco/256120/" target="_blank" onclick="event.stopPropagation()" title="daybuy 情報">📰</a></div>
+    <div class="card-body">
+      <p class="card-name">KIRIN 麒麟一番榨啤酒</p>
+      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="deal-type-badge badge-hidden" title="人工confirm的賣場隱藏優惠，折扣可能隨時異動">🏪 賣場隱藏</span><span class="countdown">⏰ 剩 5 天</span>
+      
+      <p class="deal-period">📅 06/22(一)~06/28(日)<span class="confirm-date-hint" title="此折扣為人工confirm的暫時性資料，僅代表06/23當時確認狀態，可能已變動">🕐 06/23確認</span></p>
+      <div class="card-price">
+        <span class="orig">$715</span><span class='arrow'>→</span>
+        <span class="sale">$605</span>
+      </div>
+      <p class="card-save">省 $110</p>
+      <p class="history">🆕 首次出現</p>
+    </div>
+  </a>
+  <button class="change-cat-btn" onclick="openCatModal('c_https___www_costco_com_tw_p_3055','__食品飲料','KIRIN 麒麟一番榨啤酒','https://www.costco.com.tw/p/3055')" title="修改分類（需登入）">✏️</button>
+  <a class="daybuy-link official-link" href="https://www.costco.com.tw/p/3055" target="_blank" onclick="event.stopPropagation()">🛒 好市多官網</a><a class="daybuy-link" href="https://www.daybuy.tw/costco/256120/" target="_blank" onclick="event.stopPropagation()">📰 daybuy 情報頁</a>
 </div>
 <div class="card" id="c_xtra_Virgin_Olive_Oil_2_L_p_1058619" data-cat="__食品飲料" data-deal="hotbuys">
   <a href="https://www.costco.com.tw/Food-Dining/Groceries/Cooking-Oil-Sauces/Kirkland-Signature-Extra-Virgin-Olive-Oil-2-L/p/1058619" target="_blank" rel="noopener" class="card-link">
@@ -486,64 +505,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
   <button class="change-cat-btn" onclick="openCatModal('c_https___www_costco_com_tw_p_132594','__食品飲料','HAAGEN DAZS 哈根達斯冰淇淋品脫5入自由配組（10款任選5款）','https://www.costco.com.tw/p/132594')" title="修改分類（需登入）">✏️</button>
   <a class="daybuy-link official-link" href="https://www.costco.com.tw/p/132594" target="_blank" onclick="event.stopPropagation()">🛒 好市多官網</a><a class="daybuy-link" href="https://www.daybuy.tw/costco/256402/" target="_blank" onclick="event.stopPropagation()">📰 daybuy 情報頁</a>
 </div>
-<div class="card" id="c_https___www_costco_com_tw_p_153509" data-cat="__家電_3C" data-deal="hotbuys">
-  <a href="https://www.costco.com.tw/p/153509" target="_blank" rel="noopener" class="card-link">
-    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h4d/h87/438072164352030.jpg" alt="LG 65吋OLED顯示器 OLED65B5PTA" loading="lazy" onerror="this.style.display='none'"><a class="src-icon" href="https://www.daybuy.tw/costco/256120/" target="_blank" onclick="event.stopPropagation()" title="daybuy 情報">📰</a></div>
-    <div class="card-body">
-      <p class="card-name">LG 65吋OLED顯示器 OLED65B5PTA</p>
-      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="deal-type-badge badge-hidden" title="人工confirm的賣場隱藏優惠，折扣可能隨時異動">🏪 賣場隱藏</span><span class="countdown">⏰ 剩 5 天</span>
-      
-      <p class="deal-period">📅 06/22(一)~06/28(日)<span class="confirm-date-hint" title="此折扣為人工confirm的暫時性資料，僅代表06/23當時確認狀態，可能已變動">🕐 06/23確認</span></p>
-      <div class="card-price">
-        <span class="orig">$49,999</span><span class='arrow'>→</span>
-        <span class="sale">$37,499</span>
-      </div>
-      <p class="card-save">省 $12,500</p>
-      <p class="history">🆕 首次出現</p>
-    </div>
-  </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_https___www_costco_com_tw_p_153509','__家電_3C','LG 65吋OLED顯示器 OLED65B5PTA','https://www.costco.com.tw/p/153509')" title="修改分類（需登入）">✏️</button>
-  <a class="daybuy-link official-link" href="https://www.costco.com.tw/p/153509" target="_blank" onclick="event.stopPropagation()">🛒 好市多官網</a><a class="daybuy-link" href="https://www.daybuy.tw/costco/256120/" target="_blank" onclick="event.stopPropagation()">📰 daybuy 情報頁</a>
-</div>
-<div class="card" id="c_art_Monitor_QA55QN87DAXXZW_p_152564" data-cat="__家電_3C" data-deal="coupon">
-  <a href="https://www.costco.com.tw/Televisions-Appliances/TV-Home-Entertainment/Televisions-TV-Accessories/50-59-TVs/Samsung-55-inch-Neo-QLED-AI-Smart-Monitor-QA55QN87DAXXZW/p/152564" target="_blank" rel="noopener" class="card-link">
-    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h03/h28/438072160256030.jpg" alt="Samsung 55吋 Neo QLED AI 智慧顯示器 QA55QN87DAXXZW" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.0%</div></div>
-    <div class="card-body">
-      <p class="card-name">Samsung 55吋 Neo QLED AI 智慧顯示器 QA55QN87DAXXZW</p>
-      <span class="deal-type-badge badge-coup">🏷️ 精選優惠</span>
-      
-      
-      <div class="card-price">
-        <span class="orig">$29,999</span><span class='arrow'>→</span>
-        <span class="sale">$17,999</span>
-      </div>
-      <p class="card-save">省 $6,000</p>
-      <p class="history">🆕 首次出現</p>
-    </div>
-  </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_art_Monitor_QA55QN87DAXXZW_p_152564','__家電_3C','Samsung 55吋 Neo QLED AI 智慧顯示器 QA55QN87DAXXZW','https://www.costco.com.tw/Televisions-Appliances/TV-Home-Entertainment/Televisions-TV-Accessories/50-59-TVs/Samsung-55-inch-Neo-QLED-AI-Smart-Monitor-QA55QN87DAXXZW/p/152564')" title="修改分類（需登入）">✏️</button>
-  
-</div>
-<div class="card" id="c__Cool_HP11_Filter_X_3_Pack_p_158445" data-cat="__家電_3C" data-deal="hotbuys">
-  <a href="https://www.costco.com.tw/Televisions-Appliances/Cooling-Heating-Air-Treatment/Air-Purifiers-Filters-Accessories/Dyson-Purifier-Hot-Cool-HP11-Filter-X-3-Pack/p/158445" target="_blank" rel="noopener" class="card-link">
-    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/hbf/hf8/414650697285662.jpg" alt="戴森 三合一涼暖空氣清淨機 HP11 + 綜合濾網 X 3入" loading="lazy" onerror="this.style.display='none'"><div class="badge">-6.7%</div></div>
-    <div class="card-body">
-      <p class="card-name">戴森 三合一涼暖空氣清淨機 HP11 + 綜合濾網 X 3入</p>
-      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 5 天</span>
-      
-      <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
-      <div class="card-price">
-        <span class="orig">$18,999</span><span class='arrow'>→</span>
-        <span class="sale">$16,599</span>
-      </div>
-      <p class="card-save">省 $1,200</p>
-      <p class="history">🆕 首次出現</p>
-    </div>
-  </a>
-  <button class="change-cat-btn" onclick="openCatModal('c__Cool_HP11_Filter_X_3_Pack_p_158445','__家電_3C','戴森 三合一涼暖空氣清淨機 HP11 + 綜合濾網 X 3入','https://www.costco.com.tw/Televisions-Appliances/Cooling-Heating-Air-Treatment/Air-Purifiers-Filters-Accessories/Dyson-Purifier-Hot-Cool-HP11-Filter-X-3-Pack/p/158445')" title="修改分類（需登入）">✏️</button>
-  
-</div>
-<div class="card" id="c_andle_2_Brush_Heads_HX3792_p_160016" data-cat="__家電_3C" data-deal="hotbuys">
+<div class="card" id="c_andle_2_Brush_Heads_HX3792_p_160016" data-cat="__保健美妝" data-deal="hotbuys">
   <a href="https://www.costco.com.tw/Televisions-Appliances/Small-Appliances/Electric-Toothbrushes-Water-Flossers/Philips-Sonicare-Rechargeable-Toothbrush-1-Handle-2-Brush-Heads-HX3792/p/160016" target="_blank" rel="noopener" class="card-link">
     <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/hdc/h90/468568630689822.jpg" alt="飛利浦 Sonicare 充電式智能電動護齦牙刷 單握柄+2刷頭 HX3792" loading="lazy" onerror="this.style.display='none'"><div class="badge">-29.7%</div></div>
     <div class="card-body">
@@ -559,29 +521,10 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🆕 首次出現</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_andle_2_Brush_Heads_HX3792_p_160016','__家電_3C','飛利浦 Sonicare 充電式智能電動護齦牙刷 單握柄+2刷頭 HX3792','https://www.costco.com.tw/Televisions-Appliances/Small-Appliances/Electric-Toothbrushes-Water-Flossers/Philips-Sonicare-Rechargeable-Toothbrush-1-Handle-2-Brush-Heads-HX3792/p/160016')" title="修改分類（需登入）">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_andle_2_Brush_Heads_HX3792_p_160016','__保健美妝','飛利浦 Sonicare 充電式智能電動護齦牙刷 單握柄+2刷頭 HX3792','https://www.costco.com.tw/Televisions-Appliances/Small-Appliances/Electric-Toothbrushes-Water-Flossers/Philips-Sonicare-Rechargeable-Toothbrush-1-Handle-2-Brush-Heads-HX3792/p/160016')" title="修改分類（需登入）">✏️</button>
   
 </div>
-<div class="card" id="c_ty_4_True_Wireless_Earbuds_p_146926" data-cat="__家電_3C" data-deal="coupon">
-  <a href="https://www.costco.com.tw/Digital-Mobile/Wearables-Audio/Headphones-Audio-Devices/Soundcore-Liberty-4-True-Wireless-Earbuds/p/146926" target="_blank" rel="noopener" class="card-link">
-    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/ha4/h78/329850355318814.jpg" alt="Soundcore Liberty 4 主動降噪真無線藍牙耳機" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.4%</div></div>
-    <div class="card-body">
-      <p class="card-name">Soundcore Liberty 4 主動降噪真無線藍牙耳機</p>
-      <span class="deal-type-badge badge-coup">🏷️ 精選優惠</span>
-      
-      
-      <div class="card-price">
-        <span class="orig">$2,569</span><span class='arrow'>→</span>
-        <span class="sale">$1,529</span>
-      </div>
-      <p class="card-save">省 $520</p>
-      <p class="history">🆕 首次出現</p>
-    </div>
-  </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_ty_4_True_Wireless_Earbuds_p_146926','__家電_3C','Soundcore Liberty 4 主動降噪真無線藍牙耳機','https://www.costco.com.tw/Digital-Mobile/Wearables-Audio/Headphones-Audio-Devices/Soundcore-Liberty-4-True-Wireless-Earbuds/p/146926')" title="修改分類（需登入）">✏️</button>
-  
-</div>
-<div class="card" id="c_https___www_costco_com_tw_p_146322" data-cat="__家電_3C" data-deal="hotbuys">
+<div class="card" id="c_https___www_costco_com_tw_p_146322" data-cat="__保健美妝" data-deal="hotbuys">
   <a href="https://www.costco.com.tw/p/146322" target="_blank" rel="noopener" class="card-link">
     <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h74/h98/209600029458462.jpg" alt="PHILIPS 飛利浦兒童音波電動牙刷 HX3603/03" loading="lazy" onerror="this.style.display='none'"><a class="src-icon" href="https://www.daybuy.tw/costco/256120/" target="_blank" onclick="event.stopPropagation()" title="daybuy 情報">📰</a></div>
     <div class="card-body">
@@ -597,10 +540,10 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🆕 首次出現</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_https___www_costco_com_tw_p_146322','__家電_3C','PHILIPS 飛利浦兒童音波電動牙刷 HX3603/03','https://www.costco.com.tw/p/146322')" title="修改分類（需登入）">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_https___www_costco_com_tw_p_146322','__保健美妝','PHILIPS 飛利浦兒童音波電動牙刷 HX3603/03','https://www.costco.com.tw/p/146322')" title="修改分類（需登入）">✏️</button>
   <a class="daybuy-link official-link" href="https://www.costco.com.tw/p/146322" target="_blank" onclick="event.stopPropagation()">🛒 好市多官網</a><a class="daybuy-link" href="https://www.daybuy.tw/costco/256120/" target="_blank" onclick="event.stopPropagation()">📰 daybuy 情報頁</a>
 </div>
-<div class="card" id="c_https___www_costco_com_tw_p_151105" data-cat="__家電_3C" data-deal="hotbuys">
+<div class="card" id="c_https___www_costco_com_tw_p_151105" data-cat="__保健美妝" data-deal="hotbuys">
   <a href="https://www.costco.com.tw/p/151105" target="_blank" rel="noopener" class="card-link">
     <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/hb0/hc6/332442436206622.jpg" alt="PHILIPS 飛利浦護齦牙刷刷頭 6入組" loading="lazy" onerror="this.style.display='none'"><a class="src-icon" href="https://www.daybuy.tw/costco/256120/" target="_blank" onclick="event.stopPropagation()" title="daybuy 情報">📰</a></div>
     <div class="card-body">
@@ -616,46 +559,8 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
       <p class="history">🆕 首次出現</p>
     </div>
   </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_https___www_costco_com_tw_p_151105','__家電_3C','PHILIPS 飛利浦護齦牙刷刷頭 6入組','https://www.costco.com.tw/p/151105')" title="修改分類（需登入）">✏️</button>
+  <button class="change-cat-btn" onclick="openCatModal('c_https___www_costco_com_tw_p_151105','__保健美妝','PHILIPS 飛利浦護齦牙刷刷頭 6入組','https://www.costco.com.tw/p/151105')" title="修改分類（需登入）">✏️</button>
   <a class="daybuy-link official-link" href="https://www.costco.com.tw/p/151105" target="_blank" onclick="event.stopPropagation()">🛒 好市多官網</a><a class="daybuy-link" href="https://www.daybuy.tw/costco/256120/" target="_blank" onclick="event.stopPropagation()">📰 daybuy 情報頁</a>
-</div>
-<div class="card" id="c_https___www_costco_com_tw_p_157739" data-cat="__家電_3C" data-deal="hotbuys">
-  <a href="https://www.costco.com.tw/p/157739" target="_blank" rel="noopener" class="card-link">
-    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/hc5/h64/431395279863838.jpg" alt="CyberPower 防突波 8 插座 2 USB 充電延長線" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.1%</div></div>
-    <div class="card-body">
-      <p class="card-name">CyberPower 防突波 8 插座 2 USB 充電延長線</p>
-      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 5 天</span>
-      
-      <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
-      <div class="card-price">
-        <span class="orig">$479</span><span class='arrow'>→</span>
-        <span class="sale">$359</span>
-      </div>
-      <p class="card-save">省 $120</p>
-      <p class="history">🆕 首次出現</p>
-    </div>
-  </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_https___www_costco_com_tw_p_157739','__家電_3C','CyberPower 防突波 8 插座 2 USB 充電延長線','https://www.costco.com.tw/p/157739')" title="修改分類（需登入）">✏️</button>
-  
-</div>
-<div class="card" id="c_https___www_costco_com_tw_p_1285702" data-cat="__家電_3C" data-deal="coupon">
-  <a href="https://www.costco.com.tw/p/1285702" target="_blank" rel="noopener" class="card-link">
-    <div class="card-img"><img src="https://static.daybuy.tw/wp-content/uploads/2019/06/IMG_0432.jpeg" alt="COLGATE 高露潔全效潔白牙膏" loading="lazy" onerror="this.style.display='none'"><a class="src-icon" href="https://www.daybuy.tw/costco/40365/" target="_blank" onclick="event.stopPropagation()" title="daybuy 情報">📰</a></div>
-    <div class="card-body">
-      <p class="card-name">COLGATE 高露潔全效潔白牙膏</p>
-      <span class="deal-type-badge badge-coup">🏷️ 精選優惠</span><span class="deal-type-badge badge-hidden" title="人工confirm的賣場隱藏優惠，折扣可能隨時異動">🏪 賣場隱藏</span>
-      
-      <p class="deal-period">📅 2026.06.22~2026.07.05<span class="confirm-date-hint" title="此折扣為人工confirm的暫時性資料，僅代表06/23當時確認狀態，可能已變動">🕐 06/23確認</span></p>
-      <div class="card-price">
-        <span class="orig">$549</span><span class='arrow'>→</span>
-        <span class="sale">$80</span>
-      </div>
-      <p class="card-save"></p>
-      <p class="history">🕐 距上次折扣 9 天</p>
-    </div>
-  </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_https___www_costco_com_tw_p_1285702','__家電_3C','COLGATE 高露潔全效潔白牙膏','https://www.costco.com.tw/p/1285702')" title="修改分類（需登入）">✏️</button>
-  <a class="daybuy-link official-link" href="https://www.costco.com.tw/p/1285702" target="_blank" onclick="event.stopPropagation()">🛒 好市多官網</a><a class="daybuy-link" href="https://www.daybuy.tw/costco/40365/" target="_blank" onclick="event.stopPropagation()">📰 daybuy 情報頁</a>
 </div>
 <div class="card" id="c_https___www_costco_com_tw_p_335354" data-cat="__保健美妝" data-deal="coupon">
   <a href="https://www.costco.com.tw/p/335354" target="_blank" rel="noopener" class="card-link">
@@ -845,6 +750,120 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
     </div>
   </a>
   <button class="change-cat-btn" onclick="openCatModal('c_and_Aloe_Body_Soap_1200_ml_p_133093','__保健美妝','牛乳石鹼 蘆薈精華沐浴乳 1200毫升','https://www.costco.com.tw/Health-Beauty/Personal-Care/Bath-Body/Cow-Brand-Aloe-Body-Soap-1200-ml/p/133093')" title="修改分類（需登入）">✏️</button>
+  
+</div>
+<div class="card" id="c_https___www_costco_com_tw_p_1285702" data-cat="__保健美妝" data-deal="coupon">
+  <a href="https://www.costco.com.tw/p/1285702" target="_blank" rel="noopener" class="card-link">
+    <div class="card-img"><img src="https://static.daybuy.tw/wp-content/uploads/2019/06/IMG_0432.jpeg" alt="COLGATE 高露潔全效潔白牙膏" loading="lazy" onerror="this.style.display='none'"><a class="src-icon" href="https://www.daybuy.tw/costco/40365/" target="_blank" onclick="event.stopPropagation()" title="daybuy 情報">📰</a></div>
+    <div class="card-body">
+      <p class="card-name">COLGATE 高露潔全效潔白牙膏</p>
+      <span class="deal-type-badge badge-coup">🏷️ 精選優惠</span><span class="deal-type-badge badge-hidden" title="人工confirm的賣場隱藏優惠，折扣可能隨時異動">🏪 賣場隱藏</span>
+      
+      <p class="deal-period">📅 2026.06.22~2026.07.05<span class="confirm-date-hint" title="此折扣為人工confirm的暫時性資料，僅代表06/23當時確認狀態，可能已變動">🕐 06/23確認</span></p>
+      <div class="card-price">
+        <span class="orig">$549</span><span class='arrow'>→</span>
+        <span class="sale">$80</span>
+      </div>
+      <p class="card-save"></p>
+      <p class="history">🕐 距上次折扣 9 天</p>
+    </div>
+  </a>
+  <button class="change-cat-btn" onclick="openCatModal('c_https___www_costco_com_tw_p_1285702','__保健美妝','COLGATE 高露潔全效潔白牙膏','https://www.costco.com.tw/p/1285702')" title="修改分類（需登入）">✏️</button>
+  <a class="daybuy-link official-link" href="https://www.costco.com.tw/p/1285702" target="_blank" onclick="event.stopPropagation()">🛒 好市多官網</a><a class="daybuy-link" href="https://www.daybuy.tw/costco/40365/" target="_blank" onclick="event.stopPropagation()">📰 daybuy 情報頁</a>
+</div>
+<div class="card" id="c_https___www_costco_com_tw_p_153509" data-cat="__家電_3C" data-deal="hotbuys">
+  <a href="https://www.costco.com.tw/p/153509" target="_blank" rel="noopener" class="card-link">
+    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h4d/h87/438072164352030.jpg" alt="LG 65吋OLED顯示器 OLED65B5PTA" loading="lazy" onerror="this.style.display='none'"><a class="src-icon" href="https://www.daybuy.tw/costco/256120/" target="_blank" onclick="event.stopPropagation()" title="daybuy 情報">📰</a></div>
+    <div class="card-body">
+      <p class="card-name">LG 65吋OLED顯示器 OLED65B5PTA</p>
+      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="deal-type-badge badge-hidden" title="人工confirm的賣場隱藏優惠，折扣可能隨時異動">🏪 賣場隱藏</span><span class="countdown">⏰ 剩 5 天</span>
+      
+      <p class="deal-period">📅 06/22(一)~06/28(日)<span class="confirm-date-hint" title="此折扣為人工confirm的暫時性資料，僅代表06/23當時確認狀態，可能已變動">🕐 06/23確認</span></p>
+      <div class="card-price">
+        <span class="orig">$49,999</span><span class='arrow'>→</span>
+        <span class="sale">$37,499</span>
+      </div>
+      <p class="card-save">省 $12,500</p>
+      <p class="history">🆕 首次出現</p>
+    </div>
+  </a>
+  <button class="change-cat-btn" onclick="openCatModal('c_https___www_costco_com_tw_p_153509','__家電_3C','LG 65吋OLED顯示器 OLED65B5PTA','https://www.costco.com.tw/p/153509')" title="修改分類（需登入）">✏️</button>
+  <a class="daybuy-link official-link" href="https://www.costco.com.tw/p/153509" target="_blank" onclick="event.stopPropagation()">🛒 好市多官網</a><a class="daybuy-link" href="https://www.daybuy.tw/costco/256120/" target="_blank" onclick="event.stopPropagation()">📰 daybuy 情報頁</a>
+</div>
+<div class="card" id="c_art_Monitor_QA55QN87DAXXZW_p_152564" data-cat="__家電_3C" data-deal="coupon">
+  <a href="https://www.costco.com.tw/Televisions-Appliances/TV-Home-Entertainment/Televisions-TV-Accessories/50-59-TVs/Samsung-55-inch-Neo-QLED-AI-Smart-Monitor-QA55QN87DAXXZW/p/152564" target="_blank" rel="noopener" class="card-link">
+    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h03/h28/438072160256030.jpg" alt="Samsung 55吋 Neo QLED AI 智慧顯示器 QA55QN87DAXXZW" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.0%</div></div>
+    <div class="card-body">
+      <p class="card-name">Samsung 55吋 Neo QLED AI 智慧顯示器 QA55QN87DAXXZW</p>
+      <span class="deal-type-badge badge-coup">🏷️ 精選優惠</span>
+      
+      
+      <div class="card-price">
+        <span class="orig">$29,999</span><span class='arrow'>→</span>
+        <span class="sale">$17,999</span>
+      </div>
+      <p class="card-save">省 $6,000</p>
+      <p class="history">🆕 首次出現</p>
+    </div>
+  </a>
+  <button class="change-cat-btn" onclick="openCatModal('c_art_Monitor_QA55QN87DAXXZW_p_152564','__家電_3C','Samsung 55吋 Neo QLED AI 智慧顯示器 QA55QN87DAXXZW','https://www.costco.com.tw/Televisions-Appliances/TV-Home-Entertainment/Televisions-TV-Accessories/50-59-TVs/Samsung-55-inch-Neo-QLED-AI-Smart-Monitor-QA55QN87DAXXZW/p/152564')" title="修改分類（需登入）">✏️</button>
+  
+</div>
+<div class="card" id="c__Cool_HP11_Filter_X_3_Pack_p_158445" data-cat="__家電_3C" data-deal="hotbuys">
+  <a href="https://www.costco.com.tw/Televisions-Appliances/Cooling-Heating-Air-Treatment/Air-Purifiers-Filters-Accessories/Dyson-Purifier-Hot-Cool-HP11-Filter-X-3-Pack/p/158445" target="_blank" rel="noopener" class="card-link">
+    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/hbf/hf8/414650697285662.jpg" alt="戴森 三合一涼暖空氣清淨機 HP11 + 綜合濾網 X 3入" loading="lazy" onerror="this.style.display='none'"><div class="badge">-6.7%</div></div>
+    <div class="card-body">
+      <p class="card-name">戴森 三合一涼暖空氣清淨機 HP11 + 綜合濾網 X 3入</p>
+      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 5 天</span>
+      
+      <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
+      <div class="card-price">
+        <span class="orig">$18,999</span><span class='arrow'>→</span>
+        <span class="sale">$16,599</span>
+      </div>
+      <p class="card-save">省 $1,200</p>
+      <p class="history">🆕 首次出現</p>
+    </div>
+  </a>
+  <button class="change-cat-btn" onclick="openCatModal('c__Cool_HP11_Filter_X_3_Pack_p_158445','__家電_3C','戴森 三合一涼暖空氣清淨機 HP11 + 綜合濾網 X 3入','https://www.costco.com.tw/Televisions-Appliances/Cooling-Heating-Air-Treatment/Air-Purifiers-Filters-Accessories/Dyson-Purifier-Hot-Cool-HP11-Filter-X-3-Pack/p/158445')" title="修改分類（需登入）">✏️</button>
+  
+</div>
+<div class="card" id="c_ty_4_True_Wireless_Earbuds_p_146926" data-cat="__家電_3C" data-deal="coupon">
+  <a href="https://www.costco.com.tw/Digital-Mobile/Wearables-Audio/Headphones-Audio-Devices/Soundcore-Liberty-4-True-Wireless-Earbuds/p/146926" target="_blank" rel="noopener" class="card-link">
+    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/ha4/h78/329850355318814.jpg" alt="Soundcore Liberty 4 主動降噪真無線藍牙耳機" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.4%</div></div>
+    <div class="card-body">
+      <p class="card-name">Soundcore Liberty 4 主動降噪真無線藍牙耳機</p>
+      <span class="deal-type-badge badge-coup">🏷️ 精選優惠</span>
+      
+      
+      <div class="card-price">
+        <span class="orig">$2,569</span><span class='arrow'>→</span>
+        <span class="sale">$1,529</span>
+      </div>
+      <p class="card-save">省 $520</p>
+      <p class="history">🆕 首次出現</p>
+    </div>
+  </a>
+  <button class="change-cat-btn" onclick="openCatModal('c_ty_4_True_Wireless_Earbuds_p_146926','__家電_3C','Soundcore Liberty 4 主動降噪真無線藍牙耳機','https://www.costco.com.tw/Digital-Mobile/Wearables-Audio/Headphones-Audio-Devices/Soundcore-Liberty-4-True-Wireless-Earbuds/p/146926')" title="修改分類（需登入）">✏️</button>
+  
+</div>
+<div class="card" id="c_https___www_costco_com_tw_p_157739" data-cat="__家電_3C" data-deal="hotbuys">
+  <a href="https://www.costco.com.tw/p/157739" target="_blank" rel="noopener" class="card-link">
+    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/hc5/h64/431395279863838.jpg" alt="CyberPower 防突波 8 插座 2 USB 充電延長線" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.1%</div></div>
+    <div class="card-body">
+      <p class="card-name">CyberPower 防突波 8 插座 2 USB 充電延長線</p>
+      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="countdown">⏰ 剩 5 天</span>
+      
+      <p class="deal-period">📅 2026/06/15(一)-2026/06/28</p>
+      <div class="card-price">
+        <span class="orig">$479</span><span class='arrow'>→</span>
+        <span class="sale">$359</span>
+      </div>
+      <p class="card-save">省 $120</p>
+      <p class="history">🆕 首次出現</p>
+    </div>
+  </a>
+  <button class="change-cat-btn" onclick="openCatModal('c_https___www_costco_com_tw_p_157739','__家電_3C','CyberPower 防突波 8 插座 2 USB 充電延長線','https://www.costco.com.tw/p/157739')" title="修改分類（需登入）">✏️</button>
   
 </div>
 <div class="card" id="c_olf_Ball_3_Count_X_8_Pack_p_1654518" data-cat="__生活用品" data-deal="hotbuys">
@@ -1436,25 +1455,6 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
   <button class="change-cat-btn" onclick="openCatModal('c_Shaped_Pad_Size_M_24_Piece_p_134643','__其他','蘇菲 超熟睡安心褲 M尺寸 24片','https://www.costco.com.tw/Health-Beauty/Personal-Care/Feminine-Care/Sofy-Deep-Sleep-Night-Shorts-Shaped-Pad-Size-M-24-Piece/p/134643')" title="修改分類（需登入）">✏️</button>
   
 </div>
-<div class="card" id="c_https___www_costco_com_tw_p_3055" data-cat="__其他" data-deal="hotbuys">
-  <a href="https://www.costco.com.tw/p/3055" target="_blank" rel="noopener" class="card-link">
-    <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/h0c/h0a/169396953251870.jpg" alt="KIRIN 麒麟一番榨啤酒" loading="lazy" onerror="this.style.display='none'"><a class="src-icon" href="https://www.daybuy.tw/costco/256120/" target="_blank" onclick="event.stopPropagation()" title="daybuy 情報">📰</a></div>
-    <div class="card-body">
-      <p class="card-name">KIRIN 麒麟一番榨啤酒</p>
-      <span class="deal-type-badge badge-hot">⏰ 限時優惠</span><span class="deal-type-badge badge-hidden" title="人工confirm的賣場隱藏優惠，折扣可能隨時異動">🏪 賣場隱藏</span><span class="countdown">⏰ 剩 5 天</span>
-      
-      <p class="deal-period">📅 06/22(一)~06/28(日)<span class="confirm-date-hint" title="此折扣為人工confirm的暫時性資料，僅代表06/23當時確認狀態，可能已變動">🕐 06/23確認</span></p>
-      <div class="card-price">
-        <span class="orig">$715</span><span class='arrow'>→</span>
-        <span class="sale">$605</span>
-      </div>
-      <p class="card-save">省 $110</p>
-      <p class="history">🆕 首次出現</p>
-    </div>
-  </a>
-  <button class="change-cat-btn" onclick="openCatModal('c_https___www_costco_com_tw_p_3055','__其他','KIRIN 麒麟一番榨啤酒','https://www.costco.com.tw/p/3055')" title="修改分類（需登入）">✏️</button>
-  <a class="daybuy-link official-link" href="https://www.costco.com.tw/p/3055" target="_blank" onclick="event.stopPropagation()">🛒 好市多官網</a><a class="daybuy-link" href="https://www.daybuy.tw/costco/256120/" target="_blank" onclick="event.stopPropagation()">📰 daybuy 情報頁</a>
-</div>
 <div class="card" id="c_ofiber_Towels_80_Piece_Box_p_148155" data-cat="__其他" data-deal="hotbuys">
   <a href="https://www.costco.com.tw/Sports-Lifestyle/Automotive/Automotive/GRAB-A-RAG-Microfiber-Towels-80-Piece-Box/p/148155" target="_blank" rel="noopener" class="card-link">
     <div class="card-img"><img src="https://www.costco.com.tw/medias/sys_master/images/ha0/hd0/294120769749022.jpg" alt="GRAB-A-RAG 超細纖維拭布 每盒 80 抽" loading="lazy" onerror="this.style.display='none'"><div class="badge">-25.8%</div></div>
@@ -1590,7 +1590,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
   </div>
 </div>
 
-<footer>🤖 Hermes Agent 自動整理｜資料來源：costco.com.tw｜更新：2026-06-23 13:39<br>🏪=賣場同售 📰=daybuy情報 ✏️=登入後可修改分類</footer>
+<footer>🤖 Hermes Agent 自動整理｜資料來源：costco.com.tw｜更新：2026-06-23 13:40<br>🏪=賣場同售 📰=daybuy情報 ✏️=登入後可修改分類</footer>
 
 <!-- 分類 Modal -->
 <div class="modal-overlay" id="catModal" onclick="if(event.target===this)closeModal()">
@@ -1599,8 +1599,8 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
     <div class="modal-subtitle" id="modalProductName"></div>
     <div class="modal-cats"><button class="modal-cat-btn" data-cat="__寵物用品" onclick="selectCat('__寵物用品')">🐾 寵物用品</button>
 <button class="modal-cat-btn" data-cat="__食品飲料" onclick="selectCat('__食品飲料')">🍱 食品飲料</button>
-<button class="modal-cat-btn" data-cat="__家電_3C" onclick="selectCat('__家電_3C')">📺 家電 3C</button>
 <button class="modal-cat-btn" data-cat="__保健美妝" onclick="selectCat('__保健美妝')">🧴 保健美妝</button>
+<button class="modal-cat-btn" data-cat="__家電_3C" onclick="selectCat('__家電_3C')">📺 家電 3C</button>
 <button class="modal-cat-btn" data-cat="__生活用品" onclick="selectCat('__生活用品')">🏠 生活用品</button>
 <button class="modal-cat-btn" data-cat="__服飾寢具" onclick="selectCat('__服飾寢具')">👕 服飾寢具</button>
 <button class="modal-cat-btn" data-cat="__玩具育兒" onclick="selectCat('__玩具育兒')">🧸 玩具育兒</button>
@@ -1632,7 +1632,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
 </div>
 
 <script>
-const ALL_CATS = ["🐾 寵物用品", "🍱 食品飲料", "📺 家電 3C", "🧴 保健美妝", "🏠 生活用品", "👕 服飾寢具", "🧸 玩具育兒", "🏋️ 運動戶外", "📦 其他"];
+const ALL_CATS = ["🐾 寵物用品", "🍱 食品飲料", "🧴 保健美妝", "📺 家電 3C", "🏠 生活用品", "👕 服飾寢具", "🧸 玩具育兒", "🏋️ 運動戶外", "📦 其他"];
 const DB_OVERRIDES = {"c_ng_Water_500_ml_X_24_Count_p_151543": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c_an_Pants_Size_XL_116_Piece_p_246574": "__ÃÂ§ÃÂÃÂ©ÃÂ¥ÃÂÃÂ·ÃÂ¨ÃÂÃÂ²ÃÂ¥ÃÂÃÂ", "c_Coconut_Water_1_L_X_6_Count_p_75130": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c__Calbee_Fruit_Granola_1_kg_p_216971": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c_iban_Tape_Size_L_156_Piece_p_246571": "__ÃÂ§ÃÂÃÂ©ÃÂ¥ÃÂÃÂ·ÃÂ¨ÃÂÃÂ²ÃÂ¥ÃÂÃÂ", "c_sule_60_Capsule_X_2_Bottle_p_125360": "__ÃÂ¤ÃÂ¿ÃÂÃÂ¥ÃÂÃÂ¥ÃÂ§ÃÂ¾ÃÂÃÂ¥ÃÂ¦ÃÂ", "c_ban_Pants_Size_L_144_Piece_p_246573": "__ÃÂ§ÃÂÃÂ©ÃÂ¥ÃÂÃÂ·ÃÂ¨ÃÂÃÂ²ÃÂ¥ÃÂÃÂ", "c_ban_Tape_Size_XL_124_Piece_p_246572": "__ÃÂ§ÃÂÃÂ©ÃÂ¥ÃÂÃÂ·ÃÂ¨ÃÂÃÂ²ÃÂ¥ÃÂÃÂ", "c_iban_Tape_Size_M_186_Piece_p_246570": "__ÃÂ§ÃÂÃÂ©ÃÂ¥ÃÂÃÂ·ÃÂ¨ÃÂÃÂ²ÃÂ¥ÃÂÃÂ", "c_an_Pants_Size_XXL_93_Piece_p_246575": "__ÃÂ§ÃÂÃÂ©ÃÂ¥ÃÂÃÂ·ÃÂ¨ÃÂÃÂ²ÃÂ¥ÃÂÃÂ", "c_ns_Short_Sleeve_Polo_Shirt_p_134126": "__ÃÂ¦ÃÂÃÂÃÂ©ÃÂ£ÃÂ¾ÃÂ¥ÃÂ¯ÃÂ¢ÃÂ¥ÃÂÃÂ·", "c_lavored_Potato_Chips_580_g_p_123855": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c_weet_Potato_38_g_X_16_Pack_p_132366": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c_ntial_Probiotic_120_Capsule_p_97716": "__ÃÂ¤ÃÂ¿ÃÂÃÂ¥ÃÂÃÂ¥ÃÂ§ÃÂ¾ÃÂÃÂ¥ÃÂ¦ÃÂ", "c_iban_Tape_Size_S_232_Piece_p_246569": "__ÃÂ§ÃÂÃÂ©ÃÂ¥ÃÂÃÂ·ÃÂ¨ÃÂÃÂ²ÃÂ¥ÃÂÃÂ", "c_in_Drink_300_ml_X_12_Count_p_136603": "__ÃÂ¤ÃÂ¿ÃÂÃÂ¥ÃÂÃÂ¥ÃÂ§ÃÂ¾ÃÂÃÂ¥ÃÂ¦ÃÂ", "c_nd_Strawberry_Jelly_186_kg_p_123003": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c_ge_Assorted_Pack_200_Piece_p_231119": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c__EVERYTIME_10_ml_X_30_Pack_p_186999": "__ÃÂ¤ÃÂ¿ÃÂÃÂ¥ÃÂÃÂ¥ÃÂ§ÃÂ¾ÃÂÃÂ¥ÃÂ¦ÃÂ", "c_ore_Folding_Chair_2_Piece_p_1276530": "__ÃÂ§ÃÂÃÂÃÂ¦ÃÂ´ÃÂ»ÃÂ§ÃÂÃÂ¨ÃÂ¥ÃÂÃÂ", "c_ive_ion_Hair_Dryer_TD570TW_p_152520": "__ÃÂ§ÃÂÃÂÃÂ¦ÃÂ´ÃÂ»ÃÂ§ÃÂÃÂ¨ÃÂ¥ÃÂÃÂ", "c_age_with_Lid_12_Piece_Set_p_8523323": "__ÃÂ§ÃÂÃÂÃÂ¦ÃÂ´ÃÂ»ÃÂ§ÃÂÃÂ¨ÃÂ¥ÃÂÃÂ", "c_n_Pants_Size_XXXL_93_Piece_p_246576": "__ÃÂ§ÃÂÃÂ©ÃÂ¥ÃÂÃÂ·ÃÂ¨ÃÂÃÂ²ÃÂ¥ÃÂÃÂ", "c__Oatmeal_Mini_Bite_1000_g_p_1212068": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c_ence_Drink_25_ml_X_30_Pack_p_142927": "__ÃÂ¤ÃÂ¿ÃÂÃÂ¥ÃÂÃÂ¥ÃÂ§ÃÂ¾ÃÂÃÂ¥ÃÂ¦ÃÂ", "c__Flexispot_Adjustable_Desk_p_158513": "__ÃÂ§ÃÂÃÂÃÂ¦ÃÂ´ÃÂ»ÃÂ§ÃÂÃÂ¨ÃÂ¥ÃÂÃÂ", "c_ter_Gel_Cream_120_ml_50_ml_p_681601": "__ÃÂ¤ÃÂ¿ÃÂÃÂ¥ÃÂÃÂ¥ÃÂ§ÃÂ¾ÃÂÃÂ¥ÃÂ¦ÃÂ", "c_ll_Cream_Milk_Powder_25_kg_p_230352": "__ÃÂ§ÃÂÃÂ©ÃÂ¥ÃÂÃÂ·ÃÂ¨ÃÂÃÂ²ÃÂ¥ÃÂÃÂ", "c_Mire_Biscuit_70g_X_10_Pack_p_145475": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c_Bou_Stuffed_Egg_Roll_480_g_p_144711": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c_ER_Pure_Baking_Soda_612_kg_p_488431": "__ÃÂ§ÃÂÃÂÃÂ¦ÃÂ´ÃÂ»ÃÂ§ÃÂÃÂ¨ÃÂ¥ÃÂÃÂ", "c_est_Grove_Trail_Mix_907_g_p_1056107": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c_ls_Pest_Control_Air_Care__s_p_73655": "__ÃÂ§ÃÂÃÂÃÂ¦ÃÂ´ÃÂ»ÃÂ§ÃÂÃÂ¨ÃÂ¥ÃÂÃÂ", "c_Seaweed_Potato_Chips_550_g_p_125733": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c_min_Soda_330_ml_X_24_Count_p_141523": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c_ling_Orange_320ml_X_24_Can_p_149152": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c_conut_Latte_16_g_X_50_Pack_p_149178": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c_asting_AA_Battery_40_Pack_p_1012891": "__ÃÂ§ÃÂÃÂÃÂ¦ÃÂ´ÃÂ»ÃÂ§ÃÂÃÂ¨ÃÂ¥ÃÂÃÂ", "c_DClean_shower_head_package_p_127125": "__ÃÂ§ÃÂÃÂÃÂ¦ÃÂ´ÃÂ»ÃÂ§ÃÂÃÂ¨ÃÂ¥ÃÂÃÂ", "c_Ladies_Casual_Denim_Jeans_p_1956376": "__ÃÂ¦ÃÂÃÂÃÂ©ÃÂ£ÃÂ¾ÃÂ¥ÃÂ¯ÃÂ¢ÃÂ¥ÃÂÃÂ·", "c_No_Label_500_ml_X_24_Count_p_150350": "__Ã©Â£ÂÃ¥ÂÂÃ©Â£Â²Ã¦ÂÂ", "c_es_Long_Sleeve_Pajama_Set_p_1846321": "__Ã¦ÂÂÃ©Â£Â¾Ã¥Â¯Â¢Ã¥ÂÂ·", "c_led_Belcube_250_g_X_2_Pack_p_113041": "__Ã©Â£ÂÃ¥ÂÂÃ©Â£Â²Ã¦ÂÂ", "c_https___www_daybuy_tw_costco_37195_": "__Ã©Â£ÂÃ¥ÂÂÃ©Â£Â²Ã¦ÂÂ", "c_Mango_Milk_Pudding_6_Count_p_124007": "__Ã©Â£ÂÃ¥ÂÂÃ©Â£Â²Ã¦ÂÂ", "c_https___www_daybuy_tw_costco_43837_": "__Ã§ÂÂÃ¦Â´Â»Ã§ÂÂ¨Ã¥ÂÂ", "c_ttps___www_daybuy_tw_costco_121418_": "__Ã©Â£ÂÃ¥ÂÂÃ©Â£Â²Ã¦ÂÂ", "c_ttps___www_daybuy_tw_costco_213783_": "__Ã§ÂÂÃ¦Â´Â»Ã§ÂÂ¨Ã¥ÂÂ", "c_House_100_Baking_Soda_4_kg_p_134566": "__Ã§ÂÂÃ¦Â´Â»Ã§ÂÂ¨Ã¥ÂÂ", "c_https___www_costco_com_tw_p_125978": "__Ã©Â£ÂÃ¥ÂÂÃ©Â£Â²Ã¦ÂÂ", "c_sting_AAA_Battery_40_Pack_p_1012885": "__Ã¥Â®Â¶Ã©ÂÂ»_3C", "c_https___www_daybuy_tw_costco_32970_": "__Ã©Â£ÂÃ¥ÂÂÃ©Â£Â²Ã¦ÂÂ", "c_https___www_costco_com_tw_p_681601": "__Ã§ÂÂÃ¦Â´Â»Ã§ÂÂ¨Ã¥ÂÂ", "c_com_tw_Household_Baby_Toys_p_246575": "__Ã§ÂÂ©Ã¥ÂÂ·Ã¨ÂÂ²Ã¥ÂÂ", "c_od_Great_Day_Seafood_Congee_40_g_X_30_Pack_p_96387": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c_anging_Dehumidifier_Bag_385_ml_X_15_Count_p_157762": "__ÃÂ¥ÃÂ®ÃÂ¶ÃÂ©ÃÂÃÂ»_3C", "c_ormance_Plus_Cat_Litter_476_kg_X_4_Count_p_1529177": "__ÃÂ§ÃÂÃÂÃÂ¦ÃÂ´ÃÂ»ÃÂ§ÃÂÃÂ¨ÃÂ¥ÃÂÃÂ", "c__Megumi_Hair_Essence_160_ml_Refill_150_ml_p_157761": "__ÃÂ¥ÃÂÃÂ¥ÃÂ¥ÃÂºÃÂ·ÃÂ§ÃÂ¾ÃÂÃÂ¥ÃÂ¦ÃÂ", "c_www_pttweb_cc_bbs_hypermall_M_1779184003_A_4D2": "__ÃÂ¥ÃÂ®ÃÂ¶ÃÂ©ÃÂÃÂ»_3C", "c_www_daybuy_tw_costco_248853_": "__ÃÂ¥ÃÂ®ÃÂ¶ÃÂ¥ÃÂÃÂ·ÃÂ©ÃÂ¤ÃÂÃÂ¥ÃÂ»ÃÂ", "c__Pet_Dry_Wet_Food_Cat_Chow_Cat_Food_68_kg_p_126098": "__ÃÂ§ÃÂÃÂÃÂ¦ÃÂ´ÃÂ»ÃÂ§ÃÂÃÂ¨ÃÂ¥ÃÂÃÂ", "c_e_No_Extra_Added_Sweetness_Soy_Milk_25_kg_p_141611": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c_hoes_Mens_Shoes_Adidas_Mens_Runvista_Shoe_p_154456": "__ÃÂ¦ÃÂÃÂÃÂ©ÃÂ£ÃÂ¾ÃÂ¦ÃÂÃÂÃÂ¥ÃÂ°ÃÂ", "c__Full_Synthetic_Motor_Oil_946_ml_X_6_Pack_p_125482": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c_ffee_Nescafe_Sicily_Coffee_15_g_X_40_Pack_p_150636": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c__Almond_Gift_Pack_14_g_X_20_Pack_X_2_Box_p_1116888": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c__Womens_Shoes_Adidas_Runvista_Womens_Shoe_p_154454": "__ÃÂ¦ÃÂÃÂÃÂ©ÃÂ£ÃÂ¾ÃÂ¦ÃÂÃÂÃÂ¥ÃÂ°ÃÂ", "c_mins_Youtheory_Collagen_Biotin_390_Tablet_p_554059": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c_oneless_Thigh_Thirteen_Spices_Breast_5_kg_p_157706": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c_s_Mens_Shoes_Skechers_Mens_Athletic_Shoe_p_1961251": "__ÃÂ¦ÃÂÃÂÃÂ©ÃÂ£ÃÂ¾ÃÂ¦ÃÂÃÂÃÂ¥ÃÂ°ÃÂ", "c__Iced_Latte_Caramel_Flavor_30_g_X_40_Pack_p_146963": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c_aPop_Sweet_and_Salty_Kettle_Popcorn_652_g_p_979885": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c_ol_Multi_Surface_Cleaner_177_L_X_2_Count_p_1805039": "__ÃÂ§ÃÂÃÂÃÂ¦ÃÂ´ÃÂ»ÃÂ§ÃÂÃÂ¨ÃÂ¥ÃÂÃÂ", "c_EAZEN_Kombucha_Lemon_Flavor_5_g_X_40_Pack_p_141460": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c_inks_Tea_I_Mei_Milk_Tea_250_ml_X_24_Count_p_133087": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c_ong_Yu_Frozen_Seafood_Shrimp_Pancake_2_kg_p_247284": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c__c_AGV_100_Oatmeal_Drink_340_ml_X_12_Count_p_97313": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c_ks_Veranda_Blend_Whole_Bean_Coffee_113_kg_p_648080": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c_orts_Kirkland_Signature_Players_Iron_Set_p_1740556": "__ÃÂ©ÃÂÃÂÃÂ¥ÃÂÃÂÃÂ¦ÃÂÃÂ¶ÃÂ¥ÃÂ¤ÃÂ", "c__Kirkland_Signature_Ladies_Hoodie_Jacket_p_7771776": "__ÃÂ¦ÃÂÃÂÃÂ©ÃÂ£ÃÂ¾ÃÂ¦ÃÂÃÂÃÂ¥ÃÂ°ÃÂ", "c_e_Leather_Golf_Glove_4_Pack_Right_Handed_p_1418682": "__ÃÂ¦ÃÂÃÂÃÂ©ÃÂ£ÃÂ¾ÃÂ¦ÃÂÃÂÃÂ¥ÃÂ°ÃÂ", "c_rethane_Cover_Golf_Ball_3_Count_X_8_Pack_p_1654518": "__ÃÂ©ÃÂÃÂÃÂ¥ÃÂÃÂÃÂ¦ÃÂÃÂ¶ÃÂ¥ÃÂ¤ÃÂ", "c_e_Logo_Unisex_Crew_Neck_Short_Sleeve_Tee_p_7771755": "__ÃÂ¦ÃÂÃÂÃÂ©ÃÂ£ÃÂ¾ÃÂ¦ÃÂÃÂÃÂ¥ÃÂ°ÃÂ", "c_Kirkland_Signature_Mens_Short_Sleeve_Tee_p_7771459": "__ÃÂ¦ÃÂÃÂÃÂ©ÃÂ£ÃÂ¾ÃÂ¦ÃÂÃÂÃÂ¥ÃÂ°ÃÂ", "c_and_Signature_Mens_Classic_5_Pocket_Pant_p_7771464": "__ÃÂ¦ÃÂÃÂÃÂ©ÃÂ£ÃÂ¾ÃÂ¦ÃÂÃÂÃÂ¥ÃÂ°ÃÂ", "c_kland_Signature_Ladies_Lightweight_Short_p_7771782": "__ÃÂ¦ÃÂÃÂÃÂ©ÃÂ£ÃÂ¾ÃÂ¦ÃÂÃÂÃÂ¥ÃÂ°ÃÂ", "c_es_Shoes_Womens_Shoes_Lacoste_Ladies_Shoe_p_154493": "__ÃÂ¦ÃÂÃÂÃÂ©ÃÂ£ÃÂ¾ÃÂ¦ÃÂÃÂÃÂ¥ÃÂ°ÃÂ", "c_cks_Nuts_Jerky_North_Sea_Fish_Snacks_600_g_p_78623": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c__L_Top_Mount_Freezer_Fridge_RT62N704HS9TW_p_126223": "__ÃÂ¥ÃÂ®ÃÂ¶ÃÂ©ÃÂÃÂ»_3C", "c__with_Cheese_Rice_Burger_195_g_X_10_Count_p_155717": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c_ranberry_Milk_Cereal_Bar_235_g_X_32_Count_p_227818": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c_nut_Flavored_Milk_Drink_200_ml_X_24_Count_p_298724": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c_Steel_Travel_Tumbler_750_ml_X_2_Piece_Set_p_147551": "__ÃÂ¥ÃÂ®ÃÂ¶ÃÂ¥ÃÂÃÂ·ÃÂ©ÃÂ¤ÃÂÃÂ¥ÃÂ»ÃÂ", "c_ces_Shampoo_Blue_Ginger_and_Micellar_12_L_p_139521": "__ÃÂ¥ÃÂÃÂ¥ÃÂ¥ÃÂºÃÂ·ÃÂ§ÃÂ¾ÃÂÃÂ¥ÃÂ¦ÃÂ", "c_nced_Whitening_Toothpaste_181_g_X_5_Pack_p_1285702": "__ÃÂ¥ÃÂÃÂ¥ÃÂ¥ÃÂºÃÂ·ÃÂ§ÃÂ¾ÃÂÃÂ¥ÃÂ¦ÃÂ", "c_ad_To_Toe_Shampoo_Body_Wash_1000_ml_80_ml_p_133118": "__ÃÂ¥ÃÂÃÂ¥ÃÂ¥ÃÂºÃÂ·ÃÂ§ÃÂ¾ÃÂÃÂ¥ÃÂ¦ÃÂ", "c_rae_Melon_Flavored_Milk_200_ml_X_24_Count_p_298723": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c_hampoo_Body_Wash_1000_ml_Citrus_Cedarwood_p_150878": "__ÃÂ¥ÃÂÃÂ¥ÃÂ¥ÃÂºÃÂ·ÃÂ§ÃÂ¾ÃÂÃÂ¥ÃÂ¦ÃÂ", "c_Brazil_Cerrado_Drip_Coffee_11_g_X_50_Count_p_37742": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c_s_Socks_Intimates_Gunze_Soft_Wirefree_Bra_p_160561": "__ÃÂ¦ÃÂÃÂÃÂ©ÃÂ£ÃÂ¾ÃÂ¦ÃÂÃÂÃÂ¥ÃÂ°ÃÂ", "c_g_White_Coffee_Cappuccino_30_g_X_80_Count_p_274199": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c__20mg_with_Minerals_Vitamins_150_Softgels_p_335354": "__ÃÂ¥ÃÂÃÂ¥ÃÂ¥ÃÂºÃÂ·ÃÂ§ÃÂ¾ÃÂÃÂ¥ÃÂ¦ÃÂ", "c_Power_OXI_Liquid_Laundry_Detergent_408_L_p_3160440": "__ÃÂ§ÃÂÃÂÃÂ¦ÃÂ´ÃÂ»ÃÂ§ÃÂÃÂ¨ÃÂ¥ÃÂÃÂ", "c_Premium_Roast_Drip_Coffee_12_g_X_50_Count_p_101940": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c_ed_Cat_Food_with_3_Flavors_80_g_X_24_Count_p_95452": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c_n_1_Instant_Coffee_Latte_21_g_X_100_Count_p_109399": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c_ung_13_kg_AI_Top_Load_Washer_WA80F13S5LTW_p_155133": "__ÃÂ¥ÃÂ®ÃÂ¶ÃÂ©ÃÂÃÂ»_3C", "c_te_Machine_Zojirushi_Rice_Cooker_NS_ZLF18_p_122731": "__ÃÂ¥ÃÂ®ÃÂ¶ÃÂ©ÃÂÃÂ»_3C", "c_ories_Honeywell_Air_Purifier_HPA5350WTWV1_p_157137": "__ÃÂ¥ÃÂ®ÃÂ¶ÃÂ©ÃÂÃÂ»_3C", "c_www_costco_com_tw_Food_Dining_Snacks_p_78623": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c_com_tw_Food_Dining_Drinks_Beverages_Juice_p_298724": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c_com_tw_Food_Dining_Drinks_Beverages_Juice_p_298723": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c_www_costco_com_tw_Household_Baby_Toys_p_1805039": "__ÃÂ§ÃÂÃÂÃÂ¦ÃÂ´ÃÂ»ÃÂ§ÃÂÃÂ¨ÃÂ¥ÃÂÃÂ", "c_www_costco_com_tw_Food_Dining_Snacks_p_120108": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c_www_costco_com_tw_Food_Dining_Snacks_p_1056107": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c_ood_Dining_Frozen_Fresh_Food_Frozen_Meals_p_247284": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c_www_costco_com_tw_Food_Dining_Snacks_p_125733": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c_www_costco_com_tw_Household_Baby_Toys_p_139234": "__ÃÂ§ÃÂÃÂ©ÃÂ¥ÃÂÃÂ·ÃÂ¨ÃÂÃÂ²ÃÂ¥ÃÂÃÂ", "c_www_costco_com_tw_Food_Dining_Snacks_p_1212068": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c_www_costco_com_tw_p_1276530": "__ÃÂ¥ÃÂ®ÃÂ¶ÃÂ¥ÃÂÃÂ·ÃÂ©ÃÂ¤ÃÂÃÂ¥ÃÂ»ÃÂ", "c_www_costco_com_tw_p_8523323": "__ÃÂ¥ÃÂ®ÃÂ¶ÃÂ©ÃÂÃÂ»_3C", "c_www_costco_com_tw_p_186999": "__ÃÂ¥ÃÂÃÂ¥ÃÂ¥ÃÂºÃÂ·ÃÂ§ÃÂ¾ÃÂÃÂ¥ÃÂ¦ÃÂ", "c_www_costco_com_tw_Household_Baby_Toys_p_246569": "__ÃÂ¦ÃÂÃÂÃÂ©ÃÂ£ÃÂ¾ÃÂ¦ÃÂÃÂÃÂ¥ÃÂ°ÃÂ", "c_www_costco_com_tw_p_1285702": "__ÃÂ¥ÃÂÃÂ¥ÃÂ¥ÃÂºÃÂ·ÃÂ§ÃÂ¾ÃÂÃÂ¥ÃÂ¦ÃÂ", "c_www_costco_com_tw_Household_Baby_Toys_p_246572": "__ÃÂ¦ÃÂÃÂÃÂ©ÃÂ£ÃÂ¾ÃÂ¦ÃÂÃÂÃÂ¥ÃÂ°ÃÂ", "c_www_costco_com_tw_p_150878": "__ÃÂ¥ÃÂÃÂ¥ÃÂ¥ÃÂºÃÂ·ÃÂ§ÃÂ¾ÃÂÃÂ¥ÃÂ¦ÃÂ", "c_www_costco_com_tw_Food_Dining_Drinks_p_274199": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c_www_costco_com_tw_p_125360": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c_www_costco_com_tw_p_335354": "__ÃÂ¥ÃÂÃÂ¥ÃÂ¥ÃÂºÃÂ·ÃÂ§ÃÂ¾ÃÂÃÂ¥ÃÂ¦ÃÂ", "c_www_costco_com_tw_p_122731": "__ÃÂ¥ÃÂ®ÃÂ¶ÃÂ©ÃÂÃÂ»_3C", "c_eatment_Air_Purifiers_Filters_Accessories_p_157137": "__ÃÂ¥ÃÂ®ÃÂ¶ÃÂ©ÃÂÃÂ»_3C", "c_aturals_Cranberry_Concentrate_250_Capsule_p_994336": "__ÃÂ¥ÃÂÃÂ¥ÃÂ¥ÃÂºÃÂ·ÃÂ§ÃÂ¾ÃÂÃÂ¥ÃÂ¦ÃÂ", "c_www_costco_com_tw_p_137510": "__ÃÂ¥ÃÂ®ÃÂ¶ÃÂ©ÃÂÃÂ»_3C", "c_www_daybuy_tw_costco_241312_": "__ÃÂ¥ÃÂÃÂ¥ÃÂ¥ÃÂºÃÂ·ÃÂ§ÃÂ¾ÃÂÃÂ¥ÃÂ¦ÃÂ", "c_i_Kinoko_Chocolate_Biscuits_66_g_X_8_Pack_p_203565": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c_nchy_Nut_Chia_Seeds_Cereal_31_g_X_50_Pack_p_140611": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c_ed_Goods_Vilson_Organic_Black_Bean_1500_g_p_208632": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c_ed_Food_Heinz_Lobster_Bisque_1_L_X_2_Pack_p_150603": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c_ps_Want_Want_Assorted_Rice_Crackers_827_g_p_120108": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c_ps_New_Choice_Crispiroll_Mocha_Flavor_1_kg_p_67643": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c_rm_Wet_Wipes_Unscented_72_Sheet_X_16_Pack_p_139234": "__ÃÂ§ÃÂÃÂ©ÃÂ¥ÃÂÃÂ·ÃÂ¨ÃÂÃÂ²ÃÂ¥ÃÂÃÂ", "c_nd_Tofu_Cat_Litter_Original_5_L_X_6_Count_p_121647": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c__Wafers_Cocoa_Cocoa_Flavor_30_g_X_20_Pack_p_263941": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c_eenex_Flushable_Wipes_46_Sheet_X_32_Count_p_123333": "__ÃÂ§ÃÂÃÂÃÂ¦ÃÂ´ÃÂ»ÃÂ§ÃÂÃÂ¨ÃÂ¥ÃÂÃÂ", "c_www_costco_com_tw_p_994336": "__ÃÂ¥ÃÂÃÂ¥ÃÂ¥ÃÂºÃÂ·ÃÂ§ÃÂ¾ÃÂÃÂ¥ÃÂ¦ÃÂ", "c_neloop_AAA_Rechargeable_Batteries_10_Pack_p_137510": "__ÃÂ¥ÃÂ®ÃÂ¶ÃÂ©ÃÂÃÂ»_3C", "c_www_costco_com_tw_p_158560": "__ÃÂ¥ÃÂ®ÃÂ¶ÃÂ¥ÃÂÃÂ·ÃÂ©ÃÂ¤ÃÂÃÂ¥ÃÂ»ÃÂ", "c_n_Care_Torriden_DIVE_IN_Mask_Set_24_Piece_p_158784": "__ÃÂ¥ÃÂÃÂ¥ÃÂ¥ÃÂºÃÂ·ÃÂ§ÃÂ¾ÃÂÃÂ¥ÃÂ¦ÃÂ", "c_www_daybuy_tw_costco_31177_": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c_www_costco_com_tw_Food_Dining_Drinks_p_150636": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c_ing_Frozen_Fresh_Food_Frozen_Seafood_Meat_p_157706": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c_com_tw_Food_Dining_Drinks_Beverages_Juice_p_141523": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c_www_costco_com_tw_Food_Dining_Snacks_p_67643": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c_www_costco_com_tw_Food_Dining_Snacks_p_144711": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c_www_costco_com_tw_Large_Appliances_p_126223": "__ÃÂ¥ÃÂ®ÃÂ¶ÃÂ©ÃÂÃÂ»_3C", "c_www_costco_com_tw_p_97716": "__ÃÂ¥ÃÂÃÂ¥ÃÂ¥ÃÂºÃÂ·ÃÂ§ÃÂ¾ÃÂÃÂ¥ÃÂ¦ÃÂ", "c_www_costco_com_tw_Household_Baby_Toys_p_246570": "__ÃÂ¦ÃÂÃÂÃÂ©ÃÂ£ÃÂ¾ÃÂ¦ÃÂÃÂÃÂ¥ÃÂ°ÃÂ", "c_www_costco_com_tw_Large_Appliances_p_155133": "__ÃÂ¥ÃÂ®ÃÂ¶ÃÂ©ÃÂÃÂ»_3C", "c_d_BeeTouched_Honey_Milk_250_ml_X_24_Count_p_135879": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c_riginal_Fried_Chicken_Breast_Strips_17_kg_p_153647": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c_IKO_Coffee_Candy_Sharebox_150_g_X_10_Pack_p_555551": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c_oods_Marukome_Miso_Soup_Less_Salt_36_Pack_p_156759": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c_ks_Tea_Blossom_Jinxuan_Tea_300_g_X_2_Pack_p_210915": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c_nt_Ladies_Advent_Draped_Pleated_Wide_Pant_p_156457": "__ÃÂ¦ÃÂÃÂÃÂ©ÃÂ£ÃÂ¾ÃÂ¦ÃÂÃÂÃÂ¥ÃÂ°ÃÂ", "c_mas_Advent_Ladies_Short_Sleeve_Pajama_Set_p_156611": "__ÃÂ¦ÃÂÃÂÃÂ©ÃÂ£ÃÂ¾ÃÂ¦ÃÂÃÂÃÂ¥ÃÂ°ÃÂ", "c_ages_Juice_AW_Root_Beer_325_ml_X_24_Count_p_316384": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c_ion_Shaving_Set_Razor_X_1_Blades_X_7_Pack_p_394744": "__ÃÂ¥ÃÂ®ÃÂ¶ÃÂ¥ÃÂÃÂ·ÃÂ©ÃÂ¤ÃÂÃÂ¥ÃÂ»ÃÂ", "c__Tree_Top_Sparkling_Orange_320ml_X_24_Can_p_149152": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c_com_tw_Food_Dining_Drinks_Beverages_Juice_p_149152": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c__Potato_Clam_Chowder_Soup_169_g_X_32_Pack_p_157484": "__ÃÂ©ÃÂ£ÃÂÃÂ¥ÃÂÃÂÃÂ©ÃÂ£ÃÂ²ÃÂ¦ÃÂÃÂ", "c_mins_Natrol_Biotin_10000_mcg_X_100_Tablet_p_115609": "__ÃÂ¥ÃÂÃÂ¥ÃÂ¥ÃÂºÃÂ·ÃÂ§ÃÂ¾ÃÂÃÂ¥ÃÂ¦ÃÂ", "c_itamins_WEIDER_Daily_Nutripack_50_30_Pack_p_217619": "__ÃÂ¥ÃÂÃÂ¥ÃÂ¥ÃÂºÃÂ·ÃÂ§ÃÂ¾ÃÂÃÂ¥ÃÂ¦ÃÂ", "c_ly_White_Paper_Towel_103_Sheet_X_12_Roll_p_1919326": "__ÃÂ§ÃÂÃÂÃÂ¦ÃÂ´ÃÂ»ÃÂ§ÃÂÃÂ¨ÃÂ¥ÃÂÃÂ", "c_va_3_ply_Kitchen_Towel_60_Sheet_X_16_Roll_p_127295": "__ÃÂ§ÃÂÃÂÃÂ¦ÃÂ´ÃÂ»ÃÂ§ÃÂÃÂ¨ÃÂ¥ÃÂÃÂ", "c_www_costco_com_tw_Household_Baby_Toys_p_127295": "__ÃÂ§ÃÂÃÂÃÂ¦ÃÂ´ÃÂ»ÃÂ§ÃÂÃÂ¨ÃÂ¥ÃÂÃÂ", "c_sehold_Essentials_Pest_Control_Air_Care__s_p_73655": "__ÃÂ§ÃÂÃÂÃÂ¦ÃÂ´ÃÂ»ÃÂ§ÃÂÃÂ¨ÃÂ¥ÃÂÃÂ", "c_www_costco_com_tw_Household_Baby_Toys_p_73655": "__ÃÂ§ÃÂÃÂÃÂ¦ÃÂ´ÃÂ»ÃÂ§ÃÂÃÂ¨ÃÂ¥ÃÂÃÂ", "c__Smart_Indoor_Cycling_Bike_p_140176": "___Ã©ÂÂÃ¥ÂÂÃ¦ÂÂ¶Ã¥Â¤Â", "c_e_Eufy_Robot_Vacuum_Mop_S1_p_157134": "__Ã¥Â®Â¶Ã©ÂÂ»_3C", "c_nverter_Stand_Fan_FS40125R_p_126487": "__Ã¥Â®Â¶Ã©ÂÂ»_3C", "c_edon_3_Seater_Fabric_Sofa_p_1987637": "__Ã¦ÂÂÃ©Â£Â¾Ã¥Â¯Â¢Ã¥ÂÂ·", "c_e_UC_II_Collagen_90_Tablet_p_127189": "__Ã¤Â¿ÂÃ¥ÂÂ¥Ã§Â¾ÂÃ¥Â¦Â", "c_Daily_Nutripack_50_30_Pack_p_217619": "__Ã¤Â¿ÂÃ¥ÂÂ¥Ã§Â¾ÂÃ¥Â¦Â", "c_es_Short_Sleeve_Pajama_Set_p_156611": "__Ã¦ÂÂÃ©Â£Â¾Ã¥Â¯Â¢Ã¥ÂÂ·", "c_t_Draped_Pleated_Wide_Pant_p_156457": "__Ã¦ÂÂÃ©Â£Â¾Ã¥Â¯Â¢Ã¥ÂÂ·", "c_oot_Beer_325_ml_X_24_Count_p_316384": "__Ã©Â£ÂÃ¥ÂÂÃ©Â£Â²Ã¦ÂÂ", "c__Razor_X_1_Blades_X_7_Pack_p_394744": "__Ã¤Â¿ÂÃ¥ÂÂ¥Ã§Â¾ÂÃ¥Â¦Â", "c__com_tw_Household_Baby_Toys_p_73655": "__Ã§ÂÂÃ¦Â´Â»Ã§ÂÂ¨Ã¥ÂÂ", "c_www_daybuy_tw_costco_193766_": "__Ã¥ÂÂ¥Ã¥ÂºÂ·Ã§Â¾ÂÃ¥Â¦Â", "c_t_Chicken_Canned_Cat_Food_85_g_X_24_Count_p_120407": "__Ã§ÂÂÃ¦Â´Â»Ã§ÂÂ¨Ã¥ÂÂ", "c_squito_Swatter_with_Lamp_2_Pack_DHF_T7092_p_151121": "__Ã¥Â®Â¶Ã©ÂÂ»_3C", "c_on_Shrimp_Canned_Cat_Food_85_g_X_24_Count_p_120408": "__Ã©Â£ÂÃ¥ÂÂÃ©Â£Â²Ã¦ÂÂ", "c_fervescent_Black_Currant_Flavor_45_Tablet_p_200763": "__Ã©Â£ÂÃ¥ÂÂÃ©Â£Â²Ã¦ÂÂ", "c_oy_Protein_Isolate_Milk_Tea_Flavour_25_kg_p_150748": "__Ã©Â£ÂÃ¥ÂÂÃ©Â£Â²Ã¦ÂÂ", "c_ein_Soy_Protein_Isolate_Unflavoured_25_kg_p_150747": "__Ã©Â£ÂÃ¥ÂÂÃ©Â£Â²Ã¦ÂÂ", "c_n_Faros_Native_Chopped_Leg_1_kg_X_4_Count_p_133313": "__Ã©Â£ÂÃ¥ÂÂÃ©Â£Â²Ã¦ÂÂ", "c_p_Night_Shorts_Shaped_Pad_Size_M_24_Piece_p_134643": "__Ã¦ÂÂÃ©Â£Â¾Ã¦ÂÂÃ¥Â°Â", "c_I_Kids_Back_To_School_Utensil_4_Piece_Set_p_160481": "__Ã§ÂÂ©Ã¥ÂÂ·Ã¨ÂÂ²Ã¥ÂÂ", "c_ment_Storage_with_Lid_4_Piece_Set_1300_ml_p_158744": "__Ã¥Â®Â¶Ã©ÂÂ»_3C", "c_or_with_8_Outlet_and_2_USB_Charging_Ports_p_157739": "__Ã¥Â®Â¶Ã©ÂÂ»_3C", "c_Maro_3D_Volume_Up_Shampoo_460_ml_X_2_Pack_p_122398": "__Ã¥ÂÂ¥Ã¥ÂºÂ·Ã§Â¾ÂÃ¥Â¦Â", "c__Care_Spray_Strengthening_115_ml_X_2_Pack_p_157054": "__Ã¥ÂÂ¥Ã¥ÂºÂ·Ã§Â¾ÂÃ¥Â¦Â", "c_Asia_Frozen_Shelled_Edamame_1_kg_X_5_Pack_p_863731": "__Ã©Â£ÂÃ¥ÂÂÃ©Â£Â²Ã¦ÂÂ", "c_p_Night_Shorts_Shaped_Pad_Size_L_24_Piece_p_134644": "__Ã¦ÂÂÃ©Â£Â¾Ã¦ÂÂÃ¥Â°Â", "c_App_E_money_NT2000_with_1_Year_Membership_p_142634": "__Ã©ÂÂÃ¥ÂÂÃ¦ÂÂ¶Ã¥Â¤Â", "c__Night_Shorts_Shaped_Pad_Size_XL_24_Piece_p_134645": "__Ã¦ÂÂÃ©Â£Â¾Ã¦ÂÂÃ¥Â°Â", "c_es_Kuze_Fuku_Nagasaki_Castella_Cake_314_g_p_138425": "__Ã©Â£ÂÃ¥ÂÂÃ©Â£Â²Ã¦ÂÂ", "c_Almond_Beverage_No_Sugar_196_ml_X_24_Pack_p_137161": "__Ã©Â£ÂÃ¥ÂÂÃ©Â£Â²Ã¦ÂÂ", "c__Woodsy_Scented_Essential_Shampoo_1000_ml_p_156489": "__Ã¥ÂÂ¥Ã¥ÂºÂ·Ã§Â¾ÂÃ¥Â¦Â", "c_ath_Body_Cow_Brand_Aloe_Body_Soap_1200_ml_p_133093": "__Ã¥ÂÂ¥Ã¥ÂºÂ·Ã§Â¾ÂÃ¥Â¦Â", "c_ture_Freezer_Bag_Medium_44_Bag_X_6_Count_p_1882069": "__Ã©Â£ÂÃ¥ÂÂÃ©Â£Â²Ã¦ÂÂ", "c_and_Signature_Extra_Virgin_Olive_Oil_2_L_p_1058619": "__Ã©Â£ÂÃ¥ÂÂÃ©Â£Â²Ã¦ÂÂ", "c_ockholm_4_Piece_Outdoor_Deep_Seating_Set_p_1934246": "__Ã¥Â®Â¶Ã¥ÂÂ·Ã©Â¤ÂÃ¥Â»Â", "c__AI_Refrigerator_Starry_Gray_RS70F65Q4TTW_p_155431": "__Ã¥Â®Â¶Ã©ÂÂ»_3C", "c_en_Frozen_Chicken_Essence_68_ml_X_50_Pack_p_218552": "__Ã©Â£ÂÃ¥ÂÂÃ©Â£Â²Ã¦ÂÂ", "c_www_costco_com_tw_p_8526947": "__Ã§ÂÂ©Ã¥ÂÂ·Ã¨ÂÂ²Ã¥ÂÂ", "c_www_costco_com_tw_Household_Baby_Toys_p_157762": "__Ã¥Â®Â¶Ã©ÂÂ»_3C", "c_ein_No_Extra_Added_Sweetness_Sesame_25_kg_p_145509": "__Ã©Â£ÂÃ¥ÂÂÃ©Â£Â²Ã¦ÂÂ", "c_www_costco_com_tw_p_1882069": "__Ã©Â£ÂÃ¥ÂÂÃ©Â£Â²Ã¦ÂÂ", "c_land_Signature_Mens_Boxer_Brief_4_Pack_p_7700015_B": "__Ã¦ÂÂÃ©Â£Â¾Ã¦ÂÂÃ¥Â°Â", "c_smacluster_Ion_Drape_Hair_Dryer_IB_WX1T_P_p_142741": "__Ã¥Â®Â¶Ã©ÂÂ»_3C", "c_on_Purifier_BigQuiet_BP02_Filter_X_3_Pack_p_156487": "__Ã¥Â®Â¶Ã©ÂÂ»_3C", "c_nut_Flavor_Espresso_Shot_16_ml_X_40_Count_p_234436": "__Ã©Â£ÂÃ¥ÂÂÃ©Â£Â²Ã¦ÂÂ", "c_otein_Isolate_Jin_Xuan_Latte_Flavor_750_g_p_156473": "__Ã©Â£ÂÃ¥ÂÂÃ©Â£Â²Ã¦ÂÂ", "c_ght_Weathered_Oak_Narrow_Sideboard_103_cm_p_157437": "__Ã¥Â®Â¶Ã¥ÂÂ·Ã©Â¤ÂÃ¥Â»Â", "c_www_daybuy_tw_costco_115883_": "__Ã¥ÂÂ¶Ã¤Â»Â", "c_plies_Ecodoo_Drain_Cleaner_1_L_X_2_Count_p_1137346": "__Ã¥ÂÂ¶Ã¤Â»Â", "c__Caltrate_Mini_Tablets_70_Tablet_X_4_Pack_p_890910": "__Ã¥ÂÂ¶Ã¤Â»Â", "c_es_Rice_Noodles_Le_Food_White_Quinoa_2_kg_p_158290": "__Ã¥ÂÂ¶Ã¤Â»Â", "c_per_Infinity_Heavy_Day_Pad_27_cm_32_Piece_p_115672": "__Ã¥ÂÂ¶Ã¤Â»Â", "c__Sanitary_Pad_Long_33cm_6_Piece_X_16_Pack_p_139917": "__Ã¥ÂÂ¶Ã¤Â»Â", "c__Diffuser_Collection_500_ml_X_5_Piece_Set_p_154537": "__Ã¥ÂÂ¶Ã¤Â»Â", "c_ousehold_Essentials_Pest_Control_Air_Care_p_153787": "__Ã¥ÂÂ¶Ã¤Â»Â", "c_aweed_Crisps_with_Almonds_18_g_X_12_Count_p_960660": "__Ã¥ÂÂ¶Ã¤Â»Â", "c__Crisps_with_Black_Sesame_18_g_X_12_Count_p_960661": "__Ã¥ÂÂ¶Ã¤Â»Â", "c_GRAB_A_RAG_Microfiber_Towels_80_Piece_Box_p_148155": "__Ã¥ÂÂ¶Ã¤Â»Â", "c_Labo_Kiwamizu_Hatomugi_Gel_100_g_x_2_Pack_p_139220": "__Ã¥ÂÂ¶Ã¤Â»Â", "c_ousehold_Essentials_Pest_Control_Air_Care_p_152666": "__Ã¥ÂÂ¶Ã¤Â»Â", "c_s_Bikes_Acer_ES_Series_7_Electric_Scooter_p_151497": "__Ã¥ÂÂ¶Ã¤Â»Â", "c_www_costco_com_tw_p_216971": "__Ã¥ÂÂ¶Ã¤Â»Â", "c_ng_Auto_Umbrella_2_Pack_43_inch_46_inch_p_155776_B": "__Ã¥ÂÂ¶Ã¤Â»Â", "c_agull_Series_3_Blade_White_p_160092": "__çæ´»ç¨å", "c_igmore_Fabric_Lounge_Chair_p_157766": "__服飾寢具"};
 const PW_HASH_DEFAULT = "c322e3a7a451e26a03c85e48a515ba33238c203579314b9635a16745c72ad7ee";
 const CONFIG_URL = "https://raw.githubusercontent.com/s610034/costco-deals/main/data/config.json";
