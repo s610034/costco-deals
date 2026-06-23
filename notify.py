@@ -22,8 +22,10 @@ TG_CHAT_ID = COSTCO_TG_CHAT_ID
 TG_MAX_LEN = 4000
 
 # ── Line ──────────────────────────────────────────────────
-LINE_TOKEN   = os.environ.get("LINE_CHANNEL_ACCESS_TOKEN", "")
-LINE_USER_ID = os.environ.get("LINE_USER_ID", "")
+LINE_TOKEN = os.environ.get("LINE_CHANNEL_ACCESS_TOKEN", "")
+# 多個接收對象：個人 User ID（逗號分隔）+ 群組 ID（逗號分隔）
+LINE_USER_IDS  = [u.strip() for u in os.environ.get("LINE_USER_IDS", os.environ.get("LINE_USER_ID", "")).split(",") if u.strip()]
+LINE_GROUP_IDS = [g.strip() for g in os.environ.get("LINE_GROUP_IDS", "").split(",") if g.strip()]
 
 
 # ── Telegram ──────────────────────────────────────────────
@@ -73,16 +75,8 @@ def tg_send_chunked(text: str) -> None:
 
 # ── Line ──────────────────────────────────────────────────
 
-def line_send(text: str) -> bool:
-    if not LINE_TOKEN or not LINE_USER_ID:
-        print("  ⚠️  Line Token / User ID 未設定，跳過 Line 推播")
-        print("     → 請在 .env 設定 LINE_CHANNEL_ACCESS_TOKEN 和 LINE_USER_ID")
-        return False
-    url = "https://api.line.me/v2/bot/message/push"
-    payload = json.dumps({
-        "to": LINE_USER_ID,
-        "messages": [{"type": "text", "text": text}]
-    }).encode("utf-8")
+def _line_post(url: str, body: dict) -> bool:
+    payload = json.dumps(body).encode("utf-8")
     req = urllib.request.Request(url, data=payload, headers={
         "Content-Type": "application/json",
         "Authorization": f"Bearer {LINE_TOKEN}",
@@ -90,9 +84,46 @@ def line_send(text: str) -> bool:
     try:
         with urllib.request.urlopen(req, timeout=15) as resp:
             return resp.status == 200
+    except urllib.error.HTTPError as e:
+        print(f"  ❌ Line 發送失敗：{e.code} {e.read().decode()[:200]}")
+        return False
     except Exception as e:
         print(f"  ❌ Line 發送失敗：{e}")
         return False
+
+
+def line_send(text: str) -> bool:
+    """
+    推播給所有個人(multicast，一次API呼叫送多人，不限聊天室訊息計費規則)
+    + 所有群組(各自 push，因為群組不支援 multicast)
+    """
+    if not LINE_TOKEN or (not LINE_USER_IDS and not LINE_GROUP_IDS):
+        print("  ⚠️  Line Token / 收件人未設定，跳過 Line 推播")
+        print("     → 請在 .env 設定 LINE_CHANNEL_ACCESS_TOKEN 和 LINE_USER_IDS / LINE_GROUP_IDS")
+        return False
+
+    all_ok = True
+
+    # 個人：multicast 一次送給所有人（最多 500 人/次）
+    if LINE_USER_IDS:
+        ok = _line_post("https://api.line.me/v2/bot/message/multicast", {
+            "to": LINE_USER_IDS,
+            "messages": [{"type": "text", "text": text}],
+        })
+        print(f"    {'✅' if ok else '❌'} 個人推播（{len(LINE_USER_IDS)} 人）")
+        all_ok = all_ok and ok
+
+    # 群組：不支援 multicast，逐個群組各發一次
+    # 注意：群組推播的訊息計費 = 群組人數 × 發送次數，留意免費額度消耗
+    for gid in LINE_GROUP_IDS:
+        ok = _line_post("https://api.line.me/v2/bot/message/push", {
+            "to": gid,
+            "messages": [{"type": "text", "text": text}],
+        })
+        print(f"    {'✅' if ok else '❌'} 群組推播（{gid[:10]}...）")
+        all_ok = all_ok and ok
+
+    return all_ok
 
 
 def line_send_chunked(text: str) -> None:
