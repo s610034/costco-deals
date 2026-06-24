@@ -239,90 +239,20 @@
     "cat": "__服飾寢具",
     "updated": "2026-06-24T09:15:01"
   },
-  "c_No_Label_500_ml_X_24_Count_p_150350": {
-    "name": "IRIS OHYAMA 富士山檸檬風味強氣泡水 環保無標籤款 500毫升 X 24瓶",
-    "link": "https://www.costco.com.tw/Food-Dining/Drinks/Water-Sparkling-Water/IRIS-OHYAMA-MtFuji-Lemon-Flavor-Strong-Sparkling-Water-ECO-Friendly-No-Label-500-ml-X-24-Count/p/150350",
-    "cat": "__食品飲料",
-    "updated": "2026-06-24T09:15:01"
-  },
-  "c_es_Long_Sleeve_Pajama_Set_p_1846321": {
-    "name": "Polo Ralph Lauren 女長袖睡衣套組",
-    "link": "https://www.costco.com.tw/Clothing-Accessories/Womens-Clothing/Womens-Pajamas/Polo-Ralph-Lauren-Ladies-Long-Sleeve-Pajama-Set/p/1846321",
-    "cat": "__服飾寢具",
-    "updated": "2026-06-24T09:15:01"
-  },
-  "c_led_Belcube_250_g_X_2_Pack_p_113041": {
-    "name": "笑牛迷你貝比貝爾乾酪",
-    "link": "https://www.costco.com.tw/Warehouse-Only/Food-Beverages/Chilled/The-Laughing-Cow-Chilled-Belcube-250-g-X-2-Pack/p/113041",
-    "cat": "__食品飲料",
-    "updated": "2026-06-24T09:15:01"
-  },
-  "c_https___www_daybuy_tw_costco_37195_": {
-    "name": "笑牛迷你貝比貝爾乾酪",
-    "link": "https://www.daybuy.tw/costco/37195/",
-    "cat": "__食品飲料",
-    "updated": "2026-06-24T09:15:01"
-  },
-  "c_Mango_Milk_Pudding_6_Count_p_124007": {
-    "name": "新鮮芒果奶酪 6入",
-    "link": "https://www.costco.com.tw/Warehouse-Only/Food-Beverages/Chilled/Mango-Milk-Pudding-6-Count/p/124007",
-    "cat": "__食品飲料",
-    "updated": "2026-06-24T09:15:01"
-  },
-  "c_https___www_daybuy_tw_costco_43837_": {
-    "name": "ARM＆HAMMER 多功能小蘇打粉",
-    "link": "https://www.daybuy.tw/costco/43837/",
-    "cat": "__生活用品",
-    "updated": "2026-06-24T09:15:01"
-  },
-  "c_ttps___www_daybuy_tw_costco_121418_": {
-    "name": "SHU SHIN BOU 手信坊含餡蛋捲",
-    "link": "https://www.daybuy.tw/costco/121418/",
-    "cat": "__食品飲料",
-    "updated": "2026-06-24T09:15:01"
-  },
-  "c_ttps___www_daybuy_tw_costco_213783_": {
-    "name": "CASTROL EDGE 嘉實多極緻5W-30全合成機油",
-    "link": "https://www.daybuy.tw/costco/213783/",
-    "cat": "__生活用品",
-    "updated": "2026-06-24T09:15:01"
-  },
-  "c_House_100_Baking_Soda_4_kg_p_134566": {
-    "name": "鐵鎚牌 多功能小蘇打粉",
-    "link": "https://www.costco.com.tw/Household-Baby-Toys/Household-Essentials/Cleaning-Supplies/Orange-House-100-Baking-Soda-4-kg/p/134566",
-    "cat": "__生活用品",
-    "updated": "2026-06-24T09:15:01"
-  },
-  "c_https___www_costco_com_tw_p_125978": {
-    "name": "SHIH AN FARM 石安牧場杏仁豆腐",
-    "link": "https://www.costco.com.tw/p/125978",
-    "cat": "__食品飲料",
-    "updated": "2026-06-24T09:15:01"
-  },
-  "c_sting_AAA_Battery_40_Pack_p_1012885": {
-    "name": "金頂 四號電池 40入",
-    "link": "https://www.costco.com.tw/Furniture-Kitchen/Hardware-DIY/Power-Tools-Electrical/Duracell-Long-Lasting-AAA-Battery-40-Pack/p/1012885",
-    "cat": "__家電_3C",
-    "updated": "2026-06-24T09:15:01"
-  },
-  "c_https___www_daybuy_tw_costco_32970_": {
-    "name": "SHIH AN FARM 石安牧場杏仁豆腐",
-    "link": "https://www.daybuy.tw/costco/32970/",
-    "cat": "__食品飲料",
-    "updated": "2026-06-24T09:15:01"
-  },
-  "c_https___www_costco_com_tw_p_681601": {
-    "name": "su:m37º 活水潤澤酵能水凝霜 120毫升 + 50毫升",
-    "link": "https://www.costco.com.tw/p/681601",
-    "cat": "__生活用品",
-    "updated": "2026-06-24T09:15:01"
-  },
-  "c_com_tw_Household_Baby_Toys_p_246575": {
-    "name": "幫寶適 一級幫 散熱拉拉褲 XXL號 93片",
-    "link": "https://www.costco.com.tw/Household-Baby-Toys/p/246575",
-    "cat": "__玩具育兒",
-    "updated": "2026-06-24T09:15:01"
-  },
+  "c_No_Label_500_ml_X_24_Count_p_150350": "__食品飲料",
+  "c_es_Long_Sleeve_Pajama_Set_p_1846321": "__服飾寢具",
+  "c_led_Belcube_250_g_X_2_Pack_p_113041": "__食品飲料",
+  "c_https___www_daybuy_tw_costco_37195_": "__食品飲料",
+  "c_Mango_Milk_Pudding_6_Count_p_124007": "__食品飲料",
+  "c_https___www_daybuy_tw_costco_43837_": "__生活用品",
+  "c_ttps___www_daybuy_tw_costco_121418_": "__食品飲料",
+  "c_ttps___www_daybuy_tw_costco_213783_": "__生活用品",
+  "c_House_100_Baking_Soda_4_kg_p_134566": "__生活用品",
+  "c_https___www_costco_com_tw_p_125978": "__食品飲料",
+  "c_sting_AAA_Battery_40_Pack_p_1012885": "__家電_3C",
+  "c_https___www_daybuy_tw_costco_32970_": "__食品飲料",
+  "c_https___www_costco_com_tw_p_681601": "__生活用品",
+  "c_com_tw_Household_Baby_Toys_p_246575": "__玩具育兒",
   "c_od_Great_Day_Seafood_Congee_40_g_X_30_Pack_p_96387": {
     "name": "得意的一天 干貝柴魚粥 40公克 X 30包",
     "link": "https://www.costco.com.tw/Food-Dining/Groceries/Canned-Prepared-Food/Great-Day-Seafood-Congee-40-g-X-30-Pack/p/96387",
@@ -1061,72 +991,17 @@
     "cat": "__生活用品",
     "updated": "2026-06-24T09:15:02"
   },
-  "c__Smart_Indoor_Cycling_Bike_p_140176": {
-    "name": "XTERRA MB550+ 智能飛輪車",
-    "link": "https://www.costco.com.tw/Sports-Lifestyle/Sports-Fitness/Fitness-Equipment-Accessories/XTERRA-Fitness-MB550-Smart-Indoor-Cycling-Bike/p/140176",
-    "cat": "___運動戶外",
-    "updated": "2026-06-24T09:15:02"
-  },
-  "c_e_Eufy_Robot_Vacuum_Mop_S1_p_157134": {
-    "name": "Eufy 自清潔掃拖一體全能機器人 S1",
-    "link": "https://www.costco.com.tw/Televisions-Appliances/Small-Appliances/Vacuums-Floor-Care/Eufy-Robot-Vacuum-Mop-S1/p/157134",
-    "cat": "__家電_3C",
-    "updated": "2026-06-24T09:15:02"
-  },
-  "c_nverter_Stand_Fan_FS40125R_p_126487": {
-    "name": "艾美特 16吋DC直流立扇 FS40125R",
-    "link": "https://www.costco.com.tw/Televisions-Appliances/Cooling-Heating-Air-Treatment/Heating-Cooling/Airmate-16-inch-DC-Inverter-Stand-Fan-FS40125R/p/126487",
-    "cat": "__家電_3C",
-    "updated": "2026-06-24T09:15:02"
-  },
-  "c_edon_3_Seater_Fabric_Sofa_p_1987637": {
-    "name": "Henredon 三人座布面沙發",
-    "link": "https://www.costco.com.tw/Furniture-Kitchen/Furniture/Sofas-Sectionals/Henredon-3-Seater-Fabric-Sofa/p/1987637",
-    "cat": "__服飾寢具",
-    "updated": "2026-06-24T09:15:02"
-  },
-  "c_e_UC_II_Collagen_90_Tablet_p_127189": {
-    "name": "挺立 關鍵迷你錠 90錠",
-    "link": "https://www.costco.com.tw/Health-Beauty/Supplements/Bone-Joint-Support/Caltrate-UC-II-Collagen-90-Tablet/p/127189",
-    "cat": "__保健美妝",
-    "updated": "2026-06-24T09:15:02"
-  },
-  "c_Daily_Nutripack_50_30_Pack_p_217619": {
-    "name": "",
-    "link": "",
-    "cat": "__保健美妝",
-    "updated": "2026-06-24T09:15:02"
-  },
-  "c_es_Short_Sleeve_Pajama_Set_p_156611": {
-    "name": "",
-    "link": "",
-    "cat": "__服飾寢具",
-    "updated": "2026-06-24T09:15:02"
-  },
-  "c_t_Draped_Pleated_Wide_Pant_p_156457": {
-    "name": "",
-    "link": "",
-    "cat": "__服飾寢具",
-    "updated": "2026-06-24T09:15:02"
-  },
-  "c_oot_Beer_325_ml_X_24_Count_p_316384": {
-    "name": "",
-    "link": "",
-    "cat": "__食品飲料",
-    "updated": "2026-06-24T09:15:02"
-  },
-  "c__Razor_X_1_Blades_X_7_Pack_p_394744": {
-    "name": "",
-    "link": "",
-    "cat": "__保健美妝",
-    "updated": "2026-06-24T09:15:02"
-  },
-  "c__com_tw_Household_Baby_Toys_p_73655": {
-    "name": "",
-    "link": "",
-    "cat": "__生活用品",
-    "updated": "2026-06-24T09:15:02"
-  },
+  "c__Smart_Indoor_Cycling_Bike_p_140176": "___運動戶外",
+  "c_e_Eufy_Robot_Vacuum_Mop_S1_p_157134": "__家電_3C",
+  "c_nverter_Stand_Fan_FS40125R_p_126487": "__家電_3C",
+  "c_edon_3_Seater_Fabric_Sofa_p_1987637": "__服飾寢具",
+  "c_e_UC_II_Collagen_90_Tablet_p_127189": "__保健美妝",
+  "c_Daily_Nutripack_50_30_Pack_p_217619": "__保健美妝",
+  "c_es_Short_Sleeve_Pajama_Set_p_156611": "__服飾寢具",
+  "c_t_Draped_Pleated_Wide_Pant_p_156457": "__服飾寢具",
+  "c_oot_Beer_325_ml_X_24_Count_p_316384": "__食品飲料",
+  "c__Razor_X_1_Blades_X_7_Pack_p_394744": "__保健美妝",
+  "c__com_tw_Household_Baby_Toys_p_73655": "__生活用品",
   "c_www_daybuy_tw_costco_193766_": {
     "name": "NATURE MADE 葉黃素20毫克綜合軟膠囊",
     "link": "https://www.daybuy.tw/costco/193766/",
@@ -1445,32 +1320,26 @@
     "cat": "__其他",
     "updated": "2026-06-24T09:15:02"
   },
-  "c_agull_Series_3_Blade_White_p_160092": {
-    "name": "å°éé»å­DC 52å ç´æµåæ æµ·é·ç³»å ä¸è ç½è²æ¬¾",
-    "link": "https://www.costco.com.tw/Televisions-Appliances/Cooling-Heating-Air-Treatment/Heating-Cooling/Delta-DC-52-inch-Ceiling-Fan-Seagull-Series-3-Blade-White/p/160092",
-    "cat": "__生活用品",
-    "updated": "2026-06-24T09:15:02"
-  },
-  "c_igmore_Fabric_Lounge_Chair_p_157766": {
-    "name": "Gallery Wigmore 布面休閒躺椅",
-    "link": "https://www.costco.com.tw/Furniture-Kitchen/Furniture/Sofas-Sectionals/Gallery-Wigmore-Fabric-Lounge-Chair/p/157766",
-    "cat": "__服飾寢具",
-    "updated": "2026-06-24T09:15:02"
-  },
-  "c_https___www_costco_com_tw_p_341516": {
-    "name": "LISTERINE 李施德霖全效無酒精漱口水",
-    "link": "https://www.costco.com.tw/p/341516",
-    "cat": "__保健美妝",
-    "updated": "2026-06-24T09:15:02"
-  },
-  "c_https___www_costco_com_tw_p_158958": {
-    "cat": "__服飾寢具",
-    "name": "DON HOME 萊賽爾沁涼被",
-    "link": "https://www.costco.com.tw/p/158958"
-  },
-  "c_ction_500_ml_X_5_Piece_Set_p_154537": {
-    "cat": "__生活用品",
-    "name": "COCODOR 格調系列 擴香瓶禮盒組 500毫升 X 5入組",
-    "link": "https://www.costco.com.tw/Health-Beauty/Beauty-Skin-Care/Scented-Candles-Diffusers/COCODOR-Premium-Diffuser-Collection-500-ml-X-5-Piece-Set/p/154537"
-  }
+  "c_agull_Series_3_Blade_White_p_160092": "__生活用品",
+  "c_igmore_Fabric_Lounge_Chair_p_157766": "__服飾寢具",
+  "c_https___www_costco_com_tw_p_341516": "__保健美妝",
+  "c_https___www_costco_com_tw_p_158958": "__服飾寢具",
+  "c_ction_500_ml_X_5_Piece_Set_p_154537": "__生活用品",
+  "c_ra_With_32GB_Micro_SD_Card_p_134447": "__家電_3C",
+  "c_https___www_costco_com_tw_p_152051": "__保健美妝",
+  "c_atomugi_Gel_100_g_x_2_Pack_p_139220": "__保健美妝",
+  "c_ials_Pest_Control_Air_Care_p_153787": "__生活用品",
+  "c_a_2_Pack_43_inch_46_inch_p_155776_B": "__家電_3C",
+  "c_https___www_costco_com_tw_p_2189436": "__生活用品",
+  "c_ong_33cm_6_Piece_X_16_Pack_p_139917": "__生活用品",
+  "c_haped_Pad_Size_XL_24_Piece_p_134645": "__生活用品",
+  "c_Shaped_Pad_Size_L_24_Piece_p_134644": "__生活用品",
+  "c_Shaped_Pad_Size_M_24_Piece_p_134643": "__生活用品",
+  "c_https___www_costco_com_tw_p_3055": "__食品飲料",
+  "c_ofiber_Towels_80_Piece_Box_p_148155": "__生活用品",
+  "c_https___www_costco_com_tw_p_158979": "__生活用品",
+  "c_umpkin_Seed_Kernels_835_g_p_2038563": "__食品飲料",
+  "c_avy_Day_Pad_27_cm_32_Piece_p_115672": "__生活用品",
+  "c_https___www_costco_com_tw_p_144759": "__食品飲料",
+  "c_ials_Pest_Control_Air_Care_p_152666": "__生活用品"
 }
