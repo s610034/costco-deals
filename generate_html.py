@@ -200,7 +200,12 @@ def generate_html(products: List[Dict], output_path: str) -> str:
             days      = p.get("距上次折扣天數")
             price_chg = p.get("價格變化", "")
             cat_id    = re.sub(r"[^\w]", "_", p["細分類"])
-            card_id   = "c_" + re.sub(r"[^\w]", "_", link[-35:])
+            # card_id 優先用商品編號（穩定不變），沒有編號才用連結片段當備援
+            _code = p.get("商品編號", "")
+            if _code:
+                card_id = "p_" + _code
+            else:
+                card_id = "c_" + re.sub(r"[^\w]", "_", link[-35:])
 
             # 套用 DB 覆蓋分類
             actual_cat_id = link_overrides.get(card_id, cat_id)
