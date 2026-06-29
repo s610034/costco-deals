@@ -26,12 +26,33 @@ def load_env():
 
 load_env()
 
-from scraper        import scrape_all, save_json
-from formatter      import format_summary
-from generate_html  import generate_html
-from deploy         import deploy
-from notify         import tg_send, line_send
-from database       import init_db, upsert_products, enrich_with_history, get_summary_stats, update_product_category
+try:
+    from scraper        import scrape_all, save_json
+    from formatter      import format_summary
+    from generate_html  import generate_html
+    from deploy         import deploy
+    from notify         import tg_send, line_send
+    from database       import init_db, upsert_products, enrich_with_history, get_summary_stats, update_product_category
+except Exception as _import_err:
+    import traceback
+    err_text = traceback.format_exc()
+    print(f"❌ 模組載入失敗，腳本無法啟動：{_import_err}")
+    print(err_text)
+    try:
+        _tg_token = os.environ.get("COSTCO_TG_TOKEN", "")
+        _tg_chat  = os.environ.get("COSTCO_TG_CHAT_ID", "")
+        if _tg_token and _tg_chat:
+            _payload = json.dumps({
+                "chat_id": _tg_chat,
+                "text": f"⚠️ 好市多排程啟動失敗（模組載入錯誤）\n{_import_err}",
+            }).encode("utf-8")
+            _req = urllib.request.Request(
+                f"https://api.telegram.org/bot{_tg_token}/sendMessage",
+                data=_payload, headers={"Content-Type": "application/json"}, method="POST")
+            urllib.request.urlopen(_req, timeout=10)
+    except Exception:
+        pass
+    sys.exit(1)
 
 DATA_DIR = os.path.join(BASE_DIR, "data")
 DOCS_DIR = os.path.join(BASE_DIR, "docs")
@@ -497,4 +518,14 @@ def run():
 
 
 if __name__ == "__main__":
-    sys.exit(0 if run() else 1)
+    try:
+        sys.exit(0 if run() else 1)
+    except Exception as _fatal_err:
+        import traceback
+        print(f"❌ 主流程未預期崩潰：{_fatal_err}")
+        traceback.print_exc()
+        try:
+            tg_send(f"⚠️ 好市多折扣週報主流程崩潰\n{_fatal_err}")
+        except Exception:
+            pass
+        sys.exit(1)

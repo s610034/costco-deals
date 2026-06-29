@@ -101,7 +101,13 @@ if __name__ == "__main__":
     parser.add_argument("--stats", action="store_true", help="只看統計")
     args = parser.parse_args()
 
-    if args.stats:
-        get_stats()
-    else:
-        batch_verify(args.size)
+    try:
+        if args.stats:
+            get_stats()
+        else:
+            batch_verify(args.size)
+    except Exception as _fatal_err:
+        import traceback
+        print(f"❌ 補原價未預期崩潰：{_fatal_err}")
+        traceback.print_exc()
+        sys.exit(1)

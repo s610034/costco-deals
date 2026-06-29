@@ -265,13 +265,43 @@ def crawl_all(categories: list, test_mode: bool = False, resume: bool = False) -
     return stats
 
 
+def _notify_failure(err_msg: str):
+    """崩潰時直接用urllib發送，不依賴可能也崩潰的其他模組"""
+    try:
+        env_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".env")
+        token, chat_id = "", ""
+        with open(env_path) as f:
+            for line in f:
+                line = line.strip()
+                if line.startswith("COSTCO_TG_TOKEN="):
+                    token = line.split("=", 1)[1].strip()
+                elif line.startswith("COSTCO_TG_CHAT_ID="):
+                    chat_id = line.split("=", 1)[1].strip()
+        if token and chat_id:
+            import urllib.request
+            payload = json.dumps({"chat_id": chat_id, "text": f"⚠️ 好市多全量爬蟲失敗\n{err_msg}"}).encode("utf-8")
+            req = urllib.request.Request(
+                f"https://api.telegram.org/bot{token}/sendMessage",
+                data=payload, headers={"Content-Type": "application/json"}, method="POST")
+            urllib.request.urlopen(req, timeout=10)
+    except Exception:
+        pass
+
+
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="全量爬取好市多官網商品")
-    parser.add_argument("--test",   action="store_true", help="測試模式：只爬前5個分類")
-    parser.add_argument("--resume", action="store_true", help="繼續上次中斷的爬取")
-    args = parser.parse_args()
+    try:
+        parser = argparse.ArgumentParser(description="全量爬取好市多官網商品")
+        parser.add_argument("--test",   action="store_true", help="測試模式：只爬前5個分類")
+        parser.add_argument("--resume", action="store_true", help="繼續上次中斷的爬取")
+        args = parser.parse_args()
 
-    with open(LOG_FILE, "w", encoding="utf-8") as f:
-        f.write(f"=== 好市多全量商品爬蟲 {datetime.datetime.now()} ===\n")
+        with open(LOG_FILE, "w", encoding="utf-8") as f:
+            f.write(f"=== 好市多全量商品爬蟲 {datetime.datetime.now()} ===\n")
 
-    crawl_all([], test_mode=args.test, resume=args.resume)
+        crawl_all([], test_mode=args.test, resume=args.resume)
+    except Exception as _fatal_err:
+        import traceback
+        print(f"❌ 全量爬蟲未預期崩潰：{_fatal_err}")
+        traceback.print_exc()
+        _notify_failure(str(_fatal_err))
+        sys.exit(1)
