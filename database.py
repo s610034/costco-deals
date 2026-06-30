@@ -22,7 +22,7 @@ def get_conn() -> sqlite3.Connection:
 
 
 def init_db():
-    """建立資料表（若不存在）"""
+    """建立資料表（若不存在），並自動補上既有資料庫缺少的欄位（schema migration）"""
     conn = get_conn()
     conn.executescript("""
         CREATE TABLE IF NOT EXISTS products_master (
@@ -36,7 +36,8 @@ def init_db():
             圖片URL       TEXT,
             商品連結      TEXT,
             最後更新      TEXT,
-            資料來源      TEXT
+            資料來源      TEXT,
+            折扣最後確認日 TEXT
         );
         CREATE TABLE IF NOT EXISTS products (
             id            INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -54,7 +55,8 @@ def init_db():
             商品連結      TEXT,
             抓取時間      TEXT,
             商品編號      TEXT,
-            討論連結      TEXT DEFAULT ""
+            討論連結      TEXT DEFAULT "",
+            資料來源      TEXT DEFAULT ""
         );
 
         CREATE TABLE IF NOT EXISTS category_overrides (
@@ -69,6 +71,30 @@ def init_db():
         CREATE INDEX IF NOT EXISTS idx_date      ON products(crawl_date);
         CREATE INDEX IF NOT EXISTS idx_link      ON products(商品連結);
     """)
+    conn.commit()
+
+    # === Schema migration：自動補上既有資料庫缺少的欄位 ===
+    # CREATE TABLE IF NOT EXISTS 只在資料表「不存在」時生效，
+    # 若資料表已存在但缺少新欄位（程式更新後），要用 ALTER TABLE 手動補上，
+    # 否則會在查詢時出現 "no such column" 崩潰。
+    required_columns = {
+        "products": {
+            "資料來源": "TEXT DEFAULT ''",
+        },
+        "products_master": {
+            "資料來源": "TEXT",
+            "折扣最後確認日": "TEXT",
+        },
+    }
+    for table, cols in required_columns.items():
+        existing = {row[1] for row in conn.execute(f"PRAGMA table_info({table})").fetchall()}
+        for col_name, col_def in cols.items():
+            if col_name not in existing:
+                try:
+                    conn.execute(f"ALTER TABLE {table} ADD COLUMN {col_name} {col_def}")
+                    print(f"  🔧 schema migration：{table}.{col_name} 已自動補上")
+                except sqlite3.OperationalError as e:
+                    print(f"  ⚠️  schema migration 失敗 {table}.{col_name}：{e}")
     conn.commit()
     conn.close()
     print("✅ 資料庫初始化完成")
