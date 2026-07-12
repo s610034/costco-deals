@@ -92,7 +92,7 @@ def batch_verify(batch_size: int = 50):
         conn.close()
         browser.close()
 
-    print(f"\n✅ 完成：補充 {updated} 個，找不到 {not_found} 個")
+    print(f"\n✅ 完成：補充 {updated} 個原價（已寫入 products_master），找不到 {not_found} 個（官網查無商品頁，可能已下架，目前每次仍會重試）")
     get_stats()
 
 if __name__ == "__main__":

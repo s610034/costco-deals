@@ -259,8 +259,10 @@ def crawl_all(categories: list, test_mode: bool = False, resume: bool = False) -
     log(f"\n{'='*55}")
     log(f"✅ 爬取完成！")
     log(f"   處理分類：{stats['cats_done']} 個（跳過：{stats['cats_skip']}）")
-    log(f"   商品總計：{stats['total_products']} 筆")
-    log(f"   master 增加：{end_master - start_master} 個（共 {end_master} 個）")
+    log(f"   掃描商品：{stats['total_products']} 筆（分類頁面上看到的總數）")
+    log(f"   寫入 DB：{stats['total_new_master']} 筆 upsert 到 products_master")
+    log(f"   其中全新商品：{end_master - start_master} 個（其餘 {stats['total_new_master'] - (end_master - start_master)} 筆為既有商品資料更新）")
+    log(f"   master 總數：{end_master} 個")
 
     return stats
 

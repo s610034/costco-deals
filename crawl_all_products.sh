@@ -7,7 +7,7 @@ cd /Users/ericchen/Documents/testthing/costco-deals
 echo "[$(date)] 全量商品爬蟲結束" >> /tmp/costco_crawl_all.log
 
 # 推播完成摘要（需先載入.env，否則token讀不到會靜默失敗）
-tail -10 /tmp/costco_crawl_all.log | grep -E "處理分類|商品總計|master 增加" > /tmp/crawl_all_summary.txt
+tail -12 /tmp/costco_crawl_all.log | grep -E "處理分類|掃描商品|寫入 DB|全新商品|master 總數" > /tmp/crawl_all_summary.txt
 /usr/bin/python3 -c "
 import sys, os
 sys.path.insert(0, '.')

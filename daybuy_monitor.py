@@ -276,7 +276,14 @@ def fetch_daybuy_article(url: str) -> Dict:
         all_dates = _re.findall(r"(\d{1,2})/(\d{1,2})", result["優惠期間"])
         if all_dates:
             end_month, end_day = int(all_dates[-1][0]), int(all_dates[-1][1])
-            end_year = now.year if end_month >= now.month else now.year + 1
+            # 取離今天最近的年份解讀（修正：舊邏輯會把上個月結束的優惠推成明年）
+            _cands = []
+            for _yy in (now.year - 1, now.year, now.year + 1):
+                try:
+                    _cands.append(_dt.datetime(_yy, end_month, end_day))
+                except ValueError:
+                    pass
+            end_year = min(_cands, key=lambda d: abs((d - now).days)).year if _cands else now.year
             try:
                 end_date = _dt.datetime(end_year, end_month, end_day)
                 result["優惠結束日"] = end_date.strftime("%Y-%m-%d")

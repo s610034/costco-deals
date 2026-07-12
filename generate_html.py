@@ -102,6 +102,36 @@ ALL_CATS = [r[0] for r in CATEGORY_RULES] + [OTHER_CATEGORY]
 LIMITED_TIME_KEYWORDS = ["優惠週","限時","特展","期間限定","只到","限量","快閃"]
 
 
+def parse_period_end(period: str):
+    """解析優惠期間的結束日，回傳 datetime.date 或 None。
+    年份採「離今天最近」的解讀（去年/今年/明年三個候選取最近），
+    修正舊邏輯 end_month >= 當月 → 今年、否則明年 的錯誤：
+    7 月時看到 06/30 會被誤判成明年 6 月，導致過期商品顯示「剩 300+ 天」。"""
+    import re as _re, datetime as _dt
+    if not period:
+        return None
+    tail = period.replace("~", "-").split("-")[-1].strip()
+    m = _re.search(r"(?:(\d{4})/)?(\d{1,2})/(\d{1,2})(?:\(.*?\))?\s*$", tail)
+    if not m:
+        return None
+    y, mo, d = m.group(1), int(m.group(2)), int(m.group(3))
+    if not (1 <= mo <= 12 and 1 <= d <= 31):
+        return None
+    today = _dt.date.today()
+    if y:  # 期間本身帶年份，直接用
+        try:
+            return _dt.date(int(y), mo, d)
+        except ValueError:
+            return None
+    candidates = []
+    for yy in (today.year - 1, today.year, today.year + 1):
+        try:
+            candidates.append(_dt.date(yy, mo, d))
+        except ValueError:
+            pass
+    return min(candidates, key=lambda dd: abs((dd - today).days)) if candidates else None
+
+
 def classify_product(name: str) -> str:
     for cat_name, keywords in CATEGORY_RULES:
         for kw in keywords:
@@ -157,6 +187,14 @@ def generate_html(products: List[Dict], output_path: str) -> str:
     for p in products:
         normalize_deal_category(p)
         p["細分類"] = classify_product(p.get("商品名稱", ""))
+
+    # 移除優惠已結束的商品（結束日在今天之前），統計與卡片才會一致
+    _today = datetime.date.today()
+    _before = len(products)
+    products = [p for p in products
+                if not (parse_period_end(p.get("優惠期間", "")) or _today) < _today]
+    if _before - len(products):
+        print(f"⏰ 已過濾過期優惠：{_before - len(products)} 筆")
 
     # DB 覆蓋：用商品連結的 card_id 對應
     link_overrides: Dict[str, str] = {}
@@ -247,27 +285,17 @@ def generate_html(products: List[Dict], output_path: str) -> str:
             # 優惠期間標籤：有日期就顯示日期，沒有則依分類顯示標籤
             # 解析結束日，計算倒數
             countdown_html = ""
-            if period and deal_val in ("hotbuys", "both"):
-                import re as _re
-                end_m = _re.search(r"(\d{1,2})/(\d{1,2})(?:\(.*?\))?\s*$", period.replace("~","-").split("-")[-1].strip())
-                if end_m:
-                    import datetime as _dt
-                    _td = _dt.date.today()
-                    end_month, end_day = int(end_m.group(1)), int(end_m.group(2))
-                    if 1 <= end_month <= 12 and 1 <= end_day <= 31:
-                        try:
-                            end_year = _td.year if end_month >= _td.month else _td.year + 1
-                            end_date = _dt.date(end_year, end_month, end_day)
-                            days_left = (end_date - _td).days
-                            if days_left >= 0:
-                                if days_left == 0:
-                                    countdown_html = '<span class="countdown urgent">⏰ 今天到期！</span>'
-                                elif days_left <= 3:
-                                    countdown_html = f'<span class="countdown urgent">⏰ 倒數 {days_left} 天</span>'
-                                else:
-                                    countdown_html = f'<span class="countdown">⏰ 剩 {days_left} 天</span>'
-                        except ValueError:
-                            pass
+            _end_date = parse_period_end(period)
+            if _end_date:
+                import datetime as _dt
+                days_left = (_end_date - _dt.date.today()).days
+                if deal_val in ("hotbuys", "both") and days_left >= 0:
+                    if days_left == 0:
+                        countdown_html = '<span class="countdown urgent">⏰ 今天到期！</span>'
+                    elif days_left <= 3:
+                        countdown_html = f'<span class="countdown urgent">⏰ 倒數 {days_left} 天</span>'
+                    else:
+                        countdown_html = f'<span class="countdown">⏰ 剩 {days_left} 天</span>'
 
             # 賣場隱藏優惠：顯示「最後確認日」暫時性標籤（折扣可能已變動，提醒使用者）
             confirm_date_html = ""

@@ -14,101 +14,78 @@ categorize.py
 import os, sys, json, time, re, sqlite3, urllib.request
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
+# 載入 .env（排程執行時 shell 不會自動載入，導致 ANTHROPIC_API_KEY 為空、AI 分類從未生效）
+_env_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".env")
+if os.path.exists(_env_path):
+    with open(_env_path, encoding="utf-8") as _f:
+        for _line in _f:
+            _line = _line.strip()
+            if _line and not _line.startswith("#") and "=" in _line:
+                _k, _, _v = _line.partition("=")
+                os.environ.setdefault(_k.strip(), _v.strip())
+
 DB_PATH    = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data', 'costco_history.db')
 API_KEY    = os.environ.get("ANTHROPIC_API_KEY", "")
 API_MODEL  = "claude-sonnet-4-6"
 
-# ── 分類定義 ──────────────────────────────────────────────────
-CATEGORIES = {
-    "__食品飲料": "食品飲料",
-    "__家電_3C":  "家電3C",
-    "__健康美妝": "健康美妝",
-    "__服飾時尚": "服飾時尚",
-    "__生活用品": "生活用品",
-    "__家具餐廚": "家具餐廚",
-    "__運動戶外": "運動戶外",
-    "__玩具育兒": "玩具育兒",
-    "__其他":     "其他",
-}
+# ── 分類規則：與前端共用同一份（generate_html.CATEGORY_RULES），避免兩套規則打架 ──
+# 分類 key 使用與前端 data-cat 相同的 sanitize 規則（re.sub(r"[^\w]", "_", 顯示名稱)）
+# 例："🐾 寵物用品" → "__寵物用品"
+from generate_html import CATEGORY_RULES, OTHER_CATEGORY
 
-# ── 關鍵字規則 ────────────────────────────────────────────────
-RULES = [
-    ("__食品飲料", [
-        "咖啡","茶","飲料","汽水","果汁","牛奶","奶茶","豆漿","優酪","氣泡水",
-        "零食","餅乾","洋芋片","巧克力","果凍","泡芙","蛋捲","米菓","威化",
-        "米漢堡","蝦餅","雞肉","豬肉","牛肉","魚","蝦","海鮮","蛋","奶酪",
-        "豆腐","泡麵","麵條","油","醬","醋","酒","啤酒","威士忌","葡萄酒",
-        "蜂蜜","果乾","堅果","燕麥","罐頭","冷凍","冷藏","乾酪","起司",
-        "布丁","冰淇淋","濃湯","乳酪","沙士","拿鐵","糖","鹽","巧達",
-        "Tree Top","VONO","Binggrae","Barista","Starbucks",
-    ]),
-    ("__健康美妝", [
-        "維他命","維生素","保健","益生菌","膠原蛋白","葉黃素","魚油","蔘",
-        "葡萄糖胺","洗髮","護髮","沐浴","牙膏","牙刷","面膜","乳液","乳霜",
-        "精華","防曬","卸妝","洗面","香水","護唇","隱形眼鏡","生物素",
-        "蔓越莓","UC-II","Natrol","Webber","Redoxon","Centrum","BRAND",
-    ]),
-    ("__服飾時尚", [
-        "上衣","褲","裙","鞋","靴","包包","手提","T恤","Polo","外套","夾克",
-        "內衣","內褲","睡衣","帽子","圍巾","行李箱","洋裝","連身",
-        "Adidas","Nike","Lacoste","Timberland","Skechers","Palladium",
-        "Kangol","Puma","Tommy","Columbia","North Face",
-    ]),
-    ("__家電_3C", [
-        "電視","冰箱","洗衣機","冷氣","空氣清淨","除濕","吹風機","電風扇",
-        "耳機","喇叭","螢幕","印表機","電池","充電","LED","燈","行車紀錄",
-        "顯示器","掃地機","電鍋","果汁機","咖啡機","烤箱","微波",
-        "Samsung","LG","Sony","Panasonic","Dyson","Honeywell","Philips",
-        "TCL","Hisense","Sharp","Electrolux","Whirlpool","Tescom",
-    ]),
-    ("__生活用品", [
-        "洗碗","洗衣精","柔軟精","清潔","除臭","漂白","垃圾袋","衛生紙",
-        "濕紙巾","蚊香","殺蟲","狗","貓","寵物","小蘇打","去污","廚房紙巾",
-        "除濕袋","Clorox","Ariel","Tide","汰漬","舒潔","好奇","幫寶適",
-        "Bounty","Pine-Sol","威滅",
-    ]),
-    ("__家具餐廚", [
-        "鍋","平底鍋","湯鍋","炒鍋","餐盤","碗","杯","保鮮盒","便當",
-        "刀","砧板","剪刀","桌","椅","沙發","床","收納","層架","衣架",
-        "掛勾","地墊","窗簾","棉被","枕頭","毛巾","浴巾","升降桌",
-        "Staub","Zwilling","Tefal","Neoflam","WMF","Corelle",
-    ]),
-    ("__運動戶外", [
-        "露營","帳篷","登山","游泳","瑜珈","健身","腳踏車","球","拍",
-        "釣魚","海灘","遮陽","背包","水壺","Coleman","折疊椅","海灘椅",
-        "Wilson","Michelin","輪胎","機油","Castrol",
-    ]),
-    ("__玩具育兒", [
-        "玩具","積木","Lego","娃娃","益智","拼圖","嬰兒","奶粉","尿布",
-        "奶瓶","童裝","兒童","Huggies","幫寶適","好奇","嬰兒",
-    ]),
-]
+def _cat_id(display_name: str) -> str:
+    return re.sub(r"[^\w]", "_", display_name)
+
+# ── 分類定義（衍生自前端 CATEGORY_RULES，唯一規則來源）─────────
+# key = 前端 data-cat id（如 "__寵物用品"），value = 顯示名稱（去 emoji）
+CATEGORIES = { _cat_id(c): c.split(" ", 1)[-1] for c, _ in CATEGORY_RULES }
+CATEGORIES[_cat_id(OTHER_CATEGORY)] = "其他"
 
 
 def classify_by_rules(name: str) -> str:
-    """關鍵字規則分類，回傳分類 key 或 '__其他'"""
+    """關鍵字規則分類（與前端 classify_product 同一份規則），回傳分類 key 或 '__其他'"""
     name_lower = name.lower()
-    for cat, keywords in RULES:
+    for cat, keywords in CATEGORY_RULES:
         if any(kw.lower() in name_lower for kw in keywords):
-            return cat
-    return "__其他"
+            return _cat_id(cat)
+    return _cat_id(OTHER_CATEGORY)
 
 
 def classify_batch_with_ai(names: list) -> dict:
-    """用 Claude API 批次分類，回傳 {name: cat_key}"""
+    """用 Claude API 批次分類，回傳 {name: cat_key}。
+    使用編號對應而非名稱對應：AI 只需回「編號<TAB>分類key」，
+    避免 AI 改寫商品名稱導致結果對不回原商品。"""
     if not API_KEY:
         return {}
 
-    cats_desc = "\n".join(f"- {k}: {v}" for k, v in CATEGORIES.items())
+    cat_examples = {
+        "__寵物用品": "貓砂、飼料、寵物床、潔牙骨",
+        "__食品飲料": "生鮮、零食、飲料、調味料、酒類",
+        "__保健美妝": "維他命、保健食品、保養品、個人清潔",
+        "__家電_3C":  "家電、手機、電腦周邊、電池燈具",
+        "__生活用品": "清潔用品、紙品、收納、廚房衛浴耗材",
+        "__服飾寢具": "衣鞋包、寢具、毛巾",
+        "__玩具育兒": "玩具、嬰幼兒用品、童裝",
+        "___運動戶外": "健身、露營、球類、汽車用品",
+    }
+    cats_desc = "\n".join(
+        f"- {k}（例：{cat_examples.get(k, CATEGORIES[k])}）"
+        for k in CATEGORIES if k != _cat_id(OTHER_CATEGORY)
+    )
+    numbered = "\n".join(f"{i+1}. {n}" for i, n in enumerate(names))
     prompt = (
-        f"將以下好市多商品分類到最適合的分類。\n\n可用分類：\n{cats_desc}\n\n"
-        "每行輸出：商品名稱\\t分類key\n只輸出結果，不要說明。\n\n商品：\n"
-        + "\n".join(names)
+        "你是好市多商品分類專家。將以下商品分類到最適合的一個分類。\n"
+        "判斷依據：商品的主要用途與使用對象。品牌名可作參考"
+        "（例：貓倍麗/Cat Chow 是寵物品牌 → 寵物用品，即使名稱含「雞肉」「鮭魚」也不是食品）。\n"
+        "寧可根據線索推測，真的完全無法判斷才用 " + _cat_id(OTHER_CATEGORY) + "。\n\n"
+        f"可用分類：\n{cats_desc}\n- {_cat_id(OTHER_CATEGORY)}\n\n"
+        "每行輸出：編號<TAB>分類key（例：1\t__食品飲料）。只輸出結果，不要說明。\n\n"
+        f"商品清單：\n{numbered}"
     )
 
     body = json.dumps({
         "model": API_MODEL,
-        "max_tokens": 1000,
+        "max_tokens": 2000,
         "messages": [{"role": "user", "content": prompt}]
     }).encode()
 
@@ -120,15 +97,17 @@ def classify_batch_with_ai(names: list) -> dict:
         method="POST"
     )
     try:
-        with urllib.request.urlopen(req, timeout=30) as r:
+        with urllib.request.urlopen(req, timeout=60) as r:
             result = json.loads(r.read())
         text = result["content"][0]["text"].strip()
         out = {}
         for line in text.split("\n"):
-            if "\t" in line:
-                parts = line.split("\t")
-                if len(parts) >= 2 and parts[1].strip() in CATEGORIES:
-                    out[parts[0].strip()] = parts[1].strip()
+            m = re.match(r"^(\d+)[\t.\s]+(\S+)", line.strip())
+            if not m:
+                continue
+            idx, key = int(m.group(1)) - 1, m.group(2).strip()
+            if 0 <= idx < len(names) and key in CATEGORIES:
+                out[names[idx]] = key
         return out
     except Exception as e:
         print(f"  ⚠️  AI 分類失敗：{e}")
@@ -140,7 +119,7 @@ def get_unclassified() -> list:
     conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
     rows = conn.execute("""
-        SELECT DISTINCT p.商品連結, p.商品名稱
+        SELECT DISTINCT p.商品連結, p.商品名稱, p.商品編號
         FROM products p
         LEFT JOIN category_overrides co ON co.商品連結 = p.商品連結
         WHERE co.card_id IS NULL
@@ -150,28 +129,6 @@ def get_unclassified() -> list:
     """).fetchall()
     conn.close()
     return [dict(r) for r in rows]
-
-
-def save_classifications(classified: dict, dry_run: bool = False) -> int:
-    """將分類結果存入 DB"""
-    if dry_run:
-        return 0
-    conn = sqlite3.connect(DB_PATH)
-    count = 0
-    for link, cat in classified.items():
-        name = classified.get(link + "_name", "")
-        card_id = "c_" + re.sub(r"[^a-zA-Z0-9_]", "_",
-                    link.replace("https://", "").replace("http://", ""))[-50:]
-        conn.execute("""
-            INSERT INTO category_overrides (card_id, 商品名稱, 商品連結, 細分類, updated_at)
-            VALUES (?, ?, ?, ?, datetime('now'))
-            ON CONFLICT(card_id) DO UPDATE SET
-                細分類 = excluded.細分類, updated_at = excluded.updated_at
-        """, (card_id, name, link, cat))
-        count += 1
-    conn.commit()
-    conn.close()
-    return count
 
 
 def run(dry_run: bool = False, limit: int = 200, batch_size: int = 20):
@@ -207,13 +164,12 @@ def run(dry_run: bool = False, limit: int = 200, batch_size: int = 20):
         print(f"  AI 分類完成")
     elif uncertain:
         # 沒有 API key，不確定的放入其他
+        print("  ⚠️  未設定 ANTHROPIC_API_KEY，AI 補強停用（不確定商品將留在「其他」）")
         for p in uncertain:
-            ai_results[p["商品連結"]] = "__其他"
+            ai_results[p["商品連結"]] = _cat_id(OTHER_CATEGORY)
 
-    # 3. 合併結果
+    # 3. 統計（規則 + AI 合併看整體分佈）
     all_results = {**rule_results, **ai_results}
-
-    # 統計
     from collections import Counter
     stats = Counter(all_results.values())
     print("\n分類結果：")
@@ -224,24 +180,36 @@ def run(dry_run: bool = False, limit: int = 200, batch_size: int = 20):
         print("\n（dry-run 模式，不寫入 DB）")
         return
 
-    # 4. 存入 DB（帶商品名稱）
+    # 4. 只把「AI 分類且非其他」的結果寫入 override
+    #    規則分得出來的不寫：前端 classify_product 用同一份規則會得到相同結果，
+    #    寫進去只是重複資料，還會蓋掉使用者未來的手動修改空間
+    info_map = {p["商品連結"]: p for p in products}
     conn = sqlite3.connect(DB_PATH)
     count = 0
-    name_map = {p["商品連結"]: p["商品名稱"] for p in products}
-    for link, cat in all_results.items():
-        name = name_map.get(link, "")
-        card_id = "c_" + re.sub(r"[^a-zA-Z0-9_]", "_",
-                    link.replace("https://", "").replace("http://", ""))[-50:]
+    for link, cat in ai_results.items():
+        if cat == _cat_id(OTHER_CATEGORY):
+            continue  # AI 也分不出來的不寫，讓它留在「其他」
+        p = info_map.get(link, {})
+        name = p.get("商品名稱", "")
+        code = p.get("商品編號", "") or ""
+        # card_id 規則與 generate_html 完全一致
+        if code:
+            card_id = "p_" + code
+        else:
+            card_id = "c_" + re.sub(r"[^\w]", "_", link[-35:])
         conn.execute("""
             INSERT INTO category_overrides (card_id, 商品名稱, 商品連結, 細分類, updated_at)
-            VALUES (?, ?, ?, ?, datetime('now'))
+            VALUES (?, ?, ?, ?, datetime('now','localtime'))
             ON CONFLICT(card_id) DO UPDATE SET
                 細分類 = excluded.細分類, updated_at = excluded.updated_at
         """, (card_id, name, link, cat))
         count += 1
     conn.commit()
     conn.close()
-    print(f"\n✅ 寫入 DB：{count} 筆")
+    ai_effective = sum(1 for c in ai_results.values() if c != _cat_id(OTHER_CATEGORY))
+    print(f"\n✅ 寫入 DB（僅 AI 分類結果）：{count} 筆")
+    print(f"📋 分類摘要：待分類 {len(products)}｜規則命中 {len(rule_results)}（不寫DB，前端同規則自動分）｜"
+          f"AI 判定 {ai_effective}｜AI 也無法判定 {len(ai_results) - ai_effective}｜本次寫入DB {count} 筆")
 
 
 if __name__ == "__main__":
