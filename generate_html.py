@@ -793,43 +793,15 @@ function saveOverride(id, cat) {{
   localStorage.setItem(STORAGE_KEY, JSON.stringify(o));
 }}
 
-// 手動觸發同步
+// 手動觸發同步（下載方向：以 GitHub 為準）
+// 單筆修改在儲存當下就會即時推上 GitHub（syncToGitHub），
+// 這裡不再把整包 localStorage 合併上傳——舊版此處的 Object.assign(existing, local)
+// 會把本機囤積的過時分類灌回 GitHub，造成清理過的垃圾資料復活
 async function syncNow() {{
   document.getElementById("editorMenu").style.display = "none";
-  const token = localStorage.getItem("costco_gh_token") || "";
-  if (!token) {{
-    openSetToken();
-    return;
-  }}
-  const btn = document.querySelector('#editorMenu button');
-  const apiUrl = "https://api.github.com/repos/s610034/costco-deals/contents/data/overrides.json";
   try {{
-    // 讀取現有 overrides
-    const getR = await fetch(apiUrl, {{headers: {{"Authorization": "token " + token, "Accept": "application/vnd.github.v3+json"}}}});
-    let sha = "", existing = {{}};
-    if (getR.ok) {{
-      const d = await getR.json();
-      sha = d.sha;
-      const _b64 = d.content.replaceAll(String.fromCharCode(10), "");
-      const _bytes = Uint8Array.from(atob(_b64), c => c.charCodeAt(0));
-      existing = JSON.parse(new TextDecoder("utf-8").decode(_bytes));
-    }}
-    // 合併本地 overrides
-    const local = getOverrides();
-    Object.assign(existing, local);
-    const encoded = new TextEncoder().encode(JSON.stringify(existing, null, 2));
-    const encoded2 = btoa(String.fromCharCode(...encoded));
-    const putR = await fetch(apiUrl, {{
-      method: "PUT",
-      headers: {{"Authorization": "token " + token, "Content-Type": "application/json"}},
-      body: JSON.stringify({{"message": "sync: overrides " + Object.keys(existing).length + " 筆", "content": encoded2, "sha": sha}})
-    }});
-    if (putR.ok) {{
-      alert("✅ 同步成功！所有設備將在重整後看到最新分類");
-    }} else {{
-      const err = await putR.json();
-      alert("❌ 同步失敗：" + (err.message || putR.status));
-    }}
+    const applied = await applyGitHubOverrides();
+    alert("✅ 已從雲端更新分類（" + applied + " 筆）");
   }} catch(e) {{
     alert("❌ 同步失敗：" + e.message);
   }}
@@ -961,16 +933,22 @@ const OVERRIDES_URL = "https://raw.githubusercontent.com/s610034/costco-deals/ma
 async function applyGitHubOverrides() {{
   try {{
     const r = await fetch(OVERRIDES_URL + "?t=" + Date.now());
-    if (!r.ok) return;
+    if (!r.ok) return 0;
     const overrides = await r.json();
+    let applied = 0;
+    const cache = {{}};
     Object.entries(overrides).forEach(([id, data]) => {{
       const catId = typeof data === "object" ? data.cat : data;
+      if (catId) cache[id] = catId;
       const card = document.getElementById(id);
-      if (card && catId) _applyCatToCard(card, catId, false);
+      if (card && catId) {{ _applyCatToCard(card, catId, false); applied++; }}
     }});
+    // 以 GitHub 為準覆蓋本機快取，避免過時資料囤積
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(cache));
     updateTabCounts();
     applyFilter();
-  }} catch(e) {{}}
+    return applied;
+  }} catch(e) {{ return 0; }}
 }}
 
 window.addEventListener("DOMContentLoaded", () => {{
