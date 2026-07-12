@@ -270,3 +270,69 @@ if __name__ == "__main__":
     for p in products:
         loc = f"【{p['限定門市']}限定】" if p['限定門市'] else ""
         print(f"  #{p['商品編號']} {p['商品名稱'][:35]} {loc} 折={p['折扣金額']}")
+
+
+# ── 現場特價照片解析（方案二：價格只在照片裡的商品）──────────
+PHOTO_DEAL_TITLE_KW = ["現場優惠", "隱藏優惠"]
+
+def fetch_sighting_photo_deals(days_back: int = 7, max_articles: int = 3) -> List[Dict]:
+    """
+    解析「現場優惠情報／隱藏優惠」文章中「商品連結＋價牌照片」的配對。
+    這類商品的特價金額只存在照片裡（無文字），無法進主商品列表，
+    改以照片卡形式呈現（generate_html 的「📸 現場特價目擊」收合區塊）。
+    回傳：[{商品名稱, 商品編號, 照片URL, 文章連結, 文章標題}]
+    """
+    import requests as _rq
+    from bs4 import BeautifulSoup as _BS
+
+    headers = {"User-Agent": "Mozilla/5.0"}
+    articles = []
+    for base in (SALE_URL, SIGHTING_URL):
+        try:
+            articles += get_article_urls(base, days_back)
+        except Exception:
+            pass
+    # 只取「現場優惠／隱藏優惠」文章（排除穿搭、新商品週報）
+    seen_urls, picked = set(), []
+    for art in articles:
+        url, title = art.get("url", ""), art.get("title", "")
+        if url in seen_urls:
+            continue
+        seen_urls.add(url)
+        if any(kw in title for kw in PHOTO_DEAL_TITLE_KW):
+            picked.append((title, url))
+    picked = picked[:max_articles]
+
+    deals, seen_codes = [], set()
+    for title, url in picked:
+        try:
+            soup = _BS(_rq.get(url, headers=headers, timeout=15).text, "html.parser")
+        except Exception as e:
+            print(f"  ⚠️  照片解析抓取失敗（{url}）：{e}")
+            continue
+        # 注意：daybuy 用 elementor 排版，.entry-content 是空殼，
+        # 商品內容在 elementor-widget-container 裡；直接全頁掃描，
+        # 只有商品連結符合「名稱 #編號」格式，不會誤抓側欄
+        # 走訪：<a>商品名 #編號</a> 之後第一張 <img> 即其價牌照
+        pending = None  # (name, code)
+        for el in soup.find_all(["a", "img"]):
+            if el.name == "a":
+                m = re.match(r"^(.{3,80}?)\s*#(\d{4,9})\s*$", el.get_text(strip=True))
+                if m:
+                    pending = (m.group(1).strip(), m.group(2))
+            elif el.name == "img" and pending:
+                img = el.get("src") or el.get("data-src") or ""
+                name, code = pending
+                pending = None
+                if not img or code in seen_codes:
+                    continue
+                seen_codes.add(code)
+                deals.append({
+                    "商品名稱": name,
+                    "商品編號": code,
+                    "照片URL": img,
+                    "文章連結": url,
+                    "文章標題": title,
+                })
+    print(f"  📸 現場特價照片配對：{len(deals)} 筆（{len(picked)} 篇文章）")
+    return deals

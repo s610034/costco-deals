@@ -377,6 +377,22 @@ def run():
                 existing_codes.add(code)
                 added += 1
 
+        # 方案二：價格只在照片裡的現場特價 → 存成 JSON 供 HTML 的
+        # 「📸 現場特價目擊」收合區塊使用（不進主商品列表）
+        try:
+            from sighting_monitor import fetch_sighting_photo_deals
+            photo_deals = fetch_sighting_photo_deals(days_back=7)
+            photo_payload = {
+                "fetched_at": datetime.datetime.now().isoformat(timespec="seconds"),
+                "deals": photo_deals,
+            }
+            _photo_path = os.path.join(BASE_DIR, "data", "sighting_photos.json")
+            with open(_photo_path, "w", encoding="utf-8") as _pf:
+                json.dump(photo_payload, _pf, ensure_ascii=False, indent=1)
+            print(f"  💾 現場特價照片：{len(photo_deals)} 筆 → data/sighting_photos.json")
+        except Exception as _pe:
+            print(f"  ⚠️  現場特價照片解析失敗（略過）：{_pe}")
+
         print(f"  ✅ 補充限定門市：{enriched} 筆，新增賣場折扣：{added} 筆")
     except Exception as e:
         print(f"  ⚠️  賣場目擊情報失敗（繼續）：{e}")

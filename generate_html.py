@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """generate_html.py - 產生手機優先的響應式 HTML 報告"""
 
-import json, os, datetime, re, hashlib
+import json, os, datetime, re, hashlib, html as _html
 from typing import List, Dict
 
 
@@ -420,6 +420,52 @@ def generate_html(products: List[Dict], output_path: str) -> str:
     else:
         sighting_section = ""
 
+    # 📸 現場特價目擊（價格只在照片裡的商品，預設收合）
+    photo_section = ""
+    try:
+        _pp = os.path.join(base_dir, "data", "sighting_photos.json")
+        if os.path.exists(_pp):
+            with open(_pp, encoding="utf-8") as _pf:
+                _payload = json.load(_pf)
+            _fetched = _payload.get("fetched_at", "")
+            _deals = _payload.get("deals", [])
+            # 資料超過 8 天視為過期不顯示
+            _fresh = True
+            try:
+                _fd = datetime.datetime.fromisoformat(_fetched)
+                _fresh = (datetime.datetime.now() - _fd).days <= 8
+            except Exception:
+                pass
+            # 與主列表去重（主列表已有完整價格資料的不重複顯示）
+            _main_codes = {p.get("商品編號", "") for p in products}
+            _deals = [d for d in _deals if d.get("商品編號") and d["商品編號"] not in _main_codes]
+            if _fresh and _deals:
+                _cards = ""
+                for _d in _deals:
+                    _n  = _html.escape(_d.get("商品名稱", ""))
+                    _c  = _html.escape(_d.get("商品編號", ""))
+                    _im = _html.escape(_d.get("照片URL", ""), quote=True)
+                    _au = _html.escape(_d.get("文章連結", "#"), quote=True)
+                    _cards += (
+                        f'<div class="photo-card">'
+                        f'<a href="{_au}" target="_blank" rel="noopener">'
+                        f'<img src="{_im}" loading="lazy" alt="{_n} 價牌照片" '
+                        f'onerror="this.parentElement.parentElement.style.display=\'none\'"></a>'
+                        f'<div class="photo-card-name">{_n} <span class="photo-card-code">#{_c}</span></div>'
+                        f'<a class="photo-card-link" href="https://www.costco.com.tw/p/{_c}" '
+                        f'target="_blank" rel="noopener">官網頁面 ↗</a></div>'
+                    )
+                _src_note = _html.escape(_fetched[:10])
+                photo_section = (
+                    f'<details class="photo-deals">'
+                    f'<summary>📸 現場特價目擊 <span class="photo-deals-count">{len(_deals)} 筆</span>'
+                    f'<span class="photo-deals-sub">價格見價牌照片｜{_src_note} 更新｜點照片看原文</span></summary>'
+                    f'<div class="photo-deals-grid">{_cards}</div>'
+                    f'</details>'
+                )
+    except Exception as _pe:
+        print(f"  ⚠️  現場特價區塊產生失敗（略過）：{_pe}")
+
     header_filters = f'''<div class="header-filters">
   <button class="hf-btn hf-all active" onclick="dealFilter(\'all\',this)">全部 <span>{total}</span></button>
   <button class="hf-btn hf-hot" onclick="dealFilter(\'hotbuys\',this)">⏰ 限時優惠 <span>{hotbuys_cnt}</span></button>
@@ -526,8 +572,20 @@ main{{padding:12px;max-width:960px;margin:0 auto}}
 .official-link{{background:#f0fdf4;color:#166534}}
 .official-link:hover{{background:#dcfce7}}
 .period-hint{{font-size:.6rem;color:#92400e;opacity:.75}}
-.confirm-date-hint{{font-size:.6rem;color:#9d174d;opacity:.8;margin-left:4px;background:#fce7f3;padding:1px 5px;border-radius:8px}}
 .confirm-date-hint{{font-size:.6rem;color:#9d174d;opacity:.85;margin-left:4px;background:#fce7f3;padding:1px 5px;border-radius:8px}}
+.photo-deals{{margin:14px 10px;border:1px solid #e5e7eb;border-radius:12px;background:#fff;overflow:hidden}}
+.photo-deals summary{{cursor:pointer;padding:12px 14px;font-weight:700;font-size:.95rem;list-style:none;display:flex;align-items:center;gap:8px;flex-wrap:wrap}}
+.photo-deals summary::-webkit-details-marker{{display:none}}
+.photo-deals summary::after{{content:"▾";margin-left:auto;transition:transform .2s}}
+.photo-deals[open] summary::after{{transform:rotate(180deg)}}
+.photo-deals-count{{background:#dc2626;color:#fff;font-size:.7rem;padding:2px 8px;border-radius:10px}}
+.photo-deals-sub{{font-size:.68rem;color:#6b7280;font-weight:400}}
+.photo-deals-grid{{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;padding:0 12px 14px}}
+.photo-card{{border:1px solid #f1f5f9;border-radius:10px;overflow:hidden;background:#fafafa}}
+.photo-card img{{width:100%;height:110px;object-fit:cover;display:block}}
+.photo-card-name{{font-size:.72rem;padding:6px 8px 2px;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}}
+.photo-card-code{{color:#9ca3af;font-size:.65rem}}
+.photo-card-link{{display:block;font-size:.68rem;color:#2563eb;padding:2px 8px 8px;text-decoration:none}}
 body.editor-mode .change-cat-btn{{opacity:.35;pointer-events:auto}}
 body.editor-mode .change-cat-btn:hover{{opacity:1}}
 .modal-overlay{{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;align-items:flex-end;justify-content:center}}
@@ -582,6 +640,7 @@ footer{{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}}
 </header>
 
 {sighting_section}
+{photo_section}
 
 <div class="tabs-wrap">
 {tabs_html}</div>
