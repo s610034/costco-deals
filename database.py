@@ -380,7 +380,7 @@ def get_products_last_n_days(days: int = 30) -> List[Dict]:
         products.append(p)
 
     print(f"📦 從 DB 撈取最近 {days} 天商品：{len(products)} 筆（去重後）")
-    return products
+    return canonicalize_products(products)
 
 
 def upsert_master(products: List[Dict], source: str = "scraper") -> int:
@@ -480,3 +480,57 @@ def enrich_discussion_links(products: List[Dict]) -> List[Dict]:
         if not p.get("圖片URL") and code in img_map:
             p["圖片URL"] = img_map[code]
     return products
+
+
+def canonicalize_products(products: list) -> list:
+    """顯示層正名與最終去重（不修改 DB 原始資料）：
+    1. 有商品編號者，商品名稱以 products_master 官方名稱為準
+       （修正社群爬蟲把敘述句當名稱的髒資料，如「這包 卜蜂紅燒棒腿」）
+    2. 以商品編號做最終去重（同商品可能因官網/daybuy 連結不同而重複），
+       保留優先序：有折扣金額 > 官網連結 > 較新；被捨棄那筆的討論連結/限定門市補進保留筆
+    """
+    conn = get_conn()
+    master_names = dict(conn.execute(
+        "SELECT 商品編號, 商品名稱 FROM products_master WHERE 商品編號 != ''"
+    ).fetchall())
+    conn.close()
+
+    renamed = 0
+    for p in products:
+        code = p.get("商品編號", "")
+        mname = master_names.get(code)
+        if code and mname and mname != p.get("商品名稱"):
+            p["商品名稱"] = mname
+            renamed += 1
+
+    def _score(p):
+        return (
+            1 if p.get("折扣金額") else 0,
+            1 if "costco.com.tw" in (p.get("商品連結") or "") else 0,
+            p.get("crawl_date") or "",
+        )
+
+    result, by_code = [], {}
+    deduped = 0
+    for p in products:
+        code = p.get("商品編號", "")
+        if not code:
+            result.append(p)
+            continue
+        if code not in by_code:
+            by_code[code] = p
+            result.append(p)
+        else:
+            keep = by_code[code]
+            drop = p
+            if _score(p) > _score(keep):
+                result[result.index(keep)] = p
+                by_code[code] = p
+                keep, drop = p, keep
+            for f in ("討論連結", "限定門市", "優惠期間", "圖片URL"):
+                if not keep.get(f) and drop.get(f):
+                    keep[f] = drop[f]
+            deduped += 1
+    if renamed or deduped:
+        print(f"🧹 正名 {renamed} 筆（master 官方名稱）、依商品編號去重 {deduped} 筆")
+    return result

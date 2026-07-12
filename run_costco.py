@@ -220,7 +220,8 @@ def get_products_last_30_days():
                     seen[pid]["討論連結"] = p["討論連結"]
     products = list(seen.values())
     print(f"  📦 DB 30天合併：{len(products)} 筆（去重後）")
-    return products
+    from database import canonicalize_products
+    return canonicalize_products(products)
 
 
 def run():

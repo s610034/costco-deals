@@ -245,7 +245,8 @@ def get_products_last_30_days():
     from database import enrich_discussion_links
     products = enrich_discussion_links(products)
     print(f"  📦 今日有效折扣：{len(products)} 筆（去重後）")
-    return products
+    from database import canonicalize_products
+    return canonicalize_products(products)
 
 
 print("\n【Step 0】同步前端分類覆蓋...")
