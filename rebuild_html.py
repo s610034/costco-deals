@@ -275,13 +275,18 @@ html_path = os.path.join(BASE_DIR, 'docs', 'index.html')
 generate_html(products, html_path)
 
 print(f"\n【Step 4】部署到 GitHub Pages...")
-deploy()
+_deployed = deploy()
+if not _deployed:
+    print("❌ 部署失敗！網站不會更新")
 sync_overrides_to_github()  # DB overrides → GitHub
 
 report_url = 'https://s610034.github.io/costco-deals/'
 summary = format_summary(products)
 msg = summary + f"\n\n📱 完整折扣清單：\n{report_url}"
-tg_send(msg)
+_tg_ok = tg_send(msg)
+print("Telegram:", "✅" if _tg_ok else "❌ 發送失敗")
+if not _deployed:
+    tg_send("🚨 rebuild 部署失敗！網站未更新，請手動檢查 git push")
 print("  ✅ Telegram 已發送")
 line_send(msg)
 print("  ✅ Line 已發送")

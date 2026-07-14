@@ -16,9 +16,38 @@ DB_PATH  = os.path.join(BASE_DIR, "data", "costco_history.db")
 
 def get_conn() -> sqlite3.Connection:
     os.makedirs(os.path.dirname(DB_PATH), exist_ok=True)
-    conn = sqlite3.connect(DB_PATH)
+    # timeout + WAL + busy_timeout：多個排程（週報/補原價/分類）可能同時讀寫，
+    # 避免 "database is locked" 直接崩潰（P4）
+    conn = sqlite3.connect(DB_PATH, timeout=30)
     conn.row_factory = sqlite3.Row
+    conn.execute("PRAGMA journal_mode=WAL")
+    conn.execute("PRAGMA busy_timeout=30000")
     return conn
+
+
+def acquire_pipeline_lock(name: str = "costco_pipeline", wait_seconds: int = 600):
+    """跨排程互斥鎖（flock）。取得回傳檔案握把（呼叫端須保存引用直到程序結束），
+    等待逾時回傳 None。用於避免 run_costco / batch_verify / categorize 同時執行。"""
+    import fcntl, time as _time
+    lock_path = f"/tmp/{name}.lock"
+    f = open(lock_path, "w")
+    deadline = _time.time() + wait_seconds
+    waited = False
+    while True:
+        try:
+            fcntl.flock(f, fcntl.LOCK_EX | fcntl.LOCK_NB)
+            f.seek(0); f.truncate(); f.write(str(os.getpid())); f.flush()
+            if waited:
+                print("🔓 取得排程鎖，繼續執行")
+            return f
+        except OSError:
+            if not waited:
+                print(f"⏳ 其他排程執行中（{lock_path}），等待中…（最長 {wait_seconds//60} 分鐘）")
+                waited = True
+            if _time.time() >= deadline:
+                f.close()
+                return None
+            _time.sleep(10)
 
 
 def init_db():

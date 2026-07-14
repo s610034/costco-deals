@@ -14,7 +14,7 @@ batch_verify_prices.py
 import sys, os, time, argparse
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from database import get_conn, init_db
+from database import get_conn, init_db, acquire_pipeline_lock
 
 def get_stats():
     conn = get_conn()
@@ -32,7 +32,23 @@ def batch_verify(batch_size: int = 50):
     from playwright.sync_api import sync_playwright
     from verify_prices import verify_product_price
 
+    global _pipeline_lock
+    _pipeline_lock = acquire_pipeline_lock(wait_seconds=600)
+    if not _pipeline_lock:
+        print("❌ 等待排程鎖逾時，本次放棄執行")
+        return
+
     init_db()
+    # P5：驗證失敗追蹤欄位（連續失敗的下架商品降低重試頻率）
+    _c = get_conn()
+    for _ddl in ("ALTER TABLE products_master ADD COLUMN 驗證失敗次數 INTEGER DEFAULT 0",
+                 "ALTER TABLE products_master ADD COLUMN 最後驗證嘗試 TEXT"):
+        try:
+            _c.execute(_ddl)
+        except Exception:
+            pass  # 欄位已存在
+    _c.commit(); _c.close()
+
     total, has_price, no_price = get_stats()
     if no_price == 0:
         print("✅ 所有商品都已有原價！")
@@ -45,7 +61,10 @@ def batch_verify(batch_size: int = 50):
         FROM products_master
         WHERE (原價 IS NULL OR 原價 = 0)
           AND 商品編號 != ''
-        ORDER BY CASE WHEN 圖片URL != '' THEN 0 ELSE 1 END, 商品編號
+          AND (COALESCE(驗證失敗次數, 0) < 3
+               OR COALESCE(最後驗證嘗試, '') < datetime('now', '-30 day'))
+        ORDER BY COALESCE(驗證失敗次數, 0),
+                 CASE WHEN 圖片URL != '' THEN 0 ELSE 1 END, 商品編號
         LIMIT ?
     """, (batch_size,)).fetchall()
     conn.close()
@@ -74,7 +93,8 @@ def batch_verify(batch_size: int = 50):
             if result and result.get("原價"):
                 conn.execute("""
                     UPDATE products_master SET
-                        原價 = ?, 折扣金額 = ?, 折扣後售價 = ?, 最後更新 = datetime('now')
+                        原價 = ?, 折扣金額 = ?, 折扣後售價 = ?, 最後更新 = datetime('now'),
+                        驗證失敗次數 = 0, 最後驗證嘗試 = datetime('now')
                     WHERE 商品編號 = ?
                 """, (result["原價"], result["折扣金額"], result["折扣後售價"], code))
                 if (i + 1) % 10 == 0:
@@ -84,6 +104,12 @@ def batch_verify(batch_size: int = 50):
                 print(f"  [{i+1}/{len(rows)}] #{code} ${result['原價']}{disc_str} {name[:30]}")
             else:
                 not_found += 1
+                conn.execute("""
+                    UPDATE products_master SET
+                        驗證失敗次數 = COALESCE(驗證失敗次數, 0) + 1,
+                        最後驗證嘗試 = datetime('now')
+                    WHERE 商品編號 = ?
+                """, (code,))
                 if (i + 1) % 10 == 0:
                     print(f"  [{i+1}/{len(rows)}] （進行中，{updated}個成功）")
             time.sleep(0.3)
@@ -92,7 +118,7 @@ def batch_verify(batch_size: int = 50):
         conn.close()
         browser.close()
 
-    print(f"\n✅ 完成：補充 {updated} 個原價（已寫入 products_master），找不到 {not_found} 個（官網查無商品頁，可能已下架，目前每次仍會重試）")
+    print(f"\n✅ 完成：補充 {updated} 個原價（已寫入 products_master），找不到 {not_found} 個（失敗累計3次後改為每30天重試一次）")
     get_stats()
 
 if __name__ == "__main__":

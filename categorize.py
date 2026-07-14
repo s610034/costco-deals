@@ -163,6 +163,13 @@ def get_unclassified() -> list:
 
 
 def run(dry_run: bool = False, limit: int = 200, batch_size: int = 20):
+    if not dry_run:
+        from database import acquire_pipeline_lock
+        global _pipeline_lock
+        _pipeline_lock = acquire_pipeline_lock(wait_seconds=300)
+        if not _pipeline_lock:
+            print("❌ 等待排程鎖逾時，本次放棄執行")
+            return
     products = get_unclassified()[:limit]
     print(f"需要分類：{len(products)} 個商品")
 

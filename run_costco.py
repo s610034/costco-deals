@@ -513,6 +513,8 @@ def run():
     # Step 5：部署
     print(f"\n【Step 5】部署到 GitHub Pages...")
     deployed = deploy()
+    if not deployed:
+        print("  ❌ 部署失敗！網站不會更新（詳見上方 git 錯誤）")
     sync_overrides_to_github()  # DB overrides → GitHub
 
     # Step 6：推播 Telegram + Line
@@ -521,10 +523,13 @@ def run():
     msg = summary + f"\n\n📱 完整折扣清單：\n{PAGE_URL}"
     if not deployed:
         msg += "\n\n⚠️ 部署失敗，連結稍後更新"
-    tg_send(msg)
-    print("  ✅ Telegram 已發送")
-    line_send(msg)
-    print("  ✅ Line 已發送")
+    _tg_ok = tg_send(msg)
+    print("  ✅ Telegram 已發送" if _tg_ok else "  ❌ Telegram 發送失敗")
+    _line_ok = line_send(msg)
+    print("  ✅ Line 已發送" if _line_ok else "  ❌ Line 發送失敗")
+    if not deployed:
+        # 部署失敗是嚴重問題（網站停更），額外發警報確保被看到
+        tg_send("🚨 好市多週報部署失敗！資料已入DB但網站未更新，請手動檢查 git push")
 
     elapsed = (datetime.datetime.now() - start).seconds
     print(f"\n{'='*52}")
@@ -535,6 +540,15 @@ def run():
 
 
 if __name__ == "__main__":
+    from database import acquire_pipeline_lock
+    _lock = acquire_pipeline_lock(wait_seconds=900)  # 最多等 15 分鐘
+    if not _lock:
+        print("❌ 等待排程鎖逾時（可能有卡死的排程），本次放棄執行")
+        try:
+            tg_send("⚠️ 好市多週報：排程鎖等待逾時，本次未執行（請檢查是否有卡死的程序）")
+        except Exception:
+            pass
+        sys.exit(1)
     try:
         sys.exit(0 if run() else 1)
     except Exception as _fatal_err:
