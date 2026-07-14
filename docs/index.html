@@ -126,7 +126,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
 </style>
 <script>
   // 版本控制：每次部署時更新，強制瀏覽器重新載入
-  const BUILD_TIME = '20260714132544';
+  const BUILD_TIME = '20260714133829';
   const stored = localStorage.getItem('costco_build');
   if (stored && stored !== BUILD_TIME) {
     localStorage.setItem('costco_build', BUILD_TIME);
@@ -4340,7 +4340,7 @@ footer{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}
   </div>
 </div>
 
-<footer>🤖 Hermes Agent 自動整理｜資料來源：costco.com.tw｜更新：2026-07-14 13:25<br>🏪=賣場同售 📰=daybuy情報 ✏️=登入後可修改分類</footer>
+<footer>🤖 Hermes Agent 自動整理｜資料來源：costco.com.tw｜更新：2026-07-14 13:38<br>🏪=賣場同售 📰=daybuy情報 ✏️=登入後可修改分類</footer>
 
 <!-- 分類 Modal -->
 <div class="modal-overlay" id="catModal" onclick="if(event.target===this)closeModal()">
@@ -4742,7 +4742,23 @@ function applyFilter() {
     card.style.display = show ? "" : "none";
     if (show) visible++;
   });
-  document.getElementById("empty").style.display = visible === 0 ? "block" : "none";
+  // 📸 現場特價照片卡也納入搜尋（不受分類/檔期篩選影響）
+  let photoVisible = 0;
+  document.querySelectorAll(".photo-card").forEach(pc => {
+    const nameEl = pc.querySelector(".photo-card-name");
+    const m = !search || (nameEl && nameEl.textContent.toLowerCase().includes(search));
+    pc.style.display = m ? "" : "none";
+    if (m) photoVisible++;
+  });
+  const pd = document.querySelector(".photo-deals");
+  if (pd) {
+    if (search && photoVisible > 0) pd.open = true;      // 有搜尋命中 → 自動展開
+    if (search && photoVisible === 0) pd.style.display = "none";
+    else pd.style.display = "";
+    const cnt = pd.querySelector(".photo-deals-count");
+    if (cnt) cnt.textContent = (search ? photoVisible : document.querySelectorAll(".photo-card").length) + " 筆";
+  }
+  document.getElementById("empty").style.display = (visible === 0 && photoVisible === 0) ? "block" : "none";
 }
 
 // 分類 Modal

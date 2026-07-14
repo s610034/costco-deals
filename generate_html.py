@@ -1098,7 +1098,23 @@ function applyFilter() {{
     card.style.display = show ? "" : "none";
     if (show) visible++;
   }});
-  document.getElementById("empty").style.display = visible === 0 ? "block" : "none";
+  // 📸 現場特價照片卡也納入搜尋（不受分類/檔期篩選影響）
+  let photoVisible = 0;
+  document.querySelectorAll(".photo-card").forEach(pc => {{
+    const nameEl = pc.querySelector(".photo-card-name");
+    const m = !search || (nameEl && nameEl.textContent.toLowerCase().includes(search));
+    pc.style.display = m ? "" : "none";
+    if (m) photoVisible++;
+  }});
+  const pd = document.querySelector(".photo-deals");
+  if (pd) {{
+    if (search && photoVisible > 0) pd.open = true;      // 有搜尋命中 → 自動展開
+    if (search && photoVisible === 0) pd.style.display = "none";
+    else pd.style.display = "";
+    const cnt = pd.querySelector(".photo-deals-count");
+    if (cnt) cnt.textContent = (search ? photoVisible : document.querySelectorAll(".photo-card").length) + " 筆";
+  }}
+  document.getElementById("empty").style.display = (visible === 0 && photoVisible === 0) ? "block" : "none";
 }}
 
 // 分類 Modal
