@@ -375,23 +375,58 @@ if __name__ == "__main__":
 
 def get_products_last_n_days(days: int = 30) -> List[Dict]:
     """
-    從 DB 撈最近 N 天內出現過的所有商品。
-    同一商品（同商品連結）只保留最新一次的資料。
+    從 DB 撈最近 N 天內的有效折扣商品（單一資料來源，run_costco / rebuild_html 共用）。
+    語義（整併自 run_costco 舊內嵌 SQL）：
+    - 以商品編號（無編號則連結）分組，每組取最新一筆；官網 /p/ 連結的資料優先
+    - 只收有折扣的（折扣金額或折扣後售價非空）
+    - 賣場隱藏優惠（hidden_sighting）另計：人工確認後 14 天內有效
+    - 顯示層正名與最終去重由 canonicalize_products 處理
     """
     cutoff = (datetime.datetime.now() - datetime.timedelta(days=days)).strftime("%Y%m%d")
     conn = get_conn()
-    # 取每個商品連結最新一筆
     rows = conn.execute("""
         SELECT p.*
         FROM products p
         INNER JOIN (
-            SELECT 商品連結, MAX(crawl_date) AS max_date
+            SELECT
+                CASE WHEN 商品編號 != '' AND 商品編號 IS NOT NULL
+                     THEN 商品編號 ELSE 商品連結 END as group_key,
+                COALESCE(
+                    NULLIF(MAX(CASE WHEN 商品連結 LIKE '%costco.com.tw%/p/%'
+                                    THEN crawl_date ELSE '' END), ''),
+                    MAX(crawl_date)
+                ) as best_date,
+                MAX(CASE WHEN 商品連結 LIKE '%costco.com.tw%/p/%' THEN 1 ELSE 0 END) as has_official
             FROM products
             WHERE crawl_date >= ?
-            GROUP BY 商品連結
-        ) latest ON p.商品連結 = latest.商品連結
-                    AND p.crawl_date = latest.max_date
-        ORDER BY p.折扣金額 DESC NULLS LAST
+              AND 商品連結 != ''
+              AND 商品名稱 != ''
+              AND (折扣金額 IS NOT NULL OR 折扣後售價 IS NOT NULL)
+            GROUP BY group_key
+        ) latest ON (
+            CASE WHEN p.商品編號 != '' AND p.商品編號 IS NOT NULL
+                 THEN p.商品編號 ELSE p.商品連結 END = latest.group_key
+        ) AND p.crawl_date = latest.best_date
+          AND (latest.has_official = 0
+               OR p.商品連結 LIKE '%costco.com.tw%/p/%')
+        WHERE (p.折扣金額 IS NOT NULL OR p.折扣後售價 IS NOT NULL)
+
+        UNION ALL
+
+        SELECT p.*
+        FROM products p
+        WHERE p.資料來源 = 'hidden_sighting'
+          AND p.id IN (
+              SELECT MAX(id) FROM products
+              WHERE 資料來源 = 'hidden_sighting'
+              GROUP BY 商品編號
+          )
+          AND (
+              CAST(strftime('%Y%m%d', 'now', 'localtime') AS INTEGER) <=
+              CAST(crawl_date AS INTEGER) + 14
+          )
+
+        ORDER BY 折扣金額 DESC NULLS LAST
     """, (cutoff,)).fetchall()
     conn.close()
 

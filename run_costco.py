@@ -131,97 +131,9 @@ def sync_overrides_from_github():
 
 
 def get_products_last_30_days():
-    """從 DB 撈最近30天內的商品，同一商品只取最新一筆，去重合併"""
-    import sqlite3
-    db_path = os.path.join(DATA_DIR, "costco_history.db")
-    conn = sqlite3.connect(db_path)
-    conn.row_factory = sqlite3.Row
-    cutoff = (datetime.datetime.now() - datetime.timedelta(days=30)).strftime("%Y%m%d")
-    rows = conn.execute("""
-        SELECT p.*
-        FROM products p
-        INNER JOIN (
-            SELECT 商品連結, MAX(crawl_date) as max_date
-            FROM products
-            WHERE crawl_date >= ?
-              AND 商品連結 != ''
-              AND 商品名稱 != ''
-              AND (折扣金額 IS NOT NULL OR 折扣後售價 IS NOT NULL)
-            GROUP BY 商品連結
-        ) latest ON p.商品連結 = latest.商品連結
-                    AND p.crawl_date = latest.max_date
-        WHERE p.折扣金額 IS NOT NULL OR p.折扣後售價 IS NOT NULL
-        ORDER BY p.折扣金額 DESC
-    """, (cutoff,)).fetchall()
-    conn.close()
-
-    products = []
-    for row in rows:
-        p = dict(row)
-        products.append({
-            "商品名稱":    p.get("商品名稱", ""),
-            "分類":       p.get("分類", ""),
-            "細分類":     p.get("細分類", ""),
-            "原價":       p.get("原價"),
-            "折扣金額":   p.get("折扣金額"),
-            "折扣幅度":   p.get("折扣幅度", ""),
-            "折扣後售價": p.get("折扣後售價"),
-            "優惠期間":   p.get("優惠期間", ""),
-            "實體賣場":   bool(p.get("實體賣場", 0)),
-            "圖片URL":    p.get("圖片URL", ""),
-            "商品連結":   p.get("商品連結", ""),
-            "抓取時間":   p.get("抓取時間", ""),
-            "討論連結":   "",
-            "來源":       "",
-            "商品編號":   p.get("商品編號", "") or "",
-        })
-    import re as _re
-    seen = {}
-    for p in products:
-        link = p.get("商品連結", "")
-        code = p.get("商品編號", "")
-        name = p.get("商品名稱", "")
-        # 去重鍵優先順序：商品編號 > URL的/p/數字 > 完整連結末段 > 名稱前12字
-        if code:
-            pid = "code_" + code
-        else:
-            m = _re.search(r"/p/(\d+)", link)
-            if m:
-                pid = "p_" + m.group(1)
-            elif "costco.com.tw" in link:
-                parts = [x for x in link.rstrip("/").split("/") if x]
-                pid = "url_" + parts[-1] if parts else link
-            else:
-                pid = "name_" + name[:12]
-
-        if pid not in seen:
-            seen[pid] = p
-        else:
-            old_p = seen[pid]
-            # 保留資料較完整的：有官網連結 > 有原價 > 有折扣幅度
-            new_score = sum([
-                bool(p.get("原價")),
-                bool(p.get("折扣幅度")),
-                "costco.com.tw" in link and "/p/" in link,
-                bool(code),
-            ])
-            old_score = sum([
-                bool(old_p.get("原價")),
-                bool(old_p.get("折扣幅度")),
-                "costco.com.tw" in old_p.get("商品連結","") and "/p/" in old_p.get("商品連結",""),
-                bool(old_p.get("商品編號")),
-            ])
-            if new_score > old_score:
-                if not p.get("討論連結") and seen[pid].get("討論連結"):
-                    p["討論連結"] = seen[pid]["討論連結"]
-                seen[pid] = p
-            else:
-                if not seen[pid].get("討論連結") and p.get("討論連結"):
-                    seen[pid]["討論連結"] = p["討論連結"]
-    products = list(seen.values())
-    print(f"  📦 DB 30天合併：{len(products)} 筆（去重後）")
-    from database import canonicalize_products
-    return canonicalize_products(products)
+    """薄包裝：轉呼叫 database.get_products_last_n_days（單一資料來源）"""
+    from database import get_products_last_n_days
+    return get_products_last_n_days(30)
 
 
 def run():
@@ -414,86 +326,16 @@ def run():
     print(f"  📦 商品主資料庫：共 {get_master_count()} 個商品")
 
     # Step 3：只顯示今天爬到的有效折扣（不再用30天合併）
-    print(f"\n【Step 3】整理今日有效折扣...")
-    # 用今天爬到的 new_products，再從 DB 撈今天的資料（包含去重後的最佳版本）
-    from database import get_conn
-    _conn = get_conn()
-    _rows = _conn.execute("""
-        SELECT p.*
-        FROM products p
-        INNER JOIN (
-            SELECT
-                CASE WHEN 商品編號 != '' AND 商品編號 IS NOT NULL
-                     THEN 商品編號
-                     ELSE 商品連結 END as group_key,
-                COALESCE(
-                    NULLIF(MAX(CASE WHEN 商品連結 LIKE '%costco.com.tw%/p/%'
-                                    THEN crawl_date ELSE '' END), ''),
-                    MAX(crawl_date)
-                ) as best_date,
-                MAX(CASE WHEN 商品連結 LIKE '%costco.com.tw%/p/%' THEN 1 ELSE 0 END) as has_official
-            FROM products
-            WHERE crawl_date = ?
-              AND 商品連結 != ''
-              AND 商品名稱 != ''
-              AND (折扣金額 IS NOT NULL OR 折扣後售價 IS NOT NULL)
-            GROUP BY group_key
-        ) latest ON (
-            CASE WHEN p.商品編號 != '' AND p.商品編號 IS NOT NULL
-                 THEN p.商品編號
-                 ELSE p.商品連結 END = latest.group_key
-        ) AND p.crawl_date = latest.best_date
-          AND (latest.has_official = 0
-               OR p.商品連結 LIKE '%costco.com.tw%/p/%')
-        WHERE (p.折扣金額 IS NOT NULL OR p.折扣後售價 IS NOT NULL)
-
-        UNION ALL
-
-        -- 賣場隱藏優惠：人工confirm的暫時性資料，不受「當天」限制
-        SELECT p.*
-        FROM products p
-        WHERE p.資料來源 = 'hidden_sighting'
-          AND p.id IN (
-              SELECT MAX(id) FROM products
-              WHERE 資料來源 = 'hidden_sighting'
-              GROUP BY 商品編號
-          )
-          AND (
-              CAST(strftime('%Y%m%d', 'now', 'localtime') AS INTEGER) <=
-              CAST(crawl_date AS INTEGER) + 14
-          )
-
-        ORDER BY 折扣金額 DESC NULLS LAST
-    """, (today,)).fetchall()
-
-    # 去重：保留先出現的版本（今日資料優先）
-    _seen_dedupe = set()
-    _deduped_rows = []
-    for _r in _rows:
-        _c = _r["商品編號"] if _r["商品編號"] else _r["商品連結"]
-        if _c in _seen_dedupe:
-            continue
-        _seen_dedupe.add(_c)
-        _deduped_rows.append(_r)
-    _rows = _deduped_rows
-
-    import re as _re3
-    products_30d = []
-    _seen_pid = {}
-    for _row in _rows:
-        _p = dict(_row)
-        _link = _p.get("商品連結", "")
-        _code = _p.get("商品編號", "")
-        _pid  = ("code_" + _code) if _code else ("url_" + _link[-35:])
-        if _pid in _seen_pid:
-            continue
-        _seen_pid[_pid] = True
-        products_30d.append(_p)
+    print(f"\n【Step 3】整理 30 天有效折扣...")
+    # 單一資料來源：database.get_products_last_n_days（30天有效折扣合併）
+    # 舊版此處有一份內嵌 SQL 只撈「當天」，造成排程部署與 rebuild 部署內容不一致
+    from database import get_products_last_n_days
+    products_30d = get_products_last_n_days(30)
 
     # 補充討論連結和官網連結（統一從 database 模組處理）
     from database import enrich_discussion_links
     products_30d = enrich_discussion_links(products_30d)
-    print(f"  📦 今日有效折扣：{len(products_30d)} 筆（去重後）")
+    print(f"  📦 30 天有效折扣：{len(products_30d)} 筆（去重後）")
 
     if not products_30d:
         products_30d = new_products  # fallback
