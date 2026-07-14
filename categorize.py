@@ -26,7 +26,9 @@ if os.path.exists(_env_path):
 
 DB_PATH    = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data', 'costco_history.db')
 API_KEY    = os.environ.get("ANTHROPIC_API_KEY", "")
-API_MODEL  = "claude-sonnet-4-6"
+API_MODEL  = "claude-haiku-4-5-20251001"   # 分類任務用 Haiku 即可，成本約為 Sonnet 的 1/3
+GEMINI_KEY   = os.environ.get("GEMINI_API_KEY", "")
+GEMINI_MODEL = "gemini-flash-lite-latest"  # 別名自動指向最新 Flash-Lite，避免模型淘汰造成 404
 
 # ── 分類規則：與前端共用同一份（generate_html.CATEGORY_RULES），避免兩套規則打架 ──
 # 分類 key 使用與前端 data-cat 相同的 sanitize 規則（re.sub(r"[^\w]", "_", 顯示名稱)）
@@ -51,13 +53,7 @@ def classify_by_rules(name: str) -> str:
     return _cat_id(OTHER_CATEGORY)
 
 
-def classify_batch_with_ai(names: list) -> dict:
-    """用 Claude API 批次分類，回傳 {name: cat_key}。
-    使用編號對應而非名稱對應：AI 只需回「編號<TAB>分類key」，
-    避免 AI 改寫商品名稱導致結果對不回原商品。"""
-    if not API_KEY:
-        return {}
-
+def _build_prompt(names: list) -> str:
     cat_examples = {
         "__寵物用品": "貓砂、飼料、寵物床、潔牙骨",
         "__食品飲料": "生鮮、零食、飲料、調味料、酒類",
@@ -73,7 +69,7 @@ def classify_batch_with_ai(names: list) -> dict:
         for k in CATEGORIES if k != _cat_id(OTHER_CATEGORY)
     )
     numbered = "\n".join(f"{i+1}. {n}" for i, n in enumerate(names))
-    prompt = (
+    return (
         "你是好市多商品分類專家。將以下商品分類到最適合的一個分類。\n"
         "判斷依據：商品的主要用途與使用對象。品牌名可作參考"
         "（例：貓倍麗/Cat Chow 是寵物品牌 → 寵物用品，即使名稱含「雞肉」「鮭魚」也不是食品）。\n"
@@ -83,34 +79,69 @@ def classify_batch_with_ai(names: list) -> dict:
         f"商品清單：\n{numbered}"
     )
 
+
+def _parse_ai_lines(text: str, names: list) -> dict:
+    out = {}
+    for line in text.split("\n"):
+        m = re.match(r"^(\d+)[\t.\s]+(\S+)", line.strip())
+        if not m:
+            continue
+        idx, key = int(m.group(1)) - 1, m.group(2).strip()
+        if 0 <= idx < len(names) and key in CATEGORIES:
+            out[names[idx]] = key
+    return out
+
+
+def _call_claude(prompt: str) -> str:
     body = json.dumps({
-        "model": API_MODEL,
-        "max_tokens": 2000,
+        "model": API_MODEL, "max_tokens": 2000,
         "messages": [{"role": "user", "content": prompt}]
     }).encode()
-
     req = urllib.request.Request(
-        "https://api.anthropic.com/v1/messages",
-        data=body,
+        "https://api.anthropic.com/v1/messages", data=body,
         headers={"Content-Type": "application/json", "x-api-key": API_KEY,
-                 "anthropic-version": "2023-06-01"},
-        method="POST"
-    )
+                 "anthropic-version": "2023-06-01"}, method="POST")
+    with urllib.request.urlopen(req, timeout=60) as r:
+        return json.loads(r.read())["content"][0]["text"].strip()
+
+
+def _call_gemini(prompt: str) -> str:
+    body = json.dumps({
+        "contents": [{"parts": [{"text": prompt}]}],
+        "generationConfig": {"maxOutputTokens": 2000, "temperature": 0.1},
+    }).encode()
+    req = urllib.request.Request(
+        f"https://generativelanguage.googleapis.com/v1beta/models/{GEMINI_MODEL}:generateContent",
+        data=body,
+        headers={"Content-Type": "application/json", "x-goog-api-key": GEMINI_KEY},
+        method="POST")
+    with urllib.request.urlopen(req, timeout=60) as r:
+        data = json.loads(r.read())
+    return data["candidates"][0]["content"]["parts"][0]["text"].strip()
+
+
+def ai_provider() -> str:
+    """回傳可用的 AI 供應商名稱，皆未設定回傳空字串"""
+    if API_KEY:
+        return "claude"
+    if GEMINI_KEY:
+        return "gemini"
+    return ""
+
+
+def classify_batch_with_ai(names: list) -> dict:
+    """用 AI 批次分類，回傳 {name: cat_key}。
+    供應商：ANTHROPIC_API_KEY（Claude）優先，否則 GEMINI_API_KEY（Gemini 免費層）。
+    使用編號對應而非名稱對應，避免 AI 改寫商品名稱導致結果對不回原商品。"""
+    provider = ai_provider()
+    if not provider:
+        return {}
+    prompt = _build_prompt(names)
     try:
-        with urllib.request.urlopen(req, timeout=60) as r:
-            result = json.loads(r.read())
-        text = result["content"][0]["text"].strip()
-        out = {}
-        for line in text.split("\n"):
-            m = re.match(r"^(\d+)[\t.\s]+(\S+)", line.strip())
-            if not m:
-                continue
-            idx, key = int(m.group(1)) - 1, m.group(2).strip()
-            if 0 <= idx < len(names) and key in CATEGORIES:
-                out[names[idx]] = key
-        return out
+        text = _call_claude(prompt) if provider == "claude" else _call_gemini(prompt)
+        return _parse_ai_lines(text, names)
     except Exception as e:
-        print(f"  ⚠️  AI 分類失敗：{e}")
+        print(f"  ⚠️  AI 分類失敗（{provider}）：{e}")
         return {}
 
 
@@ -151,20 +182,21 @@ def run(dry_run: bool = False, limit: int = 200, batch_size: int = 20):
 
     # 2. AI 補強（只處理規則分不出來的）
     ai_results = {}
-    if uncertain and API_KEY:
-        print(f"  呼叫 Claude API...")
+    if uncertain and ai_provider():
+        print(f"  呼叫 AI 分類（{ai_provider()}）...")
         for i in range(0, len(uncertain), batch_size):
             batch = uncertain[i:i+batch_size]
             names = [p["商品名稱"] for p in batch]
             result = classify_batch_with_ai(names)
             for p in batch:
-                cat = result.get(p["商品名稱"], "__其他")
+                cat = result.get(p["商品名稱"], _cat_id(OTHER_CATEGORY))
                 ai_results[p["商品連結"]] = cat
-            time.sleep(0.5)
+            # Gemini 免費層約 15 RPM，批次間隔放寬避免 429
+            time.sleep(5 if ai_provider() == "gemini" else 0.5)
         print(f"  AI 分類完成")
     elif uncertain:
         # 沒有 API key，不確定的放入其他
-        print("  ⚠️  未設定 ANTHROPIC_API_KEY，AI 補強停用（不確定商品將留在「其他」）")
+        print("  ⚠️  未設定 ANTHROPIC_API_KEY / GEMINI_API_KEY，AI 補強停用（不確定商品將留在「其他」）")
         for p in uncertain:
             ai_results[p["商品連結"]] = _cat_id(OTHER_CATEGORY)
 
