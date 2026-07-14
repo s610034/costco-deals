@@ -436,9 +436,22 @@ def generate_html(products: List[Dict], output_path: str) -> str:
                 _fresh = (datetime.datetime.now() - _fd).days <= 8
             except Exception:
                 pass
-            # 與主列表去重（主列表已有完整價格資料的不重複顯示）
-            _main_codes = {p.get("商品編號", "") for p in products}
-            _deals = [d for d in _deals if d.get("商品編號") and d["商品編號"] not in _main_codes]
+            # 與主列表去重——但「現場價 ≠ 官網價」的保留並標示（現場通常更便宜）
+            _main_prices = {p.get("商品編號", ""): p.get("折扣後售價")
+                            for p in products if p.get("商品編號")}
+            _kept = []
+            for d in _deals:
+                _dc = d.get("商品編號")
+                if not _dc:
+                    continue
+                if _dc not in _main_prices:
+                    _kept.append(d)  # 只有現場有 → 保留
+                    continue
+                _mp, _sp = _main_prices[_dc], d.get("特價")
+                if _sp and _mp and int(_sp) != int(_mp):
+                    d["_官網價"] = int(_mp)  # 兩邊都有但價格不同 → 保留並標示
+                    _kept.append(d)
+            _deals = _kept
             if _fresh and _deals:
                 _cards = ""
                 for _d in _deals:
@@ -598,6 +611,7 @@ main{{padding:12px;max-width:960px;margin:0 auto}}
 .photo-card-price{{padding:5px 8px 0;font-size:.85rem;color:#dc2626;font-weight:700}}
 .pc-disc{{background:#dc2626;color:#fff;font-size:.65rem;padding:1px 6px;border-radius:8px;font-weight:600;margin-left:2px}}
 .pc-exp{{color:#6b7280;font-size:.65rem;font-weight:400;margin-left:2px}}
+.pc-store{{display:inline-block;background:#f0fdf4;color:#166534;border:1px solid #bbf7d0;font-size:.62rem;padding:1px 6px;border-radius:8px;font-weight:600;margin-top:2px}}
 body.editor-mode .change-cat-btn{{opacity:.35;pointer-events:auto}}
 body.editor-mode .change-cat-btn:hover{{opacity:1}}
 .modal-overlay{{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;align-items:flex-end;justify-content:center}}
