@@ -466,6 +466,13 @@ def generate_html(products: List[Dict], output_path: str) -> str:
                         if _sale: _parts.append(f'<b>${_sale:,}</b>')
                         if _disc: _parts.append(f'<span class="pc-disc">折${_disc:,}</span>')
                         if _exp:  _parts.append(f'<span class="pc-exp">~{_html.escape(str(_exp))}</span>')
+                        _web = _d.get("_官網價")
+                        if _web and _sale:
+                            _delta = int(_web) - int(_sale)
+                            if _delta > 0:
+                                _parts.append(f'<span class="pc-store">🏪 比官網省${_delta:,}</span>')
+                            else:
+                                _parts.append(f'<span class="pc-store">🏪 現場價（官網${int(_web):,}）</span>')
                         _price_html = f'<div class="photo-card-price">{" ".join(_parts)}</div>'
                     _cards += (
                         f'<div class="photo-card">'
