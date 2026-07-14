@@ -452,6 +452,13 @@ def generate_html(products: List[Dict], output_path: str) -> str:
                     d["_官網價"] = int(_mp)  # 兩邊都有但價格不同 → 保留並標示
                     _kept.append(d)
             _deals = _kept
+            # 過期過濾（OCR 期限已過的不顯示）與錯位剔除（照片是別的商品的價牌）
+            _pb = len(_deals)
+            _deals = [d for d in _deals
+                      if not d.get("照片錯位")
+                      and not ((_pe := parse_period_end(d.get("期限") or "")) and _pe < datetime.date.today())]
+            if _pb - len(_deals):
+                print(f"  ⏰ 照片區過濾：{_pb - len(_deals)} 筆（過期或照片錯位）")
             if _fresh and _deals:
                 _cards = ""
                 for _d in _deals:

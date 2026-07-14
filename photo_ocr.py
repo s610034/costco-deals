@@ -128,6 +128,7 @@ def enrich_photo_deals_with_ocr(deals, max_new=200, sleep_seconds=4.2):
         r = cache.get(d.get("照片URL", ""), {})
         if r.get("ocr_編號") and r["ocr_編號"] != code:
             mismatched += 1  # 照片不屬於此商品，不附價格
+            d["照片錯位"] = True  # generate_html 會跳過這些卡（照片是別的商品的價牌）
         elif r:
             for k in ("特價", "折扣", "原價", "期限"):
                 if r.get(k):
