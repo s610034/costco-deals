@@ -446,11 +446,20 @@ def generate_html(products: List[Dict], output_path: str) -> str:
                     _c  = _html.escape(_d.get("商品編號", ""))
                     _im = _html.escape(_d.get("照片URL", ""), quote=True)
                     _au = _html.escape(_d.get("文章連結", "#"), quote=True)
+                    _price_html = ""
+                    _sale, _disc, _exp = _d.get("特價"), _d.get("折扣"), _d.get("期限")
+                    if _sale or _disc:
+                        _parts = []
+                        if _sale: _parts.append(f'<b>${_sale:,}</b>')
+                        if _disc: _parts.append(f'<span class="pc-disc">折${_disc:,}</span>')
+                        if _exp:  _parts.append(f'<span class="pc-exp">~{_html.escape(str(_exp))}</span>')
+                        _price_html = f'<div class="photo-card-price">{" ".join(_parts)}</div>'
                     _cards += (
                         f'<div class="photo-card">'
                         f'<a href="{_au}" target="_blank" rel="noopener">'
                         f'<img src="{_im}" loading="lazy" alt="{_n} 價牌照片" '
                         f'onerror="this.parentElement.parentElement.style.display=\'none\'"></a>'
+                        f'{_price_html}'
                         f'<div class="photo-card-name">{_n} <span class="photo-card-code">#{_c}</span></div>'
                         f'<a class="photo-card-link" href="https://www.costco.com.tw/p/{_c}" '
                         f'target="_blank" rel="noopener">官網頁面 ↗</a></div>'
@@ -586,6 +595,9 @@ main{{padding:12px;max-width:960px;margin:0 auto}}
 .photo-card-name{{font-size:.72rem;padding:6px 8px 2px;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}}
 .photo-card-code{{color:#9ca3af;font-size:.65rem}}
 .photo-card-link{{display:block;font-size:.68rem;color:#2563eb;padding:2px 8px 8px;text-decoration:none}}
+.photo-card-price{{padding:5px 8px 0;font-size:.85rem;color:#dc2626;font-weight:700}}
+.pc-disc{{background:#dc2626;color:#fff;font-size:.65rem;padding:1px 6px;border-radius:8px;font-weight:600;margin-left:2px}}
+.pc-exp{{color:#6b7280;font-size:.65rem;font-weight:400;margin-left:2px}}
 body.editor-mode .change-cat-btn{{opacity:.35;pointer-events:auto}}
 body.editor-mode .change-cat-btn:hover{{opacity:1}}
 .modal-overlay{{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;align-items:flex-end;justify-content:center}}

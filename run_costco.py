@@ -294,7 +294,9 @@ def run():
         # 「📸 現場特價目擊」收合區塊使用（不進主商品列表）
         try:
             from sighting_monitor import fetch_sighting_photo_deals
+            from photo_ocr import enrich_photo_deals_with_ocr
             photo_deals = fetch_sighting_photo_deals(days_back=7)
+            photo_deals = enrich_photo_deals_with_ocr(photo_deals, max_new=200)
             photo_payload = {
                 "fetched_at": datetime.datetime.now().isoformat(timespec="seconds"),
                 "deals": photo_deals,
