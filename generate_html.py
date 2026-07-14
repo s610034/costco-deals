@@ -89,7 +89,7 @@ def fetch_sighting_articles(days: int = 7) -> list:
 CATEGORY_RULES = [
     ("🐾 寵物用品", ["貓","狗","寵物","貓糧","狗糧","貓砂","Mon Petit","貓倍麗","愛貓","愛犬","Cat","Dog","Pet","Litter"]),
     ("🍱 食品飲料", ["咖啡","茶","飲料","果汁","零食","餅乾","糖果","巧克力","冰淇淋","哈根達斯","HAAGEN","Dazs","堅果","麵包","蛋糕","米","麵","泡麵","醬","油","鹽","糖","牛奶","優格","起司","雞蛋","肉","魚","海鮮","蔬菜","水果","冷凍","罐頭","即食","披薩","烘焙","食品","料理","湯","粥","燕麥","穀物","蜂蜜","果醬","汽水","氣泡水","卡迪那","野村","椰子汁","乾酪","豆腐","蛋捲","果乾","洋芋片","果凍","奶酪","拿鐵","威化","乳酸菌","高麗蔘","Barista","Coffee","Tea","Snack","Food","A&W","KOH","Tree Top","Laughing Cow","啤酒","麒麟","一番搾","Kirin","拉麵","炸物","RODEO", "卜蜂", "棒腿", "雞腿", "雞胸", "豬排"]),
-    ("🧴 保健美妝", ["維他命","魚油","保健","益生菌","葉黃素","膠原蛋白","乳清蛋白","營養","保養","面膜","乳液","精華","洗面","防曬","沐浴乳","洗髮","護髮","牙膏","牙刷","護齦","電動牙刷","音波","美妝","香水","刮鬍","除毛","蔘","威德","補給","Blackmores","Webber","Vitamin","Omega","Fish Oil","Protein","Probiotic","Collagen","sum37","su:m","漱口水","LISTERINE","李施德霖","牙周","潔牙","舒酸定","PRONAMEL","口腔","Sonicare"]),
+    ("🧴 保健美妝", ["維他命","魚油","保健","益生菌","葉黃素","膠原蛋白","乳清蛋白","營養","保養","面膜","乳液","精華","洗面","防曬","沐浴乳","洗髮","護髮","牙膏","牙刷","護齦","電動牙刷","音波","美妝","香水","刮鬍","除毛","蔘","威德","補給","Blackmores","Webber","Vitamin","Omega","Fish Oil","Protein","Probiotic","Collagen","sum37","su:m","漱口水","LISTERINE","李施德霖","牙周","潔牙","舒酸定","PRONAMEL","口腔","Sonicare", "衛生棉", "護墊", "衛生褲", "棉條"]),
     ("📺 家電 3C",  ["電視","冰箱","洗衣機","冷氣","空調","除濕","空氣清淨","吸塵器","掃地機","烤箱","微波爐","電鍋","咖啡機","果汁機","電磁爐","電熱水瓶","手機","平板","筆電","電腦","耳機","喇叭","相機","印表機","路由器","充電","電池","吹風機","升降桌","Samsung","Panasonic","LG","Sony","Philips","Honeywell","Dyson","Roomba","Tescom","Flexispot","iPhone","iPad","Apple","Daikin","大金","國際牌","象印","Zojirushi","Oster","Breville","Nespresso","Duracell","金頂","TV","Washer","Fridge","Purifier","Vacuum"]),
     ("🏠 生活用品", ["衛生紙","紙巾","廚房紙","濕紙巾","垃圾袋","保鮮膜","清潔劑","洗碗","洗衣精","柔軟精","除菌","消毒","收納","整理箱","燈泡","蠟燈","濾水","廚具","鍋具","餐具","保溫瓶","保溫杯","水壺","小蘇打","除臭","滅蟑","花灑","保鮮盒","折疊椅","Kirkland","科克蘭","ARM","HAMMER","Neoflam","Stakmore","Tissue","Paper","Detergent","Cleaner"]),
     ("👕 服飾寢具", ["衣服","褲子","上衣","外套","羽絨","襪子","內衣","運動服","泳衣","鞋","包包","帽子","棉被","枕頭","床墊","床單","毛毯","毛巾","浴巾","寢具","Polo衫","Jacket","Shirt","Pants","Shoes","Bedding","Pillow","Blanket","Towel","Timberland","Advent","Well Worn"]),
@@ -182,6 +182,64 @@ def generate_html(products: List[Dict], output_path: str) -> str:
     today      = datetime.datetime.now()
     date_str   = today.strftime("%Y/%m/%d")
     week_range = _get_week_range()
+
+    # 🏪 現場特價目擊 → 併入主列表（限時優惠格式，加小標籤）
+    try:
+        _pp = os.path.join(base_dir, "data", "sighting_photos.json")
+        if os.path.exists(_pp):
+            with open(_pp, encoding="utf-8") as _pf:
+                _payload = json.load(_pf)
+            _fetched = _payload.get("fetched_at", "")
+            _fresh = True
+            try:
+                _fresh = (datetime.datetime.now() - datetime.datetime.fromisoformat(_fetched)).days <= 8
+            except Exception:
+                pass
+            _deals = [d for d in _payload.get("deals", [])
+                      if _fresh and d.get("商品編號") and not d.get("照片錯位")
+                      and (d.get("特價") or d.get("折扣"))]
+            # 官網商品圖（master 有就用，沒有就用價牌照）
+            import sqlite3 as _sq
+            _mc = _sq.connect(os.path.join(base_dir, "data", "costco_history.db"), timeout=30)
+            _mimg = dict(_mc.execute(
+                "SELECT 商品編號, 圖片URL FROM products_master WHERE 圖片URL != ''").fetchall())
+            _mc.close()
+            _main_by_code = {p.get("商品編號"): p for p in products if p.get("商品編號")}
+            _added = _tagged = 0
+            for d in _deals:
+                _dc = d["商品編號"]
+                if _dc in _main_by_code:
+                    # 兩邊都有優惠：價差時在主卡加現場價提示
+                    _mp = _main_by_code[_dc].get("折扣後售價")
+                    _sp = d.get("特價")
+                    if _sp and _mp and int(_sp) != int(_mp):
+                        _main_by_code[_dc]["_現場價標"] = f"🏪 現場 ${int(_sp):,}"
+                        _tagged += 1
+                    continue
+                _orig = d.get("原價") or ((d.get("特價") or 0) + (d.get("折扣") or 0) or None)
+                _pct = round(d["折扣"] / _orig * 100, 1) if d.get("折扣") and _orig else None
+                products.append({
+                    "商品名稱": d.get("商品名稱", ""),
+                    "商品編號": _dc,
+                    "原價": _orig,
+                    "折扣金額": d.get("折扣"),
+                    "折扣幅度": _pct,
+                    "折扣後售價": d.get("特價"),
+                    "優惠期間": f"~{d['期限']}" if d.get("期限") else "",
+                    "分類": "限時優惠",
+                    "實體賣場": True,
+                    "限定門市": "",
+                    "圖片URL": _mimg.get(_dc) or d.get("照片URL", ""),
+                    "商品連結": f"https://www.costco.com.tw/p/{_dc}",
+                    "討論連結": d.get("文章連結", ""),
+                    "資料來源": "photo_sighting",
+                    "_現場目擊": True,
+                })
+                _added += 1
+            if _added or _tagged:
+                print(f"  🏪 現場目擊併入主列表：新增 {_added} 張卡、標記價差 {_tagged} 張")
+    except Exception as _pe:
+        print(f"  ⚠️  現場目擊併入失敗（略過）：{_pe}")
 
     # 套用分類和限時歸類
     for p in products:
@@ -365,12 +423,17 @@ def generate_html(products: List[Dict], output_path: str) -> str:
             name_esc = name.replace("'", "\\'")
             link_esc = link.replace("'", "\\'")
 
+            sighting_tag_html = ""
+            if p.get("_現場目擊"):
+                sighting_tag_html = '<span class="sighting-live-tag" title="價格來自賣場價牌照片（點💬看原文照片）">🏪 現場特價目擊</span>'
+            elif p.get("_現場價標"):
+                sighting_tag_html = f'<span class="sighting-live-tag" title="賣場現場另有不同優惠價，點💬看價牌照片">{p["_現場價標"]}</span>'
             all_cards_html += f'''<div class="card" id="{card_id}" data-cat="{actual_cat_id}" data-deal="{deal_val}">
   <a href="{link}" target="_blank" rel="noopener" class="card-link">
     <div class="card-img">{img_html}{badge_html}{src_icon}</div>
     <div class="card-body">
       <p class="card-name">{name}</p>
-      {deal_badge_html}{countdown_html}
+      {deal_badge_html}{countdown_html}{sighting_tag_html}
       {location_html}
       {period_html}
       <div class="card-price">
@@ -420,87 +483,7 @@ def generate_html(products: List[Dict], output_path: str) -> str:
     else:
         sighting_section = ""
 
-    # 📸 現場特價目擊（價格只在照片裡的商品，預設收合）
-    photo_section = ""
-    try:
-        _pp = os.path.join(base_dir, "data", "sighting_photos.json")
-        if os.path.exists(_pp):
-            with open(_pp, encoding="utf-8") as _pf:
-                _payload = json.load(_pf)
-            _fetched = _payload.get("fetched_at", "")
-            _deals = _payload.get("deals", [])
-            # 資料超過 8 天視為過期不顯示
-            _fresh = True
-            try:
-                _fd = datetime.datetime.fromisoformat(_fetched)
-                _fresh = (datetime.datetime.now() - _fd).days <= 8
-            except Exception:
-                pass
-            # 與主列表去重——但「現場價 ≠ 官網價」的保留並標示（現場通常更便宜）
-            _main_prices = {p.get("商品編號", ""): p.get("折扣後售價")
-                            for p in products if p.get("商品編號")}
-            _kept = []
-            for d in _deals:
-                _dc = d.get("商品編號")
-                if not _dc:
-                    continue
-                if _dc not in _main_prices:
-                    _kept.append(d)  # 只有現場有 → 保留
-                    continue
-                _mp, _sp = _main_prices[_dc], d.get("特價")
-                if _sp and _mp and int(_sp) != int(_mp):
-                    d["_官網價"] = int(_mp)  # 兩邊都有但價格不同 → 保留並標示
-                    _kept.append(d)
-            _deals = _kept
-            # 過期過濾（OCR 期限已過的不顯示）與錯位剔除（照片是別的商品的價牌）
-            _pb = len(_deals)
-            _deals = [d for d in _deals
-                      if not d.get("照片錯位")
-                      and not ((_pe := parse_period_end(d.get("期限") or "")) and _pe < datetime.date.today())]
-            if _pb - len(_deals):
-                print(f"  ⏰ 照片區過濾：{_pb - len(_deals)} 筆（過期或照片錯位）")
-            if _fresh and _deals:
-                _cards = ""
-                for _d in _deals:
-                    _n  = _html.escape(_d.get("商品名稱", ""))
-                    _c  = _html.escape(_d.get("商品編號", ""))
-                    _im = _html.escape(_d.get("照片URL", ""), quote=True)
-                    _au = _html.escape(_d.get("文章連結", "#"), quote=True)
-                    _price_html = ""
-                    _sale, _disc, _exp = _d.get("特價"), _d.get("折扣"), _d.get("期限")
-                    if _sale or _disc:
-                        _parts = []
-                        if _sale: _parts.append(f'<b>${_sale:,}</b>')
-                        if _disc: _parts.append(f'<span class="pc-disc">折${_disc:,}</span>')
-                        if _exp:  _parts.append(f'<span class="pc-exp">~{_html.escape(str(_exp))}</span>')
-                        _web = _d.get("_官網價")
-                        if _web and _sale:
-                            _delta = int(_web) - int(_sale)
-                            if _delta > 0:
-                                _parts.append(f'<span class="pc-store">🏪 比官網省${_delta:,}</span>')
-                            else:
-                                _parts.append(f'<span class="pc-store">🏪 現場價（官網${int(_web):,}）</span>')
-                        _price_html = f'<div class="photo-card-price">{" ".join(_parts)}</div>'
-                    _cards += (
-                        f'<div class="photo-card">'
-                        f'<a href="{_au}" target="_blank" rel="noopener">'
-                        f'<img src="{_im}" loading="lazy" alt="{_n} 價牌照片" '
-                        f'onerror="this.parentElement.parentElement.style.display=\'none\'"></a>'
-                        f'{_price_html}'
-                        f'<div class="photo-card-name">{_n} <span class="photo-card-code">#{_c}</span></div>'
-                        f'<a class="photo-card-link" href="https://www.costco.com.tw/p/{_c}" '
-                        f'target="_blank" rel="noopener">官網頁面 ↗</a></div>'
-                    )
-                _src_note = _html.escape(_fetched[:10])
-                photo_section = (
-                    f'<details class="photo-deals">'
-                    f'<summary>📸 現場特價目擊 <span class="photo-deals-count">{len(_deals)} 筆</span>'
-                    f'<span class="photo-deals-sub">價格見價牌照片｜{_src_note} 更新｜點照片看原文</span></summary>'
-                    f'<div class="photo-deals-grid">{_cards}</div>'
-                    f'</details>'
-                )
-    except Exception as _pe:
-        print(f"  ⚠️  現場特價區塊產生失敗（略過）：{_pe}")
+    photo_section = ""  # 已整合進主列表限時優惠
 
     header_filters = f'''<div class="header-filters">
   <button class="hf-btn hf-all active" onclick="dealFilter(\'all\',this)">全部 <span>{total}</span></button>
@@ -609,6 +592,7 @@ main{{padding:12px;max-width:960px;margin:0 auto}}
 .official-link:hover{{background:#dcfce7}}
 .period-hint{{font-size:.6rem;color:#92400e;opacity:.75}}
 .confirm-date-hint{{font-size:.6rem;color:#9d174d;opacity:.85;margin-left:4px;background:#fce7f3;padding:1px 5px;border-radius:8px}}
+.sighting-live-tag{{display:inline-block;font-size:.62rem;color:#92400e;background:#fef3c7;border:1px solid #fde68a;padding:1px 6px;border-radius:8px;font-weight:600;margin:2px 0}}
 .photo-deals{{margin:14px 10px;border:1px solid #e5e7eb;border-radius:12px;background:#fff;overflow:hidden}}
 .photo-deals summary{{cursor:pointer;padding:12px 14px;font-weight:700;font-size:.95rem;list-style:none;display:flex;align-items:center;gap:8px;flex-wrap:wrap}}
 .photo-deals summary::-webkit-details-marker{{display:none}}
