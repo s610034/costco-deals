@@ -42,7 +42,9 @@ def deploy() -> bool:
         return False
     print("  ✅ commit 完成")
 
-    code, out, err = run("git push origin main --force")
+    # 先同步遠端（避免蓋掉排程/手動部署彼此的 commit），再一般推送
+    run("git pull --rebase --autostash origin main")
+    code, out, err = run("git push origin main")
     if code != 0:
         print(f"❌ git push 失敗：{err[:200]}")
         return False
