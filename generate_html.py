@@ -996,7 +996,7 @@ async function _doSyncToGitHub(cardId, catId, productName, productLink) {{
     }} catch(e) {{}}
     await new Promise(r => setTimeout(r, 800 * attempt));
   }}
-  alert("⚠️ 分類同步失敗：" + productName + "\n請稍後對此商品再改一次");
+  alert("⚠️ 分類同步失敗：" + productName + String.fromCharCode(10) + "請稍後對此商品再改一次");
 }}
 
 // 套用分類覆蓋
