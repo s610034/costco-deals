@@ -161,7 +161,11 @@ def scrape_page(page, url: str, category_tag: str) -> List[Dict]:
                 img_url = src
 
             # 原價
-            orig_el = card.query_selector(".original-price .product-price-amount, .product-price-amount")
+            # 有劃線原價 → 讀到的是原價；沒有 → 讀到的是現售價（促銷時=折後價）
+            strike_el = card.query_selector(".original-price .product-price-amount")
+            plain_el  = card.query_selector(".product-price-amount")
+            _price_is_original = strike_el is not None
+            orig_el = strike_el or plain_el
             original_price = parse_number(orig_el.inner_text() if orig_el else "")
 
             # 折扣金額（官網改版後 class 變為 discount-row-message，文字格式「商品已折價$1,200」）
@@ -182,7 +186,13 @@ def scrape_page(page, url: str, category_tag: str) -> List[Dict]:
                 continue
 
             # 折扣後售價 & 折扣幅度
-            if original_price and discount_amt and discount_amt < original_price:
+            if original_price and discount_amt and not _price_is_original:
+                # 清單頁顯示的是折後現售價 → 原價 = 現售價 + 折扣（修正重複折扣 bug）
+                sale_price = original_price
+                original_price = original_price + discount_amt
+                pct = round((discount_amt / original_price) * 100, 1)
+                discount_pct = f"{pct}%"
+            elif original_price and discount_amt and discount_amt < original_price:
                 sale_price = original_price - discount_amt
                 pct = round((discount_amt / original_price) * 100, 1)
                 discount_pct = f"{pct}%"

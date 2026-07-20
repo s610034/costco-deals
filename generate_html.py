@@ -959,24 +959,44 @@ function clearToken() {{
 }}
 
 // GitHub overrides.json 同步
-async function syncToGitHub(cardId, catId, productName, productLink) {{
+// 同步佇列：連續快速修改時序列化執行，避免 sha 競態造成部分修改靜默丟失
+let _syncQueue = Promise.resolve();
+
+function syncToGitHub(cardId, catId, productName, productLink) {{
+  _syncQueue = _syncQueue.then(() =>
+    _doSyncToGitHub(cardId, catId, productName, productLink)
+  ).catch(() => {{}});
+  return _syncQueue;
+}}
+
+async function _doSyncToGitHub(cardId, catId, productName, productLink) {{
   const token = localStorage.getItem("costco_gh_token") || "";
   if (!token) return;
   const apiUrl = "https://api.github.com/repos/s610034/costco-deals/contents/data/overrides.json";
-  try {{
-    const getR = await fetch(apiUrl, {{headers: {{"Authorization": "token " + token, "Accept": "application/vnd.github.v3+json"}}}});
-    let sha = "", existing = {{}};
-    if (getR.ok) {{
-      const d = await getR.json();
-      sha = d.sha;
-      const _b64 = d.content.replaceAll(String.fromCharCode(10), "");
-      const _bytes = Uint8Array.from(atob(_b64), c => c.charCodeAt(0));
-      existing = JSON.parse(new TextDecoder("utf-8").decode(_bytes));
-    }}
-    existing[cardId] = {{cat: catId, name: productName, link: productLink}};
-    const encoded = new TextEncoder().encode(JSON.stringify(existing, null, 2)); const content = btoa(String.fromCharCode(...encoded));
-    await fetch(apiUrl, {{method: "PUT", headers: {{"Authorization": "token " + token, "Content-Type": "application/json"}}, body: JSON.stringify({{"message": "update category: " + cardId, "content": content, "sha": sha}})}});
-  }} catch(e) {{}}
+  for (let attempt = 1; attempt <= 3; attempt++) {{
+    try {{
+      const getR = await fetch(apiUrl + "?t=" + Date.now(), {{headers: {{"Authorization": "token " + token, "Accept": "application/vnd.github.v3+json"}}}});
+      let sha = "", existing = {{}};
+      if (getR.ok) {{
+        const d = await getR.json();
+        sha = d.sha;
+        const _b64 = d.content.replaceAll(String.fromCharCode(10), "");
+        const _bytes = Uint8Array.from(atob(_b64), c => c.charCodeAt(0));
+        existing = JSON.parse(new TextDecoder("utf-8").decode(_bytes));
+      }}
+      const _now = new Date();
+      const _pad = n => String(n).padStart(2, "0");
+      existing[cardId] = {{cat: catId, name: productName, link: productLink,
+        updated: _now.getFullYear() + "-" + _pad(_now.getMonth()+1) + "-" + _pad(_now.getDate()) + " " + _pad(_now.getHours()) + ":" + _pad(_now.getMinutes()) + ":" + _pad(_now.getSeconds())}};
+      const encoded = new TextEncoder().encode(JSON.stringify(existing, null, 2));
+      const content = btoa(String.fromCharCode(...encoded));
+      const putR = await fetch(apiUrl, {{method: "PUT", headers: {{"Authorization": "token " + token, "Content-Type": "application/json"}}, body: JSON.stringify({{"message": "update category: " + cardId, "content": content, "sha": sha}})}});
+      if (putR.ok) return;  // 成功
+      // 409/422 = sha 過期，下一輪重抓再試
+    }} catch(e) {{}}
+    await new Promise(r => setTimeout(r, 800 * attempt));
+  }}
+  alert("⚠️ 分類同步失敗：" + productName + "\n請稍後對此商品再改一次");
 }}
 
 // 套用分類覆蓋

@@ -38,6 +38,18 @@ def verify_product_price(item_code: str, page) -> Optional[Dict]:
             sale      = saleEl ? saleEl.innerText.trim() : '';
         }
 
+        // 最穩的方式：用詳情頁文字標籤解析（商品原價 $X / 商品折扣 -$Y / 小計 $Z）
+        // 舊選擇器在促銷頁會抓到小計當原價，造成重複折扣（原價589折140→449，實際729/140/589）
+        const bodyText = document.body.innerText;
+        const mOrig = bodyText.match(/商品原價\s*\$?([\d,]+)/);
+        const mDisc = bodyText.match(/商品折扣\s*-?\s*\$?([\d,]+)/);
+        const mSale = bodyText.match(/小計\s*\$?([\d,]+)/);
+        if (mOrig) origPrice = mOrig[1];
+        if (mDisc) disc = mDisc[1];
+        if (mSale) sale = mSale[1];
+        // 無促銷的商品頁只有一個價格欄位
+        if (!origPrice && mSale) origPrice = mSale[1];
+
         // fallback：直接抓 .price-value（第一個）
         if (!origPrice) {
             const pvEl = document.querySelector('.price-value');
