@@ -484,6 +484,7 @@ def upsert_master(products: List[Dict], source: str = "scraper") -> int:
         ))
         count += 1
     conn.commit()
+    conn.close()   # ★ 修連線洩漏：全量爬蟲呼叫 280 次，未關閉→殭屍連線累積→database is locked
     return count
 
 
@@ -493,6 +494,7 @@ def get_master_product(code: str) -> Optional[Dict]:
     row = conn.execute(
         "SELECT * FROM products_master WHERE 商品編號=?", (code,)
     ).fetchone()
+    conn.close()   # ★ 修連線洩漏
     if not row:
         return None
     return dict(row)
@@ -501,7 +503,9 @@ def get_master_product(code: str) -> Optional[Dict]:
 def get_master_count() -> int:
     """取得 master 表商品總數"""
     conn = get_conn()
-    return conn.execute("SELECT COUNT(*) FROM products_master").fetchone()[0]
+    n = conn.execute("SELECT COUNT(*) FROM products_master").fetchone()[0]
+    conn.close()   # ★ 修連線洩漏
+    return n
 
 
 def get_discussion_map() -> dict:
@@ -513,6 +517,7 @@ def get_discussion_map() -> dict:
         WHERE 商品編號 != '' AND 討論連結 != '' AND 討論連結 IS NOT NULL
         GROUP BY 商品編號
     """).fetchall()
+    conn.close()   # ★ 修連線洩漏
     return {r[0]: r[1] for r in rows}
 
 
@@ -543,6 +548,7 @@ def enrich_discussion_links(products: List[Dict]) -> List[Dict]:
             p["討論連結"] = disc_map[code]
         if not p.get("圖片URL") and code in img_map:
             p["圖片URL"] = img_map[code]
+    conn.close()   # ★ 修連線洩漏
     return products
 
 

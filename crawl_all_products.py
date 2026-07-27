@@ -170,7 +170,13 @@ def scrape_category(page, cat_url: str, cat_name: str, main_cat: str) -> list:
 
 def crawl_all(categories: list, test_mode: bool = False, resume: bool = False) -> dict:
     """主爬蟲流程"""
-    from database import init_db, upsert_master, get_master_count
+    from database import init_db, upsert_master, get_master_count, acquire_pipeline_lock
+
+    # 取排程互斥鎖，避免與 run_costco / batch_verify 同時寫 DB
+    _lock = acquire_pipeline_lock(wait_seconds=300)
+    if not _lock:
+        log("❌ 等待排程鎖逾時，本次放棄執行")
+        return {}
 
     init_db()
     start_master = get_master_count()
