@@ -26,6 +26,7 @@
 ├── crawl_all_products.py      # 全量爬取官網所有商品（週一三五排程）
 ├── categorize.py               # 商品自動分類（規則優先，可選AI輔助）
 ├── generate_html.py            # 產生 HTML 報告（約1100行）
+├── config.py                     # .env 讀取（load_env()，供 run_costco/categorize/rebuild_html 共用）
 ├── database.py                  # SQLite 資料庫操作
 ├── deploy.py                     # GitHub Pages 部署
 ├── notify.py                      # Telegram + LINE 推播（multicast多人+群組）
@@ -54,7 +55,7 @@ WEBHOOK_SITE_TOKEN=                 # line_id_finder.py查新好友ID用
 
 ---
 
-## ⏰ 排程總覽
+## ⏰ 排程總覽（2026-07-22 已實查校正）
 
 ### launchd（Mac本機，開機才會跑）
 | 排程 | 時間 | 任務 |
@@ -64,15 +65,20 @@ WEBHOOK_SITE_TOKEN=                 # line_id_finder.py查新好友ID用
 | com.ericchen.costcodeals.verifyprices | 週一三五 10:30 | batch_verify_prices.py --size 500（舊版，跟Hermes排程重複，待整理） |
 | com.ericchen.lmstudio.server | 開機時 | LM Studio API server常駐 |
 
-### Hermes cron（不需要Mac開機才跑，常駐gateway）
+### Hermes cron（不需要Mac開機才跑，常駐gateway，定義在 `~/.hermes/cron/jobs.json`）
 | 排程ID | 名稱 | 時間 | 腳本 |
 |---|---|---|---|
-| 582f60946d51 | costco-batch-verify-prices | 週一三五 11:00 | ~/.hermes/scripts/costco_batch_verify.sh |
-| 1ab03710c06e | costco-categorize | 週一三五 11:45 | ~/.hermes/scripts/costco_categorize.sh |
+| 582f60946d51 | costco-batch-verify-prices | **週二四 11:00** | ~/.hermes/scripts/costco_batch_verify.sh |
+| 1ab03710c06e | costco-categorize | **週二四 11:30** | ~/.hermes/scripts/costco_categorize.sh |
 
 **重要**：這兩個Hermes排程都是 `no-agent` 模式（純跑腳本，不經過LLM，不會出現編造/幻覺問題）。
 背景啟動主任務後另開一個監看程序（costco_verify_watcher.py），真正跑完才會推播LINE+Telegram完成摘要。
-原本11:00/11:30會撞期造成DB lock，已改為11:00/11:45錯開。
+（原本是週一三五 11:00/11:45，已改成週二四 11:00/11:30，錯開 launchd 的補原價排程。）
+
+### ⚠️ 已移除的重複排程
+- 曾經有一條 unix crontab（`crontab -l`）在**每週一 08:00**額外執行一次 `run_costco.py`，跟上面 launchd 的週一 09:15 重複跑同一支腳本。這是先前想取消但沒有真的移除乾淨的殘留，已於 2026-07-22 確認移除。
+
+**排程資訊容易過時，如有疑慮請直接查證**：`launchctl list`、`crontab -l`、`cat ~/.hermes/cron/jobs.json`，不要只信任本文件。
 
 ### GitHub Actions（備援，Mac沒開機時用）
 `.github/workflows/costco-deals.yml`：週一三 09:15 UTC+8，public repo完全免費無限制。
