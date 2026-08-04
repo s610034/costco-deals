@@ -1,0 +1,34 @@
+{
+  "rules": [
+    {
+      "path": "generate_html.py",
+      "rule": "這是一個用 f-string 產生 HTML/CSS/JS 的大型模板。檢查所有字面上的 CSS/JS 大括號 { } 是否正確寫成雙括號 {{ }} 逃脫（避免被 Python f-string 誤判成變數插值）；檢查 JS 字串中所有換行是否寫成 \\\\n（字面兩個字元），而不是真正的原始換行字元（真正的換行會破壞 JS 語法讓整頁不可點擊，這曾實際發生過一次）。",
+      "merge_system_rule": true
+    },
+    {
+      "path": "deploy.py",
+      "rule": "確認沒有使用 git push --force 或任何會強制覆蓋遠端歷史的指令 —— 這個專案曾經因為 git pull --rebase 覆蓋掉剛產生的文件而出過問題，push --force 已被明確移除過一次，不應該再出現。同時檢查部署後是否有驗證線上內容（例如 curl 該頁面）的步驟，而不是只信任 git push 回傳成功。",
+      "merge_system_rule": true
+    },
+    {
+      "path": "rebuild_html.py",
+      "rule": "檢查主要的 Step 0-4（同步 overrides → 產生 HTML → 部署 → TG/LINE 通知）流程是否被包在 def main() 且有 if __name__ == '__main__': 保護，不應該讓單純 import 這個模組就觸發真正的部署與通知（曾經是模組層級程式碼、import 就會誤觸發副作用，已修正過）。",
+      "merge_system_rule": true
+    },
+    {
+      "path": "database.py",
+      "rule": "檢查任何新增的 SQLite 寫入操作是否遵守既有的併發保護機制（WAL 模式、30 秒 busy_timeout、/tmp/costco_pipeline.lock 檔案鎖），不應該繞過鎖直接寫入，避免多個排程（launchd + crontab + hermes cron）同時觸發時互相衝突。",
+      "merge_system_rule": true
+    },
+    {
+      "path": "*.py",
+      "rule": "檢查 .env 環境變數讀取邏輯：多數腳本應使用 config.py 的 load_env()（非破壞性，不覆蓋已存在的環境變數），但 crawl_all_products.py（crash-notify 路徑刻意避免額外 import）、generate_html.py（只讀 EDITOR_PASSWORD）、photo_ocr.py（只讀 GEMINI_API_KEY）是刻意保留原地解析單一 key 的例外，不要建議把這三個檔案改成統一用 config.py。",
+      "merge_system_rule": true
+    },
+    {
+      "path": "categorize.py",
+      "rule": "檢查商品分類邏輯（規則式 + Gemini AI 混合）是否有適當的例外處理，AI 分類失敗時是否會讓整個分類流程中斷，還是能 fallback 到規則式分類繼續執行。",
+      "merge_system_rule": true
+    }
+  ]
+}

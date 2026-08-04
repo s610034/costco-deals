@@ -4,16 +4,10 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-with open(os.path.join(BASE_DIR, '.env')) as f:
-    for line in f:
-        line = line.strip()
-        if not line or line.startswith('#') or '=' not in line:
-            continue
-        k, _, v = line.partition('=')
-        if k.strip() and v.strip():
-            os.environ[k.strip()] = v.strip()
+from config import load_env
+load_env()
 
-from database import init_db, enrich_with_history, get_summary_stats, update_product_category
+from database import init_db, enrich_with_history, get_summary_stats, update_product_category, get_conn
 from generate_html import generate_html
 from deploy import deploy
 from notify import tg_send, line_send
@@ -73,18 +67,28 @@ def sync_overrides_from_github():
         with urllib.request.urlopen(req, timeout=10) as r:
             data = json.loads(r.read())
         content = json.loads(base64.b64decode(data["content"].replace("\n", "")).decode("utf-8"))
-        count = 0
-        for card_id, info in content.items():
-            if isinstance(info, dict):
-                cat  = info.get("cat", "")
-                name = info.get("name", "")
-                link = info.get("link", "")
-            else:
-                cat, name, link = str(info), "", ""
-            if cat:
-                update_product_category(card_id, cat, name, link)
-                count += 1
-        print(f"  ✅ 從 GitHub 同步 {count} 筆分類覆蓋到 DB")
+        count, failed = 0, 0
+        conn = get_conn()
+        try:
+            for card_id, info in content.items():
+                if isinstance(info, dict):
+                    cat  = info.get("cat", "")
+                    name = info.get("name", "")
+                    link = info.get("link", "")
+                else:
+                    cat, name, link = str(info), "", ""
+                if cat:
+                    if update_product_category(card_id, cat, name, link, conn=conn):
+                        count += 1
+                    else:
+                        failed += 1
+            conn.commit()
+        finally:
+            conn.close()
+        if failed:
+            print(f"  ⚠️  從 GitHub 同步 {count} 筆分類覆蓋到 DB，{failed} 筆失敗")
+        else:
+            print(f"  ✅ 從 GitHub 同步 {count} 筆分類覆蓋到 DB")
         return count
     except urllib.error.HTTPError as e:
         if e.code == 404:
@@ -102,46 +106,51 @@ def get_products_last_30_days():
     return get_products_last_n_days(30)
 
 
-print("\n【Step 0】同步前端分類覆蓋...")
-sync_overrides_from_github()
+def main():
+    print("\n【Step 0】同步前端分類覆蓋...")
+    sync_overrides_from_github()
 
-print("\n【Step 1】從 DB 撈取最近30天商品...")
-products = get_products_last_30_days()
+    print("\n【Step 1】從 DB 撈取最近30天商品...")
+    products = get_products_last_30_days()
 
-if not products:
-    # fallback：讀最新 JSON
-    print("  DB 無資料，改讀最新 JSON...")
-    files = sorted([f for f in os.listdir(os.path.join(BASE_DIR, 'data'))
-                    if f.startswith('costco_deals_') and f.endswith('.json')])
-    if not files:
-        print("❌ 找不到任何資料"); sys.exit(1)
-    with open(os.path.join(BASE_DIR, 'data', files[-1])) as f:
-        products = json.load(f)
+    if not products:
+        # fallback：讀最新 JSON
+        print("  DB 無資料，改讀最新 JSON...")
+        files = sorted([f for f in os.listdir(os.path.join(BASE_DIR, 'data'))
+                        if f.startswith('costco_deals_') and f.endswith('.json')])
+        if not files:
+            print("❌ 找不到任何資料"); sys.exit(1)
+        with open(os.path.join(BASE_DIR, 'data', files[-1])) as f:
+            products = json.load(f)
 
-today = datetime.datetime.now().strftime('%Y%m%d')
-print(f"\n【Step 2】附加歷史資訊...")
-products = enrich_with_history(products, today)
-stats = get_summary_stats(today)
+    today = datetime.datetime.now().strftime('%Y%m%d')
+    print(f"\n【Step 2】附加歷史資訊...")
+    products = enrich_with_history(products, today)
+    stats = get_summary_stats(today)
 
-print(f"\n【Step 3】產生 HTML...")
-html_path = os.path.join(BASE_DIR, 'docs', 'index.html')
-generate_html(products, html_path)
+    print(f"\n【Step 3】產生 HTML...")
+    html_path = os.path.join(BASE_DIR, 'docs', 'index.html')
+    generate_html(products, html_path)
 
-print(f"\n【Step 4】部署到 GitHub Pages...")
-_deployed = deploy()
-if not _deployed:
-    print("❌ 部署失敗！網站不會更新")
-sync_overrides_to_github()  # DB overrides → GitHub
+    print(f"\n【Step 4】部署到 GitHub Pages...")
+    _deployed = deploy()
+    if not _deployed:
+        print("❌ 部署失敗！網站不會更新")
+    sync_overrides_to_github()  # DB overrides → GitHub
 
-report_url = 'https://s610034.github.io/costco-deals/'
-summary = format_summary(products)
-msg = summary + f"\n\n📱 完整折扣清單：\n{report_url}"
-_tg_ok = tg_send(msg)
-print("Telegram:", "✅" if _tg_ok else "❌ 發送失敗")
-if not _deployed:
-    tg_send("🚨 rebuild 部署失敗！網站未更新，請手動檢查 git push")
-print("  ✅ Telegram 已發送")
-line_send(msg)
-print("  ✅ Line 已發送")
+    report_url = 'https://s610034.github.io/costco-deals/'
+    summary = format_summary(products)
+    msg = summary + f"\n\n📱 完整折扣清單：\n{report_url}"
+    _tg_ok = tg_send(msg)
+    print("Telegram:", "✅" if _tg_ok else "❌ 發送失敗")
+    if not _deployed:
+        tg_send("🚨 rebuild 部署失敗！網站未更新，請手動檢查 git push")
+    print("  ✅ Telegram 已發送")
+    line_send(msg)
+    print("  ✅ Line 已發送")
 
-print('\n✅ 完成！')
+    print('\n✅ 完成！')
+
+
+if __name__ == '__main__':
+    main()

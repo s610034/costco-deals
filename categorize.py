@@ -14,15 +14,8 @@ categorize.py
 import os, sys, json, time, re, sqlite3, urllib.request
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-# 載入 .env（排程執行時 shell 不會自動載入，導致 ANTHROPIC_API_KEY 為空、AI 分類從未生效）
-_env_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".env")
-if os.path.exists(_env_path):
-    with open(_env_path, encoding="utf-8") as _f:
-        for _line in _f:
-            _line = _line.strip()
-            if _line and not _line.startswith("#") and "=" in _line:
-                _k, _, _v = _line.partition("=")
-                os.environ.setdefault(_k.strip(), _v.strip())
+from config import load_env
+load_env()  # 排程執行時 shell 不會自動載入，導致 ANTHROPIC_API_KEY 為空、AI 分類從未生效
 
 DB_PATH    = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data', 'costco_history.db')
 API_KEY    = os.environ.get("ANTHROPIC_API_KEY", "")

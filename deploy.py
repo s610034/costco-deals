@@ -35,15 +35,22 @@ def deploy() -> bool:
 
     code, out, err = run(f'git commit -m "📊 自動更新折扣週報 {today}"')
     if code != 0 and "nothing to commit" in (out + err):
+        # 這次沒有新變更，但本機仍可能有前次因 pull --rebase 失敗而未推送的 commit，
+        # 不能直接視為完成，要繼續往下走 pull + push（push 沒有東西推時本身就是無害的 no-op）
         print("ℹ️  無變更，略過 commit")
-        return True
-    if code != 0:
+    elif code != 0:
         print(f"❌ git commit 失敗：{err}")
         return False
-    print("  ✅ commit 完成")
+    else:
+        print("  ✅ commit 完成")
 
     # 先同步遠端（避免蓋掉排程/手動部署彼此的 commit），再一般推送
-    run("git pull --rebase --autostash origin main")
+    code, out, err = run("git pull --rebase --autostash origin main")
+    if code != 0:
+        print(f"❌ git pull --rebase 失敗，中止部署：{err[:200]}")
+        run("git rebase --abort")
+        return False
+
     code, out, err = run("git push origin main")
     if code != 0:
         print(f"❌ git push 失敗：{err[:200]}")

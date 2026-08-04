@@ -229,13 +229,19 @@ def upsert_products(products: List[Dict], crawl_date: str = None) -> int:
 
 
 def update_product_category(card_id: str, new_category: str,
-                             product_name: str = "", product_link: str = "") -> bool:
+                             product_name: str = "", product_link: str = "",
+                             conn: sqlite3.Connection = None) -> bool:
     """
     從前端收到使用者修改的分類，寫入 category_overrides 表
     同時更新 products 表中對應商品的細分類（最新一筆）
+
+    傳入 conn 時（例如批次同步 217 筆 overrides）沿用同一條連線，
+    呼叫端負責 commit/close，避免逐筆開關連線在 macOS 上誘發 disk I/O error
     """
     now = datetime.datetime.now().isoformat(timespec="seconds")
-    conn = get_conn()
+    _own_conn = conn is None
+    if _own_conn:
+        conn = get_conn()
     try:
         # 寫入 overrides 表（主鍵為 card_id，相同 card_id 覆蓋舊值）
         conn.execute("""
@@ -264,13 +270,15 @@ def update_product_category(card_id: str, new_category: str,
                   )
             """, (new_category, product_name, product_name))
 
-        conn.commit()
+        if _own_conn:
+            conn.commit()
         return True
     except Exception as e:
         print(f"❌ update_product_category 失敗：{e}")
         return False
     finally:
-        conn.close()
+        if _own_conn:
+            conn.close()
 
 
 def get_all_category_overrides() -> Dict[str, str]:
