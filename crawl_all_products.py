@@ -14,6 +14,9 @@ crawl_all_products.py
 import sys, os, time, re, datetime, json, argparse
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
+from config import load_env
+load_env()
+
 from playwright.sync_api import sync_playwright, TimeoutError as PWTimeout
 
 BASE = "https://www.costco.com.tw"

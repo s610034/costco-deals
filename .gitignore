@@ -1,4 +1,5 @@
 .env
+.playwright-browsers/
 data/
 !data/config.json
 !data/overrides.json

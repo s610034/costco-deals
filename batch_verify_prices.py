@@ -14,6 +14,9 @@ batch_verify_prices.py
 import sys, os, time, argparse
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
+from config import load_env
+load_env()
+
 from database import get_conn, init_db, acquire_pipeline_lock
 
 def get_stats():
