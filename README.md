@@ -83,7 +83,7 @@ WEBHOOK_SITE_TOKEN=                 # line_id_finder.py查新好友ID用
 **排程資訊容易過時，如有疑慮請直接查證**：`launchctl list`、`crontab -l`、`cat ~/.hermes/cron/jobs.json`，不要只信任本文件。
 
 ### GitHub Actions（備援，Mac沒開機時用）
-`.github/workflows/costco-deals.yml`：週一三 09:15 UTC+8，public repo完全免費無限制。
+`.github/workflows/costco-deals.yml`：週一三五 09:15 UTC+8（跟本機 launchd 對齊），public repo完全免費無限制。
 
 ---
 
