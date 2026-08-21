@@ -1,13 +1,19 @@
 #!/bin/bash
 # crawl_all_products.sh
 # 全量爬取官網所有商品，更新 products_master 資料庫
-echo "[$(date)] 全量商品爬蟲啟動" >> /tmp/costco_crawl_all.log
 cd /Users/ericchen/Documents/testthing/costco-deals
-/usr/bin/env python3 crawl_all_products.py >> /tmp/costco_crawl_all.log 2>> /tmp/costco_crawl_err.log
-echo "[$(date)] 全量商品爬蟲結束" >> /tmp/costco_crawl_all.log
+mkdir -p logs
+TS=$(date +%Y%m%d_%H%M%S)
+LOG="logs/costco_crawl_all_${TS}.log"
+ERR="logs/costco_crawl_all_${TS}_err.log"
+echo "[$(date)] 全量商品爬蟲啟動" >> "$LOG"
+CRAWL_LOG_FILE="$LOG" /usr/bin/env python3 crawl_all_products.py >> /dev/null 2>> "$ERR"
+echo "[$(date)] 全量商品爬蟲結束" >> "$LOG"
+
+find logs -name "costco_crawl_all_*.log" -mtime +30 -delete 2>/dev/null
 
 # 推播完成摘要（需先載入.env，否則token讀不到會靜默失敗）
-tail -12 /tmp/costco_crawl_all.log | grep -E "處理分類|掃描商品|寫入 DB|全新商品|master 總數" > /tmp/crawl_all_summary.txt
+tail -12 "$LOG" | grep -E "處理分類|掃描商品|寫入 DB|全新商品|master 總數" > /tmp/crawl_all_summary.txt
 /usr/bin/python3 -c "
 import sys, os
 sys.path.insert(0, '.')

@@ -23,7 +23,7 @@ BASE = "https://www.costco.com.tw"
 UA   = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
         "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36")
 
-LOG_FILE    = "/tmp/costco_crawl_all.log"
+LOG_FILE    = os.environ.get("CRAWL_LOG_FILE", "/tmp/costco_crawl_all.log")
 STATE_FILE  = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "crawl_state.json")
 
 # 主分類對照（用於分類標記）
