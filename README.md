@@ -55,15 +55,17 @@ WEBHOOK_SITE_TOKEN=                 # line_id_finder.py查新好友ID用
 
 ---
 
-## ⏰ 排程總覽（2026-07-22 已實查校正）
+## ⏰ 排程總覽（2026-08-21 已實查校正）
 
 ### launchd（Mac本機，開機才會跑）
 | 排程 | 時間 | 任務 |
 |---|---|---|
-| com.ericchen.costcodeals | 週一三 09:15 | run_costco.py（折扣週報主流程） |
-| com.ericchen.costcodeals.crawlall | 週一三 09:45 + 週五 09:15 | crawl_all_products.py（全量爬蟲） |
+| com.ericchen.costcodeals | 週一三五 09:15 | run_costco.py（折扣週報主流程，含部署+推播） |
+| com.ericchen.costcodeals.crawlall | 週一三五 09:45 | crawl_all_products.py（全量爬蟲，折扣週報跑完後30分鐘） |
 | com.ericchen.costcodeals.verifyprices | 週一三五 10:30 | batch_verify_prices.py --size 500（舊版，跟Hermes排程重複，待整理） |
 | com.ericchen.lmstudio.server | 開機時 | LM Studio API server常駐 |
+
+（2026-08-21 起週五也改成跑完整流程，跟週一三時間對齊，不再是只有全量爬蟲的簡化版）
 
 ### Hermes cron（不需要Mac開機才跑，常駐gateway，定義在 `~/.hermes/cron/jobs.json`）
 | 排程ID | 名稱 | 時間 | 腳本 |
