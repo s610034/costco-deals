@@ -6,6 +6,37 @@ import json, os, datetime, re, hashlib, html as _html
 from typing import List, Dict
 
 
+def _esc(s) -> str:
+    """HTML escape：所有插進 HTML 內文/屬性的外部資料（商品名稱/連結/情報標題等，
+    可能來自 daybuy/PTT/OCR 這些非官方來源）都要過這層，避免儲存型 XSS。"""
+    return _html.escape(str(s if s is not None else ""), quote=True)
+
+
+def _esc_url(url) -> str:
+    """href 專用：只允許 http(s)，避免 javascript: 這類 scheme 被塞進連結造成 XSS。"""
+    url = str(url or "")
+    if not url.lower().startswith(("http://", "https://")):
+        return "#"
+    return _html.escape(url, quote=True)
+
+
+def _safe_json_for_script(obj) -> str:
+    """塞進 <script> 標籤內的 JSON 資料：json.dumps 不會處理 '</script>' 這種字串，
+    一旦資料裡剛好出現這個子字串（例如 GitHub overrides.json 被直接改過），
+    會提前把 <script> 標籤截斷、後面接的內容變成真的 HTML/JS 被執行。
+    把 '<' 轉成 \\u003c 是業界標準做法，JS 解析時 \\u003c 照樣會還原成 '<'，不影響資料本身。"""
+    return json.dumps(obj, ensure_ascii=False).replace("<", "\\u003c")
+
+
+def _esc_js(s) -> str:
+    """塞進 onclick='...' 裡的 JS 字串參數：先用 json.dumps 產生安全的字串常值本體，
+    跳脫外層 HTML 屬性用的單引號，最後再做一層 HTML escape——
+    因為瀏覽器解析屬性值時會先做 HTML 實體解碼才交給 JS，
+    只跳脫字面上的引號字元擋不住用 &#39; 這種實體繞過，必須再包一層。"""
+    js_body = json.dumps(str(s if s is not None else ""), ensure_ascii=False)[1:-1].replace("'", "\\'")
+    return _html.escape(js_body, quote=True)
+
+
 def fetch_sighting_articles(days: int = 7) -> list:
     """從 daybuy 抓最近 N 天內的賣場目擊情報文章（兩個來源）"""
     try:
@@ -283,8 +314,8 @@ def generate_html(products: List[Dict], output_path: str) -> str:
     sighting_articles = fetch_sighting_articles(days=7)
     coupon_cnt  = sum(1 for p in products if "精選" in p.get("分類","") and "限時" not in p.get("分類",""))
     both_cnt    = sum(1 for p in products if "限時" in p.get("分類","") and "精選" in p.get("分類",""))
-    all_cats_js = json.dumps(ALL_CATS, ensure_ascii=False)
-    db_overrides_js = json.dumps(db_overrides, ensure_ascii=False)
+    all_cats_js = _safe_json_for_script(ALL_CATS)
+    db_overrides_js = _safe_json_for_script(db_overrides)
 
     # 產生卡片
     all_cards_html = ""
@@ -341,11 +372,11 @@ def generate_html(products: List[Dict], output_path: str) -> str:
             sale_str = f"${sale:,}" if sale else ""
             amt_str  = f"省 ${amt:,}" if amt else ""
 
-            img_html    = f'<img src="{img}" alt="{name}" loading="lazy" onerror="this.style.display=\'none\'">' if img else '<div class="no-img">📦</div>'
+            img_html    = f'<img src="{_esc_url(img)}" alt="{_esc(name)}" loading="lazy" onerror="this.style.display=\'none\'">' if img else '<div class="no-img">📦</div>'
             badge_html  = f'<div class="badge">-{pct}</div>' if pct else ""
             # 限定門市標籤
             location = p.get("限定門市", "")
-            location_html = f'<span class="location-badge">📍 {location}限定</span>' if location else ""
+            location_html = f'<span class="location-badge">📍 {_esc(location)}限定</span>' if location else ""
 
             # 優惠期間標籤：有日期就顯示日期，沒有則依分類顯示標籤
             # 解析結束日，計算倒數
@@ -374,9 +405,9 @@ def generate_html(products: List[Dict], output_path: str) -> str:
                 # daybuy 來源的期間可能是從文章頁面推測的，加上標記
                 period_src = p.get("期間來源", "")
                 if period_src in ("daybuy_article", "daybuy_tg") and deal_val not in ("hotbuys",):
-                    period_html = f'<p class="deal-period">📅 {period} <span class="period-hint">（daybuy）</span>{confirm_date_html}</p>'
+                    period_html = f'<p class="deal-period">📅 {_esc(period)} <span class="period-hint">（daybuy）</span>{confirm_date_html}</p>'
                 else:
-                    period_html = f'<p class="deal-period">📅 {period}{confirm_date_html}</p>'
+                    period_html = f'<p class="deal-period">📅 {_esc(period)}{confirm_date_html}</p>'
             elif "把握" in deal_cat:
                 period_html = '<p class="deal-period">🔥 把握優惠（數量有限）</p>'
             else:
@@ -399,25 +430,25 @@ def generate_html(products: List[Dict], output_path: str) -> str:
                 # 如果主連結是官網，官網連結就是主連結本身
                 if not official_url and "costco.com.tw" in orig_link:
                     official_url = orig_link
-                src_icon = f'<a class="src-icon" href="{daybuy_url}" target="_blank" onclick="event.stopPropagation()" title="daybuy 情報">📰</a>'
+                src_icon = f'<a class="src-icon" href="{_esc_url(daybuy_url)}" target="_blank" onclick="event.stopPropagation()" title="daybuy 情報">📰</a>'
                 if official_url and official_url != daybuy_url:
                     daybuy_link_html = (
-                        f'<a class="daybuy-link official-link" href="{official_url}" target="_blank" onclick="event.stopPropagation()">🛒 好市多官網</a>'
-                        f'<a class="daybuy-link" href="{daybuy_url}" target="_blank" onclick="event.stopPropagation()">📰 daybuy 情報頁</a>'
+                        f'<a class="daybuy-link official-link" href="{_esc_url(official_url)}" target="_blank" onclick="event.stopPropagation()">🛒 好市多官網</a>'
+                        f'<a class="daybuy-link" href="{_esc_url(daybuy_url)}" target="_blank" onclick="event.stopPropagation()">📰 daybuy 情報頁</a>'
                     )
                 else:
-                    daybuy_link_html = f'<a class="daybuy-link" href="{daybuy_url}" target="_blank" onclick="event.stopPropagation()">📰 daybuy 情報頁</a>'
+                    daybuy_link_html = f'<a class="daybuy-link" href="{_esc_url(daybuy_url)}" target="_blank" onclick="event.stopPropagation()">📰 daybuy 情報頁</a>'
             elif disc_url and "daybuy.tw" in disc_url:
                 # 主連結是官網但有 daybuy 討論連結
                 official_url = orig_link if "costco.com.tw" in orig_link else (f"https://www.costco.com.tw/p/{code}" if code else "")
-                src_icon = f'<a class="src-icon" href="{disc_url}" target="_blank" onclick="event.stopPropagation()" title="daybuy 情報">📰</a>'
+                src_icon = f'<a class="src-icon" href="{_esc_url(disc_url)}" target="_blank" onclick="event.stopPropagation()" title="daybuy 情報">📰</a>'
                 if official_url:
                     daybuy_link_html = (
-                        f'<a class="daybuy-link official-link" href="{official_url}" target="_blank" onclick="event.stopPropagation()">🛒 好市多官網</a>'
-                        f'<a class="daybuy-link" href="{disc_url}" target="_blank" onclick="event.stopPropagation()">📰 daybuy 情報頁</a>'
+                        f'<a class="daybuy-link official-link" href="{_esc_url(official_url)}" target="_blank" onclick="event.stopPropagation()">🛒 好市多官網</a>'
+                        f'<a class="daybuy-link" href="{_esc_url(disc_url)}" target="_blank" onclick="event.stopPropagation()">📰 daybuy 情報頁</a>'
                     )
                 else:
-                    daybuy_link_html = f'<a class="daybuy-link" href="{disc_url}" target="_blank" onclick="event.stopPropagation()">📰 daybuy 情報頁</a>'
+                    daybuy_link_html = f'<a class="daybuy-link" href="{_esc_url(disc_url)}" target="_blank" onclick="event.stopPropagation()">📰 daybuy 情報頁</a>'
             elif p.get("實體賣場"):
                 src_icon = '<span class="src-icon" title="線上售價與賣場相同">🏪</span>'
 
@@ -427,8 +458,8 @@ def generate_html(products: List[Dict], output_path: str) -> str:
             elif price_chg == "首次出現":
                 history_html = '<p class="history">🆕 首次出現</p>'
 
-            name_esc = name.replace("'", "\\'")
-            link_esc = link.replace("'", "\\'")
+            name_esc = _esc_js(name)
+            link_esc = _esc_js(link)
 
             sighting_tag_html = ""
             if p.get("_現場目擊"):
@@ -436,10 +467,10 @@ def generate_html(products: List[Dict], output_path: str) -> str:
             elif p.get("_現場價標"):
                 sighting_tag_html = f'<span class="sighting-live-tag" title="賣場現場另有不同優惠價，點💬看價牌照片">{p["_現場價標"]}</span>'
             all_cards_html += f'''<div class="card" id="{card_id}" data-cat="{actual_cat_id}" data-deal="{deal_val}">
-  <a href="{link}" target="_blank" rel="noopener" class="card-link">
+  <a href="{_esc_url(link)}" target="_blank" rel="noopener" class="card-link">
     <div class="card-img">{img_html}{badge_html}{src_icon}</div>
     <div class="card-body">
-      <p class="card-name">{name}</p>
+      <p class="card-name">{_esc(name)}</p>
       {deal_badge_html}{countdown_html}{sighting_tag_html}
       {location_html}
       {period_html}
@@ -477,9 +508,9 @@ def generate_html(products: List[Dict], output_path: str) -> str:
                 icon = "🍽️"
             else:
                 icon = "🏪"
-            sighting_cards += f'''<a class="sighting-card" href="{url}" target="_blank" rel="noopener">
+            sighting_cards += f'''<a class="sighting-card" href="{_esc_url(url)}" target="_blank" rel="noopener">
   <span class="sighting-icon">{icon}</span>
-  <span class="sighting-title">{title}</span>
+  <span class="sighting-title">{_esc(title)}</span>
   <span class="sighting-arrow">→</span>
 </a>
 '''
