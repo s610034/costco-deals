@@ -7,8 +7,8 @@ line_id_finder.py
 
 使用前置：
   1. 確認 .env 裡有設定 WEBHOOK_SITE_TOKEN（webhook.site 網址裡的那段 UUID）
-     例如 https://webhook.site/26ea2ee4-ff22-4b78-b6b7-c5f22093c8cf
-     → WEBHOOK_SITE_TOKEN=26ea2ee4-ff22-4b78-b6b7-c5f22093c8cf
+     例如 https://webhook.site/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+     → WEBHOOK_SITE_TOKEN=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
   2. 請新成員加好友（或把官方帳號邀進群組）後說一句話
 
 執行方式：
