@@ -177,7 +177,14 @@ def generate_html(products: List[Dict], output_path: str) -> str:
                     break
     except Exception:
         pass
-    pw_hash = hashlib.sha256(env_pw.encode()).hexdigest()
+    # PBKDF2-SHA256 + 固定鹽 + 高迭代次數（取代單純一次性 SHA-256）
+    # 這是純前端網站沒有後端，驗證用的雜湊值本來就一定要讓瀏覽器抓得到、必然公開可見，
+    # 加鹽+高迭代次數只是拉高離線暴力破解成本，不是讓它「不公開」——那需要後端才做得到。
+    pw_salt_hex = "160e22445bb088a176ac6a27e51a6254"
+    pw_iterations = 210000
+    pw_hash = hashlib.pbkdf2_hmac(
+        "sha256", env_pw.encode(), bytes.fromhex(pw_salt_hex), pw_iterations
+    ).hex()
 
     today      = datetime.datetime.now()
     date_str   = today.strftime("%Y/%m/%d")
@@ -732,6 +739,8 @@ footer{{text-align:center;padding:20px;font-size:.72rem;color:var(--sub)}}
 const ALL_CATS = {all_cats_js};
 const DB_OVERRIDES = {db_overrides_js};
 const PW_HASH_DEFAULT = "{pw_hash}";
+const PW_SALT_HEX = "{pw_salt_hex}";
+const PW_ITERATIONS = {pw_iterations};
 const CONFIG_URL = "https://raw.githubusercontent.com/s610034/costco-deals/main/data/config.json";
 const CONFIG_API = "https://api.github.com/repos/s610034/costco-deals/contents/data/config.json";
 const STORAGE_KEY = "costco_cat_overrides";
@@ -761,10 +770,17 @@ async function loadConfig() {{
 }}
 loadConfig();
 
-// SHA-256
+// PBKDF2-SHA256（加鹽+高迭代次數，取代單純一次性 SHA-256，拉高離線破解成本）
 async function sha256(msg) {{
-  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(msg));
-  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,"0")).join("");
+  const saltBytes = new Uint8Array(PW_SALT_HEX.match(/.{{2}}/g).map(b => parseInt(b, 16)));
+  const keyMaterial = await crypto.subtle.importKey(
+    "raw", new TextEncoder().encode(msg), {{name: "PBKDF2"}}, false, ["deriveBits"]
+  );
+  const bits = await crypto.subtle.deriveBits(
+    {{name: "PBKDF2", salt: saltBytes, iterations: PW_ITERATIONS, hash: "SHA-256"}},
+    keyMaterial, 256
+  );
+  return Array.from(new Uint8Array(bits)).map(b => b.toString(16).padStart(2,"0")).join("");
 }}
 
 // 登入
