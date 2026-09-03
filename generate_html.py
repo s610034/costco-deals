@@ -1215,6 +1215,27 @@ function selectCat(catId) {{
     with open(output_path, "w", encoding="utf-8") as f:
         f.write(html)
     print(f"🌐 HTML 報告已產生：{output_path}")
+
+    # 產生 status.json：deploy.py 的品質閘門、GitHub Actions 健康檢查都靠這份檔案
+    # 判斷「這次要部署的內容夠不夠完整」「本機今天有沒有真的成功跑過」，
+    # 不要去解析 index.html 的內容（太脆弱，模板一改就壞）
+    try:
+        source_counts = {}
+        for p in products:
+            src = p.get("資料來源") or "(未標記)"
+            source_counts[src] = source_counts.get(src, 0) + 1
+        status = {
+            "generated_at": datetime.datetime.now().astimezone().isoformat(timespec="seconds"),
+            "item_count": len(products),
+            "source_counts": source_counts,
+        }
+        status_path = os.path.join(os.path.dirname(output_path), "status.json")
+        with open(status_path, "w", encoding="utf-8") as f:
+            json.dump(status, f, ensure_ascii=False, indent=2)
+        print(f"📋 status.json 已產生：{status['item_count']} 筆")
+    except Exception as e:
+        print(f"⚠️  status.json 產生失敗（不影響主流程）：{e}")
+
     return output_path
 
 
