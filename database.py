@@ -147,7 +147,7 @@ def upsert_products(products: List[Dict], crawl_date: str = None) -> int:
         # 有商品編號：用商品編號+日期去重（避免官網版+daybuy版重複）
         if code:
             exists = conn.execute(
-                "SELECT id, 優惠期間, 商品編號, 原價, 折扣金額, 圖片URL, 討論連結, 商品連結 FROM products WHERE crawl_date=? AND 商品編號=?",
+                "SELECT id, 優惠期間, 商品編號, 原價, 折扣金額, 圖片URL, 討論連結, 商品連結, 資料來源 FROM products WHERE crawl_date=? AND 商品編號=?",
                 (crawl_date, code)
             ).fetchone()
             # 官網連結優先：如果已存 daybuy 版但現在有官網版，更新連結
@@ -155,7 +155,7 @@ def upsert_products(products: List[Dict], crawl_date: str = None) -> int:
                 conn.execute("UPDATE products SET 商品連結=? WHERE id=?", (link, exists["id"]))
         else:
             exists = conn.execute(
-                "SELECT id, 優惠期間, 商品編號, 原價, 折扣金額, 圖片URL, 討論連結, 商品連結 FROM products WHERE crawl_date=? AND 商品連結=?",
+                "SELECT id, 優惠期間, 商品編號, 原價, 折扣金額, 圖片URL, 討論連結, 商品連結, 資料來源 FROM products WHERE crawl_date=? AND 商品連結=?",
                 (crawl_date, link)
             ).fetchone()
         if exists:
@@ -193,6 +193,11 @@ def upsert_products(products: List[Dict], crawl_date: str = None) -> int:
             if new_disc_url and not exists["討論連結"]:
                 updates.append("討論連結=?")
                 vals.append(new_disc_url)
+            # 有新的資料來源就補上（回填舊資料，之前 INSERT 漏掉這欄導致一律空字串）
+            new_source = p.get("資料來源", "")
+            if new_source and not exists["資料來源"]:
+                updates.append("資料來源=?")
+                vals.append(new_source)
             if updates:
                 vals.append(exists["id"])
                 conn.execute(f"UPDATE products SET {', '.join(updates)} WHERE id=?", vals)
@@ -201,8 +206,8 @@ def upsert_products(products: List[Dict], crawl_date: str = None) -> int:
         conn.execute("""
             INSERT INTO products
               (crawl_date, 商品名稱, 分類, 細分類, 原價, 折扣金額, 折扣幅度,
-               折扣後售價, 優惠期間, 實體賣場, 圖片URL, 商品連結, 抓取時間, 商品編號, 討論連結)
-            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+               折扣後售價, 優惠期間, 實體賣場, 圖片URL, 商品連結, 抓取時間, 商品編號, 討論連結, 資料來源)
+            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
         """, (
             crawl_date,
             p.get("商品名稱", ""),
@@ -219,6 +224,7 @@ def upsert_products(products: List[Dict], crawl_date: str = None) -> int:
             p.get("抓取時間", ""),
             p.get("商品編號", ""),
             p.get("討論連結", ""),
+            p.get("資料來源", ""),
         ))
         inserted += 1
 

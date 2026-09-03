@@ -299,6 +299,20 @@ def run():
     except Exception as e:
         print(f"  ⚠️  賣場目擊情報失敗（繼續）：{e}")
 
+    # 標準化「資料來源」欄位：各爬蟲模組各自用「來源」欄位標記(daybuy_tg/ptt_hypermall/
+    # daybuy_sighting)，但 DB schema／database.py 的過期規則(如14天內有效的賣場目擊)
+    # 認的是「資料來源」欄位，且用的字彙是 official/daybuy/ptt/hidden_sighting，兩邊字串
+    # 完全對不上，導致 upsert_products() 寫進 DB 時「資料來源」一律是空字串，賣場目擊的
+    # 14天過期規則從未生效過。這裡統一轉換。
+    _SOURCE_MAP = {
+        "daybuy_tg": "daybuy",
+        "ptt_hypermall": "ptt",
+        "daybuy_sighting": "hidden_sighting",
+    }
+    for _p in new_products:
+        if not _p.get("資料來源"):
+            _p["資料來源"] = _SOURCE_MAP.get(_p.get("來源"), "official")
+
     # Step 2：存 DB + JSON
     print(f"\n【Step 2】儲存資料...")
     try:
