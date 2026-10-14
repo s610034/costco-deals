@@ -176,7 +176,8 @@ def crawl_all(categories: list, test_mode: bool = False, resume: bool = False) -
     from database import init_db, upsert_master, get_master_count, acquire_pipeline_lock
 
     # 取排程互斥鎖，避免與 run_costco / batch_verify 同時寫 DB
-    _lock = acquire_pipeline_lock(wait_seconds=300)
+    # 週報(run_costco)可能跑 15~30 分鐘且持有同一把鎖；原本只等 5 分鐘，2026-10-14 因此整個被跳過
+    _lock = acquire_pipeline_lock(wait_seconds=int(os.environ.get("CRAWL_LOCK_WAIT", "900")))
     if not _lock:
         log("❌ 等待排程鎖逾時，本次放棄執行")
         return {}
@@ -192,6 +193,15 @@ def crawl_all(categories: list, test_mode: bool = False, resume: bool = False) -
             state = json.load(f)
         done_cats = set(state.get("done", []))
         log(f"Resume 模式：已完成 {len(done_cats)} 個分類，跳過")
+
+    # 進度檔必須永遠代表「最近一次執行」的進度：非 resume 的新一輪一開始就清空。
+    # 否則在第一個 50 分類檢查點之前就失敗（例如一啟動就沒網路），進度檔仍是上一輪
+    # 「全部完成」，之後加 --resume 重試會把所有分類都跳過、秒回成功卻什麼都沒爬。
+    # 測試模式(--test)完全不碰進度檔，避免蓋掉真實進度。
+    if not resume and not test_mode:
+        os.makedirs(os.path.dirname(STATE_FILE), exist_ok=True)
+        with open(STATE_FILE, "w") as f:
+            json.dump({"done": [], "updated": str(datetime.datetime.now())}, f)
 
     stats = {"total_products": 0, "total_new_master": 0, "cats_done": 0, "cats_skip": 0}
 
@@ -249,7 +259,7 @@ def crawl_all(categories: list, test_mode: bool = False, resume: bool = False) -
             done_cats.add(cat_url)
 
             # 每50個分類存一次進度
-            if stats["cats_done"] % 50 == 0:
+            if stats["cats_done"] % 50 == 0 and not test_mode:
                 os.makedirs(os.path.dirname(STATE_FILE), exist_ok=True)
                 with open(STATE_FILE, "w") as f:
                     json.dump({"done": list(done_cats), "updated": str(datetime.datetime.now())}, f)
@@ -259,10 +269,11 @@ def crawl_all(categories: list, test_mode: bool = False, resume: bool = False) -
 
         browser.close()
 
-    # 儲存最終進度
-    os.makedirs(os.path.dirname(STATE_FILE), exist_ok=True)
-    with open(STATE_FILE, "w") as f:
-        json.dump({"done": list(done_cats), "updated": str(datetime.datetime.now())}, f)
+    # 儲存最終進度（測試模式不寫）
+    if not test_mode:
+        os.makedirs(os.path.dirname(STATE_FILE), exist_ok=True)
+        with open(STATE_FILE, "w") as f:
+            json.dump({"done": list(done_cats), "updated": str(datetime.datetime.now())}, f)
 
     end_master = get_master_count()
     log(f"\n{'='*55}")
@@ -309,7 +320,11 @@ if __name__ == "__main__":
         with open(LOG_FILE, "w", encoding="utf-8") as f:
             f.write(f"=== 好市多全量商品爬蟲 {datetime.datetime.now()} ===\n")
 
-        crawl_all([], test_mode=args.test, resume=args.resume)
+        _result = crawl_all([], test_mode=args.test, resume=args.resume)
+        if not _result:
+            # 等排程鎖逾時、根本沒執行：必須回傳非 0，否則 wrapper 會誤發「全量爬蟲完成」
+            _notify_failure("等待排程鎖逾時，本次未執行（可能有其他排程占用過久）")
+            sys.exit(3)
     except Exception as _fatal_err:
         import traceback
         print(f"❌ 全量爬蟲未預期崩潰：{_fatal_err}")

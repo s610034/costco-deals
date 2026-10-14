@@ -88,12 +88,8 @@ def verify_product_price(item_code: str, page) -> Optional[Dict]:
     if not result or result.get("actualUrl", "").endswith("/404"):
         return None
 
-    # 解析數字
-    def parse_num(text):
-        if not text:
-            return None
-        d = re.sub(r"[^\d]", "", str(text))
-        return int(d) if d else None
+    # 解析數字（只取第一個價格，見 _parse_first_price）
+    parse_num = _parse_first_price
 
     orig = parse_num(result.get("origPrice", ""))
     disc = parse_num(result.get("disc", ""))
@@ -124,6 +120,37 @@ def verify_product_price(item_code: str, page) -> Optional[Dict]:
         "官網連結": f"{BASE_URL}/p/{item_code}",
         "圖片URL":  result.get("imgUrl", ""),
     }
+
+
+def _parse_first_price(text):
+    """從價格文字取「第一個」價格整數；沒有數字回傳 None。
+    舊寫法是去掉所有非數字再 int()：多規格商品（如尿布 S/M/L/XL）詳情頁同時有好幾個價格，
+    "$1,349 $1,349 $1,349 $1,079" 會被接成 1349134913491079；"$1,349.00" 也會變成 134900。"""
+    if not text:
+        return None
+    m = re.search(r"\d[\d,]*", str(text))
+    if not m:
+        return None
+    digits = m.group().replace(",", "")
+    return int(digits) if digits else None
+
+
+def reconcile_sale_price(p: Dict) -> bool:
+    """原價以官網詳情頁為準之後，讓「折扣後售價／折扣幅度」跟原價、折扣金額維持同一個基準。
+    不變式：折扣後售價 = 原價 − 折扣金額；折扣幅度 = 折扣金額 ÷ 原價。
+    （快取路徑本來就會重算；詳情頁路徑只覆寫原價、沿用爬蟲當時用另一個基準算的售價，
+    結果變成 原價 − 2×折扣，網頁上出現「$1,999 → $1,199 省 $400」這種自相矛盾的卡片。）
+    回傳是否有修正。"""
+    orig, disc = p.get("原價"), p.get("折扣金額")
+    if not (isinstance(orig, (int, float)) and isinstance(disc, (int, float))):
+        return False
+    if orig <= 0 or disc <= 0 or disc >= orig:
+        return False
+    sale = int(orig - disc)
+    pct = str(round(disc / orig * 100, 1)) + "%"
+    changed = p.get("折扣後售價") != sale or p.get("折扣幅度") != pct
+    p["折扣後售價"], p["折扣幅度"] = sale, pct
+    return changed
 
 
 def verify_all_products(products: List[Dict], page, max_verify: int = 30) -> List[Dict]:
@@ -191,6 +218,10 @@ def verify_all_products(products: List[Dict], page, max_verify: int = 30) -> Lis
             p["折扣後售價"] = result["折扣後售價"]
         if result.get("折扣幅度"):
             p["折扣幅度"] = result["折扣幅度"]
+        # 詳情頁沒給自己的特價時（精選優惠的優惠券商品只標原價），用「官網原價 − 折扣金額」重算，
+        # 避免沿用爬蟲當時不同基準算出的售價
+        if not result.get("折扣後售價"):
+            reconcile_sale_price(p)
 
         # 優惠期間（詳情頁有就用，沒有保留原本的）
         if result.get("優惠期間_官網") and not p.get("優惠期間"):
