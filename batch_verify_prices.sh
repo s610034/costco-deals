@@ -1,7 +1,7 @@
 #!/bin/bash
 # batch_verify_prices.sh
 # 批次補充 products_master 原價，每次 500 個
-cd /Users/ericchen/Documents/testthing/costco-deals
+cd /Users/ericchen/Developer/costco-deals
 source "$(dirname "$0")/lib_net.sh"
 mkdir -p logs
 TS=$(date +%Y%m%d_%H%M%S)

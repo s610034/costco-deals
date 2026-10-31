@@ -14,7 +14,7 @@
 
 ## 📁 專案位置與檔案
 ```
-~/Documents/testthing/costco-deals/
+~/Developer/costco-deals/
 ├── run_costco.py          # 主執行腳本（完整流程：爬取→驗證→存DB→產生HTML→部署→推播）
 ├── scraper.py              # Playwright 爬蟲（官網三個折扣頁：限時/精選/把握優惠）
 ├── daybuy_monitor.py        # daybuy @daybuy Telegram 頻道爬蟲

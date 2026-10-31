@@ -1,7 +1,7 @@
 #!/bin/bash
 # crawl_all_products.sh
 # 全量爬取官網所有商品，更新 products_master 資料庫
-cd /Users/ericchen/Documents/testthing/costco-deals
+cd /Users/ericchen/Developer/costco-deals
 source "$(dirname "$0")/lib_net.sh"
 mkdir -p logs
 TS=$(date +%Y%m%d_%H%M%S)
@@ -48,7 +48,7 @@ tail -12 "$CUR_LOG" | grep -E "處理分類|掃描商品|寫入 DB|全新商品|
 /usr/bin/python3 -c "
 import sys, os
 sys.path.insert(0, '.')
-os.chdir('/Users/ericchen/Documents/testthing/costco-deals')
+os.chdir('/Users/ericchen/Developer/costco-deals')
 
 with open('.env') as f:
     for line in f:

@@ -249,7 +249,7 @@ def verify_all_products(products: List[Dict], page, max_verify: int = 30) -> Lis
 if __name__ == "__main__":
     # 測試單一商品
     import sys
-    sys.path.insert(0, '/Users/ericchen/Documents/testthing/costco-deals')
+    sys.path.insert(0, '/Users/ericchen/Developer/costco-deals')
     from playwright.sync_api import sync_playwright
 
     UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"

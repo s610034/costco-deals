@@ -1,6 +1,6 @@
 #!/bin/bash
 # 好市多折扣週報
-cd /Users/ericchen/Documents/testthing/costco-deals
+cd /Users/ericchen/Developer/costco-deals
 source "$(dirname "$0")/lib_net.sh"
 mkdir -p logs
 TS=$(date +%Y%m%d_%H%M%S)
