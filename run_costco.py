@@ -345,6 +345,18 @@ def run():
 
     products_30d = enrich_with_history(products_30d, today)
 
+    # 價格不變式：違規商品不上網站；違規比例過高代表上游資料有系統性問題，整次不部署
+    from verify_prices import check_price_invariants
+    products_30d, _bad = check_price_invariants(products_30d)
+    if _bad:
+        print(f"  ⚠️  價格不變式違規 {len(_bad)} 筆，已排除不顯示：")
+        for _p, _why in _bad[:10]:
+            print(f"     - {_p.get('商品編號','')} {str(_p.get('商品名稱',''))[:20]}：{_why}")
+        if len(_bad) > max(5, 0.1 * (len(products_30d) + len(_bad))):
+            tg_send(f"🚨 好市多價格不變式違規 {len(_bad)} 筆（超過門檻），已中止部署，請檢查爬蟲價格解析")
+            print("❌ 價格違規比例過高，中止部署")
+            return False
+
     # Step 4：產生 HTML
     print(f"\n【Step 4】產生 HTML 報告...")
     html_path = os.path.join(DOCS_DIR, "index.html")

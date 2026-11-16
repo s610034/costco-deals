@@ -52,10 +52,14 @@ def log(msg: str):
         f.write(line + "\n")
 
 
-def parse_number(text: str):
+def parse_number(text):
+    """取文字中「第一個」數字（含千分位）；多個價格不可串接成一個整數（曾產生 104910491049）。"""
     if not text:
         return None
-    d = re.sub(r"[^\d]", "", str(text))
+    m = re.search(r"\d[\d,]*", str(text))
+    if not m:
+        return None
+    d = m.group().replace(",", "")
     return int(d) if d else None
 
 

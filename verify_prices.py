@@ -47,8 +47,7 @@ def verify_product_price(item_code: str, page) -> Optional[Dict]:
         if (mOrig) origPrice = mOrig[1];
         if (mDisc) disc = mDisc[1];
         if (mSale) sale = mSale[1];
-        // 無促銷的商品頁只有一個價格欄位
-        if (!origPrice && mSale) origPrice = mSale[1];
+        const origFromLabel = !!mOrig;  // 有「商品原價」標籤才可信；小計是折後價，不可當原價
 
         // fallback：直接抓 .price-value（第一個）
         if (!origPrice) {
@@ -82,7 +81,7 @@ def verify_product_price(item_code: str, page) -> Optional[Dict]:
         }
         if (!imgUrl) imgUrl = fallbackImg;
 
-        return {origPrice, disc, sale, walletText, actualUrl, imgUrl};
+        return {origPrice, disc, sale, walletText, actualUrl, imgUrl, origFromLabel};
     }""")
 
     if not result or result.get("actualUrl", "").endswith("/404"):
@@ -95,10 +94,16 @@ def verify_product_price(item_code: str, page) -> Optional[Dict]:
     disc = parse_num(result.get("disc", ""))
     sale = parse_num(result.get("sale", ""))
 
+    from_label = bool(result.get("origFromLabel"))
+    # 沒有「商品原價」標籤時 orig 來自 .price-value 等 fallback：一般商品（無折扣）可用，
+    # 有折扣商品可能是折後價，呼叫端（verify_all_products）會依「原價來自標籤」決定是否採用
     if orig and disc and not sale:
         sale = orig - disc
     if orig and sale and not disc:
         disc = orig - sale
+    # 三元組必須自洽：原價 − 折扣 = 小計；不一致就不回傳價格（寧可保留爬蟲值，也不寫入矛盾資料）
+    if orig and disc and sale and abs(orig - disc - sale) > 1:
+        orig = disc = sale = None
 
     # 優惠期間
     wallet_text = result.get("walletText", "")
@@ -116,6 +121,7 @@ def verify_product_price(item_code: str, page) -> Optional[Dict]:
         "折扣金額": disc,
         "折扣後售價": sale,
         "折扣幅度": f"{round(disc/orig*100, 1)}%" if orig and disc else None,
+        "原價來自標籤": from_label,
         "優惠期間_官網": period,
         "官網連結": f"{BASE_URL}/p/{item_code}",
         "圖片URL":  result.get("imgUrl", ""),
@@ -187,17 +193,14 @@ def verify_all_products(products: List[Dict], page, max_verify: int = 30) -> Lis
         source = p.get("來源", "")
         is_social = source in ("daybuy_tg", "ptt_hypermall", "daybuy_sighting")
 
-        # 官網直接爬的商品：DB 有原價就套用，不重複進官網
+        # 官網直接爬的商品：DB 原價與本次爬到的一致才跳過詳情頁驗證。
+        # 不一致時絕不讓 DB 勝出（舊版會用 DB 的 MAX(原價) 覆蓋，把歷史錯價永久固定）；
+        # 改進詳情頁以官網「商品原價/折扣/小計」為準（受 max_verify 配額限制，超過者保留爬蟲值）。
         if code in verified_codes and not is_social:
             db_orig = verified_codes[code]
-            if db_orig and db_orig != p.get("原價"):
-                p["原價"] = db_orig
-                disc = p.get("折扣金額")
-                if disc and db_orig:
-                    p["折扣後售價"] = db_orig - disc
-                    p["折扣幅度"] = str(round(disc/db_orig*100, 1)) + "%"
-            skipped += 1
-            continue
+            if db_orig and db_orig == p.get("原價"):
+                skipped += 1
+                continue
 
         # DB 沒有，去詳情頁驗證
         if verified >= max_verify:
@@ -209,8 +212,8 @@ def verify_all_products(products: List[Dict], page, max_verify: int = 30) -> Lis
             skipped += 1
             continue
 
-        # 更新原價（以官網詳情頁為準）
-        if result.get("原價"):
+        # 更新原價（以官網詳情頁為準；但沒有「商品原價」標籤時詳情頁價格可能已是折後價，不採用）
+        if result.get("原價") and result.get("原價來自標籤"):
             p["原價"] = result["原價"]
         if result.get("折扣金額"):
             p["折扣金額"] = result["折扣金額"]
@@ -276,3 +279,22 @@ if __name__ == "__main__":
                 print("  找不到")
 
         browser.close()
+
+
+def check_price_invariants(products: List[Dict]):
+    """價格不變式（部署前最後防線）：有原價/折扣/售價三者時必須 原價−折扣=售價（容差 1 元）、
+    0 < 售價 < 原價、原價不得是天文數字（多個價格被串接）。
+    回傳 (通過清單, 違規清單[(商品, 原因)])。缺欄位的商品（如只有社群文字價）不在此檢查範圍。"""
+    good, bad = [], []
+    for p in products:
+        o, d, s = p.get("原價"), p.get("折扣金額"), p.get("折扣後售價")
+        reason = None
+        if isinstance(o, (int, float)) and o > 1_000_000:
+            reason = f"原價異常大 {o}"
+        elif all(isinstance(v, (int, float)) for v in (o, d, s)):
+            if abs(o - d - s) > 1:
+                reason = f"原價{o}−折扣{d}≠售價{s}"
+            elif not (0 < s < o):
+                reason = f"售價{s}不在 0~原價{o} 之間"
+        (bad if reason else good).append((p, reason) if reason else p)
+    return good, bad
